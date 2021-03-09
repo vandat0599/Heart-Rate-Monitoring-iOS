@@ -1,0 +1,13 @@
+//
+//  Production.swift
+//  Mymanu Play
+//
+//  Created by Duy Nguyen on 1/8/21.
+//  Copyright © 2020 Duy Nguyen. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+baseUrl = prod_urls
+logEnabled = false
