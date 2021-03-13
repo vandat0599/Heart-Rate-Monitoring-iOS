@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Lottie
 
 class PlayView: UIControl {
     override init(frame: CGRect) {
@@ -63,6 +64,13 @@ class PlayView: UIControl {
         return view
     }()
     
+    private lazy var progressView: AnimationView = {
+        let view = AnimationView.init(name: "lottie-progress")
+        view.isUserInteractionEnabled = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let disposeBag = DisposeBag()
     var viewModel: PlayViewVM? {
         didSet {
@@ -72,6 +80,7 @@ class PlayView: UIControl {
     
     private func setupView() {
         addSubview(backgroundImage)
+        addSubview(progressView)
         addSubview(playIconImageView)
         addSubview(cameraView)
         addSubview(heartRateTrackLabel)
@@ -80,6 +89,11 @@ class PlayView: UIControl {
             backgroundImage.trailingAnchor.constraint(equalTo: trailingAnchor),
             backgroundImage.topAnchor.constraint(equalTo: topAnchor),
             backgroundImage.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            progressView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            progressView.topAnchor.constraint(equalTo: topAnchor),
+            progressView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             playIconImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             playIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -101,23 +115,20 @@ class PlayView: UIControl {
             guard let self = self else { return }
             self.cameraView.isHidden = !value
             self.heartRateTrackLabel.isHidden = !value
+            self.progressView.isHidden = !value
             self.playIconImageView.isHidden = value
             UIView.animate(withDuration: 0.4) {
+                self.progressView.alpha = !value ? 0.0 : 1.0
                 self.cameraView.alpha = !value ? 0.0 : 1.0
                 self.heartRateTrackLabel.alpha = !value ? 0.0 : 1.0
                 self.playIconImageView.alpha = value ? 0.0 : 1.0
             }
+            self.progressView.currentProgress = 0
 
         })
         
         viewModel?.heartRateTrackNumber
-            .map {
-                if $0 == 0 {
-                    return "--\nbpm"
-                } else {
-                    return "\($0)\nbpm"
-                }
-            }
+            .map { "\($0 == 0 ? "--" : "\($0)")\nbpm" }
             .bind(to: heartRateTrackLabel.rx.text)
             .disposed(by: disposeBag)
         
@@ -125,6 +136,12 @@ class PlayView: UIControl {
             .bind {[weak self] in
                 self?.viewModel?.togglePlay()
             }
+            .disposed(by: disposeBag)
+        
+        viewModel?.heartRateProgress
+            .subscribe(onNext: {[weak self] (value) in
+                self?.progressView.play(toProgress: AnimationProgressTime(value))
+            })
             .disposed(by: disposeBag)
     }
 }
