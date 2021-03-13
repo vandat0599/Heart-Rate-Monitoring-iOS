@@ -66,19 +66,6 @@ class BottomBarView: UIView {
         return view
     }()
     
-    private lazy var bottomPlaceHolder: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.clipsToBounds = true
-        view.cornerRadius = 15
-        view.crTopLeft  = true
-        view.crTopRight = true
-        view.crBottomLeft = false
-        view.crBottomRight = false
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     
     //MARK: -Init
     override init(frame: CGRect) {
@@ -102,27 +89,28 @@ class BottomBarView: UIView {
     
     //MARK: -Methods
     private func setupView() {
-        backgroundColor = .clear
-        addSubview(bottomPlaceHolder)
-        bottomPlaceHolder.addSubview(itemHistory)
-        bottomPlaceHolder.addSubview(itemUser)
-        bottomPlaceHolder.addSubview(itemHeartRate)
+        backgroundColor = .white
+        clipsToBounds = true
+        cornerRadius = 15
+        crTopLeft  = true
+        crTopRight = true
+        crBottomLeft = false
+        crBottomRight = false
+        addSubview(itemHistory)
+        addSubview(itemUser)
+        addSubview(itemHeartRate)
         
         NSLayoutConstraint.activate([
-            bottomPlaceHolder.leadingAnchor.constraint(equalTo: leadingAnchor),
-            bottomPlaceHolder.trailingAnchor.constraint(equalTo: trailingAnchor),
-            bottomPlaceHolder.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
             itemHeartRate.centerXAnchor.constraint(equalTo: centerXAnchor),
-            itemHeartRate.bottomAnchor.constraint(equalTo: bottomPlaceHolder.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            itemHeartRate.topAnchor.constraint(equalTo: bottomPlaceHolder.safeAreaLayoutGuide.topAnchor, constant: 10),
+            itemHeartRate.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            itemHeartRate.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             
-            itemHistory.leadingAnchor.constraint(equalTo: bottomPlaceHolder.leadingAnchor),
+            itemHistory.leadingAnchor.constraint(equalTo: leadingAnchor),
             itemHistory.heightAnchor.constraint(equalToConstant: 44),
             itemHistory.trailingAnchor.constraint(equalTo: itemHeartRate.leadingAnchor),
             itemHistory.centerYAnchor.constraint(equalTo: itemHeartRate.centerYAnchor),
             
-            itemUser.trailingAnchor.constraint(equalTo: bottomPlaceHolder.trailingAnchor),
+            itemUser.trailingAnchor.constraint(equalTo: trailingAnchor),
             itemUser.heightAnchor.constraint(equalToConstant: 44),
             itemUser.leadingAnchor.constraint(equalTo: itemHeartRate.trailingAnchor),
             itemUser.centerYAnchor.constraint(equalTo: itemHeartRate.centerYAnchor),
@@ -132,7 +120,6 @@ class BottomBarView: UIView {
     // MARK: - actions
     
     @objc private func itemTapped(_ sender: UIControl) {
-        print("item tapped")
         if sender == itemHeartRate {
             sender.performSpringAnimation(duration: 0.4, maxScale: 0.9)
         }
@@ -149,5 +136,6 @@ class BottomBarView: UIView {
         default:
             print("tab default")
         }
+        delegate?.bottomBarViewDelegate(view: self, selectedIndex: selectedIndex)
     }
 }
