@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     let rootViewController: UIViewController = {
-        return SignInVC3()
         return SignInVC()
     }()
 
