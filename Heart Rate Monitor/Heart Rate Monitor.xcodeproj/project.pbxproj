@@ -237,6 +237,22 @@
 			path = "Heart Rate MonitorUITests";
 			sourceTree = "<group>";
 		};
+		CE7F89DD25FC680B00A2EDC9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CE1E228F25F72A0200C6632E /* SignInVC.swift */,
+				CEC78EBC25F74000007BA177 /* SignInVC.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CE7F89DE25FC681200A2EDC9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		CEC78DC825F72BC6007BA177 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,8 +386,8 @@
 		CEC78E1C25F73324007BA177 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				CE1E228F25F72A0200C6632E /* SignInVC.swift */,
-				CEC78EBC25F74000007BA177 /* SignInVC.xib */,
+				CE7F89DE25FC681200A2EDC9 /* ViewModel */,
+				CE7F89DD25FC680B00A2EDC9 /* View */,
 			);
 			path = Login;
 			sourceTree = "<group>";
