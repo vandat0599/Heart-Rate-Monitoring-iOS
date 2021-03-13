@@ -11,7 +11,7 @@ class SignInVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        view.backgroundColor = UIColor(named: "test")
     }
 }
 
