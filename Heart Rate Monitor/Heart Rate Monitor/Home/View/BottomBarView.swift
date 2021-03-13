@@ -117,7 +117,7 @@ class BottomBarView: UIView {
     
     @objc private func itemTapped(_ sender: UIControl) {
         if sender == itemHeartRate {
-            sender.performSpringAnimation(duration: 0.4, maxScale: 0.9)
+            sender.performSpringAnimation(duration: 0.4, maxScale: 0.95)
         }
         [itemHistory, itemUser].forEach {
             $0.isSelected = $0 == sender
