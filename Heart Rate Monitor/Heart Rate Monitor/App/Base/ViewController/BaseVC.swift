@@ -58,6 +58,10 @@ class BaseVC: UIViewController {
     }
     
     private func setupNavigationBar() {
-        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.view.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .black
+        navigationItem.title = ""
     }
 }

@@ -15,21 +15,19 @@ protocol BottomBarViewDelegate: AnyObject {
 class BottomBarView: UIView {
     
     //MARK: - views
-    private lazy var itemHistory: UIButton = {
-        let view = UIButton()
+    private lazy var itemHistory: TabItemView = {
+        let view = TabItemView()
         view.backgroundColor = .clear
-        view.setImage(UIImage(named: "ic-history-tab"), for: .normal)
-        view.setImage(UIImage(named: "ic-history-tab"), for: .selected)
+        view.config(iconName: "ic-history-tab", title: "History", normalColor: .lightGray, selectedColor: .black)
         view.addTarget(self, action: #selector(itemTapped(_:)), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var itemUser: UIButton = {
-        let view = UIButton()
+    private lazy var itemUser: TabItemView = {
+        let view = TabItemView()
         view.backgroundColor = .clear
-        view.setImage(UIImage(named: "ic-user-tab"), for: .normal)
-        view.setImage(UIImage(named: "ic-user-tab"), for: .selected)
+        view.config(iconName: "ic-user-tab", title: "Profile", normalColor: .lightGray, selectedColor: .black)
         view.addTarget(self, action: #selector(itemTapped(_:)), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -106,12 +104,10 @@ class BottomBarView: UIView {
             itemHeartRate.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             
             itemHistory.leadingAnchor.constraint(equalTo: leadingAnchor),
-            itemHistory.heightAnchor.constraint(equalToConstant: 44),
             itemHistory.trailingAnchor.constraint(equalTo: itemHeartRate.leadingAnchor),
             itemHistory.centerYAnchor.constraint(equalTo: itemHeartRate.centerYAnchor),
             
             itemUser.trailingAnchor.constraint(equalTo: trailingAnchor),
-            itemUser.heightAnchor.constraint(equalToConstant: 44),
             itemUser.leadingAnchor.constraint(equalTo: itemHeartRate.trailingAnchor),
             itemUser.centerYAnchor.constraint(equalTo: itemHeartRate.centerYAnchor),
         ])

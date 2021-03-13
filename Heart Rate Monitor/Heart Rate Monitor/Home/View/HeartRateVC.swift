@@ -10,6 +10,9 @@ import UIKit
 class HeartRateVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+    }
+    
+    private func setupView() {
+        view.backgroundColor = .white
     }
 }
