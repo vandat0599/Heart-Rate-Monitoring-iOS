@@ -96,6 +96,8 @@ class HeartRateVC: BaseVC {
         return view
     }()
     
+    private var playViewTopAnchor: NSLayoutConstraint!
+    
     private var heartRateManager: HeartRateManager!
     let disposeBag = DisposeBag()
     private var viewModel: HeartRateVCVM!
@@ -125,13 +127,14 @@ class HeartRateVC: BaseVC {
         playView.addSubview(playIconImageView)
         playView.addSubview(heartRateTrackLabel)
         playView.addSubview(preparingAnimationView)
+        playViewTopAnchor = playView.topAnchor.constraint(equalTo: centerYView.bottomAnchor, constant: -UIScreen.main.bounds.width*0.2/2)
         NSLayoutConstraint.activate([
             guideLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             guideLabel.bottomAnchor.constraint(equalTo: playView.topAnchor, constant: -20),
             guideLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             guideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            playView.topAnchor.constraint(equalTo: centerYView.bottomAnchor),
+            playViewTopAnchor,
             playView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             playView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             playView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
@@ -173,11 +176,13 @@ class HeartRateVC: BaseVC {
     private func bindViews() {
         _ = viewModel?.isPlaying.subscribe(onNext: {[weak self] (value) in
             guard let self = self else { return }
+            self.playViewTopAnchor.constant = value ? 0 : -UIScreen.main.bounds.width*0.2/2
             self.cameraView.isHidden = !value
             self.progressView.isHidden = !value
             self.playIconImageView.isHidden = value
             self.guideLabel.isHidden = !value
             UIView.animate(withDuration: 0.4) {
+                self.view.layoutIfNeeded()
                 self.progressView.alpha = !value ? 0.0 : 1.0
                 self.cameraView.alpha = !value ? 0.0 : 1.0
                 self.playIconImageView.alpha = value ? 0.0 : 1.0
@@ -189,7 +194,6 @@ class HeartRateVC: BaseVC {
             } else {
                 self.heartRateManager.stopCapture()
             }
-            
             self.navigationItem.title = value ? AppString.keepYourFinger : AppString.heartRateMonitor
         })
         
