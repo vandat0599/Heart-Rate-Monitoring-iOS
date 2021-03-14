@@ -51,13 +51,17 @@ class BaseVC: UIViewController {
             centerXView.heightAnchor.constraint(equalToConstant: 1),
             centerXView.widthAnchor.constraint(equalToConstant: 0),
             
-            centerYView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            centerYView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -HomeContainerVC.bottomInsetHeight),
             centerYView.heightAnchor.constraint(equalToConstant: 0),
             centerYView.widthAnchor.constraint(equalToConstant: 1),
         ])
     }
     
     private func setupNavigationBar() {
-        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.view.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .black
+        navigationItem.title = ""
     }
 }
