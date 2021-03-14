@@ -13,7 +13,7 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
     lazy var bottomBar: BottomBarView = {
         let view = BottomBarView()
         view.delegate = self
-        view.selectedIndex = 0
+        view.selectedIndex = 1
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -39,7 +39,7 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
           notificationListVC,
           settingVC,
         ]
-        showingVC = vcArray[0]
+        showingVC = vcArray[1]
         super.init(nibName: nil, bundle: nil)
         display(showingVC)
     }

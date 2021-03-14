@@ -75,6 +75,7 @@ class HeartRateVC: BaseVC {
     private lazy var progressView: AnimationView = {
         let view = AnimationView.init(name: "lottie-progress")
         view.isUserInteractionEnabled = false
+        view.animationSpeed = 15/CGFloat(viewModel.maxProgressSecond)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -211,9 +212,10 @@ class HeartRateVC: BaseVC {
         viewModel?.heartRateProgress
             .subscribe(onNext: {[unowned self] (value) in
                 if value == 0 {
+                    self.progressView.stop()
                     self.progressView.currentProgress = 0
                 } else {
-                    self.progressView.play(toProgress: AnimationProgressTime(value))
+                    self.progressView.play()
                 }
             })
             .disposed(by: disposeBag)

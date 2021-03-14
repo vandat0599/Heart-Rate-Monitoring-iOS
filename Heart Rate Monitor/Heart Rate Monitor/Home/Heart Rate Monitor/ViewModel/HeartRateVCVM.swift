@@ -11,6 +11,7 @@ import RxRelay
 import AVFoundation
 
 protocol HeartRateVCVM {
+    var maxProgressSecond: Int { get }
     var isPlaying: BehaviorRelay<Bool> { get }
     var isMeasuring: BehaviorRelay<Bool> { get }
     var touchStatus: BehaviorRelay<Bool> { get }
@@ -26,7 +27,7 @@ protocol HeartRateVCVM {
 class HeartRateVCVMImp: HeartRateVCVM {
     
     let disposeBag = DisposeBag()
-    let maxProgressSecond = 60
+    var maxProgressSecond = 20
     var timeCounterSubscription: Disposable?
     private var validFrameCounter = 0
     private var hueFilter = Filter()
@@ -136,10 +137,10 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 self.touchStatus.accept(true)
                 let average = self.pulseDetector.getAverage()
                 let pulse = 60.0/average
-                print(lroundf(pulse))
                 DispatchQueue.main.async {
                     self.isHeartRateValid.accept(!(pulse == -60))
-                    self.heartRateProgress.accept(pulse == -60 ? 0 : Float(value)*100/60)
+                    print(value, Float(value)*100/Float(maxProgressSecond)/100)
+                    self.heartRateProgress.accept(Float(value)*100/Float(maxProgressSecond)/100)
                     self.heartRateTrackNumber.accept(pulse == -60 ? 0 : lroundf(pulse))
                 }
             })
