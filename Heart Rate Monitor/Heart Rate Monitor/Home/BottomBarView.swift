@@ -67,8 +67,8 @@ class BottomBarView: UIView {
     
     //MARK: -Init
     override init(frame: CGRect) {
-      super.init(frame: frame)
-      setupView()
+        super.init(frame: frame)
+        setupView()
     }
     
     required init?(coder: NSCoder) {
@@ -116,6 +116,7 @@ class BottomBarView: UIView {
     // MARK: - actions
     
     @objc private func itemTapped(_ sender: UIControl) {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if sender == itemHeartRate {
             sender.performSpringAnimation(duration: 0.4, maxScale: 0.95)
         }
