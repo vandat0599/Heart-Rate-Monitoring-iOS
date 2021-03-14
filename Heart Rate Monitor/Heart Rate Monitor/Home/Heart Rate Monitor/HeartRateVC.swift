@@ -203,8 +203,9 @@ class HeartRateVC: BaseVC {
             .disposed(by: disposeBag)
         
         playView.rx.controlEvent(.touchUpInside)
-            .bind {[weak self] in
-                self?.viewModel?.togglePlay()
+            .bind {[unowned self] in
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                self.viewModel?.togglePlay()
             }
             .disposed(by: disposeBag)
         
