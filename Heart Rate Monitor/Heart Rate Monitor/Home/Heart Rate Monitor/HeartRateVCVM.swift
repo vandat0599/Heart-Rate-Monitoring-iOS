@@ -57,16 +57,25 @@ class HeartRateVCVMImp: HeartRateVCVM {
     func togglePlay() {
         isPlaying.accept(!isPlaying.value)
         if !isPlaying.value {
-            resetData()
+            resetAllData()
         }
     }
     
-    private func resetData() {
+    private func resetAllData() {
         isMeasuring.accept(false)
+        touchStatus.accept(false)
         isHeartRateValid.accept(false)
         heartRateTrackNumber.accept(0)
         heartRateProgress.accept(0.0)
         warningText.accept(AppString.heartRateMonitor)
+        guideCoverCameraText.accept(AppString.heartRateGuides)
+    }
+    
+    private func resetMesuringData() {
+        isMeasuring.accept(false)
+        isHeartRateValid.accept(false)
+        heartRateTrackNumber.accept(0)
+        heartRateProgress.accept(0.0)
         guideCoverCameraText.accept(AppString.heartRateGuides)
     }
     
@@ -125,7 +134,9 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 _ = pulseDetector.addNewValue(newVal: filtered, atTime: CACurrentMediaTime())
             }
         } else {
-            DispatchQueue.main.async { self.resetData() }
+            DispatchQueue.main.async {
+                self.resetMesuringData()
+            }
             validFrameCounter = 0
             timeCounterSubscription?.dispose()
             pulseDetector.reset()
