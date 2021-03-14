@@ -73,7 +73,7 @@ class HeartWaveView: UIView {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = 0
         animation.toValue = 1
-        animation.duration = 2
+        animation.duration = 1
         ECGShape.add(animation, forKey: "line")
     }
     
