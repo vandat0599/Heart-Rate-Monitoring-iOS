@@ -126,12 +126,13 @@ class HeartRateVC: BaseVC {
         playView.addSubview(heartRateTrackLabel)
         playView.addSubview(preparingAnimationView)
         NSLayoutConstraint.activate([
-            guideLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            guideLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            guideLabel.bottomAnchor.constraint(equalTo: playView.topAnchor, constant: -20),
             guideLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             guideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
+            playView.topAnchor.constraint(equalTo: centerYView.bottomAnchor),
             playView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             playView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             playView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             
@@ -175,10 +176,12 @@ class HeartRateVC: BaseVC {
             self.cameraView.isHidden = !value
             self.progressView.isHidden = !value
             self.playIconImageView.isHidden = value
+            self.guideLabel.isHidden = !value
             UIView.animate(withDuration: 0.4) {
                 self.progressView.alpha = !value ? 0.0 : 1.0
                 self.cameraView.alpha = !value ? 0.0 : 1.0
                 self.playIconImageView.alpha = value ? 0.0 : 1.0
+                self.guideLabel.alpha = !value ? 0.0 : 1.0
             }
             self.progressView.currentProgress = 0
             if value {
@@ -186,6 +189,8 @@ class HeartRateVC: BaseVC {
             } else {
                 self.heartRateManager.stopCapture()
             }
+            
+            self.navigationItem.title = value ? AppString.keepYourFinger : AppString.heartRateMonitor
         })
         
         viewModel?.heartRateTrackNumber

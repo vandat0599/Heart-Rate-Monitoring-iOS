@@ -42,13 +42,6 @@ class BottomBarView: UIView {
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = false
         view.addSubview(imageView)
-        let animationView = AnimationView.init(name: "lottie-heart-wave")
-        animationView.isUserInteractionEnabled = false
-        animationView.loopMode = .loop
-        animationView.backgroundBehavior = .pauseAndRestore
-        animationView.play()
-        view.addSubview(animationView)
-        animationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: 56),
             view.widthAnchor.constraint(equalToConstant: 56),
@@ -56,10 +49,6 @@ class BottomBarView: UIView {
             imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             imageView.heightAnchor.constraint(equalTo: view.heightAnchor),
             imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            animationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            animationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            animationView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-            animationView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
         ])
         return view
     }()

@@ -21,7 +21,7 @@ struct AppString {
     static let history = "History".localized
     static let profile = "Profile".localized
     static let start = "Start".localized
-    static let heartRateGuides = "Cover the camera sensor and flash with your finger during heart rate measurement.".localized
+    static let heartRateGuides = "Please cover the camera and flash with your finger during heart rate measurement".localized
     static let heartRateMonitor = "Heart Rate Monitor".localized
     static let keepYourFinger = "Please keep still your finger ☝️".localized
 }

@@ -27,6 +27,7 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
     // MARK: - data & state
     private var showingVC: UINavigationController!
     private var vcArray: [UINavigationController] = []
+    static let bottomInsetHeight: CGFloat = 24
     
     // MARK: - init
     init() {
@@ -63,7 +64,7 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
         view.addSubview(bottomBar)
         let bottomBarBottomAnchor = bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         bottomBarBottomAnchor.priority = UILayoutPriority(1000)
-        let containerViewBottomAnchor = containerView.bottomAnchor.constraint(equalTo: bottomBar.topAnchor, constant: 30)
+        let containerViewBottomAnchor = containerView.bottomAnchor.constraint(equalTo: bottomBar.topAnchor, constant: HomeContainerVC.bottomInsetHeight)
         containerViewBottomAnchor.priority = UILayoutPriority(999)
         NSLayoutConstraint.activate([
             bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
