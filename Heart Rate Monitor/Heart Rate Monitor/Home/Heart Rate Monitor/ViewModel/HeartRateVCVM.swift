@@ -1,24 +1,22 @@
 //
-//  PlayViewVM.swift
+//  HeartRateVCVM.swift
 //  Heart Rate Monitor
 //
 //  Created by Dat Van on 3/13/21.
 //
 
 import Foundation
-
-import Foundation
-import RxRelay
 import RxSwift
+import RxRelay
 
-protocol PlayViewVM {
+protocol HeartRateVCVM {
     var isPlaying: BehaviorRelay<Bool> { get }
     var heartRateTrackNumber: BehaviorRelay<Int> { get }
     var heartRateProgress: BehaviorRelay<Float> { get }
     func togglePlay()
 }
 
-class PlayViewVMImp: PlayViewVM {
+class HeartRateVCVMImp: HeartRateVCVM {
     
     let disposeBag = DisposeBag()
     let maxProgressSecond = 60
@@ -40,7 +38,6 @@ class PlayViewVMImp: PlayViewVM {
             timeCounterSubscription = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
                 .subscribe(onNext: { (value) in
                     self.heartRateProgress.accept(Float(value)*100/60)
-                    self.heartRateTrackNumber.accept(Int.random(in: 60..<100))
                 })
         } else {
             timeCounterSubscription?.dispose()
