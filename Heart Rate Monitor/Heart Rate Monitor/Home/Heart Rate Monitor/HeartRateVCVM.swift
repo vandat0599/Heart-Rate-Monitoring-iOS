@@ -57,11 +57,17 @@ class HeartRateVCVMImp: HeartRateVCVM {
     func togglePlay() {
         isPlaying.accept(!isPlaying.value)
         if !isPlaying.value {
-            touchStatus.accept(false)
-            timeCounterSubscription?.dispose()
-            heartRateProgress.accept(0)
-            heartRateTrackNumber.accept(0)
+            resetData()
         }
+    }
+    
+    private func resetData() {
+        isMeasuring.accept(false)
+        isHeartRateValid.accept(false)
+        heartRateTrackNumber.accept(0)
+        heartRateProgress.accept(0.0)
+        warningText.accept(AppString.heartRateMonitor)
+        guideCoverCameraText.accept(AppString.heartRateGuides)
     }
     
     func handleImage(with buffer: CMSampleBuffer) {
@@ -119,12 +125,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 _ = pulseDetector.addNewValue(newVal: filtered, atTime: CACurrentMediaTime())
             }
         } else {
-            DispatchQueue.main.async {
-                self.isMeasuring.accept(false)
-                self.isHeartRateValid.accept(false)
-                self.heartRateProgress.accept(0)
-                self.heartRateTrackNumber.accept(0)
-            }
+            DispatchQueue.main.async { self.resetData() }
             validFrameCounter = 0
             timeCounterSubscription?.dispose()
             pulseDetector.reset()
@@ -139,7 +140,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 let pulse = 60.0/average
                 DispatchQueue.main.async {
                     self.isHeartRateValid.accept(!(pulse == -60))
-                    print(value, Float(value)*100/Float(maxProgressSecond)/100)
                     self.heartRateProgress.accept(Float(value)*100/Float(maxProgressSecond)/100)
                     self.heartRateTrackNumber.accept(pulse == -60 ? 0 : lroundf(pulse))
                 }

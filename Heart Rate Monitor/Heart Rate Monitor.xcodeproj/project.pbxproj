@@ -217,22 +217,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		CE10732525FDCED9003777D6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		CE10732625FDCEDC003777D6 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		CE1E227F25F72A0200C6632E = {
 			isa = PBXGroup;
 			children = (
@@ -324,8 +308,8 @@
 		CE7F8A4F25FCB71F00A2EDC9 /* Heart Rate Monitor */ = {
 			isa = PBXGroup;
 			children = (
-				CE10732525FDCED9003777D6 /* View */,
-				CE10732625FDCEDC003777D6 /* ViewModel */,
+				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
+				CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */,
 			);
 			path = "Heart Rate Monitor";
 			sourceTree = "<group>";

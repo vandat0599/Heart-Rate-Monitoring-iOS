@@ -100,7 +100,6 @@ class HeartRateVC: BaseVC {
     private var playViewTopAnchor: NSLayoutConstraint!
     
     private var heartRateManager: HeartRateManager!
-    let disposeBag = DisposeBag()
     private var viewModel: HeartRateVCVM!
     
     init(viewModel: HeartRateVCVM) {
@@ -234,6 +233,14 @@ class HeartRateVC: BaseVC {
         
         viewModel?.guideCoverCameraText
             .bind(to: guideLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel?.isMeasuring
+            .bind(onNext: {[unowned self] (value) in
+                DispatchQueue.main.async {
+                    self.playView.isUserInteractionEnabled = !value
+                }
+            })
             .disposed(by: disposeBag)
         
         viewModel?.isHeartRateValid
