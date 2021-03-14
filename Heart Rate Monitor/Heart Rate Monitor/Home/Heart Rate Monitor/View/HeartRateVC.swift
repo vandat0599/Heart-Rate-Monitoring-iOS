@@ -78,6 +78,17 @@ class HeartRateVC: BaseVC {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private lazy var preparingAnimationView: AnimationView = {
+        let view = AnimationView.init(name: "lottie-heart-wave")
+        view.loopMode = .loop
+        view.backgroundBehavior = .pauseAndRestore
+        view.play()
+        view.isHidden = true
+        view.isUserInteractionEnabled = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     private lazy var playView: UIControl = {
         let view = UIControl()
@@ -85,15 +96,8 @@ class HeartRateVC: BaseVC {
         return view
     }()
     
-    private let disposeBag = DisposeBag()
-    private var validFrameCounter = 0
     private var heartRateManager: HeartRateManager!
-    private var hueFilter = Filter()
-    private var pulseDetector = PulseDetector()
-    private var inputs: [CGFloat] = []
-    private var measurementStartedFlag = false
-    private var timer = Timer()
-    
+    let disposeBag = DisposeBag()
     private var viewModel: HeartRateVCVM!
     
     init(viewModel: HeartRateVCVM) {
@@ -120,6 +124,7 @@ class HeartRateVC: BaseVC {
         playView.addSubview(cameraView)
         playView.addSubview(playIconImageView)
         playView.addSubview(heartRateTrackLabel)
+        playView.addSubview(preparingAnimationView)
         NSLayoutConstraint.activate([
             guideLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             guideLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -152,6 +157,11 @@ class HeartRateVC: BaseVC {
             
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
+            
+            preparingAnimationView.leadingAnchor.constraint(equalTo: playView.leadingAnchor),
+            preparingAnimationView.trailingAnchor.constraint(equalTo: playView.trailingAnchor),
+            preparingAnimationView.topAnchor.constraint(equalTo: playView.topAnchor),
+            preparingAnimationView.bottomAnchor.constraint(equalTo: playView.bottomAnchor),
         ])
         view.layoutIfNeeded()
         initVideoCapture()
@@ -163,20 +173,18 @@ class HeartRateVC: BaseVC {
         _ = viewModel?.isPlaying.subscribe(onNext: {[weak self] (value) in
             guard let self = self else { return }
             self.cameraView.isHidden = !value
-            self.heartRateTrackLabel.isHidden = !value
             self.progressView.isHidden = !value
             self.playIconImageView.isHidden = value
             UIView.animate(withDuration: 0.4) {
                 self.progressView.alpha = !value ? 0.0 : 1.0
                 self.cameraView.alpha = !value ? 0.0 : 1.0
-                self.heartRateTrackLabel.alpha = !value ? 0.0 : 1.0
                 self.playIconImageView.alpha = value ? 0.0 : 1.0
             }
             self.progressView.currentProgress = 0
             if value {
-                self.initCaptureSession()
+                self.heartRateManager.startCapture()
             } else {
-                self.deinitCaptureSession()
+                self.heartRateManager.stopCapture()
             }
         })
         
@@ -192,8 +200,44 @@ class HeartRateVC: BaseVC {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateProgress
-            .subscribe(onNext: {[weak self] (value) in
-                self?.progressView.play(toProgress: AnimationProgressTime(value))
+            .subscribe(onNext: {[unowned self] (value) in
+                if value == 0 {
+                    self.progressView.currentProgress = 0
+                } else {
+                    self.progressView.play(toProgress: AnimationProgressTime(value))
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.touchStatus
+            .subscribe(onNext: {[unowned self] (value) in
+                self.toggleTorch(status: value)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.warningText
+            .subscribe(onNext: {[unowned self] (value) in
+                self.navigationItem.title = value
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.guideCoverCameraText
+            .bind(to: guideLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel?.isHeartRateValid
+            .subscribe(onNext: {[unowned self] (value) in
+                if self.viewModel?.isMeasuring.value ?? false {
+                    self.heartRateTrackLabel.isHidden = !value
+                    self.preparingAnimationView.isHidden = value
+                    UIView.animate(withDuration: 0.4) {
+                        self.heartRateTrackLabel.alpha = !value ? 0.0 : 1.0
+                        self.preparingAnimationView.alpha = value ? 0.0 : 1.0
+                    }
+                } else {
+                    self.preparingAnimationView.isHidden = true
+                    self.heartRateTrackLabel.isHidden = true
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -203,102 +247,12 @@ class HeartRateVC: BaseVC {
         let specs = VideoSpec(fps: 30, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
         heartRateManager = HeartRateManager(cameraType: .back, preferredSpec: specs, previewContainer: cameraView.layer)
         heartRateManager.imageBufferHandler = { [unowned self] (imageBuffer) in
-            self.handle(buffer: imageBuffer)
+            self.viewModel.handleImage(with: imageBuffer)
         }
-    }
-
-    // MARK: - AVCaptureSession Helpers
-    private func initCaptureSession() {
-        heartRateManager.startCapture()
-    }
-
-    private func deinitCaptureSession() {
-        heartRateManager.stopCapture()
-        toggleTorch(status: false)
     }
 
     private func toggleTorch(status: Bool) {
         guard let device = AVCaptureDevice.default(for: .video) else { return }
         device.toggleTorch(on: status)
-    }
-
-    // MARK: - Measurement
-    private func startMeasurement() {
-        DispatchQueue.main.async {
-            self.toggleTorch(status: true)
-            self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] (timer) in
-                guard let self = self else { return }
-                let average = self.pulseDetector.getAverage()
-                let pulse = 60.0/average
-                if pulse == -60 {
-                    self.heartRateTrackLabel.text = "--\nbpm"
-                } else {
-                    self.heartRateTrackLabel.text = "\(lroundf(pulse))\nbpm"
-                }
-            })
-        }
-    }
-
-    fileprivate func handle(buffer: CMSampleBuffer) {
-        var redmean:CGFloat = 0.0;
-        var greenmean:CGFloat = 0.0;
-        var bluemean:CGFloat = 0.0;
-
-        let pixelBuffer = CMSampleBufferGetImageBuffer(buffer)
-        let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
-
-        let extent = cameraImage.extent
-        let inputExtent = CIVector(x: extent.origin.x, y: extent.origin.y, z: extent.size.width, w: extent.size.height)
-        let averageFilter = CIFilter(name: "CIAreaAverage",
-                              parameters: [kCIInputImageKey: cameraImage, kCIInputExtentKey: inputExtent])!
-        let outputImage = averageFilter.outputImage!
-
-        let ctx = CIContext(options:nil)
-        let cgImage = ctx.createCGImage(outputImage, from:outputImage.extent)!
-
-        let rawData:NSData = cgImage.dataProvider!.data!
-        let pixels = rawData.bytes.assumingMemoryBound(to: UInt8.self)
-        let bytes = UnsafeBufferPointer<UInt8>(start:pixels, count:rawData.length)
-        var BGRA_index = 0
-        for pixel in UnsafeBufferPointer(start: bytes.baseAddress, count: bytes.count) {
-            switch BGRA_index {
-            case 0:
-                bluemean = CGFloat (pixel)
-            case 1:
-                greenmean = CGFloat (pixel)
-            case 2:
-                redmean = CGFloat (pixel)
-            case 3:
-                break
-            default:
-                break
-            }
-            BGRA_index += 1
-        }
-
-        let hsv = rgb2hsv((red: redmean, green: greenmean, blue: bluemean, alpha: 1.0))
-        // Do a sanity check to see if a finger is placed over the camera
-        if (hsv.1 > 0.5 && hsv.2 > 0.5) {
-            DispatchQueue.main.async {
-                self.navigationItem.title = "Please keep still your finger ☝️"
-                self.toggleTorch(status: true)
-                if !self.measurementStartedFlag {
-                    self.startMeasurement()
-                    self.measurementStartedFlag = true
-                }
-            }
-            validFrameCounter += 1
-            inputs.append(hsv.0)
-            // Filter the hue value - the filter is a simple BAND PASS FILTER that removes any DC component and any high frequency noise
-            let filtered = hueFilter.processValue(value: Double(hsv.0))
-            if validFrameCounter > 60 {
-                self.pulseDetector.addNewValue(newVal: filtered, atTime: CACurrentMediaTime())
-            }
-        } else {
-            
-            validFrameCounter = 0
-            measurementStartedFlag = false
-            pulseDetector.reset()
-        }
     }
 }
