@@ -97,6 +97,12 @@ class HeartRateVC: BaseVC {
         return view
     }()
     
+    private lazy var heartWaveView: HeartWaveView = {
+        let view = HeartWaveView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private var playViewTopAnchor: NSLayoutConstraint!
     
     private var heartRateManager: HeartRateManager!
@@ -121,6 +127,7 @@ class HeartRateVC: BaseVC {
         view.backgroundColor = .white
         view.addSubview(guideLabel)
         view.addSubview(playView)
+        view.addSubview(heartWaveView)
         playView.addSubview(backgroundImage)
         playView.addSubview(progressView)
         playView.addSubview(cameraView)
@@ -133,6 +140,11 @@ class HeartRateVC: BaseVC {
             guideLabel.bottomAnchor.constraint(equalTo: playView.topAnchor, constant: -20),
             guideLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             guideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            heartWaveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            heartWaveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            heartWaveView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            heartWaveView.bottomAnchor.constraint(equalTo: playView.topAnchor),
             
             playViewTopAnchor,
             playView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -217,6 +229,7 @@ class HeartRateVC: BaseVC {
                 } else {
                     self.progressView.play()
                 }
+                self.heartWaveView.ECGDraw()
             })
             .disposed(by: disposeBag)
         
@@ -247,13 +260,18 @@ class HeartRateVC: BaseVC {
         viewModel?.isHeartRateValid
             .subscribe(onNext: {[unowned self] (value) in
                 if self.viewModel?.isMeasuring.value ?? false {
+                    self.guideLabel.isHidden = value
+                    self.heartWaveView.isHidden = !value
                     self.heartRateTrackLabel.isHidden = !value
                     self.preparingAnimationView.isHidden = value
                     UIView.animate(withDuration: 0.4) {
+                        self.heartWaveView.alpha = !value ? 0.0 : 1.0
                         self.heartRateTrackLabel.alpha = !value ? 0.0 : 1.0
                         self.preparingAnimationView.alpha = value ? 0.0 : 1.0
                     }
                 } else {
+                    self.guideLabel.isHidden = false
+                    self.heartWaveView.isHidden = true
                     self.preparingAnimationView.isHidden = true
                     self.heartRateTrackLabel.isHidden = true
                 }
