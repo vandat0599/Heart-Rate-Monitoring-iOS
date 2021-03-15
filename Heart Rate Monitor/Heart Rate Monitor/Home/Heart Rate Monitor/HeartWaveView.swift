@@ -36,6 +36,8 @@ class HeartWaveView: UIView {
         removeShape.lineWidth = 2
         removeShape.lineJoin = .round
         removeShape.lineCap = .round
+        layer.addSublayer(removeShape)
+        layer.addSublayer(ECGShape)
     }
     
     func ECGDraw(color: UIColor? = .red, heartRateNumber: Int) {
@@ -44,8 +46,6 @@ class HeartWaveView: UIView {
         let numberOfSmallSquarePerEdge: CGFloat = 1500/CGFloat(heartRateNumber)
         let numberOfECGEdge = frame.width/numberOfSmallSquarePerEdge/4
         let widthScale: CGFloat = numberOfSmallSquarePerEdge*4/5/5
-        ECGShape.removeFromSuperlayer()
-        removeShape.removeFromSuperlayer()
         ECGShape.removeAllAnimations()
         removeShape.removeAllAnimations()
         let x = CGFloat(0)
@@ -61,7 +61,6 @@ class HeartWaveView: UIView {
             startAnimation.duration = 1
             startAnimation.fillMode = .backwards
             ECGShape.path = newPath.cgPath
-            layer.addSublayer(ECGShape)
             ECGShape.add(startAnimation, forKey: "Draw")
         }
         
@@ -76,7 +75,6 @@ class HeartWaveView: UIView {
         }
         newPath.addLine(to: endPoint)
         removeShape.path = newPath.cgPath
-        layer.addSublayer(removeShape)
         let endAnimation = CABasicAnimation(keyPath: "strokeEnd")
         endAnimation.fromValue = 0
         endAnimation.toValue = 1
@@ -119,9 +117,8 @@ class HeartWaveView: UIView {
     }
     
     func removeAllLayer() {
-        ECGShape.removeFromSuperlayer()
-        removeShape.removeFromSuperlayer()
-        ECGShape.removeAllAnimations()
-        removeShape.removeAllAnimations()
+        newPath = UIBezierPath()
+        removeShape.path = newPath.cgPath
+        ECGShape.path = newPath.cgPath
     }
 }
