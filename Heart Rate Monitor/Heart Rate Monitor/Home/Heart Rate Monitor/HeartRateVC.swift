@@ -227,9 +227,9 @@ class HeartRateVC: BaseVC {
                     self.progressView.stop()
                     self.progressView.currentProgress = 0
                 } else {
+                    self.heartWaveView.ECGDraw(color: .red, heartRateNumber: 60)
                     self.progressView.play()
                 }
-                self.heartWaveView.ECGDraw()
             })
             .disposed(by: disposeBag)
         

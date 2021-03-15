@@ -22,6 +22,8 @@ class HeartWaveView: UIView {
     
     let ECGShape = CAShapeLayer()
     var removeShape = CAShapeLayer()
+    var currentPath: UIBezierPath!
+    var newPath: UIBezierPath!
     
     private func setupView() {
         ECGShape.strokeColor = UIColor.red.cgColor
@@ -36,30 +38,12 @@ class HeartWaveView: UIView {
         removeShape.lineCap = .round
     }
     
-    func addSingleECG(path: UIBezierPath, checkPoint: inout CGPoint) {
-        let epsilon = CGFloat.random(in: -12...12)
-        path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 40, y: 0)
-        path.addQuadCurve(to: checkPoint, controlPoint: checkPoint + CGPoint(x: -20, y: -38 + epsilon/2))
-        checkPoint = checkPoint + CGPoint(x: 10, y: 0)
-        path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 10, y: 22)
-        path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 10, y: -22 - 140 - 6 * epsilon)
-        path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 10, y: +22 + 140 + 50 + 10 * epsilon)
-        path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 10, y: -22 - 50 - 4 * epsilon)
-        path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 30, y: 0)
-        path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 60, y: 0)
-        path.addQuadCurve(to: checkPoint, controlPoint: checkPoint + CGPoint(x: -30, y: -50 - 2 * epsilon))
-        checkPoint = checkPoint + CGPoint(x: 30, y: 0)
-        path.addLine(to: checkPoint)
-    }
-    
-    func ECGDraw(color: UIColor? = .red) {
+    func ECGDraw(color: UIColor? = .red, heartRateNumber: Int) {
+        // ref: https://www.youtube.com/watch?v=S3jtQehfZsw
+        let numberOfSmallSquare: CGFloat = 1500/CGFloat(heartRateNumber)
+        let numberOfECGEdge = Int(frame.width/numberOfSmallSquare)
+        let widthScale: CGFloat = frame.width/(numberOfSmallSquare*5*20)
+        print(widthScale)
         ECGShape.removeFromSuperlayer()
         removeShape.removeFromSuperlayer()
         ECGShape.removeAllAnimations()
@@ -69,66 +53,62 @@ class HeartWaveView: UIView {
         let startingPoint = CGPoint(x: x, y: y)
         let endPoint = CGPoint(x: x + bounds.width, y: y)
         
-        let path = UIBezierPath()
-        path.move(to: startingPoint)
-        var checkPoint = startingPoint+CGPoint(x: 0, y: 0)
-        addSingleECG(path: path, checkPoint: &checkPoint, scale: 1)
-        addSingleECG(path: path, checkPoint: &checkPoint, scale: 1)
-        addSingleECG(path: path, checkPoint: &checkPoint, scale: 1)
-        addSingleECG(path: path, checkPoint: &checkPoint, scale: 1)
-        path.addLine(to: endPoint)
-        ECGShape.path = path.cgPath
-        removeShape.path = path.cgPath
-        layer.addSublayer(ECGShape)
-        let startAnimation = CABasicAnimation(keyPath: "strokeStart")
-        startAnimation.fromValue = 0
-        startAnimation.toValue = 1
-        startAnimation.duration = 1
-        startAnimation.fillMode = .backwards
-        ECGShape.add(startAnimation, forKey: "Draw")
+        // current path
+        if newPath != nil {
+            let startAnimation = CABasicAnimation(keyPath: "strokeStart")
+            startAnimation.fromValue = 0
+            startAnimation.toValue = 1
+            startAnimation.duration = 1
+            startAnimation.fillMode = .backwards
+            ECGShape.path = newPath.cgPath
+            layer.addSublayer(ECGShape)
+            ECGShape.add(startAnimation, forKey: "Draw")
+        }
         
-        
-        let pathRemove = UIBezierPath()
-        pathRemove.move(to: startingPoint)
-        var checkPoint2 = startingPoint+CGPoint(x: 0, y: 0)
-        addSingleECG(path: pathRemove, checkPoint: &checkPoint2, scale: 1)
-        addSingleECG(path: pathRemove, checkPoint: &checkPoint2, scale: 1)
-        addSingleECG(path: pathRemove, checkPoint: &checkPoint2, scale: 1)
-        addSingleECG(path: pathRemove, checkPoint: &checkPoint2, scale: 1)
-        pathRemove.addLine(to: endPoint)
-        removeShape.path = pathRemove.cgPath
+        // new path
+        newPath = UIBezierPath()
+        newPath.move(to: startingPoint)
+        var checkPoint2 = startingPoint + CGPoint(x: 0, y: 0)
+        if numberOfECGEdge > 0 {
+            for _ in 0..<numberOfECGEdge {
+                addSingleECG(path: newPath, checkPoint: &checkPoint2, scale: widthScale)
+            }
+        }
+        newPath.addLine(to: endPoint)
+        removeShape.path = newPath.cgPath
         layer.addSublayer(removeShape)
         let endAnimation = CABasicAnimation(keyPath: "strokeEnd")
         endAnimation.fromValue = 0
-        endAnimation.toValue = 1.0
+        endAnimation.toValue = 1
         endAnimation.duration = 1
         endAnimation.fillMode = .backwards
-        endAnimation.beginTime = CACurrentMediaTime() + 0.1
+        endAnimation.beginTime = CACurrentMediaTime() + 0.05
         removeShape.add(endAnimation, forKey: "Remove")
     }
     
-    func addSingleECG(path: UIBezierPath, checkPoint: inout CGPoint, scale: Float) {
-        let smallSquareWidth = frame.width/20/5
+    func addSingleECG(path: UIBezierPath, checkPoint: inout CGPoint, scale: CGFloat = 1.0) {
+        let smallSquareWidth = (frame.width/20/5)*scale
+        let smallSquareHeight = (frame.width/20/5)
         path.addLine(to: checkPoint)
         checkPoint = checkPoint + CGPoint(x: 4*smallSquareWidth, y: 0)
         path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 2*smallSquareWidth, y: -2*smallSquareWidth)
+        checkPoint = checkPoint + CGPoint(x: 1*smallSquareWidth, y: -2*smallSquareHeight)
         path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 2*smallSquareWidth, y: 2*smallSquareWidth)
+        checkPoint = checkPoint + CGPoint(x: 2*smallSquareWidth, y: 2*smallSquareHeight)
         path.addLine(to: checkPoint)
         checkPoint = checkPoint + CGPoint(x: 2*smallSquareWidth, y: 0)
         path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: smallSquareWidth, y: 2*smallSquareWidth)
+        checkPoint = checkPoint + CGPoint(x: smallSquareWidth, y: 2*smallSquareHeight)
         path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: smallSquareWidth, y: -3*5*smallSquareWidth - 2*smallSquareWidth)
+        checkPoint = checkPoint + CGPoint(x: smallSquareWidth, y: -3*5*smallSquareHeight - 2*smallSquareHeight)
         path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: smallSquareWidth, y: 3*5*smallSquareWidth + 8*smallSquareWidth)
+        checkPoint = checkPoint + CGPoint(x: smallSquareWidth, y: 3*5*smallSquareHeight + 8*smallSquareHeight)
         path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: smallSquareWidth, y: -8*smallSquareWidth)
+        checkPoint = checkPoint + CGPoint(x: smallSquareWidth, y: -8*smallSquareHeight)
         path.addLine(to: checkPoint)
         checkPoint = checkPoint + CGPoint(x: 4*smallSquareWidth, y: 0)
         path.addLine(to: checkPoint)
-        checkPoint = checkPoint + CGPoint(x: 4*smallSquareWidth, y: -6*smallSquareWidth)
+        checkPoint = checkPoint + CGPoint(x: 2*smallSquareWidth, y: -6*smallSquareWidth)
         path.addLine(to: checkPoint)
         checkPoint = checkPoint + CGPoint(x: 2*smallSquareWidth, y: 6*smallSquareWidth)
         path.addLine(to: checkPoint)
