@@ -42,8 +42,8 @@ class HeartWaveView: UIView {
         // ref: https://www.youtube.com/watch?v=S3jtQehfZsw
         guard heartRateNumber > 0 else { return }
         let numberOfSmallSquarePerEdge: CGFloat = 1500/CGFloat(heartRateNumber)
-        let numberOfECGEdge = frame.width/numberOfSmallSquarePerEdge
-        let widthScale: CGFloat = numberOfSmallSquarePerEdge/5/5
+        let numberOfECGEdge = frame.width/numberOfSmallSquarePerEdge/4
+        let widthScale: CGFloat = numberOfSmallSquarePerEdge*4/5/5
         ECGShape.removeFromSuperlayer()
         removeShape.removeFromSuperlayer()
         ECGShape.removeAllAnimations()
