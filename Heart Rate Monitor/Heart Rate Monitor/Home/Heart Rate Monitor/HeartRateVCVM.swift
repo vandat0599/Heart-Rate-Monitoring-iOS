@@ -72,10 +72,10 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     private func resetMesuringData() {
-        isMeasuring.accept(false)
-        isHeartRateValid.accept(false)
         heartRateTrackNumber.accept(0)
         heartRateProgress.accept(0.0)
+        isMeasuring.accept(false)
+        isHeartRateValid.accept(false)
         guideCoverCameraText.accept(AppString.heartRateGuides)
     }
     

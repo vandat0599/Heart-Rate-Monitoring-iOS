@@ -16,6 +16,8 @@
 		CE10732125FDCDDF003777D6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731F25FDCDDF003777D6 /* Filter.swift */; };
 		CE10732225FDCDDF003777D6 /* PulseDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10732025FDCDDF003777D6 /* PulseDetector.swift */; };
 		CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */ = {isa = PBXBuildFile; fileRef = CE10733525FE1075003777D6 /* lottie-heart-wave.json */; };
+		CE10736125FE7211003777D6 /* HeartWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10736025FE7211003777D6 /* HeartWaveView.swift */; };
+		CE10736625FE7449003777D6 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10736525FE7449003777D6 /* CGPoint+.swift */; };
 		CE1E228C25F72A0200C6632E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E228B25F72A0200C6632E /* AppDelegate.swift */; };
 		CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E228F25F72A0200C6632E /* SignInVC.swift */; };
 		CE1E229525F72A0300C6632E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1E229425F72A0300C6632E /* Assets.xcassets */; };
@@ -117,6 +119,8 @@
 		CE10731F25FDCDDF003777D6 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		CE10732025FDCDDF003777D6 /* PulseDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PulseDetector.swift; sourceTree = "<group>"; };
 		CE10733525FE1075003777D6 /* lottie-heart-wave.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-heart-wave.json"; sourceTree = "<group>"; };
+		CE10736025FE7211003777D6 /* HeartWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartWaveView.swift; sourceTree = "<group>"; };
+		CE10736525FE7449003777D6 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		CE1E228825F72A0200C6632E /* Heart Rate Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heart Rate Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1E228B25F72A0200C6632E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE1E228F25F72A0200C6632E /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
@@ -310,6 +314,7 @@
 			children = (
 				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
 				CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */,
+				CE10736025FE7211003777D6 /* HeartWaveView.swift */,
 			);
 			path = "Heart Rate Monitor";
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 				CEC78E8E25F73A06007BA177 /* UIView+.swift */,
 				CEC78E8925F73A05007BA177 /* UIViewController+.swift */,
 				CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */,
+				CE10736525FE7449003777D6 /* CGPoint+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -738,6 +744,7 @@
 				CEC78EA925F73A22007BA177 /* APIService.swift in Sources */,
 				CEC78E9925F73A07007BA177 /* NSObject+.swift in Sources */,
 				CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */,
+				CE10736125FE7211003777D6 /* HeartWaveView.swift in Sources */,
 				CEC78E1525F732A4007BA177 /* AppString.swift in Sources */,
 				CEC78E9725F73A07007BA177 /* String+.swift in Sources */,
 				CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */,
@@ -756,6 +763,7 @@
 				CE1E228C25F72A0200C6632E /* AppDelegate.swift in Sources */,
 				CEC78E0D25F7329D007BA177 /* AppConstant.swift in Sources */,
 				CE10731C25FDCDD3003777D6 /* HeartRateManager.swift in Sources */,
+				CE10736625FE7449003777D6 /* CGPoint+.swift in Sources */,
 				CE7F8A3425FCB33A00A2EDC9 /* RoundedView.swift in Sources */,
 				CE10732225FDCDDF003777D6 /* PulseDetector.swift in Sources */,
 				CEC78E9A25F73A07007BA177 /* UIViewController+.swift in Sources */,
