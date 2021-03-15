@@ -40,10 +40,10 @@ class HeartWaveView: UIView {
     
     func ECGDraw(color: UIColor? = .red, heartRateNumber: Int) {
         // ref: https://www.youtube.com/watch?v=S3jtQehfZsw
-        let numberOfSmallSquare: CGFloat = 1500/CGFloat(heartRateNumber)
-        let numberOfECGEdge = Int(frame.width/numberOfSmallSquare)
-        let widthScale: CGFloat = frame.width/(numberOfSmallSquare*5*20)
-        print(widthScale)
+        guard heartRateNumber > 0 else { return }
+        let numberOfSmallSquarePerEdge: CGFloat = 1500/CGFloat(heartRateNumber)
+        let numberOfECGEdge = frame.width/numberOfSmallSquarePerEdge
+        let widthScale: CGFloat = numberOfSmallSquarePerEdge/5/5
         ECGShape.removeFromSuperlayer()
         removeShape.removeFromSuperlayer()
         ECGShape.removeAllAnimations()
@@ -70,7 +70,7 @@ class HeartWaveView: UIView {
         newPath.move(to: startingPoint)
         var checkPoint2 = startingPoint + CGPoint(x: 0, y: 0)
         if numberOfECGEdge > 0 {
-            for _ in 0..<numberOfECGEdge {
+            for _ in 0..<Int(numberOfECGEdge) {
                 addSingleECG(path: newPath, checkPoint: &checkPoint2, scale: widthScale)
             }
         }
@@ -87,7 +87,7 @@ class HeartWaveView: UIView {
     }
     
     func addSingleECG(path: UIBezierPath, checkPoint: inout CGPoint, scale: CGFloat = 1.0) {
-        let smallSquareWidth = (frame.width/20/5)*scale
+        let smallSquareWidth = scale
         let smallSquareHeight = (frame.width/20/5)
         path.addLine(to: checkPoint)
         checkPoint = checkPoint + CGPoint(x: 4*smallSquareWidth, y: 0)
