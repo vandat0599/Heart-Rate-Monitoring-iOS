@@ -253,6 +253,9 @@ class HeartRateVC: BaseVC {
             .bind(onNext: {[unowned self] (value) in
                 DispatchQueue.main.async {
                     self.playView.isUserInteractionEnabled = !value
+                    if !value {
+                        self.heartWaveView.removeAllLayer()
+                    }
                 }
             })
             .disposed(by: disposeBag)

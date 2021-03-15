@@ -49,7 +49,7 @@ class HeartWaveView: UIView {
         ECGShape.removeAllAnimations()
         removeShape.removeAllAnimations()
         let x = CGFloat(0)
-        let y = center.y
+        let y = frame.height/2
         let startingPoint = CGPoint(x: x, y: y)
         let endPoint = CGPoint(x: x + bounds.width, y: y)
         
@@ -116,5 +116,12 @@ class HeartWaveView: UIView {
         path.addLine(to: checkPoint)
         checkPoint = checkPoint + CGPoint(x: 2*smallSquareWidth, y: smallSquareWidth)
         path.addLine(to: checkPoint)
+    }
+    
+    func removeAllLayer() {
+        ECGShape.removeFromSuperlayer()
+        removeShape.removeFromSuperlayer()
+        ECGShape.removeAllAnimations()
+        removeShape.removeAllAnimations()
     }
 }
