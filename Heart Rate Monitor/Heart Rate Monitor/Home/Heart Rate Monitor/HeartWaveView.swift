@@ -36,8 +36,7 @@ class HeartWaveView: UIView {
         removeShape.lineWidth = 2
         removeShape.lineJoin = .round
         removeShape.lineCap = .round
-        layer.addSublayer(removeShape)
-        layer.addSublayer(ECGShape)
+        
     }
     
     func ECGDraw(color: UIColor? = .red, heartRateNumber: Int) {
@@ -46,8 +45,8 @@ class HeartWaveView: UIView {
         let numberOfSmallSquarePerEdge: CGFloat = 1500/CGFloat(heartRateNumber)
         let numberOfECGEdge = frame.width/numberOfSmallSquarePerEdge/4
         let widthScale: CGFloat = numberOfSmallSquarePerEdge*4/5/5
-        ECGShape.removeAllAnimations()
-        removeShape.removeAllAnimations()
+        removeShape.removeFromSuperlayer()
+        ECGShape.removeFromSuperlayer()
         let x = CGFloat(0)
         let y = frame.height/2
         let startingPoint = CGPoint(x: x, y: y)
@@ -82,6 +81,8 @@ class HeartWaveView: UIView {
         endAnimation.fillMode = .backwards
         endAnimation.beginTime = CACurrentMediaTime() + 0.05
         removeShape.add(endAnimation, forKey: "Remove")
+        layer.addSublayer(removeShape)
+        layer.addSublayer(ECGShape)
     }
     
     func addSingleECG(path: UIBezierPath, checkPoint: inout CGPoint, scale: CGFloat = 1.0) {
@@ -117,8 +118,7 @@ class HeartWaveView: UIView {
     }
     
     func removeAllLayer() {
-        newPath = UIBezierPath()
-        removeShape.path = newPath.cgPath
-        ECGShape.path = newPath.cgPath
+        removeShape.removeFromSuperlayer()
+        ECGShape.removeFromSuperlayer()
     }
 }
