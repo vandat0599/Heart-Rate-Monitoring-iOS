@@ -164,6 +164,12 @@ extension UIView {
         let trailingConstraint = NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: parentView, attribute: .trailing, multiplier: 1, constant: -padding)
         parentView.addConstraints([topConstraint, bottomConstraint, leadingConstraint, trailingConstraint])
     }
+    
+    func loadViewFromNib(nibName: String) -> UIView? {
+        let bundle = Bundle(for: type(of: self))
+        let nib = UINib(nibName: nibName, bundle: bundle)
+        return nib.instantiate(withOwner: self, options: nil).first as? UIView
+    }
 }
 
 
