@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileCell" customModule="Heart_Rate_Monitor" customModuleProvider="target">
+            <connections>
+                <outlet property="keyLabel" destination="R2J-Mw-nG2" id="AgB-nw-iGO"/>
+                <outlet property="valueLabel" destination="5jc-Mg-lZc" id="S33-wA-6sb"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2J-Mw-nG2">
+                    <rect key="frame" x="16" y="13.666666666666664" width="23" height="14"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="11"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jc-Mg-lZc">
+                    <rect key="frame" x="372" y="14" width="26" height="13"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="13" id="LQl-UA-kiB"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="R2J-Mw-nG2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="Eg4-8M-2Gd"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="5jc-Mg-lZc" secondAttribute="bottom" constant="15" id="MFH-Kl-RRd"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="5jc-Mg-lZc" secondAttribute="trailing" constant="16" id="Zlq-wE-slT"/>
+                <constraint firstItem="5jc-Mg-lZc" firstAttribute="centerY" secondItem="R2J-Mw-nG2" secondAttribute="centerY" id="hJX-nM-d7V"/>
+                <constraint firstItem="5jc-Mg-lZc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="14" id="qVv-mY-42U"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="131.8840579710145" y="-307.33695652173918"/>
+        </view>
+    </objects>
+</document>
