@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		108A837F606DD09CFE7F2E77 /* Pods_Heart_Rate_Monitor_Heart_Rate_MonitorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E47FAAA0D01FF3D807DF878 /* Pods_Heart_Rate_Monitor_Heart_Rate_MonitorUITests.framework */; };
+		1DC1F3F32605F50C003EA6B4 /* Complex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC1F3F22605F50C003EA6B4 /* Complex.swift */; };
+		1DC1F3F72605F52A003EA6B4 /* FloatingPointMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC1F3F62605F52A003EA6B4 /* FloatingPointMath.swift */; };
 		81D1917AA40E24FA1005A042 /* Pods_Heart_Rate_MonitorTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 579497AEDB20702A5390C924 /* Pods_Heart_Rate_MonitorTests.framework */; };
 		84230D4E2603184900EC9DD0 /* GradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84230D4D2603184900EC9DD0 /* GradientColor.swift */; };
 		845DF6122603345B00DD26BF /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DF6102603345B00DD26BF /* SignUpVC.swift */; };
@@ -100,6 +102,8 @@
 /* Begin PBXFileReference section */
 		0B74324F843F9DBE87023F05 /* Pods-Heart Rate MonitorTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.staging.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.staging.xcconfig"; sourceTree = "<group>"; };
 		13946A76B8F33140617BC1A8 /* Pods-Heart Rate MonitorTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.production.xcconfig"; sourceTree = "<group>"; };
+		1DC1F3F22605F50C003EA6B4 /* Complex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complex.swift; sourceTree = "<group>"; };
+		1DC1F3F62605F52A003EA6B4 /* FloatingPointMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointMath.swift; sourceTree = "<group>"; };
 		27BB2FC9DAFF478BD83ADD15 /* Pods-Heart Rate Monitor.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.staging.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.staging.xcconfig"; sourceTree = "<group>"; };
 		579497AEDB20702A5390C924 /* Pods_Heart_Rate_MonitorTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heart_Rate_MonitorTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6530B35DA96698733F756423 /* Pods-Heart Rate Monitor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.debug.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.debug.xcconfig"; sourceTree = "<group>"; };
@@ -447,6 +451,8 @@
 				CE10732025FDCDDF003777D6 /* PulseDetector.swift */,
 				CE10731B25FDCDD3003777D6 /* HeartRateManager.swift */,
 				CE10731725FDCDC1003777D6 /* ColorUtils.swift */,
+				1DC1F3F22605F50C003EA6B4 /* Complex.swift */,
+				1DC1F3F62605F52A003EA6B4 /* FloatingPointMath.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -770,10 +776,12 @@
 				CEC78EA925F73A22007BA177 /* APIService.swift in Sources */,
 				CEC78E9925F73A07007BA177 /* NSObject+.swift in Sources */,
 				CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */,
+				1DC1F3F32605F50C003EA6B4 /* Complex.swift in Sources */,
 				CE10736125FE7211003777D6 /* HeartWaveView.swift in Sources */,
 				CEC78E1525F732A4007BA177 /* AppString.swift in Sources */,
 				CEC78E9725F73A07007BA177 /* String+.swift in Sources */,
 				CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */,
+				1DC1F3F72605F52A003EA6B4 /* FloatingPointMath.swift in Sources */,
 				CEC78E9C25F73A07007BA177 /* UICollectionView+.swift in Sources */,
 				84230D4E2603184900EC9DD0 /* GradientColor.swift in Sources */,
 				CEC78EA425F73A07007BA177 /* UIImage+.swift in Sources */,
