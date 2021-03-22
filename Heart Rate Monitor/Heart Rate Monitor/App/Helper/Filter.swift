@@ -52,7 +52,26 @@ class Filter: NSObject {
         
         return result
     }
-    
+    func iFFT(signal: Array<ComplexDouble>)-> Array<ComplexDouble>{
+            let n = signal.count
+            
+            var result = [ComplexDouble]()
+            for i in 0...n{
+                result[i] = signal[i].conj
+            }
+            
+            result = FFT(signal: result)
+            
+            for i in 0...n{
+                result[i] = result[i].conj
+            }
+            
+            for i in 0...n{
+                result[i] = Complex(real: result[i].real/Double(n), imag: result[i].imag/Double(n))
+            }
+            
+            return result
+        }
     
     func processValue(value: Double) -> Double {
         xv[0] = xv[1]
