@@ -16,7 +16,7 @@ import Foundation
 private let numberOfZeros: Int = 10
 private let numberOfPoles: Int = 10
 private let gain: Double = 1.894427025e+01
-
+typealias ComplexDouble = Complex<Double>
 /*
  For more information head over to http://www-users.cs.york.ac.uk/~fisher/mkfilter/
  */
@@ -25,6 +25,35 @@ class Filter: NSObject {
     var xv = [Double](repeating: 0.0, count: numberOfZeros + 1)
     var yv = [Double](repeating: 0.0, count: numberOfPoles + 1)
 
+    
+    
+    func FFT(signal: Array<ComplexDouble>)-> Array<ComplexDouble>{
+        let n = signal.count
+        if n == 1{
+            return signal
+        }
+        
+        var even = [ComplexDouble]()
+        var odd = even
+        for i in 0...n/2{
+            even[i] = signal[i*2]
+            odd[i] = signal[i*2 + 1]
+        }
+        let evenFFT = FFT(signal: even)
+        let oddFFT = FFT(signal: odd)
+        
+        var result = [ComplexDouble]()
+        for i in 0...n{
+            let alpha = -2 * Double(i) * Double.pi / Double(n)
+            let wk = Complex(real: cos(alpha), imag: sin(alpha))
+            result[i] = evenFFT[i] + wk * oddFFT[i]
+            result[i+n/2] = evenFFT[i] - wk * oddFFT[i]
+        }
+        
+        return result
+    }
+    
+    
     func processValue(value: Double) -> Double {
         xv[0] = xv[1]
         xv[1] = xv[2]
