@@ -25,7 +25,27 @@ class Filter: NSObject {
     var xv = [Double](repeating: 0.0, count: numberOfZeros + 1)
     var yv = [Double](repeating: 0.0, count: numberOfPoles + 1)
 
-    
+    func ButterworthFilter(signal: Array<ComplexDouble>, sampleFreq: Double, order: Int,
+                               f0: Double, Gain: Double) -> Array<ComplexDouble>{
+            let n = signal.count
+            var signalFFT = FFT(signal: signal)
+            
+            if(f0>0){
+                
+                let binWidth = sampleFreq/Double(n)
+                
+                for i in 1...n/2{
+                    let binFreq = binWidth * Double(i)
+                    let gain = Gain / sqrt(1 + pow(binFreq / f0, 2.0 * Double(order)))
+                    signalFFT[i] *= gain
+                    signalFFT[n - i] *= gain
+                }
+            }
+            var result = [ComplexDouble]()
+            result = iFFT(signal: signalFFT) // inverse FFT
+            return result
+            
+        }
     
     func FFT(signal: Array<ComplexDouble>)-> Array<ComplexDouble>{
         let n = signal.count
