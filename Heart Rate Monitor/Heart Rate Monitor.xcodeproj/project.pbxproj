@@ -24,6 +24,7 @@
 		CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE1E229625F72A0300C6632E /* LaunchScreen.storyboard */; };
 		CE1E22A325F72A0300C6632E /* Heart_Rate_MonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22A225F72A0300C6632E /* Heart_Rate_MonitorTests.swift */; };
 		CE1E22AE25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */; };
+		CE20A1162606DE480084F2BA /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20A1152606DE480084F2BA /* FFT.swift */; };
 		CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */; };
 		CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */; };
 		CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */; };
@@ -133,6 +134,7 @@
 		CE1E22A925F72A0300C6632E /* Heart Rate MonitorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Heart Rate MonitorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart_Rate_MonitorUITests.swift; sourceTree = "<group>"; };
 		CE1E22AF25F72A0300C6632E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE20A1152606DE480084F2BA /* FFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
 		CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerVC.swift; sourceTree = "<group>"; };
 		CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVC.swift; sourceTree = "<group>"; };
 		CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 				CE10732025FDCDDF003777D6 /* PulseDetector.swift */,
 				CE10731B25FDCDD3003777D6 /* HeartRateManager.swift */,
 				CE10731725FDCDC1003777D6 /* ColorUtils.swift */,
+				CE20A1152606DE480084F2BA /* FFT.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -514,6 +517,8 @@
 			dependencies = (
 			);
 			name = "Heart Rate Monitor";
+			packageProductDependencies = (
+			);
 			productName = "Heart Rate Monitor";
 			productReference = CE1E228825F72A0200C6632E /* Heart Rate Monitor.app */;
 			productType = "com.apple.product-type.application";
@@ -588,6 +593,8 @@
 				Base,
 			);
 			mainGroup = CE1E227F25F72A0200C6632E;
+			packageReferences = (
+			);
 			productRefGroup = CE1E228925F72A0200C6632E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -772,6 +779,7 @@
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
 				CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */,
+				CE20A1162606DE480084F2BA /* FFT.swift in Sources */,
 				CE7F8A5125FCB74100A2EDC9 /* HeartRateVCVM.swift in Sources */,
 				CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */,
 				CEC78EA025F73A07007BA177 /* Double+.swift in Sources */,

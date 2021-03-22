@@ -43,9 +43,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>baseUrl</key>
-    <string>${baseUrl}</string>
-    <key>logEnabled</key>
-    <string>${logEnabled}</string>
+	<key>baseUrl</key>
+	<string>${baseUrl}</string>
+	<key>logEnabled</key>
+	<string>${logEnabled}</string>
 </dict>
 </plist>

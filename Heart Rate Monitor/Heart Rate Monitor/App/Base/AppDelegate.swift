@@ -7,6 +7,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Accelerate
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +25,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
+        
+//        let fft = FFT()
+//
+//        let n = 512 // Should be power of two for the FFT
+//        let frequency1 = 4.0
+//        let phase1 = 0.0
+//        let amplitude1 = 8.0
+//        let seconds = 2.0
+//        let fps = Double(n)/seconds
+//
+//        let sineWave = (0..<n).map {
+//            amplitude1 * sin(2.0 * .pi / fps * Double($0) * frequency1 + phase1)
+//        }
+//
+//        fft.calculate(sineWave, fps: fps)
+        
         return true
     }
 }
