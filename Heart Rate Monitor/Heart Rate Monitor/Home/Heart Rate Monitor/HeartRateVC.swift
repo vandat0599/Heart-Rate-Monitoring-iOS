@@ -94,6 +94,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
 
     private lazy var playView: UIControl = {
         let view = UIControl()
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -121,25 +122,16 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         l.drawInside = false
         
         let xAxis = view.xAxis
+        xAxis.labelPosition = .bottom
         xAxis.labelFont = .systemFont(ofSize: 11)
-        xAxis.labelTextColor = .white
-        xAxis.drawAxisLineEnabled = false
+        xAxis.labelTextColor = .black
+        xAxis.drawAxisLineEnabled = true
         
         let leftAxis = view.leftAxis
-        leftAxis.labelFont = .systemFont(ofSize: 11)
-        leftAxis.labelTextColor = UIColor(red: 51/255, green: 181/255, blue: 229/255, alpha: 1)
-        leftAxis.axisMaximum = 200
+        leftAxis.axisMaximum = 10
         leftAxis.axisMinimum = 0
         leftAxis.drawGridLinesEnabled = true
         leftAxis.granularityEnabled = true
-        
-        let rightAxis = view.rightAxis
-        rightAxis.labelFont = .systemFont(ofSize: 11)
-        rightAxis.labelTextColor = .red
-        rightAxis.axisMaximum = 900
-        rightAxis.axisMinimum = -200
-        rightAxis.granularityEnabled = false
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -193,8 +185,8 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             playView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             playView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             
-            chartView.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
-            chartView.heightAnchor.constraint(equalToConstant: 200),
+            chartView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            chartView.heightAnchor.constraint(equalToConstant: 300),
             chartView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
@@ -230,7 +222,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.layoutIfNeeded()
 //        initVideoCapture()
 //        bindViews()
-        setDataCount(21, range: 30)
+        setDataCount()
         cameraView.layer.cornerRadius = cameraView.frame.height/2
     }
     
@@ -331,55 +323,33 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
     }
     
-    func setDataCount(_ count: Int, range: UInt32) {
-        let yVals1 = (0..<count).map { (i) -> ChartDataEntry in
-            let mult = range / 2
-            let val = Double(arc4random_uniform(mult) + 50)
-            return ChartDataEntry(x: Double(i), y: val)
-        }
-        let yVals2 = (0..<count).map { (i) -> ChartDataEntry in
-            let val = Double(arc4random_uniform(range) + 450)
-            return ChartDataEntry(x: Double(i), y: val)
-        }
-        let yVals3 = (0..<count).map { (i) -> ChartDataEntry in
-            let val = Double(arc4random_uniform(range) + 500)
-            return ChartDataEntry(x: Double(i), y: val)
+    func setDataCount() {
+        
+        let sineArraySize = 64 // n
+        let frequency = 1.0 // hz
+        let phase = 0.0 // starting point
+        let amplitude = 7.0
+        let sineWave = (0..<sineArraySize).map {
+            amplitude * sin(2.0 * Double.pi/Double(sineArraySize) * Double($0) * frequency + phase)
         }
 
-        let set1 = LineChartDataSet(entries: yVals1, label: "DataSet 1")
+        chartView.leftAxis.axisMinimum = -(amplitude + 3)
+        chartView.leftAxis.axisMaximum = amplitude + 3
+        chartView.xAxis.axisMinimum = 0
+        chartView.xAxis.axisMaximum = Double(sineArraySize)
+                
+        let yVals1 = (0..<sineArraySize).map { (i) -> ChartDataEntry in
+            return ChartDataEntry(x: Double(i), y: sineWave[i])
+        }
+
+        let set1 = LineChartDataSet(entries: yVals1, label: "HeartRate BPM")
         set1.axisDependency = .left
-        set1.setColor(UIColor(red: 51/255, green: 181/255, blue: 229/255, alpha: 1))
-        set1.setCircleColor(.white)
+        set1.setColor(.red)
         set1.lineWidth = 2
-        set1.circleRadius = 3
-        set1.fillAlpha = 65/255
-        set1.fillColor = UIColor(red: 51/255, green: 181/255, blue: 229/255, alpha: 1)
-        set1.highlightColor = UIColor(red: 244/255, green: 117/255, blue: 117/255, alpha: 1)
+        set1.drawCirclesEnabled = false
         set1.drawCircleHoleEnabled = false
         
-        let set2 = LineChartDataSet(entries: yVals2, label: "DataSet 2")
-        set2.axisDependency = .right
-        set2.setColor(.red)
-        set2.setCircleColor(.white)
-        set2.lineWidth = 2
-        set2.circleRadius = 3
-        set2.fillAlpha = 65/255
-        set2.fillColor = .red
-        set2.highlightColor = UIColor(red: 244/255, green: 117/255, blue: 117/255, alpha: 1)
-        set2.drawCircleHoleEnabled = false
-
-        let set3 = LineChartDataSet(entries: yVals3, label: "DataSet 3")
-        set3.axisDependency = .right
-        set3.setColor(.yellow)
-        set3.setCircleColor(.white)
-        set3.lineWidth = 2
-        set3.circleRadius = 3
-        set3.fillAlpha = 65/255
-        set3.fillColor = UIColor.yellow.withAlphaComponent(200/255)
-        set3.highlightColor = UIColor(red: 244/255, green: 117/255, blue: 117/255, alpha: 1)
-        set3.drawCircleHoleEnabled = false
-        
-        let data: LineChartData = LineChartData.init(dataSets: [set1, set2, set3])
+        let data: LineChartData = LineChartData.init(dataSets: [set1])
         data.setValueTextColor(.white)
         data.setValueFont(.systemFont(ofSize: 9))
         

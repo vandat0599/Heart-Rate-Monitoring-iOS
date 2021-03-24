@@ -48,7 +48,7 @@ class FFT {
         return (bandPassFilter, minIdx, maxIdx)
     }
     
-    func calculate(_ _values: [Double], fps: Double) {
+    func calculate(_ _values: [Double], fps: Double) -> [Double] {
         // ----------------------------------------------------------------
         // Copy of our input
         // ----------------------------------------------------------------
@@ -192,6 +192,7 @@ class FFT {
         for k in 0 ..< N {
             print("\(k)   \(values[k])     \(result[k])")
         }
+        return result
     }
     
     // The bandpass frequencies
