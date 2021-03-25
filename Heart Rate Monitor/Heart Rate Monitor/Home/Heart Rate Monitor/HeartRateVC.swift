@@ -94,7 +94,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
 
     private lazy var playView: UIControl = {
         let view = UIControl()
-        view.isHidden = true
+        view.isHidden = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -107,6 +107,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private lazy var chartView: LineChartView = {
         let view = LineChartView()
+        view.isHidden = true
         view.delegate = self
         view.chartDescription?.enabled = false
         view.dragEnabled = true
@@ -220,8 +221,8 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             preparingAnimationView.bottomAnchor.constraint(equalTo: playView.bottomAnchor),
         ])
         view.layoutIfNeeded()
-//        initVideoCapture()
-//        bindViews()
+        initVideoCapture()
+        bindViews()
         setDataCount()
         cameraView.layer.cornerRadius = cameraView.frame.height/2
     }

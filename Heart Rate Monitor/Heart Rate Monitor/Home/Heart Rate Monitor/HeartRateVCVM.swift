@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 import AVFoundation
+import ComplexModule
 
 protocol HeartRateVCVM {
     var maxProgressSecond: Int { get }
@@ -33,6 +34,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     private var hueFilter = Filter()
     private var pulseDetector = PulseDetector()
     private var inputs: [CGFloat] = []
+    private var redmeans: [Double] = []
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -115,32 +117,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
             }
             BGRA_index += 1
         }
+        redmeans.append(Double(redmean))
+        let fft = FFT.fft(input: redmeans)
+//        print(redmeans)
         let hsv = rgb2hsv((red: redmean, green: greenmean, blue: bluemean, alpha: 1.0))
-        // Do a sanity check to see if a finger is placed over the camera
-        if (hsv.1 > 0.5 && hsv.2 > 0.5) {
-            DispatchQueue.main.async {
-                self.warningText.accept(AppString.keepYourFinger)
-            }
-            touchStatus.accept(true)
-            if !isMeasuring.value {
-                startMeasurement()
-                isMeasuring.accept(true)
-            }
-            validFrameCounter += 1
-            inputs.append(hsv.0)
-            // Filter the hue value - the filter is a simple BAND PASS FILTER that removes any DC component and any high frequency noise
-            let filtered = hueFilter.processValue(value: Double(hsv.0))
-            if validFrameCounter > 60 {
-                _ = pulseDetector.addNewValue(newVal: filtered, atTime: CACurrentMediaTime())
-            }
-        } else {
-            DispatchQueue.main.async {
-                self.resetMesuringData()
-            }
-            validFrameCounter = 0
-            timeCounterSubscription?.dispose()
-            pulseDetector.reset()
-        }
+        print(hsv.0)
     }
     
     private func startMeasurement() {

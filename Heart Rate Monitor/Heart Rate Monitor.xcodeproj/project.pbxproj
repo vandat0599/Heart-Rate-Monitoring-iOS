@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,9 @@
 		CE1E22A325F72A0300C6632E /* Heart_Rate_MonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22A225F72A0300C6632E /* Heart_Rate_MonitorTests.swift */; };
 		CE1E22AE25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */; };
 		CE20A1162606DE480084F2BA /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20A1152606DE480084F2BA /* FFT.swift */; };
+		CE44E875260C337C001EB4C2 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = CE44E874260C337C001EB4C2 /* ComplexModule */; };
+		CE44E877260C337C001EB4C2 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = CE44E876260C337C001EB4C2 /* RealModule */; };
+		CE44E879260C337C001EB4C2 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = CE44E878260C337C001EB4C2 /* Numerics */; };
 		CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */; };
 		CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */; };
 		CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */; };
@@ -179,6 +182,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEC78E6D25F7361B007BA177 /* Pods_Heart_Rate_Monitor.framework in Frameworks */,
+				CE44E875260C337C001EB4C2 /* ComplexModule in Frameworks */,
+				CE44E879260C337C001EB4C2 /* Numerics in Frameworks */,
+				CE44E877260C337C001EB4C2 /* RealModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +524,9 @@
 			);
 			name = "Heart Rate Monitor";
 			packageProductDependencies = (
+				CE44E874260C337C001EB4C2 /* ComplexModule */,
+				CE44E876260C337C001EB4C2 /* RealModule */,
+				CE44E878260C337C001EB4C2 /* Numerics */,
 			);
 			productName = "Heart Rate Monitor";
 			productReference = CE1E228825F72A0200C6632E /* Heart Rate Monitor.app */;
@@ -594,6 +603,7 @@
 			);
 			mainGroup = CE1E227F25F72A0200C6632E;
 			packageReferences = (
+				CE44E873260C337C001EB4C2 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 			);
 			productRefGroup = CE1E228925F72A0200C6632E /* Products */;
 			projectDirPath = "";
@@ -1243,6 +1253,35 @@
 			defaultConfigurationName = Development;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CE44E873260C337C001EB4C2 /* XCRemoteSwiftPackageReference "swift-numerics" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-numerics.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CE44E874260C337C001EB4C2 /* ComplexModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE44E873260C337C001EB4C2 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = ComplexModule;
+		};
+		CE44E876260C337C001EB4C2 /* RealModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE44E873260C337C001EB4C2 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = RealModule;
+		};
+		CE44E878260C337C001EB4C2 /* Numerics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE44E873260C337C001EB4C2 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = Numerics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CE1E228025F72A0200C6632E /* Project object */;
 }
