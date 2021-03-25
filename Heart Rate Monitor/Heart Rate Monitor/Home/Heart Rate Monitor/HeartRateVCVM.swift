@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import RxRelay
 import AVFoundation
-import ComplexModule
 
 protocol HeartRateVCVM {
     var maxProgressSecond: Int { get }
@@ -31,7 +30,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var maxProgressSecond = 20
     var timeCounterSubscription: Disposable?
     private var validFrameCounter = 0
-    private var hueFilter = Filter()
     private var pulseDetector = PulseDetector()
     private var inputs: [CGFloat] = []
     private var redmeans: [Double] = []
@@ -82,46 +80,33 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     func handleImage(with buffer: CMSampleBuffer) {
-        var redmean:CGFloat = 0.0
-        var greenmean:CGFloat = 0.0
-        var bluemean:CGFloat = 0.0
-        
+        // B1: Video signal acquisition -> camera frame
+        touchStatus.accept(true)
         let pixelBuffer = CMSampleBufferGetImageBuffer(buffer)
         let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
-        
-        let extent = cameraImage.extent
-        let inputExtent = CIVector(x: extent.origin.x, y: extent.origin.y, z: extent.size.width, w: extent.size.height)
-        let averageFilter = CIFilter(name: "CIAreaAverage",
-                                     parameters: [kCIInputImageKey: cameraImage, kCIInputExtentKey: inputExtent])!
-        let outputImage = averageFilter.outputImage!
-        
-        let ctx = CIContext(options:nil)
-        let cgImage = ctx.createCGImage(outputImage, from:outputImage.extent)!
-        
-        let rawData:NSData = cgImage.dataProvider!.data!
-        let pixels = rawData.bytes.assumingMemoryBound(to: UInt8.self)
-        let bytes = UnsafeBufferPointer<UInt8>(start:pixels, count:rawData.length)
-        var BGRA_index = 0
-        for pixel in UnsafeBufferPointer(start: bytes.baseAddress, count: bytes.count) {
-            switch BGRA_index {
-            case 0:
-                bluemean = CGFloat (pixel)
-            case 1:
-                greenmean = CGFloat (pixel)
-            case 2:
-                redmean = CGFloat (pixel)
-            case 3:
-                break
-            default:
-                break
-            }
-            BGRA_index += 1
-        }
+        let extentVector = CIVector(x: cameraImage.extent.origin.x, y: cameraImage.extent.origin.y, z: cameraImage.extent.size.width, w: cameraImage.extent.size.height)
+        let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: cameraImage, kCIInputExtentKey: extentVector])
+        guard let outputImage = filter?.outputImage else { return }
+        var bitmap = [UInt8](repeating: 0, count: 4)
+        let context = CIContext(options: [.workingColorSpace: kCFNull as Any])
+        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
+        // B2: Brightness signal computation -> mean of red color
+        let redmean = CGFloat(bitmap[0])
+        let greenmean = CGFloat(bitmap[1])
+        let bluemean = CGFloat(bitmap[2])
         redmeans.append(Double(redmean))
-        let fft = FFT.fft(input: redmeans)
-//        print(redmeans)
-        let hsv = rgb2hsv((red: redmean, green: greenmean, blue: bluemean, alpha: 1.0))
-        print(hsv.0)
+        
+        // B3: Band-pass filtering: BPM_L = 40 & BPM_H = 230 -> filtered mean of red color
+        
+        // B4:
+        let bbf = BBFilter()
+        let filted = redmeans.map { bbf.processValue(value: $0) }
+        let fft = FFT.fft(input: filted)
+        print("filtered: \(filted)")
+        print("fft: \(fft.max())")
+        
+        // hsv for cover camera condition
+        let hsv = rgb2hsv(red: redmean, green: greenmean, blue: bluemean)
     }
     
     private func startMeasurement() {

@@ -8,17 +8,16 @@
 import Foundation
 import Accelerate
 
-
 class FFT {
     
     static func sqrt(_ x: [Double]) -> [Double] {
         var results = [Double](repeating: 0.0, count: x.count)
         vvsqrt(&results, x, [Int32(x.count)])
-        
         return results
     }
     
     static func fft(input: [Double]) -> [Double] {
+        guard input.count > 0 else { return [] }
         var real = [Double](input)
         var imaginary = [Double](repeating: 0, count: input.count)
         var splitComplex = DSPDoubleSplitComplex(realp: &real, imagp: &imaginary)
@@ -38,6 +37,5 @@ class FFT {
         
         return normalizedMagnitudes
     }
-    
     
 }

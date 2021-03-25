@@ -47,5 +47,7 @@
 	<string>${baseUrl}</string>
 	<key>logEnabled</key>
 	<string>${logEnabled}</string>
+    <key>NSCameraUsageDescription</key>
+    <string></string>
 </dict>
 </plist>
