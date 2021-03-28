@@ -351,7 +351,6 @@
 				CE1E228B25F72A0200C6632E /* AppDelegate.swift */,
 				CE1E229625F72A0300C6632E /* LaunchScreen.storyboard */,
 				CEC78DF625F7304F007BA177 /* ViewController */,
-				CEC78E0225F731D4007BA177 /* View */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -427,13 +426,6 @@
 				CE20A1152606DE480084F2BA /* FFT.swift */,
 			);
 			path = Helper;
-			sourceTree = "<group>";
-		};
-		CEC78E0225F731D4007BA177 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		CEC78E1925F732C9007BA177 /* Lottie */ = {
@@ -895,6 +887,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7859BCHX87;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
@@ -904,6 +897,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1019,6 +1013,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7859BCHX87;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
@@ -1028,6 +1023,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1143,6 +1139,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7859BCHX87;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
@@ -1152,6 +1149,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

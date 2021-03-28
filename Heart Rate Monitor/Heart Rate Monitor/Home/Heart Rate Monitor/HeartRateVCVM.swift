@@ -95,15 +95,12 @@ class HeartRateVCVMImp: HeartRateVCVM {
         let greenmean = CGFloat(bitmap[1])
         let bluemean = CGFloat(bitmap[2])
         redmeans.append(Double(redmean))
-        
         // B3: Band-pass filtering: BPM_L = 40 & BPM_H = 230 -> filtered mean of red color
         
         // B4:
         let bbf = BBFilter()
         let filted = redmeans.map { bbf.processValue(value: $0) }
-        let fft = FFT.fft(input: filted)
-        print("filtered: \(filted)")
-        print("fft: \(fft.max())")
+        let fft = FFT().fftAnalyzer(frameOfSamples: filted.map{ Float($0) })
         
         // hsv for cover camera condition
         let hsv = rgb2hsv(red: redmean, green: greenmean, blue: bluemean)

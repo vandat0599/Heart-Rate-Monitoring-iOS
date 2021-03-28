@@ -228,28 +228,29 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     }
     
     private func bindViews() {
-        _ = viewModel?.isPlaying.subscribe(onNext: {[weak self] (value) in
-            guard let self = self else { return }
-            self.playViewTopAnchor.constant = value ? 0 : -UIScreen.main.bounds.width*0.2/2
-            self.cameraView.isHidden = !value
-            self.progressView.isHidden = !value
-            self.playIconImageView.isHidden = value
-            self.guideLabel.isHidden = !value
-            UIView.animate(withDuration: 0.4) {
-                self.view.layoutIfNeeded()
-                self.progressView.alpha = !value ? 0.0 : 1.0
-                self.cameraView.alpha = !value ? 0.0 : 1.0
-                self.playIconImageView.alpha = value ? 0.0 : 1.0
-                self.guideLabel.alpha = !value ? 0.0 : 1.0
-            }
-            self.progressView.currentProgress = 0
-            if value {
-                self.heartRateManager.startCapture()
-            } else {
-                self.heartRateManager.stopCapture()
-            }
-            self.navigationItem.title = value ? AppString.keepYourFinger : AppString.heartRateMonitor
-        })
+        viewModel?.isPlaying
+            .bind(onNext: {[unowned self] (value) in
+                self.playViewTopAnchor.constant = value ? 0 : -UIScreen.main.bounds.width*0.2/2
+                self.cameraView.isHidden = !value
+                self.progressView.isHidden = !value
+                self.playIconImageView.isHidden = value
+                self.guideLabel.isHidden = !value
+                UIView.animate(withDuration: 0.4) {
+                    self.view.layoutIfNeeded()
+                    self.progressView.alpha = !value ? 0.0 : 1.0
+                    self.cameraView.alpha = !value ? 0.0 : 1.0
+                    self.playIconImageView.alpha = value ? 0.0 : 1.0
+                    self.guideLabel.alpha = !value ? 0.0 : 1.0
+                }
+                self.progressView.currentProgress = 0
+                if value {
+                    self.heartRateManager.startCapture()
+                } else {
+                    self.heartRateManager.stopCapture()
+                }
+                self.navigationItem.title = value ? AppString.keepYourFinger : AppString.heartRateMonitor
+            })
+            .disposed(by: disposeBag)
         
         viewModel?.heartRateTrackNumber
             .map { "\($0 == 0 ? "--" : "\($0)")\nbpm" }
@@ -325,7 +326,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     }
     
     func setDataCount() {
-        
         let sineArraySize = 64 // n
         let frequency = 1.0 // hz
         let phase = 0.0 // starting point
@@ -333,27 +333,22 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         let sineWave = (0..<sineArraySize).map {
             amplitude * sin(2.0 * Double.pi/Double(sineArraySize) * Double($0) * frequency + phase)
         }
-
         chartView.leftAxis.axisMinimum = -(amplitude + 3)
         chartView.leftAxis.axisMaximum = amplitude + 3
         chartView.xAxis.axisMinimum = 0
         chartView.xAxis.axisMaximum = Double(sineArraySize)
-                
         let yVals1 = (0..<sineArraySize).map { (i) -> ChartDataEntry in
             return ChartDataEntry(x: Double(i), y: sineWave[i])
         }
-
         let set1 = LineChartDataSet(entries: yVals1, label: "HeartRate BPM")
         set1.axisDependency = .left
         set1.setColor(.red)
         set1.lineWidth = 2
         set1.drawCirclesEnabled = false
         set1.drawCircleHoleEnabled = false
-        
         let data: LineChartData = LineChartData.init(dataSets: [set1])
         data.setValueTextColor(.white)
         data.setValueFont(.systemFont(ofSize: 9))
-        
         chartView.data = data
     }
     

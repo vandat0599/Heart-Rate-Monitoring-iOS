@@ -38,4 +38,28 @@ class FFT {
         return normalizedMagnitudes
     }
     
+    func fftAnalyzer(frameOfSamples: [Float]) -> [Float] {
+        // As above, frameOfSamples = [1.0, 2.0, 3.0, 4.0]
+        let frameCount = frameOfSamples.count
+        let reals = UnsafeMutableBufferPointer<Float>.allocate(capacity: frameCount)
+        defer {reals.deallocate()}
+        let imags =  UnsafeMutableBufferPointer<Float>.allocate(capacity: frameCount)
+        defer {imags.deallocate()}
+        _ = reals.initialize(from: frameOfSamples)
+        imags.initialize(repeating: 0.0)
+        var complexBuffer = DSPSplitComplex(realp: reals.baseAddress!, imagp: imags.baseAddress!)
+        let log2Size = Int(log2(Float(frameCount)))
+        guard let fftSetup = vDSP_create_fftsetup(vDSP_Length(log2Size), FFTRadix(kFFTRadix2)) else {
+            return []
+        }
+        defer {vDSP_destroy_fftsetup(fftSetup)}
+        // Perform a forward FFT
+        vDSP_fft_zip(fftSetup, &complexBuffer, 1, vDSP_Length(log2Size), FFTDirection(FFT_FORWARD))
+        let realFloats = Array(reals)
+        let imaginaryFloats = Array(imags)
+        print(realFloats)
+        print(imaginaryFloats)
+        return realFloats
+    }
+    
 }
