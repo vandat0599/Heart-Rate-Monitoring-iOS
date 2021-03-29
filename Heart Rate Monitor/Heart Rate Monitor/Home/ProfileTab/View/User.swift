@@ -7,10 +7,18 @@
 
 import Foundation
 
-enum Gender {
-    case Undefined
-    case Male
-    case Female
+enum Gender : Int{
+    case Undefined = 0
+    case Male = 1
+    case Female = 2
+    
+    var description: String {
+            switch self {
+            case .Male: return "Male"
+            case .Female   : return "Female"
+            default: return "Undefined"
+            }
+        }
 }
 
 class User {
