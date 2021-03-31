@@ -215,10 +215,10 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
             
-            preparingAnimationView.leadingAnchor.constraint(equalTo: playView.leadingAnchor),
-            preparingAnimationView.trailingAnchor.constraint(equalTo: playView.trailingAnchor),
-            preparingAnimationView.topAnchor.constraint(equalTo: playView.topAnchor),
-            preparingAnimationView.bottomAnchor.constraint(equalTo: playView.bottomAnchor),
+            preparingAnimationView.leadingAnchor.constraint(equalTo: playView.leadingAnchor, constant: 20),
+            preparingAnimationView.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -20),
+            preparingAnimationView.topAnchor.constraint(equalTo: playView.topAnchor, constant: 20),
+            preparingAnimationView.bottomAnchor.constraint(equalTo: playView.bottomAnchor, constant: -20),
         ])
         view.layoutIfNeeded()
         initVideoCapture()
@@ -320,6 +320,16 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                     self.heartWaveView.isHidden = true
                     self.preparingAnimationView.isHidden = true
                     self.heartRateTrackLabel.isHidden = true
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.timeupTrigger
+            .bind(onNext: { (value) in
+                guard value else { return }
+                let vc = UINavigationController(rootViewController: HeartRateResultVC(viewModel: HeartRateResultVMImp(heartRateNumber: self.viewModel.heartRateTrackNumber.value)))
+                self.present(vc, animated: true) {
+                    self.viewModel.togglePlay()
                 }
             })
             .disposed(by: disposeBag)

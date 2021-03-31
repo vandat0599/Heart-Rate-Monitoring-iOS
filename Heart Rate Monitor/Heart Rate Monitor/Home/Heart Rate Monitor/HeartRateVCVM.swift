@@ -20,8 +20,10 @@ protocol HeartRateVCVM {
     var warningText: BehaviorRelay<String> { get }
     var isHeartRateValid: BehaviorRelay<Bool> { get }
     var guideCoverCameraText: BehaviorRelay<String> { get }
+    var timeupTrigger: PublishRelay<Bool> { get }
     func handleImage(with buffer: CMSampleBuffer)
     func togglePlay()
+    func resetAllData()
 }
 
 class HeartRateVCVMImp: HeartRateVCVM {
@@ -33,6 +35,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     private var pulseDetector = PulseDetector()
     private var inputs: [CGFloat] = []
     private var redmeans: [Double] = []
+    private let hueFilter = BBFilter()
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -43,6 +46,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
         heartRateProgress = BehaviorRelay<Float>(value: 0.0)
         warningText = BehaviorRelay<String>(value: AppString.heartRateMonitor)
         guideCoverCameraText = BehaviorRelay<String>(value: AppString.heartRateGuides)
+        timeupTrigger = PublishRelay<Bool>()
     }
     
     var isPlaying: BehaviorRelay<Bool>
@@ -53,6 +57,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var isMeasuring: BehaviorRelay<Bool>
     var touchStatus: BehaviorRelay<Bool>
     var isHeartRateValid: BehaviorRelay<Bool>
+    var timeupTrigger: PublishRelay<Bool>
     
     func togglePlay() {
         isPlaying.accept(!isPlaying.value)
@@ -61,7 +66,10 @@ class HeartRateVCVMImp: HeartRateVCVM {
         }
     }
     
-    private func resetAllData() {
+    func resetAllData() {
+        validFrameCounter = 0
+        timeCounterSubscription?.dispose()
+        pulseDetector.reset()
         isMeasuring.accept(false)
         touchStatus.accept(false)
         isHeartRateValid.accept(false)
@@ -98,12 +106,33 @@ class HeartRateVCVMImp: HeartRateVCVM {
         // B3: Band-pass filtering: BPM_L = 40 & BPM_H = 230 -> filtered mean of red color
         
         // B4:
-        let bbf = BBFilter()
-        let filted = redmeans.map { bbf.processValue(value: $0) }
-        let fft = FFT().fftAnalyzer(frameOfSamples: filted.map{ Float($0) })
         
         // hsv for cover camera condition
         let hsv = rgb2hsv(red: redmean, green: greenmean, blue: bluemean)
+        if (hsv.1 > 0.5 && hsv.2 > 0.5) {
+            DispatchQueue.main.async {
+                self.warningText.accept(AppString.keepYourFinger)
+            }
+            touchStatus.accept(true)
+            if !isMeasuring.value {
+                startMeasurement()
+                isMeasuring.accept(true)
+            }
+            validFrameCounter += 1
+            inputs.append(hsv.0)
+            // Filter the hue value - the filter is a simple BAND PASS FILTER that removes any DC component and any high frequency noise
+            let filtered = hueFilter.processValue(value: Double(hsv.0))
+            if validFrameCounter > 60 {
+                _ = pulseDetector.addNewValue(newVal: filtered, atTime: CACurrentMediaTime())
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.resetMesuringData()
+            }
+            validFrameCounter = 0
+            timeCounterSubscription?.dispose()
+            pulseDetector.reset()
+        }
     }
     
     private func startMeasurement() {
@@ -112,9 +141,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 self.touchStatus.accept(true)
                 let average = self.pulseDetector.getAverage()
                 let pulse = 60.0/average
+                let heartRateProgress = Float(value)/Float(maxProgressSecond)
+                timeupTrigger.accept(heartRateProgress >= 1)
                 DispatchQueue.main.async {
                     self.isHeartRateValid.accept(!(pulse == -60))
-                    self.heartRateProgress.accept(Float(value)*100/Float(maxProgressSecond)/100)
+                    self.heartRateProgress.accept(heartRateProgress)
                     self.heartRateTrackNumber.accept(pulse == -60 ? 0 : lroundf(pulse))
                 }
             })

@@ -25,6 +25,7 @@
 		CE1E22A325F72A0300C6632E /* Heart_Rate_MonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22A225F72A0300C6632E /* Heart_Rate_MonitorTests.swift */; };
 		CE1E22AE25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */; };
 		CE20A1162606DE480084F2BA /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20A1152606DE480084F2BA /* FFT.swift */; };
+		CE7AF9BC261431490035AD17 /* HeartRateResultVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */; };
 		CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */; };
 		CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */; };
 		CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */; };
@@ -33,6 +34,8 @@
 		CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */; };
 		CE7F8A3425FCB33A00A2EDC9 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A3325FCB33A00A2EDC9 /* RoundedView.swift */; };
 		CE7F8A5125FCB74100A2EDC9 /* HeartRateVCVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */; };
+		CE9965E726141BCF00104065 /* HeartRateResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9965E626141BCF00104065 /* HeartRateResultVC.swift */; };
+		CE9965EB26141BDA00104065 /* HeartRateResultVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */; };
 		CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DF725F730A2007BA177 /* BaseVC.swift */; };
 		CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */; };
 		CEC78E0525F7327B007BA177 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E0425F7327B007BA177 /* Environment.swift */; };
@@ -135,6 +138,7 @@
 		CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart_Rate_MonitorUITests.swift; sourceTree = "<group>"; };
 		CE1E22AF25F72A0300C6632E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE20A1152606DE480084F2BA /* FFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
+		CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeartRateResultVC.xib; sourceTree = "<group>"; };
 		CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerVC.swift; sourceTree = "<group>"; };
 		CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVC.swift; sourceTree = "<group>"; };
 		CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 		CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemView.swift; sourceTree = "<group>"; };
 		CE7F8A3325FCB33A00A2EDC9 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVCVM.swift; sourceTree = "<group>"; };
+		CE9965E626141BCF00104065 /* HeartRateResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateResultVC.swift; sourceTree = "<group>"; };
+		CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateResultVM.swift; sourceTree = "<group>"; };
 		CEC78DF725F730A2007BA177 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresentVC.swift; sourceTree = "<group>"; };
 		CEC78E0425F7327B007BA177 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -317,6 +323,9 @@
 				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
 				CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */,
 				CE10736025FE7211003777D6 /* HeartWaveView.swift */,
+				CE9965E626141BCF00104065 /* HeartRateResultVC.swift */,
+				CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */,
+				CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */,
 			);
 			path = "Heart Rate Monitor";
 			sourceTree = "<group>";
@@ -603,6 +612,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE7AF9BC261431490035AD17 /* HeartRateResultVC.xib in Resources */,
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
 				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,
@@ -738,6 +748,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9965E726141BCF00104065 /* HeartRateResultVC.swift in Sources */,
 				CEC78E9625F73A07007BA177 /* Date+.swift in Sources */,
 				CE7F8A1E25FC902600A2EDC9 /* HistoryVC.swift in Sources */,
 				CEC78EA925F73A22007BA177 /* APIService.swift in Sources */,
@@ -767,6 +778,7 @@
 				CE10732225FDCDDF003777D6 /* PulseDetector.swift in Sources */,
 				CEC78E9A25F73A07007BA177 /* UIViewController+.swift in Sources */,
 				CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */,
+				CE9965EB26141BDA00104065 /* HeartRateResultVM.swift in Sources */,
 				CEC78EA325F73A07007BA177 /* UITableView+.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
