@@ -21,6 +21,8 @@ protocol HeartRateVCVM {
     var isHeartRateValid: BehaviorRelay<Bool> { get }
     var guideCoverCameraText: BehaviorRelay<String> { get }
     var timeupTrigger: PublishRelay<Bool> { get }
+    var filteredValueTrigger: PublishRelay<Double> { get }
+    var filtedValues: [Double] { get }
     func handleImage(with buffer: CMSampleBuffer)
     func togglePlay()
     func resetAllData()
@@ -31,6 +33,17 @@ class HeartRateVCVMImp: HeartRateVCVM {
     let disposeBag = DisposeBag()
     var maxProgressSecond = 20
     var timeCounterSubscription: Disposable?
+    var isPlaying: BehaviorRelay<Bool>
+    var heartRateTrackNumber: BehaviorRelay<Int>
+    var heartRateProgress: BehaviorRelay<Float>
+    var warningText: BehaviorRelay<String>
+    var guideCoverCameraText: BehaviorRelay<String>
+    var isMeasuring: BehaviorRelay<Bool>
+    var touchStatus: BehaviorRelay<Bool>
+    var isHeartRateValid: BehaviorRelay<Bool>
+    var timeupTrigger: PublishRelay<Bool>
+    var filteredValueTrigger: PublishRelay<Double>
+    var filtedValues: [Double]
     private var validFrameCounter = 0
     private var pulseDetector = PulseDetector()
     private var inputs: [CGFloat] = []
@@ -47,17 +60,9 @@ class HeartRateVCVMImp: HeartRateVCVM {
         warningText = BehaviorRelay<String>(value: AppString.heartRateMonitor)
         guideCoverCameraText = BehaviorRelay<String>(value: AppString.heartRateGuides)
         timeupTrigger = PublishRelay<Bool>()
+        filtedValues = []
+        filteredValueTrigger = PublishRelay<Double>()
     }
-    
-    var isPlaying: BehaviorRelay<Bool>
-    var heartRateTrackNumber: BehaviorRelay<Int>
-    var heartRateProgress: BehaviorRelay<Float>
-    var warningText: BehaviorRelay<String>
-    var guideCoverCameraText: BehaviorRelay<String>
-    var isMeasuring: BehaviorRelay<Bool>
-    var touchStatus: BehaviorRelay<Bool>
-    var isHeartRateValid: BehaviorRelay<Bool>
-    var timeupTrigger: PublishRelay<Bool>
     
     func togglePlay() {
         isPlaying.accept(!isPlaying.value)
@@ -67,6 +72,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     func resetAllData() {
+        filtedValues = []
         validFrameCounter = 0
         timeCounterSubscription?.dispose()
         pulseDetector.reset()
@@ -80,6 +86,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     private func resetMesuringData() {
+        filtedValues = []
         heartRateTrackNumber.accept(0)
         heartRateProgress.accept(0.0)
         isMeasuring.accept(false)
@@ -121,7 +128,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
             validFrameCounter += 1
             inputs.append(hsv.0)
             // Filter the hue value - the filter is a simple BAND PASS FILTER that removes any DC component and any high frequency noise
-            let filtered = hueFilter.processValue(value: Double(hsv.0))
+            var filtered = hueFilter.processValue(value: Double(hsv.0))
+            filtered = filtered <= -1 ? 0 : filtered
+            filtered = filtered >= 1 ? 0 : filtered
+            filtedValues.append(filtered)
+            filteredValueTrigger.accept(filtered)
             if validFrameCounter > 60 {
                 _ = pulseDetector.addNewValue(newVal: filtered, atTime: CACurrentMediaTime())
             }

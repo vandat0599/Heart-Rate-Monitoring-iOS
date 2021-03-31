@@ -99,44 +99,23 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         return view
     }()
     
-    private lazy var heartWaveView: HeartWaveView = {
-        let view = HeartWaveView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var chartView: LineChartView = {
         let view = LineChartView()
-        view.isHidden = true
+        view.isHidden = false
         view.delegate = self
         view.chartDescription?.enabled = false
         view.dragEnabled = true
-        view.setScaleEnabled(true)
+        view.setScaleEnabled(false)
         view.pinchZoomEnabled = true
-        let l = view.legend
-        l.form = .line
-        l.font = UIFont(name: "HelveticaNeue-Light", size: 11)!
-        l.textColor = .white
-        l.horizontalAlignment = .left
-        l.verticalAlignment = .bottom
-        l.orientation = .horizontal
-        l.drawInside = false
-        
-        let xAxis = view.xAxis
-        xAxis.labelPosition = .bottom
-        xAxis.labelFont = .systemFont(ofSize: 11)
-        xAxis.labelTextColor = .black
-        xAxis.drawAxisLineEnabled = true
-        
-        let leftAxis = view.leftAxis
-        leftAxis.axisMaximum = 10
-        leftAxis.axisMinimum = 0
-        leftAxis.drawGridLinesEnabled = true
-        leftAxis.granularityEnabled = true
+        view.autoScaleMinMaxEnabled = false
+        view.rightAxis.enabled = false
+        view.leftAxis.enabled = false
+        view.legend.enabled = false
+        view.xAxis.enabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+        
     private var playViewTopAnchor: NSLayoutConstraint!
     
     private var heartRateManager: HeartRateManager!
@@ -161,7 +140,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.backgroundColor = .white
         view.addSubview(guideLabel)
         view.addSubview(playView)
-        view.addSubview(heartWaveView)
         view.addSubview(chartView)
         playView.addSubview(backgroundImage)
         playView.addSubview(progressView)
@@ -171,26 +149,20 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         playView.addSubview(preparingAnimationView)
         playViewTopAnchor = playView.topAnchor.constraint(equalTo: centerYView.bottomAnchor, constant: -UIScreen.main.bounds.width*0.2/2)
         NSLayoutConstraint.activate([
-            guideLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            guideLabel.bottomAnchor.constraint(equalTo: playView.topAnchor, constant: -20),
+            guideLabel.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
+            guideLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             guideLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             guideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            heartWaveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            heartWaveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            heartWaveView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            heartWaveView.bottomAnchor.constraint(equalTo: playView.topAnchor),
+            chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            chartView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            chartView.bottomAnchor.constraint(equalTo: playView.topAnchor),
             
             playViewTopAnchor,
             playView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             playView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             playView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
-            
-            chartView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            chartView.heightAnchor.constraint(equalToConstant: 300),
-            chartView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             
             backgroundImage.leadingAnchor.constraint(equalTo: playView.leadingAnchor),
             backgroundImage.trailingAnchor.constraint(equalTo: playView.trailingAnchor),
@@ -223,7 +195,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.layoutIfNeeded()
         initVideoCapture()
         bindViews()
-        setDataCount()
         cameraView.layer.cornerRadius = cameraView.frame.height/2
     }
     
@@ -270,7 +241,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                     self.progressView.stop()
                     self.progressView.currentProgress = 0
                 } else {
-                    self.heartWaveView.ECGDraw(color: .red, heartRateNumber: self.viewModel.heartRateTrackNumber.value)
                     self.progressView.play()
                 }
             })
@@ -295,10 +265,16 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         viewModel?.isMeasuring
             .bind(onNext: {[unowned self] (value) in
                 DispatchQueue.main.async {
-                    self.playView.isUserInteractionEnabled = !value
-                    if !value {
-                        self.heartWaveView.removeAllLayer()
+                    if value {
+                        self.chartView.isHidden = false
+                        UIView.animate(withDuration: 0.4) {
+                            self.chartView.alpha = !value ? 0.0 : 1.0
+                        }
+                    } else {
+                        self.chartView.isHidden = true
+                        self.reloadChartData(value: nil)
                     }
+                    self.playView.isUserInteractionEnabled = !value
                 }
             })
             .disposed(by: disposeBag)
@@ -307,17 +283,14 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .subscribe(onNext: {[unowned self] (value) in
                 if self.viewModel?.isMeasuring.value ?? false {
                     self.guideLabel.isHidden = value
-                    self.heartWaveView.isHidden = !value
                     self.heartRateTrackLabel.isHidden = !value
                     self.preparingAnimationView.isHidden = value
                     UIView.animate(withDuration: 0.4) {
-                        self.heartWaveView.alpha = !value ? 0.0 : 1.0
                         self.heartRateTrackLabel.alpha = !value ? 0.0 : 1.0
                         self.preparingAnimationView.alpha = value ? 0.0 : 1.0
                     }
                 } else {
                     self.guideLabel.isHidden = false
-                    self.heartWaveView.isHidden = true
                     self.preparingAnimationView.isHidden = true
                     self.heartRateTrackLabel.isHidden = true
                 }
@@ -325,7 +298,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.timeupTrigger
-            .bind(onNext: { (value) in
+            .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
                 let vc = UINavigationController(rootViewController: HeartRateResultVC(viewModel: HeartRateResultVMImp(heartRateNumber: self.viewModel.heartRateTrackNumber.value)))
                 self.present(vc, animated: true) {
@@ -333,33 +306,38 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 }
             })
             .disposed(by: disposeBag)
+        
+        viewModel?.filteredValueTrigger
+            .bind(onNext: {[unowned self] (value) in
+                DispatchQueue.main.async {
+                    if chartView.isHidden == true {
+                        chartView.isHidden = false
+                    }
+                    self.reloadChartData(value: value)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
-    func setDataCount() {
-        let sineArraySize = 64 // n
-        let frequency = 1.0 // hz
-        let phase = 0.0 // starting point
-        let amplitude = 7.0
-        let sineWave = (0..<sineArraySize).map {
-            amplitude * sin(2.0 * Double.pi/Double(sineArraySize) * Double($0) * frequency + phase)
+    func reloadChartData(value: Double?) {
+        guard let value = value else {
+            let dataSet = LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 0)])
+            dataSet.axisDependency = .left
+            dataSet.setColor(.red)
+            dataSet.lineWidth = 2
+            dataSet.drawCirclesEnabled = false
+            dataSet.drawCircleHoleEnabled = false
+            let lineChartData: LineChartData = LineChartData.init(dataSets: [dataSet])
+            lineChartData.setValueTextColor(.clear)
+            chartView.data = lineChartData
+            return
         }
-        chartView.leftAxis.axisMinimum = -(amplitude + 3)
-        chartView.leftAxis.axisMaximum = amplitude + 3
-        chartView.xAxis.axisMinimum = 0
-        chartView.xAxis.axisMaximum = Double(sineArraySize)
-        let yVals1 = (0..<sineArraySize).map { (i) -> ChartDataEntry in
-            return ChartDataEntry(x: Double(i), y: sineWave[i])
+        chartView.data?.addEntry(ChartDataEntry(x: Double(viewModel.filtedValues.count), y: value), dataSetIndex: 0)
+        if viewModel.filtedValues.count > 100 {
+            chartView.setVisibleXRange(minXRange: 1, maxXRange: 100)
         }
-        let set1 = LineChartDataSet(entries: yVals1, label: "HeartRate BPM")
-        set1.axisDependency = .left
-        set1.setColor(.red)
-        set1.lineWidth = 2
-        set1.drawCirclesEnabled = false
-        set1.drawCircleHoleEnabled = false
-        let data: LineChartData = LineChartData.init(dataSets: [set1])
-        data.setValueTextColor(.white)
-        data.setValueFont(.systemFont(ofSize: 9))
-        chartView.data = data
+        chartView.notifyDataSetChanged()
+        chartView.moveViewToX(Double(viewModel.filtedValues.count))
     }
     
     // MARK: - Frames Capture Methods
