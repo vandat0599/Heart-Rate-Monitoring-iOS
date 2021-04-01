@@ -20,7 +20,8 @@
                 <outlet property="heightProfileCell" destination="AtR-58-jxV" id="A21-Qf-MZK"/>
                 <outlet property="nameLabel" destination="9y5-xI-Sht" id="sSt-F0-oH5"/>
                 <outlet property="phoneProfileCell" destination="RZw-A6-xMe" id="FbN-XL-bKP"/>
-                <outlet property="relationshipsStackView" destination="ZUu-Gt-BBa" id="jd4-xI-S5M"/>
+                <outlet property="relationshipTableHeightConstraint" destination="LVV-CE-Pny" id="ZNV-6O-gSF"/>
+                <outlet property="relationshipTableView" destination="gJo-ZH-Npp" id="E0p-a7-kpF"/>
                 <outlet property="saveButton" destination="Nbr-zT-Wy3" id="AEV-rX-Dd0"/>
                 <outlet property="timeProfileCell" destination="gdb-jj-Rim" id="aHO-YK-H6L"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -32,11 +33,11 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3e-UI-7QZ">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3e-UI-7QZ">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
-                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b1y-9F-Mu9" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="785"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b1y-9F-Mu9" userLabel="Content View">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="911.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyễn Văn An" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9y5-xI-Sht">
                                     <rect key="frame" x="16" y="30" width="181.5" height="30"/>
@@ -55,8 +56,8 @@
                                         <action selector="editButtonTouched:" destination="-1" eventType="touchUpInside" id="yje-ge-Cxp"/>
                                     </connections>
                                 </button>
-                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7JO-dC-crJ">
-                                    <rect key="frame" x="0.0" y="60" width="414" height="725"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7JO-dC-crJ">
+                                    <rect key="frame" x="0.0" y="60" width="414" height="851.5"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NJo-zr-r4b" userLabel="Account View">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="147"/>
@@ -187,40 +188,41 @@
                                                 <constraint firstItem="nwa-cN-Qrc" firstAttribute="top" secondItem="Q4z-qd-vvh" secondAttribute="top" constant="30" id="tkK-xo-5Yx"/>
                                             </constraints>
                                         </view>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VqJ-uI-Max" userLabel="Relationships View">
-                                            <rect key="frame" x="0.0" y="406" width="414" height="133"/>
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VqJ-uI-Max" userLabel="Relationships View">
+                                            <rect key="frame" x="0.0" y="406" width="414" height="259.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Relationships" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmE-Zm-Cnp">
-                                                    <rect key="frame" x="16" y="30" width="104" height="19.5"/>
+                                                    <rect key="frame" x="16" y="30" width="104" height="177.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZUu-Gt-BBa">
-                                                    <rect key="frame" x="16" y="133" width="382" height="0.0"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gJo-ZH-Npp">
+                                                    <rect key="frame" x="16" y="217.5" width="382" height="42"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" id="O74-Fq-jCL"/>
+                                                        <constraint firstAttribute="height" constant="42" id="LVV-CE-Pny"/>
                                                     </constraints>
+                                                    <color key="sectionIndexBackgroundColor" name="backgroundGray"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="13"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
-                                                </stackView>
+                                                </tableView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="ZUu-Gt-BBa" firstAttribute="top" secondItem="gmE-Zm-Cnp" secondAttribute="bottom" constant="10" id="COh-27-lyO"/>
+                                                <constraint firstAttribute="trailing" secondItem="gJo-ZH-Npp" secondAttribute="trailing" constant="16" id="3Mz-qA-ctC"/>
+                                                <constraint firstItem="gJo-ZH-Npp" firstAttribute="leading" secondItem="VqJ-uI-Max" secondAttribute="leading" constant="16" id="4Ee-Um-hbx"/>
+                                                <constraint firstItem="gJo-ZH-Npp" firstAttribute="top" secondItem="gmE-Zm-Cnp" secondAttribute="bottom" constant="10" id="5Uq-AE-D4z"/>
                                                 <constraint firstItem="gmE-Zm-Cnp" firstAttribute="top" secondItem="VqJ-uI-Max" secondAttribute="top" constant="30" id="UfU-Fb-ecl"/>
+                                                <constraint firstAttribute="bottom" secondItem="gJo-ZH-Npp" secondAttribute="bottom" id="bX0-zD-dDy"/>
                                                 <constraint firstItem="gmE-Zm-Cnp" firstAttribute="leading" secondItem="VqJ-uI-Max" secondAttribute="leading" constant="16" id="dAi-tX-p7w"/>
-                                                <constraint firstAttribute="trailing" secondItem="ZUu-Gt-BBa" secondAttribute="trailing" constant="16" id="nRq-S3-70n"/>
-                                                <constraint firstAttribute="bottom" secondItem="ZUu-Gt-BBa" secondAttribute="bottom" id="qxq-hw-5Ii"/>
-                                                <constraint firstItem="ZUu-Gt-BBa" firstAttribute="leading" secondItem="VqJ-uI-Max" secondAttribute="leading" constant="16" id="s79-Vn-28H"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gCd-gs-oN8" userLabel="Reminder View">
-                                            <rect key="frame" x="0.0" y="539" width="414" height="186"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCd-gs-oN8" userLabel="Reminder View">
+                                            <rect key="frame" x="0.0" y="665.5" width="414" height="186"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reminder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAB-rW-DfI">
                                                     <rect key="frame" x="16" y="30" width="74.5" height="61"/>

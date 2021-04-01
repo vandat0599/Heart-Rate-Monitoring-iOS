@@ -22,13 +22,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2J-Mw-nG2">
-                    <rect key="frame" x="16" y="6.3333333333333339" width="23" height="29.333333333333329"/>
+                    <rect key="frame" x="16" y="6.3333333333333339" width="80" height="29.333333333333329"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="h6M-8v-usU"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="11"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Value Text View" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="uXc-re-YT9">
-                    <rect key="frame" x="49" y="6.3333333333333339" width="349" height="29.333333333333329"/>
+                    <rect key="frame" x="106" y="6.3333333333333339" width="292" height="29.333333333333329"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="textColor" systemColor="labelColor"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>

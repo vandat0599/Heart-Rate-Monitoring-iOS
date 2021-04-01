@@ -17,6 +17,10 @@
 		84C718992606EB3200BA2C6D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C718972606EB3200BA2C6D /* ProfileVC.swift */; };
 		84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C718982606EB3200BA2C6D /* ProfileVC.xib */; };
 		84C718C62606F85F00BA2C6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C718C52606F85F00BA2C6D /* User.swift */; };
+		84E46095261566F700F60040 /* RelationshipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E46093261566F700F60040 /* RelationshipTableViewCell.swift */; };
+		84E46096261566F700F60040 /* RelationshipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E46094261566F700F60040 /* RelationshipTableViewCell.xib */; };
+		84E460B026158C0200F60040 /* InputRelationshipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E460AE26158C0200F60040 /* InputRelationshipTableViewCell.swift */; };
+		84E460B126158C0200F60040 /* InputRelationshipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E460AF26158C0200F60040 /* InputRelationshipTableViewCell.xib */; };
 		CE06D10125FD1DA4007CE81C /* lottie-progress.json in Resources */ = {isa = PBXBuildFile; fileRef = CE06D10025FD1DA4007CE81C /* lottie-progress.json */; };
 		CE10731425FDCD8B003777D6 /* AVCaptureDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */; };
 		CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731725FDCDC1003777D6 /* ColorUtils.swift */; };
@@ -119,6 +123,10 @@
 		84C718972606EB3200BA2C6D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		84C718982606EB3200BA2C6D /* ProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileVC.xib; sourceTree = "<group>"; };
 		84C718C52606F85F00BA2C6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = "Heart Rate Monitor/Home/ProfileTab/View/User.swift"; sourceTree = SOURCE_ROOT; };
+		84E46093261566F700F60040 /* RelationshipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipTableViewCell.swift; sourceTree = "<group>"; };
+		84E46094261566F700F60040 /* RelationshipTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelationshipTableViewCell.xib; sourceTree = "<group>"; };
+		84E460AE26158C0200F60040 /* InputRelationshipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRelationshipTableViewCell.swift; sourceTree = "<group>"; };
+		84E460AF26158C0200F60040 /* InputRelationshipTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputRelationshipTableViewCell.xib; sourceTree = "<group>"; };
 		8555D753D470E963FF1C7086 /* Pods-Heart Rate Monitor-Heart Rate MonitorUITests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor-Heart Rate MonitorUITests.staging.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor-Heart Rate MonitorUITests/Pods-Heart Rate Monitor-Heart Rate MonitorUITests.staging.xcconfig"; sourceTree = "<group>"; };
 		8A5C8A89F8802FFDEF0174F5 /* Pods-Heart Rate Monitor-Heart Rate MonitorUITests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor-Heart Rate MonitorUITests.development.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor-Heart Rate MonitorUITests/Pods-Heart Rate Monitor-Heart Rate MonitorUITests.development.xcconfig"; sourceTree = "<group>"; };
 		8D2AE4A0EEB21EABB1E4F0A7 /* Pods-Heart Rate Monitor-Heart Rate MonitorUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor-Heart Rate MonitorUITests.debug.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor-Heart Rate MonitorUITests/Pods-Heart Rate Monitor-Heart Rate MonitorUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -240,18 +248,9 @@
 		84575B6E260781A400711760 /* ProfileCell */ = {
 			isa = PBXGroup;
 			children = (
-				84575B6F260783EF00711760 /* View */,
+				84E460AA261571DB00F60040 /* View */,
 			);
 			path = ProfileCell;
-			sourceTree = "<group>";
-		};
-		84575B6F260783EF00711760 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				84575B762607844200711760 /* ProfileCell.swift */,
-				84575B7A2607845800711760 /* ProfileCell.xib */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		845DF60D2603339400DD26BF /* SignUp */ = {
@@ -281,6 +280,8 @@
 		84C718952606EACD00BA2C6D /* ProfileTab */ = {
 			isa = PBXGroup;
 			children = (
+				84E460AD26158BD200F60040 /* InputRelationshipTableViewCell */,
+				84E46090261565B200F60040 /* RelationshipTableViewCell */,
 				84575B6E260781A400711760 /* ProfileCell */,
 				84C718962606EAF400BA2C6D /* View */,
 			);
@@ -294,6 +295,33 @@
 				84C718982606EB3200BA2C6D /* ProfileVC.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		84E46090261565B200F60040 /* RelationshipTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				84E46093261566F700F60040 /* RelationshipTableViewCell.swift */,
+				84E46094261566F700F60040 /* RelationshipTableViewCell.xib */,
+			);
+			path = RelationshipTableViewCell;
+			sourceTree = "<group>";
+		};
+		84E460AA261571DB00F60040 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84575B762607844200711760 /* ProfileCell.swift */,
+				84575B7A2607845800711760 /* ProfileCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84E460AD26158BD200F60040 /* InputRelationshipTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				84E460AE26158C0200F60040 /* InputRelationshipTableViewCell.swift */,
+				84E460AF26158C0200F60040 /* InputRelationshipTableViewCell.xib */,
+			);
+			path = InputRelationshipTableViewCell;
 			sourceTree = "<group>";
 		};
 		CE1E227F25F72A0200C6632E = {
@@ -687,6 +715,8 @@
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
 				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,
+				84E460B126158C0200F60040 /* InputRelationshipTableViewCell.xib in Resources */,
+				84E46096261566F700F60040 /* RelationshipTableViewCell.xib in Resources */,
 				CEC78E2425F73365007BA177 /* Production.xcconfig in Resources */,
 				84575B7B2607845800711760 /* ProfileCell.xib in Resources */,
 				84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */,
@@ -855,6 +885,7 @@
 				CEC78E9A25F73A07007BA177 /* UIViewController+.swift in Sources */,
 				CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */,
 				CEC78EA325F73A07007BA177 /* UITableView+.swift in Sources */,
+				84E46095261566F700F60040 /* RelationshipTableViewCell.swift in Sources */,
 				84C718C62606F85F00BA2C6D /* User.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
@@ -862,6 +893,7 @@
 				CE7F8A5125FCB74100A2EDC9 /* HeartRateVCVM.swift in Sources */,
 				CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */,
 				84C718992606EB3200BA2C6D /* ProfileVC.swift in Sources */,
+				84E460B026158C0200F60040 /* InputRelationshipTableViewCell.swift in Sources */,
 				CEC78EA025F73A07007BA177 /* Double+.swift in Sources */,
 				CEC78E9D25F73A07007BA177 /* UITapGestureRecognizer+.swift in Sources */,
 				CEC78E0525F7327B007BA177 /* Environment.swift in Sources */,

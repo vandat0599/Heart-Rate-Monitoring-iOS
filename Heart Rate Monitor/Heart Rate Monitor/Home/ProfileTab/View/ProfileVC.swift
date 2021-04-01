@@ -19,9 +19,10 @@ class ProfileVC: BaseVC {
     @IBOutlet weak var ageProfileCell: ProfileCell!
     @IBOutlet weak var frequencyProfileCell: ProfileCell!
     @IBOutlet weak var timeProfileCell: ProfileCell!
-    @IBOutlet weak var relationshipsStackView: UIStackView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var relationshipTableView: UITableView!
+    @IBOutlet weak var relationshipTableHeightConstraint: NSLayoutConstraint!
     
     
     var heightPicker = UIPickerView()
@@ -31,6 +32,8 @@ class ProfileVC: BaseVC {
     var frequencyPicker = UIPickerView()
     var timePicker = UIDatePicker()
     let frequencyState = ["Daily", "Weekly", "Never"]
+    
+    let fakeUser = User(email: "nvan.1199@gmail.com", name: "Nguyễn Văn An", phoneNumber: "0987123456", gender: Gender.Male, height: 172, weight: 73, age: 22, relationships: ["Nguyễn Quốc Bảo", "Lê Ngọc Châu", "Ngô Huy Biên"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +56,17 @@ class ProfileVC: BaseVC {
         
         timeProfileCell.keyLabel.text = "Time:"
         
-        fillUserInfo(user: User(email: "nvan.1199@gmail.com", name: "Nguyễn Văn An", phoneNumber: "0987123456", gender: Gender.Male, height: 172, weight: 73, age: 22, relationships: ["Nguyễn Quốc Bảo", "Lê Ngọc Châu"]))
+        relationshipTableView.register(RelationshipTableViewCell.nib, forCellReuseIdentifier: RelationshipTableViewCell.identifier)
+        relationshipTableView.register(InputRelationshipTableViewCell.nib, forCellReuseIdentifier: InputRelationshipTableViewCell.identifier)
+        relationshipTableView.delegate = self
+        relationshipTableView.dataSource = self
+        relationshipTableHeightConstraint.constant = 42 * CGFloat(fakeUser.relationships.count)
+        relationshipTableView.layoutIfNeeded()
+        relationshipTableView.separatorColor = view.backgroundColor
+        relationshipTableView.separatorStyle = .singleLine
+        relationshipTableView.allowsSelection = false
+        
+        fillUserInfo(user: fakeUser)
         frequencyProfileCell.valueTextView.text = frequencyState[0]
         timeProfileCell.valueTextView.text = "05:00 AM"
         
@@ -88,22 +101,8 @@ class ProfileVC: BaseVC {
         heightProfileCell.valueTextView.text =  "\(user.height)"
         weightProfileCell.valueTextView.text =  "\(user.weight)"
         ageProfileCell.valueTextView.text = "\(user.age)"
+        relationshipTableView.sizeToFit()
         
-        //add relationships into Relationships Stack View
-        relationshipsStackView.sizeToFit()
-        relationshipsStackView.translatesAutoresizingMaskIntoConstraints = false
-        for relationship in user.relationships {
-            let textLabel = UILabel()
-            textLabel.backgroundColor = .clear
-            textLabel.text = relationship
-            textLabel.textAlignment = .left
-            textLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 11)
-            textLabel.backgroundColor = UIColor(named: "backgroundGray")
-            textLabel.widthAnchor.constraint(equalToConstant: relationshipsStackView.frame.width).isActive = true
-            textLabel.heightAnchor.constraint(equalToConstant: 42).isActive = true
-            
-            relationshipsStackView.addArrangedSubview(textLabel)
-        }
     }
     
     @IBAction func editButtonTouched(_ sender: Any) {
@@ -118,6 +117,8 @@ class ProfileVC: BaseVC {
         ageProfileCell.turnToEditMode()
         frequencyProfileCell.turnToEditMode()
         timeProfileCell.turnToEditMode()
+        
+        relationshipTableHeightConstraint.constant += 42
     }
     
     @IBAction func saveButtonTouched(_ sender: Any) {
@@ -142,13 +143,14 @@ class ProfileVC: BaseVC {
         ageProfileCell.turnToViewMode()
         frequencyProfileCell.turnToViewMode()
         timeProfileCell.turnToViewMode()
+        
+        relationshipTableHeightConstraint.constant -= 42
     }
     
 }
 
 
 extension ProfileVC: UITextViewDelegate{
-    
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         switch textView.layer {
@@ -219,4 +221,67 @@ extension ProfileVC: UIPickerViewDelegate, UIPickerViewDataSource{
         }
     }
     
+}
+
+extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return fakeUser.relationships.count
+        default:
+            return 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: RelationshipTableViewCell.identifier, for: indexPath) as! RelationshipTableViewCell
+            cell.bindData(name: fakeUser.relationships[indexPath.row])
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: InputRelationshipTableViewCell.identifier, for: indexPath) as! InputRelationshipTableViewCell
+            cell.delegate = self
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 42
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return editButton.isHidden
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("delete: \(fakeUser.relationships[indexPath.row])")
+            fakeUser.relationships.remove(at: indexPath.row)
+            tableView.reloadData()
+            relationshipTableHeightConstraint.constant -= 42
+            tableView.layoutIfNeeded()
+        }
+    }
+}
+
+extension ProfileVC: addNewRelationship {
+    func addNewRelationshipTouched(email: String) {
+        if email != "" {
+            //Check email valid
+            //Get Fullname of user
+            fakeUser.relationships.append(email)
+            relationshipTableView.reloadData()
+            relationshipTableHeightConstraint.constant += 42
+        }
+    }
+    
+    
+}
+
+protocol addNewRelationship {
+    func addNewRelationshipTouched(email: String)
 }
