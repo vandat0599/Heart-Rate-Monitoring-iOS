@@ -46,7 +46,7 @@ class BaseVC: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "background")
         view.addSubview(centerXView)
         view.addSubview(centerYView)
         NSLayoutConstraint.activate([
