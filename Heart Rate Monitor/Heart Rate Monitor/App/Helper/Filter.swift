@@ -160,19 +160,19 @@ class BBFilter: NSObject {
         result[0] = numC[0] * signal[0]
         for i in 1..<(order+1) {
             for j in 0..<i+1 {
-                result[i] = result[i] + numC[i] * signal[i-j]
+                result[i] = result[i] + numC[j] * signal[i-j]
             }
-            for j in 0..<order {
-                result[i] = result[i] - denC[i] * signal[i-j-1]
+            for j in 0..<i {
+                result[i] = result[i] - denC[j+1] * result[i-j-1]
             }
         }
         
-        for i in (order + 1)..<length + 1 {
-            for j in 0..<order+1 {
-                result[i] = result[i] + numC[i] * signal[i-j]
+        for i in (order + 1)..<length {
+            for j in 0..<i+1 {
+                result[i] = result[i] + numC[j] * signal[i-j]
             }
-            for j in 0..<order {
-                result[i] = result[i] - denC[i] * signal[i-j-1]
+            for j in 0..<i {
+                result[i] = result[i] - denC[j+1] * result[i-j-1]
             }
         }
         
