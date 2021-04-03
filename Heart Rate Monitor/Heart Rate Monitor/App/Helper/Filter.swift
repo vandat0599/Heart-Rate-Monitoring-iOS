@@ -69,6 +69,40 @@ class BBFilter: NSObject {
             return result
         }
     
+    func ComputeDenCCoeff (order: Int, lowFreq:Double, highFreq: Double)->[Double]{
+            
+            var result = [Double]()
+            let cp : Double = cos(Double.pi * (highFreq + lowFreq)/2.0)
+            let theta : Double = Double.pi * (highFreq - lowFreq)/2.0
+            let st : Double = sin(theta)
+            let ct : Double = cos(theta)
+            let s2t : Double = 2.0*st*ct
+            let c2t : Double = 2*ct*ct - 1.0
+            var rCoeff = [Double](repeating: 0.0, count: 2*order)
+            var tCoeff = [Double](repeating: 0.0, count: 2*order)
+            
+            for i in 0..<order {
+                let  poleAngle : Double = Double.pi * Double((2*i+1))/Double(2*order)
+                let sinPoleAngle : Double = sin(poleAngle)
+                let cosPoleAngle : Double = cos(poleAngle)
+                let a : Double = 1.0 + s2t*sinPoleAngle
+                rCoeff[2*i] = c2t/a
+                rCoeff[2*i+1] = s2t*cosPoleAngle/a
+                tCoeff[2*i] = -2.0*cp*(ct+st*sinPoleAngle)/a
+                tCoeff[2*i+1] = -2.0*cp*st*cosPoleAngle/a
+                
+            }
+            
+            result = Multiply(order: order, firstCoeff: tCoeff, secondCoeff: rCoeff)
+            result[1] = result[0]
+            result[0] = 1.0
+            
+            for i in 3...2*order {
+                result[i] = result[2*i-2]
+            }
+            
+            return result
+        }
     func processValue(value: Double) -> Double {
         xv[0] = xv[1]
         xv[1] = xv[2]
