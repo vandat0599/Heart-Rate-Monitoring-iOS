@@ -14,7 +14,7 @@ class BBFilter: NSObject {
     var yv = [Double](repeating: 0.0, count: numberOfPoles + 1)
     
     func ComputeLP(order: Int) -> [Double]{
-        var numCoeff = [Double](repeating: 0.0, count: order)
+        var numCoeff = [Double](repeating: 0.0, count: order + 1)
         numCoeff[0] = 1
         numCoeff[1] = Double(order)
         let n = order/2
