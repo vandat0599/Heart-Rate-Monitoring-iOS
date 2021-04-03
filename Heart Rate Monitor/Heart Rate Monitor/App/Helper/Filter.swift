@@ -152,7 +152,16 @@ class BBFilter: NSObject {
             }
             
             return numCoeff
-        }
+    }
+    
+    func butter(order: Int, lowFreq: Double, highFreq: Double)-> ([Double],[Double]){
+        let denC = ComputeDenCCoeff(order: order, lowFreq: lowFreq, highFreq: highFreq)
+        let numC = ComputeNumCoeff(order: order, lowFreq: lowFreq, highFreq: highFreq, DenC: denC)
+        return (numC , denC)
+    }
+    
+    
+    
     func processValue(value: Double) -> Double {
         xv[0] = xv[1]
         xv[1] = xv[2]
