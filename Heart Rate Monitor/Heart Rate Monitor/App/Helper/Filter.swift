@@ -102,6 +102,56 @@ class BBFilter: NSObject {
             }
             
             return result
+    }
+    func ComputeNumCoeff(order: Int, lowFreq: Double, highFreq: Double, DenC: [Double])->[Double]{
+            var numCoeff = [Double](repeating: 0.0, count: 2 * order + 1)
+        
+            var numbers = [Int]()
+            let length = order * 2 + 1
+            for i in 0..<length {
+                numbers.append(i)
+            }
+            
+            let TCoeffs = computeHP(order: order)
+            print("Tcoeff\(TCoeffs)")
+            for i in 0..<order{
+                numCoeff[2*i] = TCoeffs[i]
+                numCoeff[2*i+1] = 0.0
+            }
+            
+            numCoeff[2*order] = TCoeffs[order]
+            var cp = [Double]()
+            cp.append(2*2.0*tan(Double.pi * lowFreq/2.0))
+            cp.append(2*2.0*tan(Double.pi * highFreq/2.0))
+            
+    //        let bandWidth = cp[1] - cp[0]
+            let temp = sqrt(cp[0]*cp[1])
+            let centerFreq = 2 * atan2(temp, 4)
+            
+            let result = ComplexDouble(-1, 0)
+            var normalizedKernel = [ComplexDouble](repeating: ComplexDouble(0, 0), count: length)
+            for i in 0..<length {
+                normalizedKernel[i] = Complex.exp(-1 * Complex.sqrt(result)*centerFreq*Double(numbers[i]))
+            }
+            
+            var b: Double = 0
+            var den: Double = 0
+            
+            for i in 0..<length {
+                let temp = normalizedKernel[i] * numCoeff[i]
+                print("normalized: ", normalizedKernel[i])
+                print("numCoeff: ",numCoeff[i])
+                print(temp)
+                b += (normalizedKernel[i] * numCoeff[i]).real
+                den += (normalizedKernel[i]*DenC[i]).real;
+                print("b: ",b)
+                print("den :",den)
+            }
+            for i in 0..<length {
+                numCoeff[i] = (numCoeff[i]*den)/b
+            }
+            
+            return numCoeff
         }
     func processValue(value: Double) -> Double {
         xv[0] = xv[1]
