@@ -31,7 +31,17 @@ class BBFilter: NSObject {
         return numCoeff
     }
     
-    
+    func computeHP(order : Int) -> [Double]{
+            var numCoeff = [Double]()
+            
+            numCoeff = ComputeLP(order: order)
+            for i in 0...order {
+                if (i % 2 != 0) {
+                    numCoeff[i] = numCoeff[i] * -1
+                }
+            }
+            return numCoeff
+        }
     
     func processValue(value: Double) -> Double {
         xv[0] = xv[1]
