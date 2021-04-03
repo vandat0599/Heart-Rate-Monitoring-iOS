@@ -43,6 +43,32 @@ class BBFilter: NSObject {
             return numCoeff
         }
     
+    func Multiply(order: Int, firstCoeff : [Double], secondCoeff: [Double])-> [Double]{
+            var result = [Double](repeating: 0.0, count: 4 * order)
+            result[0] = firstCoeff[0]
+            result[1] = firstCoeff[1]
+            result[2] = secondCoeff[0]
+            result[3] = secondCoeff[1]
+            
+            for i in 1..<order {
+                result[2 * (2 * i + 1)] += secondCoeff[2 * i] * result[2 * (2 * i - 1)] - secondCoeff[2 * i + 1] * result[2 * (2 * i - 1) + 1]
+                result[2 * (2 * i + 1) + 1] += secondCoeff[2 * i] * result[2 * (2 * i - 1) + 1] + secondCoeff[2 * i + 1] * result[2 * (2 * i - 1)]
+                
+                for j in (2...2*i).reversed() {
+                    result[2*j] += firstCoeff[2*i] * result[2*(j - 1)] - firstCoeff[2*i+1] * result[2*(j-1)+1] + secondCoeff[2*i] * result[2*(j-2)] - secondCoeff[2*i+1] * result[2*(j-2)+1]
+                    result[2*j+1] += firstCoeff[2*i] * result[2*(j - 1)+1] + firstCoeff[2*i+1] * result[2*(j-1)] + secondCoeff[2*i] * result[2*(j-2)+1] + secondCoeff[2*i+1] * result[2*(j-2)]
+                }
+                
+                result[2] += firstCoeff[2*i] * result[0] - firstCoeff[2*i+1]*result[1] + secondCoeff[2*i]
+                result[3] += firstCoeff[2*i] * result[1] + firstCoeff[2*i+1]*result[0] + secondCoeff[2*i+1]
+                result[0] += firstCoeff[2*i]
+                result[1] += firstCoeff[2*i+1]
+                
+            }
+            
+            return result
+        }
+    
     func processValue(value: Double) -> Double {
         xv[0] = xv[1]
         xv[1] = xv[2]
