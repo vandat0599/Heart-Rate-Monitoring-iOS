@@ -1,22 +1,10 @@
-//
-//  Filter.swift
-//  Pulse
-//
-//  Created by Athanasios Papazoglou on 18/7/20.
-//  Copyright © 2020 Athanasios Papazoglou. All rights reserved.
-//
-
-//  Original credits go to Gurpreet Singh.
-//  He created Filter.h & Filter.m on 31/10/2013.
-//  Copyright (c) 2015 Pubnub. All rights reserved.
-//
 
 import Foundation
 
 private let numberOfZeros: Int = 10
 private let numberOfPoles: Int = 10
 private let gain: Double = 1.894427025e+01
-
+typealias ComplexDouble = Complex<Double>
 /*
  For more information head over to http://www-users.cs.york.ac.uk/~fisher/mkfilter/
  */
@@ -24,6 +12,26 @@ private let gain: Double = 1.894427025e+01
 class BBFilter: NSObject {
     var xv = [Double](repeating: 0.0, count: numberOfZeros + 1)
     var yv = [Double](repeating: 0.0, count: numberOfPoles + 1)
+    
+    func ComputeLP(order: Int) -> [Double]{
+        var numCoeff = [Double](repeating: 0.0, count: order)
+        numCoeff[0] = 1
+        numCoeff[1] = Double(order)
+        let n = order/2
+        if (n>=2){
+            for i in 2...n {
+                let value = Double((order - i + 1)) * numCoeff[i-1]/Double(i)
+                numCoeff[i] = value
+                numCoeff[order - i] = numCoeff[i]
+            }
+            
+        }
+        numCoeff[order - 1] = Double(order)
+        numCoeff[order] = 1
+        return numCoeff
+    }
+    
+    
     
     func processValue(value: Double) -> Double {
         xv[0] = xv[1]
@@ -48,9 +56,9 @@ class BBFilter: NSObject {
         yv[7] = yv[8]
         yv[8] = yv[9]
         yv[9] = yv[10]
-        
+
         yv[10] = (xv[10] - xv[0]) + 5 * (xv[2] - xv[8]) + 10 * (xv[6] - xv[4]) + (-0.0000000000 * yv[0]) + (0.0357796363 * yv[1]) + (-0.1476158522 * yv[2]) + (0.3992561394 * yv[3]) + (-1.1743136181 * yv[4]) + (2.4692165842 * yv[5]) + (-3.3820859632 * yv[6]) + (3.9628972812 * yv[7]) + (-4.3832594900 * yv[8]) + (3.2101976096 * yv[9])
-        
+
         return yv[10]
     }
 }
