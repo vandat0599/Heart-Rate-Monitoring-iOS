@@ -113,7 +113,6 @@ class BBFilter: NSObject {
             }
             
             let TCoeffs = computeHP(order: order)
-            print("Tcoeff\(TCoeffs)")
             for i in 0..<order{
                 numCoeff[2*i] = TCoeffs[i]
                 numCoeff[2*i+1] = 0.0
@@ -124,7 +123,6 @@ class BBFilter: NSObject {
             cp.append(2*2.0*tan(Double.pi * lowFreq/2.0))
             cp.append(2*2.0*tan(Double.pi * highFreq/2.0))
             
-    //        let bandWidth = cp[1] - cp[0]
             let temp = sqrt(cp[0]*cp[1])
             let centerFreq = 2 * atan2(temp, 4)
             
@@ -138,14 +136,8 @@ class BBFilter: NSObject {
             var den: Double = 0
             
             for i in 0..<length {
-                let temp = normalizedKernel[i] * numCoeff[i]
-                print("normalized: ", normalizedKernel[i])
-                print("numCoeff: ",numCoeff[i])
-                print(temp)
                 b += (normalizedKernel[i] * numCoeff[i]).real
                 den += (normalizedKernel[i]*DenC[i]).real;
-                print("b: ",b)
-                print("den :",den)
             }
             for i in 0..<length {
                 numCoeff[i] = (numCoeff[i]*den)/b
