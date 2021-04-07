@@ -9,7 +9,6 @@ import Foundation
 import Accelerate
 
 class FFT {
-    
     static func fftAnalyzer(frameOfSamples: [Double]) -> [Double] {
         let frameCount = frameOfSamples.count
         let reals = UnsafeMutableBufferPointer<Double>.allocate(capacity: frameCount)
@@ -30,5 +29,4 @@ class FFT {
         let imaginaryDoubles = Array(imags)
         return Range(0...realDoubles.count-1).map { Double(sqrt(pow(realDoubles[$0], 2) + pow(imaginaryDoubles[$0], 2))) }
     }
-    
 }

@@ -21,6 +21,10 @@
 		84E46096261566F700F60040 /* RelationshipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E46094261566F700F60040 /* RelationshipTableViewCell.xib */; };
 		84E460B026158C0200F60040 /* InputRelationshipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E460AE26158C0200F60040 /* InputRelationshipTableViewCell.swift */; };
 		84E460B126158C0200F60040 /* InputRelationshipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E460AF26158C0200F60040 /* InputRelationshipTableViewCell.xib */; };
+		CE001609261D7D0600B9374F /* HeartRateRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001608261D7D0600B9374F /* HeartRateRecord.swift */; };
+		CE001614261D834800B9374F /* HeartRateStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001613261D834800B9374F /* HeartRateStateView.swift */; };
+		CE001619261D83F700B9374F /* UINibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001618261D83F700B9374F /* UINibView.swift */; };
+		CE001629261D846600B9374F /* HeartRateStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE001628261D846600B9374F /* HeartRateStateView.xib */; };
 		CE06D10125FD1DA4007CE81C /* lottie-progress.json in Resources */ = {isa = PBXBuildFile; fileRef = CE06D10025FD1DA4007CE81C /* lottie-progress.json */; };
 		CE10731425FDCD8B003777D6 /* AVCaptureDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */; };
 		CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731725FDCDC1003777D6 /* ColorUtils.swift */; };
@@ -140,6 +144,10 @@
 		BA640A8AFBAE7C0DBAFB2B35 /* Pods-Heart Rate Monitor-Heart Rate MonitorUITests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor-Heart Rate MonitorUITests.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor-Heart Rate MonitorUITests/Pods-Heart Rate Monitor-Heart Rate MonitorUITests.production.xcconfig"; sourceTree = "<group>"; };
 		C3B3E9323FA191E33E0E8E3A /* Pods-Heart Rate MonitorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.release.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.release.xcconfig"; sourceTree = "<group>"; };
 		C7186A67983926F1BFAF72A5 /* Pods_Heart_Rate_Monitor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heart_Rate_Monitor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE001608261D7D0600B9374F /* HeartRateRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateRecord.swift; sourceTree = "<group>"; };
+		CE001613261D834800B9374F /* HeartRateStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateStateView.swift; sourceTree = "<group>"; };
+		CE001618261D83F700B9374F /* UINibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINibView.swift; sourceTree = "<group>"; };
+		CE001628261D846600B9374F /* HeartRateStateView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeartRateStateView.xib; sourceTree = "<group>"; };
 		CE06D10025FD1DA4007CE81C /* lottie-progress.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-progress.json"; sourceTree = "<group>"; };
 		CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureDevice.swift; sourceTree = "<group>"; };
 		CE10731725FDCDC1003777D6 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
@@ -332,6 +340,51 @@
 			path = InputRelationshipTableViewCell;
 			sourceTree = "<group>";
 		};
+		CE00160C261D81ED00B9374F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
+				CE10736025FE7211003777D6 /* HeartWaveView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CE00160D261D81F100B9374F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CE00160E261D81FB00B9374F /* Result */ = {
+			isa = PBXGroup;
+			children = (
+				CE001610261D820600B9374F /* ViewModel */,
+				CE00160F261D820200B9374F /* View */,
+			);
+			path = Result;
+			sourceTree = "<group>";
+		};
+		CE00160F261D820200B9374F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CE9965E626141BCF00104065 /* HeartRateResultVC.swift */,
+				CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */,
+				CE001613261D834800B9374F /* HeartRateStateView.swift */,
+				CE001628261D846600B9374F /* HeartRateStateView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CE001610261D820600B9374F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		CE1E227F25F72A0200C6632E = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +464,7 @@
 				CE7F8A2125FC902F00A2EDC9 /* UserVC.swift */,
 				CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */,
 				CE7F8A4F25FCB71F00A2EDC9 /* Heart Rate Monitor */,
+				CE00160E261D81FB00B9374F /* Result */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -420,6 +474,7 @@
 			children = (
 				CE7F8A3325FCB33A00A2EDC9 /* RoundedView.swift */,
 				84230D4D2603184900EC9DD0 /* GradientColor.swift */,
+				CE001618261D83F700B9374F /* UINibView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -427,12 +482,8 @@
 		CE7F8A4F25FCB71F00A2EDC9 /* Heart Rate Monitor */ = {
 			isa = PBXGroup;
 			children = (
-				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
-				CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */,
-				CE10736025FE7211003777D6 /* HeartWaveView.swift */,
-				CE9965E626141BCF00104065 /* HeartRateResultVC.swift */,
-				CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */,
-				CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */,
+				CE00160D261D81F100B9374F /* ViewModel */,
+				CE00160C261D81ED00B9374F /* View */,
 			);
 			path = "Heart Rate Monitor";
 			sourceTree = "<group>";
@@ -520,6 +571,7 @@
 			isa = PBXGroup;
 			children = (
 				84C718C52606F85F00BA2C6D /* User.swift */,
+				CE001608261D7D0600B9374F /* HeartRateRecord.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -720,6 +772,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE001629261D846600B9374F /* HeartRateStateView.xib in Resources */,
 				CE7AF9BC261431490035AD17 /* HeartRateResultVC.xib in Resources */,
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
 				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
@@ -893,12 +946,15 @@
 				CE10732225FDCDDF003777D6 /* PulseDetector.swift in Sources */,
 				845DF6122603345B00DD26BF /* SignUpVC.swift in Sources */,
 				CEC78E9A25F73A07007BA177 /* UIViewController+.swift in Sources */,
+				CE001609261D7D0600B9374F /* HeartRateRecord.swift in Sources */,
+				CE001619261D83F700B9374F /* UINibView.swift in Sources */,
 				CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */,
 				CE9965EB26141BDA00104065 /* HeartRateResultVM.swift in Sources */,
 				CEC78EA325F73A07007BA177 /* UITableView+.swift in Sources */,
 				84E46095261566F700F60040 /* RelationshipTableViewCell.swift in Sources */,
 				84C718C62606F85F00BA2C6D /* User.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
+				CE001614261D834800B9374F /* HeartRateStateView.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
 				CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */,
 				CE20A1162606DE480084F2BA /* FFT.swift in Sources */,
