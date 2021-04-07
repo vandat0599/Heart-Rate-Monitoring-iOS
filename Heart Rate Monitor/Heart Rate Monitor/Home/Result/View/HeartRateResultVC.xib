@@ -12,7 +12,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HeartRateResultVC" customModule="Heart_Rate_Monitor" customModuleProvider="target">
             <connections>
                 <outlet property="heartRateNumberLabel" destination="9p3-ge-CrO" id="w15-un-GcY"/>
-                <outlet property="normalControl" destination="wI7-Af-h1V" id="UEK-1Q-eve"/>
+                <outlet property="normalControl" destination="wI7-Af-h1V" id="DaX-jd-7dl"/>
+                <outlet property="noteTextField" destination="K4g-jl-gZt" id="EzB-mD-TuH"/>
                 <outlet property="runningControl" destination="Ctd-QJ-3Er" id="NgO-Mx-e4E"/>
                 <outlet property="view" destination="iN0-l3-epB" id="pl8-UP-pgp"/>
             </connections>
@@ -61,51 +62,21 @@
                                     <state key="normal" title="SAVE" backgroundImage="img-button-background-gradient">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
+                                    <connections>
+                                        <action selector="saveButtonTapped:" destination="-1" eventType="touchUpInside" id="ZUD-di-qnE"/>
+                                    </connections>
                                 </button>
-                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wI7-Af-h1V" userLabel="Normal Control" customClass="UIControl">
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wI7-Af-h1V" userLabel="Normal Control" customClass="HeartRateStateView" customModule="Heart_Rate_Monitor" customModuleProvider="target">
                                     <rect key="frame" x="68" y="149.5" width="124" height="145"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-gradient-bg-1" translatesAutoresizingMaskIntoConstraints="NO" id="JMy-Av-UlP">
-                                            <rect key="frame" x="0.0" y="0.0" width="124" height="145"/>
-                                        </imageView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-person-normal" translatesAutoresizingMaskIntoConstraints="NO" id="Kpy-1G-ga2">
-                                            <rect key="frame" x="46.5" y="10" width="30.5" height="105.5"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="NORMAL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y23-x4-fB3">
-                                            <rect key="frame" x="0.0" y="115.5" width="124" height="19.5"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="y23-x4-fB3" secondAttribute="bottom" constant="10" id="5Uw-U2-x6a"/>
-                                        <constraint firstItem="JMy-Av-UlP" firstAttribute="centerY" secondItem="wI7-Af-h1V" secondAttribute="centerY" id="7bx-S7-KPu"/>
                                         <constraint firstAttribute="width" secondItem="wI7-Af-h1V" secondAttribute="height" multiplier="3:3.5" id="ByB-KY-kPC"/>
-                                        <constraint firstItem="JMy-Av-UlP" firstAttribute="centerX" secondItem="wI7-Af-h1V" secondAttribute="centerX" id="Ol6-Th-OYy"/>
-                                        <constraint firstItem="Kpy-1G-ga2" firstAttribute="top" secondItem="wI7-Af-h1V" secondAttribute="top" constant="10" id="ROJ-Ae-oXa"/>
-                                        <constraint firstItem="JMy-Av-UlP" firstAttribute="height" secondItem="wI7-Af-h1V" secondAttribute="height" id="S2z-hU-pAw"/>
-                                        <constraint firstItem="Kpy-1G-ga2" firstAttribute="centerX" secondItem="wI7-Af-h1V" secondAttribute="centerX" id="S9g-Sc-srs"/>
-                                        <constraint firstItem="y23-x4-fB3" firstAttribute="top" secondItem="Kpy-1G-ga2" secondAttribute="bottom" id="WZO-O1-lDM"/>
-                                        <constraint firstAttribute="trailing" secondItem="y23-x4-fB3" secondAttribute="trailing" id="vAa-Fn-zcA"/>
-                                        <constraint firstItem="JMy-Av-UlP" firstAttribute="width" secondItem="wI7-Af-h1V" secondAttribute="width" id="xWX-a5-nyy"/>
-                                        <constraint firstItem="y23-x4-fB3" firstAttribute="leading" secondItem="wI7-Af-h1V" secondAttribute="leading" id="z7K-uP-2OO"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                             <real key="value" value="10"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                            <real key="value" value="1"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="normalControlTapped:" destination="-1" eventType="valueChanged" id="rkd-Va-jpc"/>
-                                    </connections>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckz-SH-XfA">
                                     <rect key="frame" x="179.5" y="324.5" width="55" height="29"/>
@@ -113,50 +84,17 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ctd-QJ-3Er" userLabel="Running Control" customClass="UIControl">
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ctd-QJ-3Er" userLabel="Running Control" customClass="HeartRateStateView" customModule="Heart_Rate_Monitor" customModuleProvider="target">
                                     <rect key="frame" x="222" y="149.5" width="124" height="145"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NPb-c1-HJV">
-                                            <rect key="frame" x="0.0" y="0.0" width="124" height="145"/>
-                                        </imageView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-person-running" translatesAutoresizingMaskIntoConstraints="NO" id="unv-RO-CvO">
-                                            <rect key="frame" x="32.5" y="10" width="59" height="105"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="ACTIVE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ZO-Y1-pBU">
-                                            <rect key="frame" x="0.0" y="115" width="124" height="20"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
-                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="Ctd-QJ-3Er" secondAttribute="height" multiplier="3:3.5" id="2HH-QJ-NnD"/>
-                                        <constraint firstAttribute="trailing" secondItem="7ZO-Y1-pBU" secondAttribute="trailing" id="8or-my-tJP"/>
-                                        <constraint firstAttribute="bottom" secondItem="7ZO-Y1-pBU" secondAttribute="bottom" constant="10" id="FeV-eX-ws0"/>
-                                        <constraint firstItem="7ZO-Y1-pBU" firstAttribute="top" secondItem="unv-RO-CvO" secondAttribute="bottom" id="SDj-5m-8wW"/>
-                                        <constraint firstItem="NPb-c1-HJV" firstAttribute="height" secondItem="Ctd-QJ-3Er" secondAttribute="height" id="eQn-n2-tF9"/>
-                                        <constraint firstItem="7ZO-Y1-pBU" firstAttribute="leading" secondItem="Ctd-QJ-3Er" secondAttribute="leading" id="hKo-Yo-dz2"/>
-                                        <constraint firstItem="unv-RO-CvO" firstAttribute="centerX" secondItem="Ctd-QJ-3Er" secondAttribute="centerX" id="iea-g8-H3q"/>
-                                        <constraint firstItem="unv-RO-CvO" firstAttribute="top" secondItem="Ctd-QJ-3Er" secondAttribute="top" constant="10" id="juF-Hv-ddC"/>
-                                        <constraint firstItem="NPb-c1-HJV" firstAttribute="width" secondItem="Ctd-QJ-3Er" secondAttribute="width" id="jye-hM-Jfy"/>
-                                        <constraint firstItem="NPb-c1-HJV" firstAttribute="centerX" secondItem="Ctd-QJ-3Er" secondAttribute="centerX" id="lSW-ar-EGP"/>
-                                        <constraint firstItem="NPb-c1-HJV" firstAttribute="centerY" secondItem="Ctd-QJ-3Er" secondAttribute="centerY" id="yB4-oJ-Xyx"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                             <real key="value" value="10"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                            <real key="value" value="1"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                            <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="runningControlTapped:" destination="-1" eventType="valueChanged" id="wev-mB-Bkd"/>
-                                    </connections>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-KS-tlf">
                                     <rect key="frame" x="20" y="373.5" width="374" height="128"/>
@@ -199,11 +137,10 @@
                                 <constraint firstItem="Ctd-QJ-3Er" firstAttribute="width" secondItem="Ctd-QJ-3Er" secondAttribute="height" multiplier="3:3.5" id="1xH-HV-k90"/>
                                 <constraint firstItem="Ctd-QJ-3Er" firstAttribute="width" secondItem="POm-1A-OPj" secondAttribute="width" multiplier="0.3" id="4ey-je-whF"/>
                                 <constraint firstItem="Ej1-KS-tlf" firstAttribute="top" secondItem="ckz-SH-XfA" secondAttribute="bottom" constant="20" id="9O1-7e-3EQ"/>
-                                <constraint firstItem="Ctd-QJ-3Er" firstAttribute="centerY" secondItem="JMy-Av-UlP" secondAttribute="centerY" id="D5V-30-Bfu"/>
                                 <constraint firstItem="GlJ-sa-cF7" firstAttribute="top" secondItem="Ej1-KS-tlf" secondAttribute="bottom" constant="40" id="D99-7Z-UDi"/>
                                 <constraint firstItem="CUr-o5-a8z" firstAttribute="leading" secondItem="9p3-ge-CrO" secondAttribute="trailing" constant="10" id="GlY-dl-QeB"/>
-                                <constraint firstItem="ckz-SH-XfA" firstAttribute="top" secondItem="JMy-Av-UlP" secondAttribute="bottom" constant="30" id="IyV-9d-WsX"/>
                                 <constraint firstItem="Mi5-RT-ooU" firstAttribute="leading" secondItem="CUr-o5-a8z" secondAttribute="trailing" constant="10" id="KFE-e8-tmh"/>
+                                <constraint firstItem="ckz-SH-XfA" firstAttribute="top" secondItem="wI7-Af-h1V" secondAttribute="bottom" constant="30" id="Lqw-gD-7M1"/>
                                 <constraint firstItem="wI7-Af-h1V" firstAttribute="top" secondItem="2Fz-9e-TSC" secondAttribute="bottom" constant="20" id="WFo-Hr-WG3"/>
                                 <constraint firstItem="9p3-ge-CrO" firstAttribute="top" secondItem="POm-1A-OPj" secondAttribute="top" constant="20" id="aF3-Mn-qCx"/>
                                 <constraint firstItem="GlJ-sa-cF7" firstAttribute="centerX" secondItem="POm-1A-OPj" secondAttribute="centerX" id="an7-Ku-4eI"/>
@@ -216,6 +153,7 @@
                                 <constraint firstItem="2Fz-9e-TSC" firstAttribute="centerX" secondItem="POm-1A-OPj" secondAttribute="centerX" id="oLk-Kg-HwW"/>
                                 <constraint firstItem="2Fz-9e-TSC" firstAttribute="top" secondItem="9p3-ge-CrO" secondAttribute="bottom" constant="30" id="oi8-Ca-kvw"/>
                                 <constraint firstItem="wI7-Af-h1V" firstAttribute="width" secondItem="POm-1A-OPj" secondAttribute="width" multiplier="0.3" id="tVK-UH-sXd"/>
+                                <constraint firstItem="Ctd-QJ-3Er" firstAttribute="centerY" secondItem="wI7-Af-h1V" secondAttribute="centerY" id="vyj-uG-lx6"/>
                                 <constraint firstItem="Mi5-RT-ooU" firstAttribute="centerY" secondItem="9p3-ge-CrO" secondAttribute="centerY" id="wno-vL-p2x"/>
                                 <constraint firstItem="Ctd-QJ-3Er" firstAttribute="leading" secondItem="CUr-o5-a8z" secondAttribute="trailing" constant="15" id="yWf-iX-8of"/>
                                 <constraint firstAttribute="trailing" secondItem="Ej1-KS-tlf" secondAttribute="trailing" constant="20" id="zSD-b1-Jno"/>
@@ -243,15 +181,12 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ZFx-IM-FHu" secondAttribute="bottom" id="dzf-yn-fwq"/>
                 <constraint firstItem="ZFx-IM-FHu" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="x8o-ez-eMg"/>
             </constraints>
-            <point key="canvasLocation" x="-822" y="86"/>
+            <point key="canvasLocation" x="-1133" y="88"/>
         </view>
     </objects>
     <resources>
         <image name="ic-heart-gradient" width="52.5" height="45.5"/>
-        <image name="ic-person-normal" width="30.5" height="60.5"/>
-        <image name="ic-person-running" width="59" height="60"/>
         <image name="img-button-background-gradient" width="298" height="50"/>
-        <image name="img-gradient-bg-1" width="91" height="109"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -300,7 +300,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         viewModel?.timeupTrigger
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
-                let vc = UINavigationController(rootViewController: HeartRateResultVC(viewModel: HeartRateResultVMImp(heartRateNumber: self.viewModel.heartRateTrackNumber.value)))
+                let vc = UINavigationController(rootViewController: HeartRateResultVC(viewModel: HeartRateResultVMImp(heartRateRecord: HeartRateRecord(value: self.viewModel.heartRateTrackNumber.value, note: Date().toString(format: "MM-dd-yyyy HH:mm")))))
                 self.present(vc, animated: true) {
                     self.viewModel.togglePlay()
                 }
