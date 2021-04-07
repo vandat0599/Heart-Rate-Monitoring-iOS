@@ -12,6 +12,7 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
     // MARK: - ui components
     lazy var bottomBar: BottomBarView = {
         let view = BottomBarView()
+        view.backgroundColor = UIColor(named: "white-black")
         view.delegate = self
         view.selectedIndex = 1
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +34,7 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
     init() {
         let homeVC = UINavigationController(rootViewController: HistoryVC())
         let notificationListVC = UINavigationController(rootViewController: HeartRateVC(viewModel: HeartRateVCVMImp()))
-        let settingVC = UINavigationController(rootViewController: UserVC())
+        let settingVC = UINavigationController(rootViewController: ProfileVC())
         vcArray = [
           homeVC,
           notificationListVC,
