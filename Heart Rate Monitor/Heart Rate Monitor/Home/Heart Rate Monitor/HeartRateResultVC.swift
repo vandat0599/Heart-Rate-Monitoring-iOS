@@ -10,6 +10,9 @@ import UIKit
 class HeartRateResultVC: BasePresentVC {
     
     @IBOutlet weak var heartRateNumberLabel: UILabel!
+    @IBOutlet weak var normalControl: UIControl!
+    @IBOutlet weak var runningControl: UIControl!
+    
     private var viewModel: HeartRateResultVM
     
     init(viewModel: HeartRateResultVM) {
@@ -27,6 +30,10 @@ class HeartRateResultVC: BasePresentVC {
         bindView()
     }
     
+    private func setupView() {
+        
+    }
+    
     private func bindView() {
         viewModel.heartRateResultNumber
             .bind { (value) in
@@ -34,4 +41,12 @@ class HeartRateResultVC: BasePresentVC {
             }
             .disposed(by: disposeBag)
     }
+    @IBAction func normalControlTapped(_ sender: Any) {
+        
+    }
+    
+    @IBAction func runningControlTapped(_ sender: Any) {
+        
+    }
+    
 }
