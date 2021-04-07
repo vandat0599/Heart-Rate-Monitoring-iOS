@@ -7,6 +7,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Accelerate
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

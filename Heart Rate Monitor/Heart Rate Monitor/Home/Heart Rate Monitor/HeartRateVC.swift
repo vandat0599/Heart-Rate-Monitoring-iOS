@@ -10,8 +10,9 @@ import Lottie
 import RxSwift
 import RxCocoa
 import AVFoundation
+import Charts
 
-class HeartRateVC: BaseVC {
+class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private lazy var guideLabel: UILabel = {
         let view = UILabel()
@@ -93,16 +94,28 @@ class HeartRateVC: BaseVC {
 
     private lazy var playView: UIControl = {
         let view = UIControl()
+        view.isHidden = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var heartWaveView: HeartWaveView = {
-        let view = HeartWaveView()
+    private lazy var chartView: LineChartView = {
+        let view = LineChartView()
+        view.isHidden = false
+        view.delegate = self
+        view.chartDescription?.enabled = false
+        view.dragEnabled = true
+        view.setScaleEnabled(false)
+        view.pinchZoomEnabled = true
+        view.autoScaleMinMaxEnabled = false
+        view.rightAxis.enabled = false
+        view.leftAxis.enabled = false
+        view.legend.enabled = false
+        view.xAxis.enabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+        
     private var playViewTopAnchor: NSLayoutConstraint!
     
     private var heartRateManager: HeartRateManager!
@@ -127,7 +140,7 @@ class HeartRateVC: BaseVC {
         view.backgroundColor = .white
         view.addSubview(guideLabel)
         view.addSubview(playView)
-        view.addSubview(heartWaveView)
+        view.addSubview(chartView)
         playView.addSubview(backgroundImage)
         playView.addSubview(progressView)
         playView.addSubview(cameraView)
@@ -136,15 +149,15 @@ class HeartRateVC: BaseVC {
         playView.addSubview(preparingAnimationView)
         playViewTopAnchor = playView.topAnchor.constraint(equalTo: centerYView.bottomAnchor, constant: -UIScreen.main.bounds.width*0.2/2)
         NSLayoutConstraint.activate([
-            guideLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            guideLabel.bottomAnchor.constraint(equalTo: playView.topAnchor, constant: -20),
+            guideLabel.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
+            guideLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             guideLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             guideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            heartWaveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            heartWaveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            heartWaveView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            heartWaveView.bottomAnchor.constraint(equalTo: playView.topAnchor),
+            chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            chartView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            chartView.bottomAnchor.constraint(equalTo: playView.topAnchor),
             
             playViewTopAnchor,
             playView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -174,10 +187,10 @@ class HeartRateVC: BaseVC {
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
             
-            preparingAnimationView.leadingAnchor.constraint(equalTo: playView.leadingAnchor),
-            preparingAnimationView.trailingAnchor.constraint(equalTo: playView.trailingAnchor),
-            preparingAnimationView.topAnchor.constraint(equalTo: playView.topAnchor),
-            preparingAnimationView.bottomAnchor.constraint(equalTo: playView.bottomAnchor),
+            preparingAnimationView.leadingAnchor.constraint(equalTo: playView.leadingAnchor, constant: 20),
+            preparingAnimationView.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -20),
+            preparingAnimationView.topAnchor.constraint(equalTo: playView.topAnchor, constant: 20),
+            preparingAnimationView.bottomAnchor.constraint(equalTo: playView.bottomAnchor, constant: -20),
         ])
         view.layoutIfNeeded()
         initVideoCapture()
@@ -186,28 +199,29 @@ class HeartRateVC: BaseVC {
     }
     
     private func bindViews() {
-        _ = viewModel?.isPlaying.subscribe(onNext: {[weak self] (value) in
-            guard let self = self else { return }
-            self.playViewTopAnchor.constant = value ? 0 : -UIScreen.main.bounds.width*0.2/2
-            self.cameraView.isHidden = !value
-            self.progressView.isHidden = !value
-            self.playIconImageView.isHidden = value
-            self.guideLabel.isHidden = !value
-            UIView.animate(withDuration: 0.4) {
-                self.view.layoutIfNeeded()
-                self.progressView.alpha = !value ? 0.0 : 1.0
-                self.cameraView.alpha = !value ? 0.0 : 1.0
-                self.playIconImageView.alpha = value ? 0.0 : 1.0
-                self.guideLabel.alpha = !value ? 0.0 : 1.0
-            }
-            self.progressView.currentProgress = 0
-            if value {
-                self.heartRateManager.startCapture()
-            } else {
-                self.heartRateManager.stopCapture()
-            }
-            self.navigationItem.title = value ? AppString.keepYourFinger : AppString.heartRateMonitor
-        })
+        viewModel?.isPlaying
+            .bind(onNext: {[unowned self] (value) in
+                self.playViewTopAnchor.constant = value ? 0 : -UIScreen.main.bounds.width*0.2/2
+                self.cameraView.isHidden = !value
+                self.progressView.isHidden = !value
+                self.playIconImageView.isHidden = value
+                self.guideLabel.isHidden = !value
+                UIView.animate(withDuration: 0.4) {
+                    self.view.layoutIfNeeded()
+                    self.progressView.alpha = !value ? 0.0 : 1.0
+                    self.cameraView.alpha = !value ? 0.0 : 1.0
+                    self.playIconImageView.alpha = value ? 0.0 : 1.0
+                    self.guideLabel.alpha = !value ? 0.0 : 1.0
+                }
+                self.progressView.currentProgress = 0
+                if value {
+                    self.heartRateManager.startCapture()
+                } else {
+                    self.heartRateManager.stopCapture()
+                }
+                self.navigationItem.title = value ? AppString.keepYourFinger : AppString.heartRateMonitor
+            })
+            .disposed(by: disposeBag)
         
         viewModel?.heartRateTrackNumber
             .map { "\($0 == 0 ? "--" : "\($0)")\nbpm" }
@@ -227,7 +241,6 @@ class HeartRateVC: BaseVC {
                     self.progressView.stop()
                     self.progressView.currentProgress = 0
                 } else {
-                    self.heartWaveView.ECGDraw(color: .red, heartRateNumber: self.viewModel.heartRateTrackNumber.value)
                     self.progressView.play()
                 }
             })
@@ -252,10 +265,16 @@ class HeartRateVC: BaseVC {
         viewModel?.isMeasuring
             .bind(onNext: {[unowned self] (value) in
                 DispatchQueue.main.async {
-                    self.playView.isUserInteractionEnabled = !value
-                    if !value {
-                        self.heartWaveView.removeAllLayer()
+                    if value {
+                        self.chartView.isHidden = false
+                        UIView.animate(withDuration: 0.4) {
+                            self.chartView.alpha = !value ? 0.0 : 1.0
+                        }
+                    } else {
+                        self.chartView.isHidden = true
+                        self.reloadChartData(value: nil)
                     }
+                    self.playView.isUserInteractionEnabled = !value
                 }
             })
             .disposed(by: disposeBag)
@@ -264,22 +283,61 @@ class HeartRateVC: BaseVC {
             .subscribe(onNext: {[unowned self] (value) in
                 if self.viewModel?.isMeasuring.value ?? false {
                     self.guideLabel.isHidden = value
-                    self.heartWaveView.isHidden = !value
                     self.heartRateTrackLabel.isHidden = !value
                     self.preparingAnimationView.isHidden = value
                     UIView.animate(withDuration: 0.4) {
-                        self.heartWaveView.alpha = !value ? 0.0 : 1.0
                         self.heartRateTrackLabel.alpha = !value ? 0.0 : 1.0
                         self.preparingAnimationView.alpha = value ? 0.0 : 1.0
                     }
                 } else {
                     self.guideLabel.isHidden = false
-                    self.heartWaveView.isHidden = true
                     self.preparingAnimationView.isHidden = true
                     self.heartRateTrackLabel.isHidden = true
                 }
             })
             .disposed(by: disposeBag)
+        
+        viewModel?.timeupTrigger
+            .bind(onNext: {[unowned self] (value) in
+                guard value else { return }
+                let vc = UINavigationController(rootViewController: HeartRateResultVC(viewModel: HeartRateResultVMImp(heartRateNumber: self.viewModel.heartRateTrackNumber.value)))
+                self.present(vc, animated: true) {
+                    self.viewModel.togglePlay()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.filteredValueTrigger
+            .bind(onNext: {[unowned self] (value) in
+                DispatchQueue.main.async {
+                    if chartView.isHidden == true {
+                        chartView.isHidden = false
+                    }
+                    self.reloadChartData(value: value)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func reloadChartData(value: Double?) {
+        guard let value = value else {
+            let dataSet = LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 0)])
+            dataSet.axisDependency = .left
+            dataSet.setColor(.red)
+            dataSet.lineWidth = 2
+            dataSet.drawCirclesEnabled = false
+            dataSet.drawCircleHoleEnabled = false
+            let lineChartData: LineChartData = LineChartData.init(dataSets: [dataSet])
+            lineChartData.setValueTextColor(.clear)
+            chartView.data = lineChartData
+            return
+        }
+        chartView.data?.addEntry(ChartDataEntry(x: Double(viewModel.filtedValues.count), y: value), dataSetIndex: 0)
+        if viewModel.filtedValues.count > 100 {
+            chartView.setVisibleXRange(minXRange: 1, maxXRange: 100)
+        }
+        chartView.notifyDataSetChanged()
+        chartView.moveViewToX(Double(viewModel.filtedValues.count))
     }
     
     // MARK: - Frames Capture Methods
