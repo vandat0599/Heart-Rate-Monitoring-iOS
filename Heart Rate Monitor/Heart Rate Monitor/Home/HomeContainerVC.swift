@@ -12,6 +12,7 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
     // MARK: - ui components
     lazy var bottomBar: BottomBarView = {
         let view = BottomBarView()
+        view.backgroundColor = UIColor(named: "white-black")
         view.delegate = self
         view.selectedIndex = 1
         view.translatesAutoresizingMaskIntoConstraints = false

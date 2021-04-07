@@ -23,7 +23,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         paragraphStyle.alignment = .center
         view.attributedText = NSMutableAttributedString(string: AppString.heartRateGuides as String, attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18),
-            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.foregroundColor: UIColor(named: "black-white")!,
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
         ])
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +40,8 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     }()
     
     private lazy var playIconImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "ic-play"))
+        let view = UIImageView(image: UIImage(named: "ic-play")?.withRenderingMode(.alwaysTemplate))
+        view.tintColor = UIColor(named: "black-white")!
         view.contentMode = .scaleAspectFit
         view.isUserInteractionEnabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -137,7 +138,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private func setupView() {
         navigationItem.title = AppString.heartRateMonitor
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "white-black")!
         view.addSubview(guideLabel)
         view.addSubview(playView)
         view.addSubview(chartView)

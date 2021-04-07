@@ -13,7 +13,6 @@ class HeartRateResultVC: BasePresentVC {
     @IBOutlet weak var normalControl: HeartRateStateView!
     @IBOutlet weak var runningControl: HeartRateStateView!
     
-    
     @IBOutlet weak var noteTextField: UITextField!
     
     private var viewModel: HeartRateResultVM
@@ -34,6 +33,7 @@ class HeartRateResultVC: BasePresentVC {
     }
     
     private func setupView() {
+        view.backgroundColor = UIColor(named: "white-black")
         navigationItem.title = "Result"
         normalControl.titlelabel.text = "Normal"
         normalControl.isSelected = true
