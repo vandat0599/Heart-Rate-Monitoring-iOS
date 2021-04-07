@@ -18,7 +18,7 @@ class BottomBarView: UIView {
     private lazy var itemHistory: TabItemView = {
         let view = TabItemView()
         view.backgroundColor = .clear
-        view.config(iconName: "ic-history-tab", title: "History", normalColor: .lightGray, selectedColor: .black)
+        view.config(iconName: "ic-history-tab", title: "History", normalColor: .lightGray, selectedColor: UIColor(named: "black-white")!)
         view.addTarget(self, action: #selector(itemTapped(_:)), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -27,7 +27,7 @@ class BottomBarView: UIView {
     private lazy var itemUser: TabItemView = {
         let view = TabItemView()
         view.backgroundColor = .clear
-        view.config(iconName: "ic-user-tab", title: "Profile", normalColor: .lightGray, selectedColor: .black)
+        view.config(iconName: "ic-user-tab", title: "Profile", normalColor: .lightGray, selectedColor: UIColor(named: "black-white")!)
         view.addTarget(self, action: #selector(itemTapped(_:)), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
