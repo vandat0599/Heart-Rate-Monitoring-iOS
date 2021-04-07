@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		108A837F606DD09CFE7F2E77 /* Pods_Heart_Rate_Monitor_Heart_Rate_MonitorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E47FAAA0D01FF3D807DF878 /* Pods_Heart_Rate_Monitor_Heart_Rate_MonitorUITests.framework */; };
+		1DE870862614E55B006A38C2 /* Complex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE870852614E55B006A38C2 /* Complex.swift */; };
+		1DE8708A2614E588006A38C2 /* FloatingPointMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE870892614E588006A38C2 /* FloatingPointMath.swift */; };
 		81D1917AA40E24FA1005A042 /* Pods_Heart_Rate_MonitorTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 579497AEDB20702A5390C924 /* Pods_Heart_Rate_MonitorTests.framework */; };
 		84230D4E2603184900EC9DD0 /* GradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84230D4D2603184900EC9DD0 /* GradientColor.swift */; };
 		84575B772607844200711760 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84575B762607844200711760 /* ProfileCell.swift */; };
@@ -122,6 +124,8 @@
 /* Begin PBXFileReference section */
 		0B74324F843F9DBE87023F05 /* Pods-Heart Rate MonitorTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.staging.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.staging.xcconfig"; sourceTree = "<group>"; };
 		13946A76B8F33140617BC1A8 /* Pods-Heart Rate MonitorTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.production.xcconfig"; sourceTree = "<group>"; };
+		1DE870852614E55B006A38C2 /* Complex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complex.swift; sourceTree = "<group>"; };
+		1DE870892614E588006A38C2 /* FloatingPointMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointMath.swift; sourceTree = "<group>"; };
 		27BB2FC9DAFF478BD83ADD15 /* Pods-Heart Rate Monitor.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.staging.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.staging.xcconfig"; sourceTree = "<group>"; };
 		579497AEDB20702A5390C924 /* Pods_Heart_Rate_MonitorTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heart_Rate_MonitorTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6530B35DA96698733F756423 /* Pods-Heart Rate Monitor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.debug.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.debug.xcconfig"; sourceTree = "<group>"; };
@@ -608,6 +612,8 @@
 				CE10731B25FDCDD3003777D6 /* HeartRateManager.swift */,
 				CE10731725FDCDC1003777D6 /* ColorUtils.swift */,
 				CE20A1152606DE480084F2BA /* FFT.swift */,
+				1DE870852614E55B006A38C2 /* Complex.swift */,
+				1DE870892614E588006A38C2 /* FloatingPointMath.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -939,6 +945,7 @@
 				CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */,
 				CE10736125FE7211003777D6 /* HeartWaveView.swift in Sources */,
 				CEC78E1525F732A4007BA177 /* AppString.swift in Sources */,
+				1DE870862614E55B006A38C2 /* Complex.swift in Sources */,
 				CEC78E9725F73A07007BA177 /* String+.swift in Sources */,
 				CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */,
 				CEC78E9C25F73A07007BA177 /* UICollectionView+.swift in Sources */,
@@ -983,6 +990,7 @@
 				84C718992606EB3200BA2C6D /* ProfileVC.swift in Sources */,
 				84E460B026158C0200F60040 /* InputRelationshipTableViewCell.swift in Sources */,
 				CEC78EA025F73A07007BA177 /* Double+.swift in Sources */,
+				1DE8708A2614E588006A38C2 /* FloatingPointMath.swift in Sources */,
 				CEC78E9D25F73A07007BA177 /* UITapGestureRecognizer+.swift in Sources */,
 				CEC78E0525F7327B007BA177 /* Environment.swift in Sources */,
 				CEC78E9825F73A07007BA177 /* UITextField+.swift in Sources */,
@@ -1097,13 +1105,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7859BCHX87;
+				DEVELOPMENT_TEAM = 8UJMBWQY69;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate20212;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1223,13 +1231,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7859BCHX87;
+				DEVELOPMENT_TEAM = 8UJMBWQY69;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate20212;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1349,13 +1357,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7859BCHX87;
+				DEVELOPMENT_TEAM = 8UJMBWQY69;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate20212;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
