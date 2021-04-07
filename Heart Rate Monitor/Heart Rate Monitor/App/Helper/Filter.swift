@@ -13,6 +13,19 @@ class BBFilter: NSObject {
     var xv = [Double](repeating: 0.0, count: numberOfZeros + 1)
     var yv = [Double](repeating: 0.0, count: numberOfPoles + 1)
     
+    func DFT(signal : [Double]) -> [Double]{
+        var result = [Double]()
+        let n = signal.count
+        for k in 0..<n {
+            var sum = Complex(0, 0)
+            for i in 0..<n {
+                sum = sum + Complex.exp(Complex(0, -2 * Double.pi*(Double(i)*Double(k)/Double(n))))*signal[i]
+            }
+            result.append(sum.abs)
+        }
+        return result
+    }
+    
     func ComputeLP(order: Int) -> [Double]{
         var numCoeff = [Double](repeating: 0.0, count: order + 1)
         numCoeff[0] = 1
