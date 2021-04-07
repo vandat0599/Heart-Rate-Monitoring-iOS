@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     let rootViewController: UIViewController = {
-        return UINavigationController(rootViewController: ProfileVC())
+        return UINavigationController(rootViewController: HistoryVC())
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
