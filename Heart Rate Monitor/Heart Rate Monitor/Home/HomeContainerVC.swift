@@ -33,7 +33,7 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
     init() {
         let homeVC = UINavigationController(rootViewController: HistoryVC())
         let notificationListVC = UINavigationController(rootViewController: HeartRateVC(viewModel: HeartRateVCVMImp()))
-        let settingVC = UINavigationController(rootViewController: UserVC())
+        let settingVC = UINavigationController(rootViewController: ProfileVC())
         vcArray = [
           homeVC,
           notificationListVC,
