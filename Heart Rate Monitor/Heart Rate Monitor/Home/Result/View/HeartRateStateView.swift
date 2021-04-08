@@ -28,7 +28,7 @@ class HeartRateStateView: UINibView {
         didSet {
             if !isSelected {
                 UIView.animate(withDuration: 0.5) {
-                    self.backgroundImageView.image = UIImage(color: .white)
+                    self.backgroundImageView.image = UIImage(color: .clear)
                     self.titlelabel.textColor = .lightGray
                     self.iconImageView.tintColor = .lightGray
                     self.borderWidth = 1

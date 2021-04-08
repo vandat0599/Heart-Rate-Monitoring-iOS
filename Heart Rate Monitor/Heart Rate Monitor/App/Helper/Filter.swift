@@ -166,6 +166,7 @@ class BBFilter: NSObject {
     }
     
     func Filter (signal: [Double], denC: [Double], numC: [Double] )-> [Double]{
+        print("signal count: \(signal.count)")
         let order = (numC.count - 1) / 2
         let length = signal.count
         var result = [Double](repeating: 0.0, count: signal.count)

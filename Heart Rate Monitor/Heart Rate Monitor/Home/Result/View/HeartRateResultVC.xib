@@ -133,7 +133,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" name="white-black"/>
                             <constraints>
                                 <constraint firstItem="ckz-SH-XfA" firstAttribute="centerX" secondItem="POm-1A-OPj" secondAttribute="centerX" id="1Bn-SR-DNb"/>
                                 <constraint firstItem="Ctd-QJ-3Er" firstAttribute="width" secondItem="Ctd-QJ-3Er" secondAttribute="height" multiplier="3:3.5" id="1xH-HV-k90"/>
@@ -162,7 +162,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" name="white-black"/>
                     <constraints>
                         <constraint firstItem="POm-1A-OPj" firstAttribute="width" secondItem="ZFx-IM-FHu" secondAttribute="width" id="5PO-aZ-qPm"/>
                         <constraint firstAttribute="trailing" secondItem="POm-1A-OPj" secondAttribute="trailing" id="FaS-3R-cqx"/>

@@ -45,8 +45,8 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var filteredValueTrigger: PublishRelay<Double>
     var filtedValues: [Double]
     private var validFrameCounter = 0
-    private var pulseDetector = PulseDetector()
-    private var inputs: [CGFloat] = []
+//    private var pulseDetector = PulseDetector()
+    private var inputs: [Double] = []
     private var redmeans: [Double] = []
     private let hueFilter = BBFilter()
     
@@ -75,7 +75,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
         filtedValues = []
         validFrameCounter = 0
         timeCounterSubscription?.dispose()
-        pulseDetector.reset()
+//        pulseDetector.reset()
         isMeasuring.accept(false)
         touchStatus.accept(false)
         isHeartRateValid.accept(false)
@@ -126,23 +126,23 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 isMeasuring.accept(true)
             }
             validFrameCounter += 1
-            inputs.append(hsv.0)
+            inputs.append(Double(hsv.0))
             // Filter the hue value - the filter is a simple BAND PASS FILTER that removes any DC component and any high frequency noise
-            var filtered = hueFilter.processValue(value: Double(hsv.0))
-            filtered = filtered <= -1 ? 0 : filtered
-            filtered = filtered >= 1 ? 0 : filtered
-            filtedValues.append(filtered)
-            filteredValueTrigger.accept(filtered)
-            if validFrameCounter > 60 {
-                _ = pulseDetector.addNewValue(newVal: filtered, atTime: CACurrentMediaTime())
-            }
+//            var filtered = hueFilter.processValue(value: Double(hsv.0))
+//            filtered = filtered <= -1 ? 0 : filtered
+//            filtered = filtered >= 1 ? 0 : filtered
+//            filtedValues.append(filtered)
+//            filteredValueTrigger.accept(filtered)
+//            if validFrameCounter > 60 {
+//                _ = pulseDetector.addNewValue(newVal: filtered, atTime: CACurrentMediaTime())
+//            }
         } else {
             DispatchQueue.main.async {
                 self.resetMesuringData()
             }
             validFrameCounter = 0
             timeCounterSubscription?.dispose()
-            pulseDetector.reset()
+//            pulseDetector.reset()
         }
     }
     
@@ -150,15 +150,23 @@ class HeartRateVCVMImp: HeartRateVCVM {
         timeCounterSubscription = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: {[unowned self] (value) in
                 self.touchStatus.accept(true)
-                let average = self.pulseDetector.getAverage()
-                let pulse = 60.0/average
-                let heartRateProgress = Float(value)/Float(maxProgressSecond)
-                timeupTrigger.accept(heartRateProgress >= 1)
-                DispatchQueue.main.async {
-                    self.isHeartRateValid.accept(!(pulse == -60))
-                    self.heartRateProgress.accept(heartRateProgress)
-                    self.heartRateTrackNumber.accept(pulse == -60 ? 0 : lroundf(pulse))
-                }
+                
+                let filter = BBFilter()
+                let (denC, numC) = filter.butter(order: 2, lowFreq: 2/45, highFreq: 23/90)
+                var y = filter.Filter(signal: inputs, denC: denC, numC: numC)
+                let r = filter.DFT(signal: y)
+                print(r)
+                
+//                let average = self.pulseDetector.getAverage()
+//                let pulse = 60.0/average
+//                let heartRateProgress = Float(value)/Float(maxProgressSecond)
+                
+//                timeupTrigger.accept(heartRateProgress >= 1)
+//                DispatchQueue.main.async {
+//                    self.isHeartRateValid.accept(!(pulse == -60))
+//                    self.heartRateProgress.accept(heartRateProgress)
+//                    self.heartRateTrackNumber.accept(pulse == -60 ? 0 : lroundf(pulse))
+//                }
             })
     }
 }
