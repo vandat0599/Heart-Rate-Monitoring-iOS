@@ -33,7 +33,21 @@ class ProfileVC: BaseVC {
     var timePicker = UIDatePicker()
     let frequencyState = ["Daily", "Weekly", "Never"]
     
-    let fakeUser = User(email: "nvan.1199@gmail.com", name: "Nguyễn Văn An", phoneNumber: "0987123456", gender: Gender.Male, height: 172, weight: 73, age: 22, relationships: ["Nguyễn Quốc Bảo", "Lê Ngọc Châu", "Ngô Huy Biên"])
+    var fakeUser = User(
+        id: "asdfffd",
+        name: "Lý Em",
+        email: "emly@gmail.com",
+        phoneNumber: "01235463738",
+        address: "222 Cách Mạng Tháng 8, Quận 10, TPHCM")
+    
+    var relationships = [
+        "Ngô Huy Biên 1",
+        "Ngô Huy Biên 2",
+        "Ngô Huy Biên 3",
+        "Ngô Huy Biên 4",
+        "Ngô Huy Biên 5",
+        "Ngô Huy Biên 6",
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +74,7 @@ class ProfileVC: BaseVC {
         relationshipTableView.register(InputRelationshipTableViewCell.nib, forCellReuseIdentifier: InputRelationshipTableViewCell.identifier)
         relationshipTableView.delegate = self
         relationshipTableView.dataSource = self
-        relationshipTableHeightConstraint.constant = 42 * CGFloat(fakeUser.relationships.count)
+        relationshipTableHeightConstraint.constant = 42 * CGFloat(relationships.count)
         relationshipTableView.layoutIfNeeded()
         relationshipTableView.separatorColor = view.backgroundColor
         relationshipTableView.separatorStyle = .singleLine
@@ -97,10 +111,10 @@ class ProfileVC: BaseVC {
         nameLabel.text = user.name
         emailProfileCell.valueTextView.text = user.email
         phoneProfileCell.valueTextView.text = user.phoneNumber
-        genderProfileCell.valueTextView.text = "\(user.gender)"
-        heightProfileCell.valueTextView.text =  "\(user.height)"
-        weightProfileCell.valueTextView.text =  "\(user.weight)"
-        ageProfileCell.valueTextView.text = "\(user.age)"
+        genderProfileCell.valueTextView.text = "user gender"
+        heightProfileCell.valueTextView.text =  "170"
+        weightProfileCell.valueTextView.text =  "45kg"
+        ageProfileCell.valueTextView.text = "25"
         relationshipTableView.sizeToFit()
         
     }
@@ -231,7 +245,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return fakeUser.relationships.count
+            return relationships.count
         default:
             return 1
         }
@@ -240,7 +254,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: RelationshipTableViewCell.identifier, for: indexPath) as! RelationshipTableViewCell
-            cell.bindData(name: fakeUser.relationships[indexPath.row])
+            cell.bindData(name: relationships[indexPath.row])
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: InputRelationshipTableViewCell.identifier, for: indexPath) as! InputRelationshipTableViewCell
@@ -259,8 +273,8 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print("delete: \(fakeUser.relationships[indexPath.row])")
-            fakeUser.relationships.remove(at: indexPath.row)
+            print("delete: \(relationships[indexPath.row])")
+            relationships.remove(at: indexPath.row)
             tableView.reloadData()
             relationshipTableHeightConstraint.constant -= 42
             tableView.layoutIfNeeded()
@@ -273,7 +287,7 @@ extension ProfileVC: addNewRelationship {
         if email != "" {
             //Check email valid
             //Get Fullname of user
-            fakeUser.relationships.append(email)
+            relationships.append(email)
             relationshipTableView.reloadData()
             relationshipTableHeightConstraint.constant += 42
         }

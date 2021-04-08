@@ -53,7 +53,7 @@ class HeartRateResultVC: BasePresentVC {
     private func bindView() {
         viewModel.heartRateRecord
             .bind { (value) in
-                self.heartRateNumberLabel.text = "\(value.value ?? 0)"
+                self.heartRateNumberLabel.text = value.heartRate
                 self.noteTextField.text = value.note ?? ""
             }
             .disposed(by: disposeBag)

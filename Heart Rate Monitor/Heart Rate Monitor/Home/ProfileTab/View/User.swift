@@ -7,38 +7,20 @@
 
 import Foundation
 
-enum Gender : Int{
-    case Undefined = 0
-    case Male = 1
-    case Female = 2
+struct User: Decodable {
+    var id: String?
+    var account: Account?
+    var name: String?
+    var email: String?
+    var phoneNumber: String?
+    var address: String?
     
-    var description: String {
-            switch self {
-            case .Male: return "Male"
-            case .Female   : return "Female"
-            default: return "Undefined"
-            }
-        }
-}
-
-class User {
-    var email : String
-    var name : String
-    var phoneNumber : String
-    var gender : Gender = Gender.Undefined // Undefined | Male | Female
-    var height : Int // (cm)
-    var weight : Int // (kg)
-    var age : Int
-    var relationships : [String] = [] // List of emails of other accounts in system.
-    
-    init(email: String, name: String, phoneNumber: String, gender: Gender, height: Int, weight: Int, age: Int, relationships: [String]) {
-        self.email = email
-        self.name = name
-        self.phoneNumber = phoneNumber
-        self.gender = gender
-        self.height = height
-        self.weight = weight
-        self.age = age
-        self.relationships = relationships
+    enum CodingKeys: String, CodingKey {
+        case id
+        case account
+        case name
+        case email
+        case phoneNumber = "phone_number"
+        case address
     }
 }

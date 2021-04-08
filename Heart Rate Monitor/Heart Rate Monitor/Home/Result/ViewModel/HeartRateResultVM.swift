@@ -10,14 +10,14 @@ import RxRelay
 import RxSwift
 
 protocol HeartRateResultVM {
-    var heartRateRecord: BehaviorRelay<HeartRateRecord> { get }
+    var heartRateRecord: BehaviorRelay<HeartRateHistory> { get }
 }
 
 class HeartRateResultVMImp: HeartRateResultVM {
     
-    var heartRateRecord: BehaviorRelay<HeartRateRecord>
+    var heartRateRecord: BehaviorRelay<HeartRateHistory>
     
-    init(heartRateRecord: HeartRateRecord) {
-        self.heartRateRecord = BehaviorRelay<HeartRateRecord>(value: heartRateRecord)
+    init(heartRateRecord: HeartRateHistory) {
+        self.heartRateRecord = BehaviorRelay<HeartRateHistory>(value: heartRateRecord)
     }
 }
