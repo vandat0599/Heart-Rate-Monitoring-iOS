@@ -166,26 +166,24 @@ class BBFilter: NSObject {
     }
     
     func Filter (signal: [Double], denC: [Double], numC: [Double] )-> [Double]{
-        let order = (numC.count - 1) / 2
         let length = signal.count
         var result = [Double](repeating: 0.0, count: signal.count)
-        
         result[0] = numC[0] * signal[0]
-        for i in 1..<(order+1) {
-            for j in 0..<i+1 {
-                result[i] = result[i] + numC[j] * signal[i-j]
-            }
-            for j in 0..<i {
-                result[i] = result[i] - denC[j+1] * result[i-j-1]
-            }
-        }
         
-        for i in (order + 1)..<length {
-            for j in 0..<i+1 {
-                result[i] = result[i] + numC[j] * signal[i-j]
+        for i in 1..<length {
+            for j in 0..<numC.count {
+                if (i-j >= 0){
+                    result[i] += numC[j]*signal[i-j]
+                }
+                
+                
             }
-            for j in 0..<i {
-                result[i] = result[i] - denC[j+1] * result[i-j-1]
+            for j in 0..<denC.count{
+                if(i-j-1 >= 0){
+                    if (j+1 < numC.count){
+                        result[i] += -denC[j+1]*result[i-j-1]
+                    }
+                }
             }
         }
         
