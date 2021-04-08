@@ -13,6 +13,7 @@ target 'Heart Rate Monitor' do
   pod "lottie-ios"
   pod 'RxSwift', '~> 5'
   pod 'RxCocoa', '~> 5'
+  pod 'Charts'
 
   # Pods for Heart Rate Monitor
 

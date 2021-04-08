@@ -5,7 +5,7 @@
 //  Created by Dat Van on 3/13/21.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 import RxRelay
 import AVFoundation
@@ -20,8 +20,12 @@ protocol HeartRateVCVM {
     var warningText: BehaviorRelay<String> { get }
     var isHeartRateValid: BehaviorRelay<Bool> { get }
     var guideCoverCameraText: BehaviorRelay<String> { get }
+    var timeupTrigger: PublishRelay<Bool> { get }
+    var filteredValueTrigger: PublishRelay<Double> { get }
+    var filtedValues: [Double] { get }
     func handleImage(with buffer: CMSampleBuffer)
     func togglePlay()
+    func resetAllData()
 }
 
 class HeartRateVCVMImp: HeartRateVCVM {
@@ -29,10 +33,22 @@ class HeartRateVCVMImp: HeartRateVCVM {
     let disposeBag = DisposeBag()
     var maxProgressSecond = 20
     var timeCounterSubscription: Disposable?
+    var isPlaying: BehaviorRelay<Bool>
+    var heartRateTrackNumber: BehaviorRelay<Int>
+    var heartRateProgress: BehaviorRelay<Float>
+    var warningText: BehaviorRelay<String>
+    var guideCoverCameraText: BehaviorRelay<String>
+    var isMeasuring: BehaviorRelay<Bool>
+    var touchStatus: BehaviorRelay<Bool>
+    var isHeartRateValid: BehaviorRelay<Bool>
+    var timeupTrigger: PublishRelay<Bool>
+    var filteredValueTrigger: PublishRelay<Double>
+    var filtedValues: [Double]
     private var validFrameCounter = 0
-    private var hueFilter = Filter()
     private var pulseDetector = PulseDetector()
     private var inputs: [CGFloat] = []
+    private var redmeans: [Double] = []
+    private let hueFilter = BBFilter()
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -43,16 +59,10 @@ class HeartRateVCVMImp: HeartRateVCVM {
         heartRateProgress = BehaviorRelay<Float>(value: 0.0)
         warningText = BehaviorRelay<String>(value: AppString.heartRateMonitor)
         guideCoverCameraText = BehaviorRelay<String>(value: AppString.heartRateGuides)
+        timeupTrigger = PublishRelay<Bool>()
+        filtedValues = []
+        filteredValueTrigger = PublishRelay<Double>()
     }
-    
-    var isPlaying: BehaviorRelay<Bool>
-    var heartRateTrackNumber: BehaviorRelay<Int>
-    var heartRateProgress: BehaviorRelay<Float>
-    var warningText: BehaviorRelay<String>
-    var guideCoverCameraText: BehaviorRelay<String>
-    var isMeasuring: BehaviorRelay<Bool>
-    var touchStatus: BehaviorRelay<Bool>
-    var isHeartRateValid: BehaviorRelay<Bool>
     
     func togglePlay() {
         isPlaying.accept(!isPlaying.value)
@@ -61,7 +71,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
         }
     }
     
-    private func resetAllData() {
+    func resetAllData() {
+        filtedValues = []
+        validFrameCounter = 0
+        timeCounterSubscription?.dispose()
+        pulseDetector.reset()
         isMeasuring.accept(false)
         touchStatus.accept(false)
         isHeartRateValid.accept(false)
@@ -72,6 +86,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     private func resetMesuringData() {
+        filtedValues = []
         heartRateTrackNumber.accept(0)
         heartRateProgress.accept(0.0)
         isMeasuring.accept(false)
@@ -80,43 +95,27 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     func handleImage(with buffer: CMSampleBuffer) {
-        var redmean:CGFloat = 0.0
-        var greenmean:CGFloat = 0.0
-        var bluemean:CGFloat = 0.0
-        
+        // B1: Video signal acquisition -> camera frame
+        touchStatus.accept(true)
         let pixelBuffer = CMSampleBufferGetImageBuffer(buffer)
         let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
+        let extentVector = CIVector(x: cameraImage.extent.origin.x, y: cameraImage.extent.origin.y, z: cameraImage.extent.size.width, w: cameraImage.extent.size.height)
+        let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: cameraImage, kCIInputExtentKey: extentVector])
+        guard let outputImage = filter?.outputImage else { return }
+        var bitmap = [UInt8](repeating: 0, count: 4)
+        let context = CIContext(options: [.workingColorSpace: kCFNull as Any])
+        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
+        // B2: Brightness signal computation -> mean of red color
+        let redmean = CGFloat(bitmap[0])
+        let greenmean = CGFloat(bitmap[1])
+        let bluemean = CGFloat(bitmap[2])
+        redmeans.append(Double(redmean))
+        // B3: Band-pass filtering: BPM_L = 40 & BPM_H = 230 -> filtered mean of red color
         
-        let extent = cameraImage.extent
-        let inputExtent = CIVector(x: extent.origin.x, y: extent.origin.y, z: extent.size.width, w: extent.size.height)
-        let averageFilter = CIFilter(name: "CIAreaAverage",
-                                     parameters: [kCIInputImageKey: cameraImage, kCIInputExtentKey: inputExtent])!
-        let outputImage = averageFilter.outputImage!
+        // B4:
         
-        let ctx = CIContext(options:nil)
-        let cgImage = ctx.createCGImage(outputImage, from:outputImage.extent)!
-        
-        let rawData:NSData = cgImage.dataProvider!.data!
-        let pixels = rawData.bytes.assumingMemoryBound(to: UInt8.self)
-        let bytes = UnsafeBufferPointer<UInt8>(start:pixels, count:rawData.length)
-        var BGRA_index = 0
-        for pixel in UnsafeBufferPointer(start: bytes.baseAddress, count: bytes.count) {
-            switch BGRA_index {
-            case 0:
-                bluemean = CGFloat (pixel)
-            case 1:
-                greenmean = CGFloat (pixel)
-            case 2:
-                redmean = CGFloat (pixel)
-            case 3:
-                break
-            default:
-                break
-            }
-            BGRA_index += 1
-        }
-        let hsv = rgb2hsv((red: redmean, green: greenmean, blue: bluemean, alpha: 1.0))
-        // Do a sanity check to see if a finger is placed over the camera
+        // hsv for cover camera condition
+        let hsv = rgb2hsv(red: redmean, green: greenmean, blue: bluemean)
         if (hsv.1 > 0.5 && hsv.2 > 0.5) {
             DispatchQueue.main.async {
                 self.warningText.accept(AppString.keepYourFinger)
@@ -129,7 +128,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
             validFrameCounter += 1
             inputs.append(hsv.0)
             // Filter the hue value - the filter is a simple BAND PASS FILTER that removes any DC component and any high frequency noise
-            let filtered = hueFilter.processValue(value: Double(hsv.0))
+            var filtered = hueFilter.processValue(value: Double(hsv.0))
+            filtered = filtered <= -1 ? 0 : filtered
+            filtered = filtered >= 1 ? 0 : filtered
+            filtedValues.append(filtered)
+            filteredValueTrigger.accept(filtered)
             if validFrameCounter > 60 {
                 _ = pulseDetector.addNewValue(newVal: filtered, atTime: CACurrentMediaTime())
             }
@@ -149,9 +152,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 self.touchStatus.accept(true)
                 let average = self.pulseDetector.getAverage()
                 let pulse = 60.0/average
+                let heartRateProgress = Float(value)/Float(maxProgressSecond)
+                timeupTrigger.accept(heartRateProgress >= 1)
                 DispatchQueue.main.async {
                     self.isHeartRateValid.accept(!(pulse == -60))
-                    self.heartRateProgress.accept(Float(value)*100/Float(maxProgressSecond)/100)
+                    self.heartRateProgress.accept(heartRateProgress)
                     self.heartRateTrackNumber.accept(pulse == -60 ? 0 : lroundf(pulse))
                 }
             })
