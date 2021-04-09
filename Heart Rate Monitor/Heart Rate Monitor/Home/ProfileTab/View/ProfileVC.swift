@@ -33,7 +33,7 @@ class ProfileVC: BaseVC {
     var timePicker = UIDatePicker()
     let frequencyState = ["Daily", "Weekly", "Never"]
     
-    let fakeUser = User(email: "nvan.1199@gmail.com", name: "Nguyễn Văn An", phoneNumber: "0987123456", gender: Gender.Male, height: 172, weight: 73, age: 22, relationships: ["Nguyễn Quốc Bảo", "Lê Ngọc Châu", "Ngô Huy Biên"])
+    let fakeUser = User(email: "nvan.1199@gmail.com", name: "Nguyễn Văn An", phoneNumber: "0987123456", gender: Gender.Male, height: 172, weight: 73, age: 22, relationships: ["Nguyễn Quốc Bảo", "Lê Ngọc Châu", "Huỳnh Thuỳ Dung", "Trần Ngọc Giàu"])
     
     override func viewDidLoad() {
         super.viewDidLoad()

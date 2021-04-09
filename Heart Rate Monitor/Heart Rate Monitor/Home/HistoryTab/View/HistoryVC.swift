@@ -17,10 +17,18 @@ class HistoryVC: BaseVC {
     @IBOutlet weak var heartRateLabel: UILabel!
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var historyTableView: UITableView!
+    @IBOutlet weak var historyTableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var timeEditView: UIView!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
     
     var listOfRecord = [HeartRateRecord(value: 88, state: .normal, note: "Cooking"),
                         HeartRateRecord(value: 75, state: .normal, note: "Watching movie"),
                         HeartRateRecord(value: 132, state: .active, note: "Running for 44 minutes")]
+    var statePicker = UIPickerView()
+    var datePicker = UIDatePicker()
+    var date = Date()
+    let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +38,36 @@ class HistoryVC: BaseVC {
     func setupView() {
         historyTableView.dataSource = self
         historyTableView.register(RecordTableViewCell.nib, forCellReuseIdentifier: RecordTableViewCell.identifier)
+        historyTableView.separatorColor = view.backgroundColor
+        historyTableView.separatorStyle = .singleLine
+        historyTableView.allowsSelection = false
+        
+        heartRateLabel.text = "\(averageHeartRate(forState: .normal))"
+        
+        stateTextView.delegate = self
+        
+        statePicker.delegate = self
+        statePicker.dataSource = self
         
         barChartView.backgroundColor = UIColor(named: "backgroundGray")
         barChartView.layer.cornerRadius = 13
         barChartView.clipsToBounds = true
         barChartUpdate()
         
-//        timeSegmentedControl.setBackgroundImage(<#T##backgroundImage: UIImage?##UIImage?#>, for: .selected, barMetrics: .default)
+        editButton.isHidden = false
+        saveButton.isHidden = true
+        timeLabel.isHidden = false
+        timeEditView.isHidden = true
         
+        datePicker.datePickerMode = .date
+        datePicker.setDate(date, animated: true)
+        datePicker.tintColor = UIColor(named: "purple")
+        datePicker.backgroundColor = UIColor(named: "backgroundGray")
+        
+        dateFormatter.dateFormat = "EEE, MMM dd, yyyy"
+        timeLabel.text = dateFormatter.string(from: date)
+        
+//        timeSegmentedControl.setBackgroundImage(<#T##backgroundImage: UIImage?##UIImage?#>, for: .selected, barMetrics: .default)
         
     }
     
@@ -56,12 +86,47 @@ class HistoryVC: BaseVC {
         //This must stay at end of function
         barChartView.notifyDataSetChanged()
     }
-
+    
+    func averageHeartRate(forState: HeartRateState) -> Int{
+        var sum = 0
+        var counter = 0
+        for record in listOfRecord {
+            if record.state == forState {
+                counter += 1
+                sum += record.value ?? 0
+            }
+        }
+        return Int(sum/counter)
+    }
+    
+    @IBAction func editButtonTouched(_ sender: Any) {
+        editButton.isHidden = true
+        saveButton.isHidden = false
+        timeLabel.isHidden = true
+        timeEditView.isHidden = false
+        
+        timeEditView.addSubview(datePicker)
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.leadingAnchor.constraint(equalTo: timeEditView.leadingAnchor).isActive = true
+        datePicker.topAnchor.constraint(equalTo: timeEditView.topAnchor).isActive = true
+        datePicker.bottomAnchor.constraint(equalTo: timeEditView.bottomAnchor).isActive = true
+    }
+    
+    @IBAction func saveButtonTouched(_ sender: Any) {
+        editButton.isHidden = false
+        saveButton.isHidden = true
+        timeLabel.isHidden = false
+        timeEditView.isHidden = true
+        
+        date = datePicker.date
+        timeLabel.text = dateFormatter.string(from: date)
+    }
 }
 
 
-extension HistoryVC: UITableViewDataSource {
+extension HistoryVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        historyTableViewHeightConstraint.constant = CGFloat(42 * listOfRecord.count)
         return listOfRecord.count
     }
     
@@ -71,7 +136,41 @@ extension HistoryVC: UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 42
+    }
+}
+
+extension HistoryVC: UITextViewDelegate {
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        return true
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        return true
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.inputView = statePicker
+    }
+}
+
+extension HistoryVC: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 2
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return HeartRateState.allCases[row].rawValue
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let state = row == 0 ? "normal" : "active"
+        stateTextView.text = "\(state) state"
+        heartRateLabel.text = "\(averageHeartRate(forState: HeartRateState(rawValue: state)!))"
     }
 }
