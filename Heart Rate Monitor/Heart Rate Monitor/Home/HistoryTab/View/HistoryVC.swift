@@ -36,8 +36,9 @@ class HistoryVC: BaseVC {
     }
     
     func setupView() {
-        historyTableView.dataSource = self
         historyTableView.register(RecordTableViewCell.nib, forCellReuseIdentifier: RecordTableViewCell.identifier)
+        historyTableView.register(WeekMonthRecordTableViewCell.nib, forCellReuseIdentifier: WeekMonthRecordTableViewCell.identifier)
+        historyTableView.dataSource = self
         historyTableView.separatorColor = view.backgroundColor
         historyTableView.separatorStyle = .singleLine
         historyTableView.allowsSelection = false
@@ -52,6 +53,13 @@ class HistoryVC: BaseVC {
         barChartView.backgroundColor = UIColor(named: "backgroundGray")
         barChartView.layer.cornerRadius = 13
         barChartView.clipsToBounds = true
+        barChartView.xAxis.enabled = false
+        barChartView.rightAxis.enabled = false
+        barChartView.leftAxis.labelCount = 4
+        barChartView.leftAxis.axisMinimum = 0
+        barChartView.leftAxis.gridColor = UIColor(named: "background")!
+        barChartView.leftAxis.axisLineColor = UIColor(named: "background")!
+        
         barChartUpdate()
         
         editButton.isHidden = false
@@ -106,7 +114,7 @@ class HistoryVC: BaseVC {
             listOfEntries.append(BarChartDataEntry(x: Double(i + 1), y: Double(listOfRecord[i].value!)))
             listOfEntriesColor.append(listOfRecord[i].state == HeartRateState.normal ? UIColor(named: "purple")! : UIColor(named: "pink")!)
         }
-        let dataSet = BarChartDataSet(entries: listOfEntries, label: "Widgets Type")
+        let dataSet = BarChartDataSet(entries: listOfEntries)
         dataSet.colors = listOfEntriesColor
         
         let data = BarChartData(dataSet: dataSet)
@@ -157,6 +165,7 @@ class HistoryVC: BaseVC {
         } else {
             timeLabel.text = dateFormatter.string(from: date)
         }
+        historyTableView.reloadData()
     }
 }
 
@@ -168,9 +177,16 @@ extension HistoryVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: RecordTableViewCell.identifier, for: indexPath) as! RecordTableViewCell
-        cell.bindData(record: listOfRecord[indexPath.row])
-        return cell
+        if dateFormatter.dateFormat == "EEE, MMM dd, yyyy" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: RecordTableViewCell.identifier, for: indexPath) as! RecordTableViewCell
+            cell.bindData(record: listOfRecord[indexPath.row])
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: WeekMonthRecordTableViewCell.identifier, for: indexPath) as! WeekMonthRecordTableViewCell
+            cell.bindData(date: date, dateFormatter: dateFormatter, normalHeartRate: -1, activeHeartRate: -1)
+            return cell
+        }
+            
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

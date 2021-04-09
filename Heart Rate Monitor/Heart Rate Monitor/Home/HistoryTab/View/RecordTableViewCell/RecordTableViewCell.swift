@@ -29,6 +29,7 @@ class RecordTableViewCell: UITableViewCell {
         stateImageView.image = record.state.rawValue == "active" ? UIImage(named: "ic-active") : UIImage(named: "ic-normal")
         timeLabel.text = record.note
         heartBeatLabel.text = "\(record.value ?? 0)"
+        setSelected(false, animated: false)
     }
     
     static var identifier: String {
