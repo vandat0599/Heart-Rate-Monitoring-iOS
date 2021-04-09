@@ -9,8 +9,6 @@ import Charts
 import UIKit
 
 class HistoryVC: BaseVC {
-
-    @IBOutlet weak var timeSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var stateTextView: UITextView!
@@ -24,7 +22,9 @@ class HistoryVC: BaseVC {
     
     var listOfRecord = [HeartRateRecord(value: 88, state: .normal, note: "Cooking"),
                         HeartRateRecord(value: 75, state: .normal, note: "Watching movie"),
-                        HeartRateRecord(value: 132, state: .active, note: "Running for 44 minutes")]
+                        HeartRateRecord(value: 132, state: .active, note: "Running for 44 minutes"),
+                        HeartRateRecord(value: 91, state: .normal, note: "Playing with cats"),
+                        HeartRateRecord(value: 124, state: .active, note: "Cardio for 10 minutes")]
     var statePicker = UIPickerView()
     var datePicker = UIDatePicker()
     var date = Date()
@@ -67,23 +67,51 @@ class HistoryVC: BaseVC {
         dateFormatter.dateFormat = "EEE, MMM dd, yyyy"
         timeLabel.text = dateFormatter.string(from: date)
         
-//        timeSegmentedControl.setBackgroundImage(<#T##backgroundImage: UIImage?##UIImage?#>, for: .selected, barMetrics: .default)
+        let segmentedControl = TTSegmentedControl()
+        segmentedControl.allowChangeThumbWidth = false
+        segmentedControl.frame = CGRect(x: 0, y: 0, width: (self.view.frame.width - 32), height: 32)
+        segmentedControl.itemTitles = ["Day", "Week", "Month"]
+        segmentedControl.layer.cornerRadius = 9
+        segmentedControl.didSelectItemWith = { (index, title) -> () in
+            self.changeSegmentedControl(title: title)
+        }
+        navigationItem.titleView = segmentedControl
+        
+    }
+    
+    func changeSegmentedControl(title: String?) {
+        switch title {
+        case "Day":
+            dateFormatter.dateFormat = "EEE, MMM dd, yyyy"
+            reloadTimeLabel()
+            break
+        case "Week":
+            dateFormatter.dateFormat = "MMM dd, yyyy"
+            reloadTimeLabel()
+            break
+        case "Month":
+            dateFormatter.dateFormat = "MMM yyyy"
+            reloadTimeLabel()
+            break
+        default:
+            print("Error segment.")
+        }
         
     }
     
     func barChartUpdate() {
-        let entry1 = BarChartDataEntry(x: 1.0, y: Double(listOfRecord[0].value!))
-        let entry2 = BarChartDataEntry(x: 2.0, y: Double(listOfRecord[1].value!))
-        let entry3 = BarChartDataEntry(x: 3.0, y: Double(listOfRecord[2].value!))
-        let dataSet = BarChartDataSet(entries: [entry1, entry2, entry3], label: "Widgets Type")
-        dataSet.colors = [UIColor(named: "purple")!]
+        var listOfEntries = [BarChartDataEntry]()
+        var listOfEntriesColor = [UIColor]()
+        for i in 0..<listOfRecord.count {
+            listOfEntries.append(BarChartDataEntry(x: Double(i + 1), y: Double(listOfRecord[i].value!)))
+            listOfEntriesColor.append(listOfRecord[i].state == HeartRateState.normal ? UIColor(named: "purple")! : UIColor(named: "pink")!)
+        }
+        let dataSet = BarChartDataSet(entries: listOfEntries, label: "Widgets Type")
+        dataSet.colors = listOfEntriesColor
         
         let data = BarChartData(dataSet: dataSet)
         barChartView.data = data
-
-        //All other additions to this function will go here
-
-        //This must stay at end of function
+        
         barChartView.notifyDataSetChanged()
     }
     
@@ -119,7 +147,16 @@ class HistoryVC: BaseVC {
         timeEditView.isHidden = true
         
         date = datePicker.date
-        timeLabel.text = dateFormatter.string(from: date)
+        reloadTimeLabel()
+    }
+    
+    func reloadTimeLabel() {
+        if dateFormatter.dateFormat == "MMM dd, yyyy" {
+            let endDate = Calendar.current.date(byAdding: .day, value: 6, to: date)
+            timeLabel.text = "\(dateFormatter.string(from: date)) - \(dateFormatter.string(from: endDate!))"
+        } else {
+            timeLabel.text = dateFormatter.string(from: date)
+        }
     }
 }
 
