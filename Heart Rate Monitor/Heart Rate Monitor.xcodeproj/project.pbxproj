@@ -53,6 +53,9 @@
 		CE1E22A325F72A0300C6632E /* Heart_Rate_MonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22A225F72A0300C6632E /* Heart_Rate_MonitorTests.swift */; };
 		CE1E22AE25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */; };
 		CE20A1162606DE480084F2BA /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20A1152606DE480084F2BA /* FFT.swift */; };
+		CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CF92627F98200159D86 /* lottie-error.json */; };
+		CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFA2627F98200159D86 /* lottie-success.json */; };
+		CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */; };
 		CE7AF9BC261431490035AD17 /* HeartRateResultVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */; };
 		CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */; };
 		CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */; };
@@ -194,6 +197,9 @@
 		CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart_Rate_MonitorUITests.swift; sourceTree = "<group>"; };
 		CE1E22AF25F72A0300C6632E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE20A1152606DE480084F2BA /* FFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
+		CE4D1CF92627F98200159D86 /* lottie-error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-error.json"; sourceTree = "<group>"; };
+		CE4D1CFA2627F98200159D86 /* lottie-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-success.json"; sourceTree = "<group>"; };
+		CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-internet-connection.json"; sourceTree = "<group>"; };
 		CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeartRateResultVC.xib; sourceTree = "<group>"; };
 		CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerVC.swift; sourceTree = "<group>"; };
 		CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVC.swift; sourceTree = "<group>"; };
@@ -636,6 +642,9 @@
 		CEC78E1925F732C9007BA177 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				CE4D1CF92627F98200159D86 /* lottie-error.json */,
+				CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */,
+				CE4D1CFA2627F98200159D86 /* lottie-success.json */,
 				CE10733525FE1075003777D6 /* lottie-heart-wave.json */,
 				CE06D10025FD1DA4007CE81C /* lottie-progress.json */,
 			);
@@ -809,6 +818,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE001629261D846600B9374F /* HeartRateStateView.xib in Resources */,
+				CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */,
+				CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */,
 				CE7AF9BC261431490035AD17 /* HeartRateResultVC.xib in Resources */,
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
 				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
@@ -823,6 +834,7 @@
 				845DF6132603345B00DD26BF /* SignUpVC.xib in Resources */,
 				CE1E229525F72A0300C6632E /* Assets.xcassets in Resources */,
 				CE06D10125FD1DA4007CE81C /* lottie-progress.json in Resources */,
+				CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
