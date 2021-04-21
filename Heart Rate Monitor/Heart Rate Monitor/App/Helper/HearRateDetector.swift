@@ -41,6 +41,16 @@ class HeartRateDetector: NSObject {
         return result
     }
     
+    static func Multiplication (_ a : [Double], _ b : [Double]) -> [Double] {
+        var result = [Double]()
+        
+        for i in 0..<a.count {
+            result.append(a[i]*b[i])
+        }
+        
+        return result
+    }
+    
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm 15 frame thì lại gọi hàm
     static func PulseDetector(_ signal: [Double],fps: Int) ->Int {
