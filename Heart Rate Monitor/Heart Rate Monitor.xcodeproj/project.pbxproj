@@ -98,6 +98,8 @@
 		CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC78EBC25F74000007BA177 /* SignInVC.xib */; };
 		CEC7EDA7262FBD8700403671 /* PermissionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDA6262FBD8700403671 /* PermissionUtil.swift */; };
 		CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDAA262FBEEC00403671 /* HError.swift */; };
+		CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDB2262FCA8A00403671 /* HLog.swift */; };
+		CEC7EDB7262FCB7B00403671 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDB6262FCB7B00403671 /* APIResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +244,8 @@
 		CEC78EBC25F74000007BA177 /* SignInVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignInVC.xib; sourceTree = "<group>"; };
 		CEC7EDA6262FBD8700403671 /* PermissionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionUtil.swift; sourceTree = "<group>"; };
 		CEC7EDAA262FBEEC00403671 /* HError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HError.swift; sourceTree = "<group>"; };
+		CEC7EDB2262FCA8A00403671 /* HLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLog.swift; sourceTree = "<group>"; };
+		CEC7EDB6262FCB7B00403671 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		EA0CA797C01A5CC5331E7137 /* Pods-Heart Rate Monitor.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.production.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -601,6 +605,7 @@
 			isa = PBXGroup;
 			children = (
 				CEC78EA825F73A22007BA177 /* APIService.swift */,
+				CEC7EDB6262FCB7B00403671 /* APIResponse.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -641,6 +646,7 @@
 				1DE870892614E588006A38C2 /* FloatingPointMath.swift */,
 				CEC7EDA6262FBD8700403671 /* PermissionUtil.swift */,
 				CEC7EDAA262FBEEC00403671 /* HError.swift */,
+				CEC7EDB2262FCA8A00403671 /* HLog.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1007,6 +1013,7 @@
 				CE7F8A3425FCB33A00A2EDC9 /* RoundedView.swift in Sources */,
 				CE10732225FDCDDF003777D6 /* PulseDetector.swift in Sources */,
 				845DF6122603345B00DD26BF /* SignUpVC.swift in Sources */,
+				CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */,
 				CEC78E9A25F73A07007BA177 /* UIViewController+.swift in Sources */,
 				CE001619261D83F700B9374F /* UINibView.swift in Sources */,
 				CE0BE134261EAA4500073002 /* Account.swift in Sources */,
@@ -1020,6 +1027,7 @@
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
 				CE001614261D834800B9374F /* HeartRateStateView.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
+				CEC7EDB7262FCB7B00403671 /* APIResponse.swift in Sources */,
 				CE00163A261D8FC300B9374F /* LottieSheetViewController.swift in Sources */,
 				CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */,
 				CE20A1162606DE480084F2BA /* FFT.swift in Sources */,
