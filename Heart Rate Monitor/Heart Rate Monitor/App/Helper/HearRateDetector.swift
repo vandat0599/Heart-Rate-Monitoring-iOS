@@ -40,5 +40,40 @@ class HeartRateDetector: NSObject {
         
         return result
     }
+    
+    // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
+    // sau đó mỗi lần signal có thêm 15 frame thì lại gọi hàm
+    static func PulseDetector(_ signal: [Double],fps: Int) ->Int {
+        if (signal.count != 180){
+            print("signal truyền vào phải có 180 giá trị thay vì \(signal.count)")
+            return -1
+        }
+        var heartBeat = 0
+        
+        let filter = BBFilter()
+        
+        let (denC, numC) = filter.butter(order: 2, lowFreq: 2/45, highFreq: 23/90)
+        var y = filter.Filter(signal: signal, denC: denC, numC: numC)
+        y = Multiplication(y, hann(Windows_Seconds*fps + 1))
+        
+        let gain = filter.DFT(signal: y)
+        let index_range = Array(5...25)
+        //trueGain : nơi thực sự có tần số chứa giá trị nhịp tim
+        let trueGain = gain.enumerated().filter() {
+            $0.offset >= 5 && $0.offset <= 25
+        }.map(){
+            $0.element
+        }
+        
+        let (peaks,indexs) = findPeakElement(trueGain)
+        let maxPeak = peaks.max()!
+        let indexOfMaxPeak = peaks.firstIndex(of: maxPeak)!
+        let maxFreqIndx = index_range[indexs[indexOfMaxPeak]]
+        let temp  = Double(maxFreqIndx) * Double(fps) / Double(Windows_Seconds * fps + 1)
+        let bpm = Double(temp*60)
+        heartBeat = SmoothingPeak(y: y, bpm, fps)
+        
+        return heartBeat
+    }
 
 }
