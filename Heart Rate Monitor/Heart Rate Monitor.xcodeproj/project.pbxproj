@@ -12,13 +12,20 @@
 		1DE8708A2614E588006A38C2 /* FloatingPointMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE870892614E588006A38C2 /* FloatingPointMath.swift */; };
 		81D1917AA40E24FA1005A042 /* Pods_Heart_Rate_MonitorTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 579497AEDB20702A5390C924 /* Pods_Heart_Rate_MonitorTests.framework */; };
 		84230D4E2603184900EC9DD0 /* GradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84230D4D2603184900EC9DD0 /* GradientColor.swift */; };
+		844863A4261D529C007CC806 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844863A2261D529C007CC806 /* HistoryVC.swift */; };
+		844863A5261D529C007CC806 /* HistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844863A3261D529C007CC806 /* HistoryVC.xib */; };
 		84575B772607844200711760 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84575B762607844200711760 /* ProfileCell.swift */; };
 		84575B7B2607845800711760 /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84575B7A2607845800711760 /* ProfileCell.xib */; };
 		845DF6122603345B00DD26BF /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DF6102603345B00DD26BF /* SignUpVC.swift */; };
 		845DF6132603345B00DD26BF /* SignUpVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845DF6112603345B00DD26BF /* SignUpVC.xib */; };
+		848645D926201358003599A4 /* TTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848645D826201358003599A4 /* TTSegmentedControl.swift */; };
+		848645E3262037D2003599A4 /* WeekMonthRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848645E1262037D2003599A4 /* WeekMonthRecordTableViewCell.swift */; };
+		848645E4262037D2003599A4 /* WeekMonthRecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848645E2262037D2003599A4 /* WeekMonthRecordTableViewCell.xib */; };
 		84C718992606EB3200BA2C6D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C718972606EB3200BA2C6D /* ProfileVC.swift */; };
 		84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C718982606EB3200BA2C6D /* ProfileVC.xib */; };
 		84C718C62606F85F00BA2C6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C718C52606F85F00BA2C6D /* User.swift */; };
+		84CD8230261EDDEC00ABD9B5 /* RecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD822E261EDDEC00ABD9B5 /* RecordTableViewCell.swift */; };
+		84CD8231261EDDEC00ABD9B5 /* RecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CD822F261EDDEC00ABD9B5 /* RecordTableViewCell.xib */; };
 		84E46095261566F700F60040 /* RelationshipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E46093261566F700F60040 /* RelationshipTableViewCell.swift */; };
 		84E46096261566F700F60040 /* RelationshipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E46094261566F700F60040 /* RelationshipTableViewCell.xib */; };
 		84E460B026158C0200F60040 /* InputRelationshipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E460AE26158C0200F60040 /* InputRelationshipTableViewCell.swift */; };
@@ -60,7 +67,6 @@
 		CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */; };
 		CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */; };
 		CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */; };
-		CE7F8A1E25FC902600A2EDC9 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A1D25FC902600A2EDC9 /* HistoryVC.swift */; };
 		CE7F8A2225FC902F00A2EDC9 /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A2125FC902F00A2EDC9 /* UserVC.swift */; };
 		CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */; };
 		CE7F8A3425FCB33A00A2EDC9 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A3325FCB33A00A2EDC9 /* RoundedView.swift */; };
@@ -145,13 +151,20 @@
 		742195EC7D78BAAA9B0677E8 /* Pods-Heart Rate Monitor-Heart Rate MonitorUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor-Heart Rate MonitorUITests.release.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor-Heart Rate MonitorUITests/Pods-Heart Rate Monitor-Heart Rate MonitorUITests.release.xcconfig"; sourceTree = "<group>"; };
 		744D8899B52DC0FEF9246748 /* Pods-Heart Rate MonitorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.debug.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.debug.xcconfig"; sourceTree = "<group>"; };
 		84230D4D2603184900EC9DD0 /* GradientColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColor.swift; sourceTree = "<group>"; };
+		844863A2261D529C007CC806 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
+		844863A3261D529C007CC806 /* HistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryVC.xib; sourceTree = "<group>"; };
 		84575B762607844200711760 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		84575B7A2607845800711760 /* ProfileCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileCell.xib; sourceTree = "<group>"; };
 		845DF6102603345B00DD26BF /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		845DF6112603345B00DD26BF /* SignUpVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpVC.xib; sourceTree = "<group>"; };
+		848645D826201358003599A4 /* TTSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSegmentedControl.swift; sourceTree = "<group>"; };
+		848645E1262037D2003599A4 /* WeekMonthRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekMonthRecordTableViewCell.swift; sourceTree = "<group>"; };
+		848645E2262037D2003599A4 /* WeekMonthRecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeekMonthRecordTableViewCell.xib; sourceTree = "<group>"; };
 		84C718972606EB3200BA2C6D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		84C718982606EB3200BA2C6D /* ProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileVC.xib; sourceTree = "<group>"; };
 		84C718C52606F85F00BA2C6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = "Heart Rate Monitor/Home/ProfileTab/View/User.swift"; sourceTree = SOURCE_ROOT; };
+		84CD822E261EDDEC00ABD9B5 /* RecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordTableViewCell.swift; sourceTree = "<group>"; };
+		84CD822F261EDDEC00ABD9B5 /* RecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordTableViewCell.xib; sourceTree = "<group>"; };
 		84E46093261566F700F60040 /* RelationshipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipTableViewCell.swift; sourceTree = "<group>"; };
 		84E46094261566F700F60040 /* RelationshipTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelationshipTableViewCell.xib; sourceTree = "<group>"; };
 		84E460AE26158C0200F60040 /* InputRelationshipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRelationshipTableViewCell.swift; sourceTree = "<group>"; };
@@ -208,7 +221,6 @@
 		CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerVC.swift; sourceTree = "<group>"; };
 		CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVC.swift; sourceTree = "<group>"; };
 		CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
-		CE7F8A1D25FC902600A2EDC9 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		CE7F8A2125FC902F00A2EDC9 /* UserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
 		CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemView.swift; sourceTree = "<group>"; };
 		CE7F8A3325FCB33A00A2EDC9 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
@@ -299,6 +311,25 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		844863A0261D5246007CC806 /* HistoryTab */ = {
+			isa = PBXGroup;
+			children = (
+				844863A1261D526B007CC806 /* View */,
+			);
+			path = HistoryTab;
+			sourceTree = "<group>";
+		};
+		844863A1261D526B007CC806 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				848645E0262037AA003599A4 /* WeekMonthRecordTableViewCell */,
+				84CD822B261EDDC300ABD9B5 /* RecordTableViewCell */,
+				844863A2261D529C007CC806 /* HistoryVC.swift */,
+				844863A3261D529C007CC806 /* HistoryVC.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		84575B6E260781A400711760 /* ProfileCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +353,15 @@
 				845DF6112603345B00DD26BF /* SignUpVC.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		848645E0262037AA003599A4 /* WeekMonthRecordTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				848645E1262037D2003599A4 /* WeekMonthRecordTableViewCell.swift */,
+				848645E2262037D2003599A4 /* WeekMonthRecordTableViewCell.xib */,
+			);
+			path = WeekMonthRecordTableViewCell;
 			sourceTree = "<group>";
 		};
 		84C718932606E9A100BA2C6D /* Personal */ = {
@@ -349,6 +389,15 @@
 				84C718982606EB3200BA2C6D /* ProfileVC.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		84CD822B261EDDC300ABD9B5 /* RecordTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				84CD822E261EDDEC00ABD9B5 /* RecordTableViewCell.swift */,
+				84CD822F261EDDEC00ABD9B5 /* RecordTableViewCell.xib */,
+			);
+			path = RecordTableViewCell;
 			sourceTree = "<group>";
 		};
 		84E46090261565B200F60040 /* RelationshipTableViewCell */ = {
@@ -495,10 +544,10 @@
 		CE7F89F525FC786100A2EDC9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				844863A0261D5246007CC806 /* HistoryTab */,
 				84C718952606EACD00BA2C6D /* ProfileTab */,
 				CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */,
 				CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */,
-				CE7F8A1D25FC902600A2EDC9 /* HistoryVC.swift */,
 				CE7F8A2125FC902F00A2EDC9 /* UserVC.swift */,
 				CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */,
 				CE7F8A4F25FCB71F00A2EDC9 /* Heart Rate Monitor */,
@@ -517,6 +566,7 @@
 				CE001634261D8F8000B9374F /* HAlert.swift */,
 				CE001639261D8FC300B9374F /* LottieSheetOneActionVC.swift */,
 				CE001638261D8FC300B9374F /* LottieSheetViewController.swift */,
+				848645D826201358003599A4 /* TTSegmentedControl.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -836,11 +886,14 @@
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
 				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,
+				844863A5261D529C007CC806 /* HistoryVC.xib in Resources */,
 				84E460B126158C0200F60040 /* InputRelationshipTableViewCell.xib in Resources */,
 				84E46096261566F700F60040 /* RelationshipTableViewCell.xib in Resources */,
 				CEC78E2425F73365007BA177 /* Production.xcconfig in Resources */,
+				84CD8231261EDDEC00ABD9B5 /* RecordTableViewCell.xib in Resources */,
 				84575B7B2607845800711760 /* ProfileCell.xib in Resources */,
 				84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */,
+				848645E4262037D2003599A4 /* WeekMonthRecordTableViewCell.xib in Resources */,
 				CEC78E2225F73365007BA177 /* Staging.xcconfig in Resources */,
 				CEC78E2325F73365007BA177 /* Development.xcconfig in Resources */,
 				845DF6132603345B00DD26BF /* SignUpVC.xib in Resources */,
@@ -976,6 +1029,7 @@
 			files = (
 				CE9965E726141BCF00104065 /* HeartRateResultVC.swift in Sources */,
 				CE00163B261D8FC300B9374F /* LottieSheetOneActionVC.swift in Sources */,
+				84CD8230261EDDEC00ABD9B5 /* RecordTableViewCell.swift in Sources */,
 				CE001635261D8F8000B9374F /* HAlert.swift in Sources */,
 				CEC78E9625F73A07007BA177 /* Date+.swift in Sources */,
 				CEC7EDA7262FBD8700403671 /* PermissionUtil.swift in Sources */,
@@ -999,6 +1053,7 @@
 				CE0BE144261EB77700073002 /* Gender.swift in Sources */,
 				CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */,
 				CEC78E9F25F73A07007BA177 /* UIView+.swift in Sources */,
+				848645D926201358003599A4 /* TTSegmentedControl.swift in Sources */,
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
 				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,
 				CE10731425FDCD8B003777D6 /* AVCaptureDevice.swift in Sources */,
@@ -1028,6 +1083,7 @@
 				CE001614261D834800B9374F /* HeartRateStateView.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
 				CEC7EDB7262FCB7B00403671 /* APIResponse.swift in Sources */,
+				844863A4261D529C007CC806 /* HistoryVC.swift in Sources */,
 				CE00163A261D8FC300B9374F /* LottieSheetViewController.swift in Sources */,
 				CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */,
 				CE20A1162606DE480084F2BA /* FFT.swift in Sources */,
@@ -1041,6 +1097,7 @@
 				CE0BE138261EB01C00073002 /* HealthInfo.swift in Sources */,
 				CEC78E9D25F73A07007BA177 /* UITapGestureRecognizer+.swift in Sources */,
 				CEC78E0525F7327B007BA177 /* Environment.swift in Sources */,
+				848645E3262037D2003599A4 /* WeekMonthRecordTableViewCell.swift in Sources */,
 				CEC78E9825F73A07007BA177 /* UITextField+.swift in Sources */,
 				CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */,
 			);
