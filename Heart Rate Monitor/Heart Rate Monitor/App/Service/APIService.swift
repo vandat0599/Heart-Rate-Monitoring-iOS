@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import RxSwift
 
 class APIService {
     static let shared = APIService()
@@ -21,7 +22,15 @@ class APIService {
         return manager
     }()
     
-    private lazy var baseUrl: String = {
+    private var baseUrl: String = {
         return Environment.configuration(key: .baseUrl)
     }()
+    
+    private var disposeBag = DisposeBag()
+    
+    func login(userName: String, password: String) -> Single<User> {
+        Single.create { (single) -> Disposable in
+            return Disposables.create()
+        }
+    }
 }

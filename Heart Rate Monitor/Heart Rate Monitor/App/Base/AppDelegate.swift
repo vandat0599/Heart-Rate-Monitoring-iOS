@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    var deviceToken: String?
+    
     let rootViewController: UIViewController = {
         return UINavigationController(rootViewController: HomeContainerVC())
     }()
@@ -26,6 +28,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
         return true
+    }
+    
+    // MARK: - Remote Notification
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+        self.deviceToken = token
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("didFailToRegisterForRemoteNotificationsWithError: \(error.localizedDescription)")
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("notificaiton: \(userInfo.debugDescription)")
     }
 }
 

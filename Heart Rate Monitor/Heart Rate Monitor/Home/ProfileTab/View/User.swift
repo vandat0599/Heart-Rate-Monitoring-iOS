@@ -14,6 +14,7 @@ struct User: Decodable {
     var email: String?
     var phoneNumber: String?
     var address: String?
+    var accessToken: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -22,5 +23,6 @@ struct User: Decodable {
         case email
         case phoneNumber = "phone_number"
         case address
+        case accessToken = "access_token"
     }
 }

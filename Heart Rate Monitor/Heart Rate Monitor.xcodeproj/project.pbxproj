@@ -96,6 +96,8 @@
 		CEC78EA525F73A07007BA177 /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E9425F73A07007BA177 /* NSLayoutConstraint+.swift */; };
 		CEC78EA925F73A22007BA177 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78EA825F73A22007BA177 /* APIService.swift */; };
 		CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC78EBC25F74000007BA177 /* SignInVC.xib */; };
+		CEC7EDA7262FBD8700403671 /* PermissionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDA6262FBD8700403671 /* PermissionUtil.swift */; };
+		CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDAA262FBEEC00403671 /* HError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -238,6 +240,8 @@
 		CEC78E9425F73A07007BA177 /* NSLayoutConstraint+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+.swift"; sourceTree = "<group>"; };
 		CEC78EA825F73A22007BA177 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		CEC78EBC25F74000007BA177 /* SignInVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignInVC.xib; sourceTree = "<group>"; };
+		CEC7EDA6262FBD8700403671 /* PermissionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionUtil.swift; sourceTree = "<group>"; };
+		CEC7EDAA262FBEEC00403671 /* HError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HError.swift; sourceTree = "<group>"; };
 		EA0CA797C01A5CC5331E7137 /* Pods-Heart Rate Monitor.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.production.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -635,6 +639,8 @@
 				CE20A1152606DE480084F2BA /* FFT.swift */,
 				1DE870852614E55B006A38C2 /* Complex.swift */,
 				1DE870892614E588006A38C2 /* FloatingPointMath.swift */,
+				CEC7EDA6262FBD8700403671 /* PermissionUtil.swift */,
+				CEC7EDAA262FBEEC00403671 /* HError.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -966,6 +972,7 @@
 				CE00163B261D8FC300B9374F /* LottieSheetOneActionVC.swift in Sources */,
 				CE001635261D8F8000B9374F /* HAlert.swift in Sources */,
 				CEC78E9625F73A07007BA177 /* Date+.swift in Sources */,
+				CEC7EDA7262FBD8700403671 /* PermissionUtil.swift in Sources */,
 				CE7F8A1E25FC902600A2EDC9 /* HistoryVC.swift in Sources */,
 				CEC78EA925F73A22007BA177 /* APIService.swift in Sources */,
 				CEC78E9925F73A07007BA177 /* NSObject+.swift in Sources */,
@@ -984,6 +991,7 @@
 				CE7F8A2225FC902F00A2EDC9 /* UserVC.swift in Sources */,
 				CEC78E9525F73A07007BA177 /* UIColor+.swift in Sources */,
 				CE0BE144261EB77700073002 /* Gender.swift in Sources */,
+				CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */,
 				CEC78E9F25F73A07007BA177 /* UIView+.swift in Sources */,
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
 				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,

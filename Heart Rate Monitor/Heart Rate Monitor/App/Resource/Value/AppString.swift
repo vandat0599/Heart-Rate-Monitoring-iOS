@@ -12,6 +12,7 @@ struct AppString {
         static let cancel = "Cancel".localized
         static let no = "No".localized
         static let yes = "Yes".localized
+        static let permissionDeny = "Permission denied".localized
     }
     
     struct Login {
