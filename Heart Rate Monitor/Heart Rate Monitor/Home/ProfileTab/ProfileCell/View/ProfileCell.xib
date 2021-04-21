@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileCell" customModule="Heart_Rate_Monitor" customModuleProvider="target">
+            <connections>
+                <outlet property="keyLabel" destination="R2J-Mw-nG2" id="AgB-nw-iGO"/>
+                <outlet property="valueTextView" destination="uXc-re-YT9" id="r6P-jv-sXr"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2J-Mw-nG2">
+                    <rect key="frame" x="16" y="6.3333333333333339" width="80" height="29.333333333333329"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="h6M-8v-usU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="11"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Value Text View" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="uXc-re-YT9">
+                    <rect key="frame" x="106" y="6.3333333333333339" width="292" height="29.333333333333329"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="textColor" systemColor="labelColor"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="textContainer.maximumNumberOfLines">
+                            <integer key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </textView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" name="backgroundGray"/>
+            <constraints>
+                <constraint firstItem="R2J-Mw-nG2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3YN-22-thh"/>
+                <constraint firstItem="R2J-Mw-nG2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="Eg4-8M-2Gd"/>
+                <constraint firstItem="uXc-re-YT9" firstAttribute="top" secondItem="R2J-Mw-nG2" secondAttribute="top" id="UQb-Nh-Hed"/>
+                <constraint firstItem="uXc-re-YT9" firstAttribute="bottom" secondItem="R2J-Mw-nG2" secondAttribute="bottom" id="Wwt-iY-e9X"/>
+                <constraint firstItem="uXc-re-YT9" firstAttribute="leading" secondItem="R2J-Mw-nG2" secondAttribute="trailing" constant="10" id="t2q-OJ-HP2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="uXc-re-YT9" secondAttribute="trailing" constant="16" id="u7a-S7-5Lc"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="131.8840579710145" y="-308.1521739130435"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="backgroundGray">
+            <color red="0.93333333333333335" green="0.93333333333333335" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

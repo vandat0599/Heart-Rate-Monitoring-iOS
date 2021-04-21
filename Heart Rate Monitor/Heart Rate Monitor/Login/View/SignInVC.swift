@@ -20,10 +20,11 @@ class SignInVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
+        setupView()
     }
     
-    func configUI() {
+    private func setupView() {
+        view.backgroundColor = UIColor(named: "background")
         Gradient.horizontal(signupButton)
         Gradient.diagonal(loginButton)
         

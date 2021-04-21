@@ -20,6 +20,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var crTopLeft: Bool {
         get {
             self.layer.maskedCorners.contains(.layerMinXMinYCorner)
@@ -33,6 +34,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var crTopRight: Bool {
         get {
             self.layer.maskedCorners.contains(.layerMaxXMinYCorner)
@@ -46,6 +48,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var crBottomLeft: Bool {
         get {
             self.layer.maskedCorners.contains(.layerMinXMaxYCorner)
@@ -59,6 +62,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var crBottomRight: Bool {
         get {
             self.layer.maskedCorners.contains(.layerMaxXMaxYCorner)
@@ -72,6 +76,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var borderWidth: CGFloat {
         get {
             return layer.borderWidth
@@ -81,6 +86,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var borderColor: UIColor? {
         get {
             if let color = layer.borderColor {
@@ -97,6 +103,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var shadowColor: UIColor?{
         
         get{
@@ -114,6 +121,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var shadowOffset: CGSize{
         get{
             return layer.shadowOffset
@@ -123,6 +131,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var shadowOpacity: Float{
         get{
             return layer.shadowOpacity
@@ -134,6 +143,7 @@ extension UIView {
         }
     }
     
+    @IBInspectable
     var shadowRadius: CGFloat{
         get{
             return layer.shadowRadius
