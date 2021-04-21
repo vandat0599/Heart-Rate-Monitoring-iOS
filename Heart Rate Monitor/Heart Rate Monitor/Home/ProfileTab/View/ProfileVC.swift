@@ -113,7 +113,9 @@ class ProfileVC: BaseVC {
     
     @IBAction func editButtonTouched(_ sender: Any) {
         editButton.isHidden = true
+        editButton.isEnabled = false
         saveButton.isHidden = false
+        saveButton.isEnabled = true
         
         emailProfileCell.turnToEditMode()
         phoneProfileCell.turnToEditMode()
@@ -129,9 +131,15 @@ class ProfileVC: BaseVC {
     
     @IBAction func saveButtonTouched(_ sender: Any) {
         saveButton.isHidden = true
+        saveButton.isEnabled = false
         editButton.isHidden = false
+        editButton.isEnabled = true
         
-        registerReminder()
+        if frequencyProfileCell.valueTextView.text == "Never" {
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["frequencyReminder"])
+        } else {
+            registerReminder()
+        }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a"
@@ -170,7 +178,7 @@ class ProfileVC: BaseVC {
         dateComponents.minute = time.minute
         dateComponents.weekday = (frequencyProfileCell.valueTextView.text == "Weekly") ? Calendar.current.component(.weekday, from: time) : nil
         
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let requestIdentifier = "frequencyReminder"
         let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
@@ -312,11 +320,6 @@ extension ProfileVC: UNUserNotificationCenterDelegate {
         } else {
             completionHandler([.sound, .alert])
         }
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        //Show homeView
-        print("Show HomeView")
     }
 }
 
