@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HeartRateState: String, Decodable {
+enum HeartRateState: String, Decodable, CaseIterable {
     case normal = "normal"
     case active = "active"
     

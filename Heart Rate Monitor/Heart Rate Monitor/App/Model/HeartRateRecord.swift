@@ -7,18 +7,6 @@
 
 import Foundation
 
-enum HeartRateState: String, Decodable {
-    case normal = "normal"
-    case active = "active"
-    
-    static let allCases = [normal, active]
-    
-    enum CodingKeys: String, CodingKey {
-        case normal
-        case active
-    }
-}
-
 struct HeartRateRecord: Decodable {
     var value: Int?
     var state: HeartRateState = .normal
