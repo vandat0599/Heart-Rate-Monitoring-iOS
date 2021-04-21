@@ -29,5 +29,16 @@ class HeartRateDetector: NSObject {
         }
         return (peaks,index)
     }
+    
+    // remove high freq, bring edges to zero
+    static func hann(_ windowsLength: Int ) -> [Double] {
+        var result = [Double]()
+        
+        for i in 0..<windowsLength {
+            result.append((0.5 * (1 -  cos(2 * Double.pi * Double(i) / Double(windowsLength - 1)))))
+        }
+        
+        return result
+    }
 
 }
