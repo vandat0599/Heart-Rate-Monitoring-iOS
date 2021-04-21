@@ -51,6 +51,36 @@ class HeartRateDetector: NSObject {
         return result
     }
     
+    // Làm mượt đỉnh
+    static func SmoothingPeak (y:[Double],_ bpm: Double, _ fps: Int) -> Int {
+        let freq_resolution = 1.0/Double(Windows_Seconds)
+        let lowfreq = bpm / 60 - 0.5 * freq_resolution
+        let freq_incre = 1.0/60.0
+        var freqs = [Double]()
+        for i in 0..<10 {
+            freqs.append(Double(i)*freq_incre + lowfreq)
+        }
+        
+        var power = [Double]()
+        for i in 0..<10 {
+            var real = 0.0
+            var ima = 0.0
+            for j in 0...(Windows_Seconds*fps - 1) {
+                let phi = 2 * Double.pi * freqs[i] * (Double(j)/Double(fps))
+                real += y[j] * cos(phi)
+                ima += y[j] * sin(phi)
+            }
+            power.append(Double(real*real + ima*ima))
+        }
+        
+        let maxPeak = power.max()!
+        let indexOfMax = power.firstIndex(of: maxPeak)
+        let bpm_Smoothing = Int(ceil(60 * freqs[indexOfMax!]))
+        
+        return bpm_Smoothing
+        
+    }
+    
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm 15 frame thì lại gọi hàm
     static func PulseDetector(_ signal: [Double],fps: Int) ->Int {
