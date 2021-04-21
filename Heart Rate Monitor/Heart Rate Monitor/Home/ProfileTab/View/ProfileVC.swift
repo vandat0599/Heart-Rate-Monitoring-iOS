@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol addNewRelationship {
+    func addNewRelationshipTouched(email: String)
+}
+
 class ProfileVC: BaseVC {
     
     //Outlets
@@ -55,6 +59,8 @@ class ProfileVC: BaseVC {
         frequencyProfileCell.keyLabel.text = "Frequency:"
         
         timeProfileCell.keyLabel.text = "Time:"
+        
+        UNUserNotificationCenter.current().delegate = self
         
         relationshipTableView.register(RelationshipTableViewCell.nib, forCellReuseIdentifier: RelationshipTableViewCell.identifier)
         relationshipTableView.register(InputRelationshipTableViewCell.nib, forCellReuseIdentifier: InputRelationshipTableViewCell.identifier)
@@ -125,6 +131,8 @@ class ProfileVC: BaseVC {
         saveButton.isHidden = true
         editButton.isHidden = false
         
+        registerReminder()
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -147,6 +155,32 @@ class ProfileVC: BaseVC {
         relationshipTableHeightConstraint.constant -= 42
     }
     
+    func registerReminder() {
+        let content = UNMutableNotificationContent()
+        content.title = "Reminder"
+        content.body = "Time to measure your heart rate."
+//        content.badge = 1
+        content.categoryIdentifier = "frequencyReminder"
+        
+        let time = timePicker.date
+        
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+        dateComponents.hour = time.hour
+        dateComponents.minute = time.minute
+        dateComponents.weekday = (frequencyProfileCell.valueTextView.text == "Weekly") ? Calendar.current.component(.weekday, from: time) : nil
+        
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let requestIdentifier = "frequencyReminder"
+        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+            if let err = error {
+                print(err.localizedDescription)
+            }
+        })
+    }
 }
 
 
@@ -166,6 +200,9 @@ extension ProfileVC: UITextViewDelegate{
             frequencyProfileCell.valueTextView.inputView = frequencyPicker
         case self.timeProfileCell.valueTextView.layer:
             timeProfileCell.valueTextView.addSubview(timePicker)
+//            timePicker.trailingAnchor.constraint(equalTo: timeProfileCell.valueTextView.trailingAnchor).isActive = true
+            timePicker.trailingAnchor.constraint(equalTo: timeProfileCell.valueTextView.trailingAnchor, constant: 0).isActive = true
+            timePicker.centerYAnchor.constraint(equalTo: timeProfileCell.valueTextView.centerYAnchor).isActive = true
             timePicker.tag = 3
         default:
             print("////////Unknown")
@@ -268,6 +305,21 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension ProfileVC: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if #available(iOS 14.0, *) {
+            completionHandler([.sound, .banner])
+        } else {
+            completionHandler([.sound, .alert])
+        }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        //Show homeView
+        print("Show HomeView")
+    }
+}
+
 extension ProfileVC: addNewRelationship {
     func addNewRelationshipTouched(email: String) {
         if email != "" {
@@ -282,6 +334,3 @@ extension ProfileVC: addNewRelationship {
     
 }
 
-protocol addNewRelationship {
-    func addNewRelationshipTouched(email: String)
-}

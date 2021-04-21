@@ -8,6 +8,7 @@
 import UIKit
 import IQKeyboardManagerSwift
 import Accelerate
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
+        
+        //Notification
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound], completionHandler: {(permissionGranted, error) in
+            if let err = error {
+                print(err.localizedDescription)
+            }
+        })
+        
         return true
     }
 }
