@@ -368,13 +368,6 @@
 			path = WeekMonthRecordTableViewCell;
 			sourceTree = "<group>";
 		};
-		84C718932606E9A100BA2C6D /* Personal */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Personal;
-			sourceTree = "<group>";
-		};
 		84C718952606EACD00BA2C6D /* ProfileTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,7 +494,6 @@
 		CE1E228A25F72A0200C6632E /* Heart Rate Monitor */ = {
 			isa = PBXGroup;
 			children = (
-				84C718932606E9A100BA2C6D /* Personal */,
 				CEC78DC825F72BC6007BA177 /* App */,
 				CE7F89F525FC786100A2EDC9 /* Home */,
 				845DF60D2603339400DD26BF /* SignUp */,

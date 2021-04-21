@@ -31,7 +31,7 @@ protocol HeartRateVCVM {
 class HeartRateVCVMImp: HeartRateVCVM {
     
     let disposeBag = DisposeBag()
-    var maxProgressSecond = 20
+    var maxProgressSecond = 50
     var timeCounterSubscription: Disposable?
     var isPlaying: BehaviorRelay<Bool>
     var heartRateTrackNumber: BehaviorRelay<Int>
@@ -46,7 +46,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var filtedValues: [Double]
     private var validFrameCounter = 0
     private var pulseDetector = PulseDetector()
-    private var inputs: [CGFloat] = []
+    private var inputs: [Double] = []
     private var redmeans: [Double] = []
     private let hueFilter = BBFilter()
     
@@ -83,6 +83,8 @@ class HeartRateVCVMImp: HeartRateVCVM {
         heartRateProgress.accept(0.0)
         warningText.accept(AppString.heartRateMonitor)
         guideCoverCameraText.accept(AppString.heartRateGuides)
+        pulses.removeAll()
+        inputs.removeAll()
     }
     
     private func resetMesuringData() {
@@ -92,7 +94,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
         isMeasuring.accept(false)
         isHeartRateValid.accept(false)
         guideCoverCameraText.accept(AppString.heartRateGuides)
+        pulses.removeAll()
+        inputs.removeAll()
     }
+    
+    var pulses: [Int] = []
     
     func handleImage(with buffer: CMSampleBuffer) {
         // B1: Video signal acquisition -> camera frame
@@ -109,7 +115,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
         let redmean = CGFloat(bitmap[0])
         let greenmean = CGFloat(bitmap[1])
         let bluemean = CGFloat(bitmap[2])
-        redmeans.append(Double(redmean))
         // B3: Band-pass filtering: BPM_L = 40 & BPM_H = 230 -> filtered mean of red color
         
         // B4:
@@ -126,8 +131,15 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 isMeasuring.accept(true)
             }
             validFrameCounter += 1
-            inputs.append(hsv.0)
+            inputs.append(Double(redmean))
             // Filter the hue value - the filter is a simple BAND PASS FILTER that removes any DC component and any high frequency noise
+            
+            if inputs.count >= 180 && (inputs.count-180)%15 == 0 {
+                let heartRate = HeartRateDetector.PulseDetector(Array(inputs[15*pulses.count..<inputs.count]), fps: 30)
+                pulses.append(heartRate)
+                print("heartRate: \(pulses.reduce(0,+)/pulses.count) - \(inputs.count)")
+            }
+            
             var filtered = hueFilter.processValue(value: Double(hsv.0))
             filtered = filtered <= -1 ? 0 : filtered
             filtered = filtered >= 1 ? 0 : filtered

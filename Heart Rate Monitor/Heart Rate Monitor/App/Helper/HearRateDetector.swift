@@ -84,6 +84,7 @@ class HeartRateDetector: NSObject {
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm 15 frame thì lại gọi hàm
     static func PulseDetector(_ signal: [Double],fps: Int) ->Int {
+        print(signal)
         if (signal.count != 180){
             print("signal truyền vào phải có 180 giá trị thay vì \(signal.count)")
             return -1
