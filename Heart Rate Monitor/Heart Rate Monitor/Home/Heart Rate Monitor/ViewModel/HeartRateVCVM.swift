@@ -103,24 +103,38 @@ class HeartRateVCVMImp: HeartRateVCVM {
     func handleImage(with buffer: CMSampleBuffer) {
         // B1: Video signal acquisition -> camera frame
         touchStatus.accept(true)
-        let pixelBuffer = CMSampleBufferGetImageBuffer(buffer)
-        let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
-        let extentVector = CIVector(x: cameraImage.extent.origin.x, y: cameraImage.extent.origin.y, z: cameraImage.extent.size.width, w: cameraImage.extent.size.height)
-        let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: cameraImage, kCIInputExtentKey: extentVector])
-        guard let outputImage = filter?.outputImage else { return }
-        var bitmap = [UInt8](repeating: 0, count: 4)
-        let context = CIContext(options: [.workingColorSpace: kCFNull as Any])
-        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
-        // B2: Brightness signal computation -> mean of red color
-        let redmean = CGFloat(bitmap[0])
-        let greenmean = CGFloat(bitmap[1])
-        let bluemean = CGFloat(bitmap[2])
+        let imageBuffer = CMSampleBufferGetImageBuffer(buffer)!
+        CVPixelBufferLockBaseAddress(imageBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
+        let width = CVPixelBufferGetWidth(imageBuffer)
+        let height = CVPixelBufferGetHeight(imageBuffer)
+        
+        let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer)!
+        let byteBuffer = baseAddress.assumingMemoryBound(to: UInt8.self)
+        var reds: [Int] = []
+        var greens: [Int] = []
+        var blues: [Int] = []
+        for j in 0..<height {
+            for i in 0..<width {
+                let index = (j * width + i) * 4
+                let b = byteBuffer[index] // blue
+                let g = byteBuffer[index+1] // green
+                let r = byteBuffer[index+2] // red
+                reds.append(Int(r))
+                greens.append(Int(g))
+                blues.append(Int(b))
+            }
+        }
+        let redmean = Double(reds.reduce(0, +))/Double(reds.count)
+        let greenmean = Double(greens.reduce(0, +))/Double(greens.count)
+        let bluemean = Double(blues.reduce(0, +))/Double(blues.count)
+        inputs.append(redmean)
+        
         // B3: Band-pass filtering: BPM_L = 40 & BPM_H = 230 -> filtered mean of red color
         
         // B4:
         
         // hsv for cover camera condition
-        let hsv = rgb2hsv(red: redmean, green: greenmean, blue: bluemean)
+        let hsv = rgb2hsv(red: CGFloat(redmean), green: CGFloat(greenmean), blue: CGFloat(bluemean))
         if (hsv.1 > 0.5 && hsv.2 > 0.5) {
             DispatchQueue.main.async {
                 self.warningText.accept(AppString.keepYourFinger)
@@ -131,7 +145,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 isMeasuring.accept(true)
             }
             validFrameCounter += 1
-            inputs.append(Double(redmean))
             // Filter the hue value - the filter is a simple BAND PASS FILTER that removes any DC component and any high frequency noise
             
             if inputs.count >= 180 && (inputs.count-180)%15 == 0 {
