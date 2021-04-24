@@ -22,6 +22,14 @@ class HeartRateDetector: NSObject {
                 if $0.element < last && ascending  {
                     ascending = false
                     peaks.append(last)
+                    var idx = $0.offset - 1
+                    while(freqs[idx] == last){
+                        if (freqs[idx-1] != last){
+                            peaks.append(freqs[idx])
+                            index.append(idx)
+                        }
+                        idx -= 1
+                    }
                     index.append($0.offset)
                 }
                 last = $0.element
