@@ -9,6 +9,16 @@
 import Foundation
 let Windows_Seconds = 6
 class HeartRateDetector: NSObject {
+
+    static func Multiplication (_ a : [Double], _ b : [Double]) -> [Double] {
+        var result = [Double]()
+        
+        for i in 0..<a.count {
+            result.append(a[i]*b[i])
+        }
+        
+        return result
+    }
     
     static func findPeakElement(_ freqs: [Double]) -> ([Double],[Int]){
         var ascending = false
@@ -37,7 +47,6 @@ class HeartRateDetector: NSObject {
         }
         return (peaks,index)
     }
-    
     // remove high freq, bring edges to zero
     static func hann(_ windowsLength: Int ) -> [Double] {
         var result = [Double]()
@@ -48,19 +57,8 @@ class HeartRateDetector: NSObject {
         
         return result
     }
-    
-    static func Multiplication (_ a : [Double], _ b : [Double]) -> [Double] {
-        var result = [Double]()
-        
-        for i in 0..<a.count {
-            result.append(a[i]*b[i])
-        }
-        
-        return result
-    }
-    
     // Làm mượt đỉnh
-    static func SmoothingPeak (y:[Double],_ bpm: Double, _ fps: Int) -> Int {
+    static func SmoothingPeak (y:[Double],_ bpm: Double, _ fps: Int) -> Double {
         let freq_resolution = 1.0/Double(Windows_Seconds)
         let lowfreq = bpm / 60 - 0.5 * freq_resolution
         let freq_incre = 1.0/60.0
@@ -73,7 +71,7 @@ class HeartRateDetector: NSObject {
         for i in 0..<10 {
             var real = 0.0
             var ima = 0.0
-            for j in 0...(Windows_Seconds*fps - 1) {
+            for j in 0..<(Windows_Seconds*fps) {
                 let phi = 2 * Double.pi * freqs[i] * (Double(j)/Double(fps))
                 real += y[j] * cos(phi)
                 ima += y[j] * sin(phi)
@@ -83,27 +81,26 @@ class HeartRateDetector: NSObject {
         
         let maxPeak = power.max()!
         let indexOfMax = power.firstIndex(of: maxPeak)
-        let bpm_Smoothing = Int(ceil(60 * freqs[indexOfMax!]))
+        
+        let bpm_Smoothing = 60 * freqs[indexOfMax!]
         
         return bpm_Smoothing
         
     }
-    
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm 15 frame thì lại gọi hàm
-    static func PulseDetector(_ signal: [Double],fps: Int) ->Int {
-        print(signal)
-        if (signal.count != 180){
-            print("signal truyền vào phải có 180 giá trị thay vì \(signal.count)")
+    static func PulseDetector(_ signal: [Double],fps: Int) ->Double {
+        if (signal.count != 6*fps){
+            print("signal truyền vào phải có \(6*fps) giá trị thay vì \(signal.count)")
             return -1
         }
-        var heartBeat = 0
+        var heartBeat = 0.0
         
         let filter = BBFilter()
         
         let (denC, numC) = filter.butter(order: 2, lowFreq: 2/45, highFreq: 23/90)
         var y = filter.Filter(signal: signal, denC: denC, numC: numC)
-        y = Multiplication(y, hann(Windows_Seconds*fps + 1))
+        y = Multiplication(y, hann(Windows_Seconds*fps))
         
         let gain = filter.DFT(signal: y)
         let index_range = Array(5...25)
@@ -113,16 +110,13 @@ class HeartRateDetector: NSObject {
         }.map(){
             $0.element
         }
-        
         let (peaks,indexs) = findPeakElement(trueGain)
-        let maxPeak = peaks.max()!
-        let indexOfMaxPeak = peaks.firstIndex(of: maxPeak)!
+        let maxPeak = peaks.max() ?? 0
+        let indexOfMaxPeak = peaks.firstIndex(of: maxPeak) ?? 0
         let maxFreqIndx = index_range[indexs[indexOfMaxPeak]]
-        let temp  = Double(maxFreqIndx) * Double(fps) / Double(Windows_Seconds * fps + 1)
+        let temp  = Double(maxFreqIndx-1) * Double(fps) / Double(Windows_Seconds * fps+1)
         let bpm = Double(temp*60)
         heartBeat = SmoothingPeak(y: y, bpm, fps)
-        
         return heartBeat
     }
-
 }

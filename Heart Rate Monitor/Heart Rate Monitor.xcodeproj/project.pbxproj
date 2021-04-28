@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		108A837F606DD09CFE7F2E77 /* Pods_Heart_Rate_Monitor_Heart_Rate_MonitorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E47FAAA0D01FF3D807DF878 /* Pods_Heart_Rate_Monitor_Heart_Rate_MonitorUITests.framework */; };
-		1D1B8216263003DC0037D3E8 /* HearRateDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1B8215263003DC0037D3E8 /* HearRateDetector.swift */; };
+		1D1B8216263003DC0037D3E8 /* HeartRateDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1B8215263003DC0037D3E8 /* HeartRateDetector.swift */; };
 		1DE870862614E55B006A38C2 /* Complex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE870852614E55B006A38C2 /* Complex.swift */; };
 		1DE8708A2614E588006A38C2 /* FloatingPointMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE870892614E588006A38C2 /* FloatingPointMath.swift */; };
 		81D1917AA40E24FA1005A042 /* Pods_Heart_Rate_MonitorTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 579497AEDB20702A5390C924 /* Pods_Heart_Rate_MonitorTests.framework */; };
@@ -54,6 +54,7 @@
 		CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */ = {isa = PBXBuildFile; fileRef = CE10733525FE1075003777D6 /* lottie-heart-wave.json */; };
 		CE10736125FE7211003777D6 /* HeartWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10736025FE7211003777D6 /* HeartWaveView.swift */; };
 		CE10736625FE7449003777D6 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10736525FE7449003777D6 /* CGPoint+.swift */; };
+		CE16203A263930550076E71F /* CMSampleBuffer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE162039263930550076E71F /* CMSampleBuffer+.swift */; };
 		CE1E228C25F72A0200C6632E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E228B25F72A0200C6632E /* AppDelegate.swift */; };
 		CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E228F25F72A0200C6632E /* SignInVC.swift */; };
 		CE1E229525F72A0300C6632E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1E229425F72A0300C6632E /* Assets.xcassets */; };
@@ -144,7 +145,7 @@
 /* Begin PBXFileReference section */
 		0B74324F843F9DBE87023F05 /* Pods-Heart Rate MonitorTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.staging.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.staging.xcconfig"; sourceTree = "<group>"; };
 		13946A76B8F33140617BC1A8 /* Pods-Heart Rate MonitorTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.production.xcconfig"; sourceTree = "<group>"; };
-		1D1B8215263003DC0037D3E8 /* HearRateDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HearRateDetector.swift; sourceTree = "<group>"; };
+		1D1B8215263003DC0037D3E8 /* HeartRateDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateDetector.swift; sourceTree = "<group>"; };
 		1DE870852614E55B006A38C2 /* Complex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complex.swift; sourceTree = "<group>"; };
 		1DE870892614E588006A38C2 /* FloatingPointMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointMath.swift; sourceTree = "<group>"; };
 		27BB2FC9DAFF478BD83ADD15 /* Pods-Heart Rate Monitor.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.staging.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.staging.xcconfig"; sourceTree = "<group>"; };
@@ -204,6 +205,7 @@
 		CE10733525FE1075003777D6 /* lottie-heart-wave.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-heart-wave.json"; sourceTree = "<group>"; };
 		CE10736025FE7211003777D6 /* HeartWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartWaveView.swift; sourceTree = "<group>"; };
 		CE10736525FE7449003777D6 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
+		CE162039263930550076E71F /* CMSampleBuffer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMSampleBuffer+.swift"; sourceTree = "<group>"; };
 		CE1E228825F72A0200C6632E /* Heart Rate Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heart Rate Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1E228B25F72A0200C6632E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE1E228F25F72A0200C6632E /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				CEC78E8925F73A05007BA177 /* UIViewController+.swift */,
 				CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */,
 				CE10736525FE7449003777D6 /* CGPoint+.swift */,
+				CE162039263930550076E71F /* CMSampleBuffer+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -694,7 +697,7 @@
 				CEC7EDA6262FBD8700403671 /* PermissionUtil.swift */,
 				CEC7EDAA262FBEEC00403671 /* HError.swift */,
 				CEC7EDB2262FCA8A00403671 /* HLog.swift */,
-				1D1B8215263003DC0037D3E8 /* HearRateDetector.swift */,
+				1D1B8215263003DC0037D3E8 /* HeartRateDetector.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1062,9 +1065,10 @@
 				84575B772607844200711760 /* ProfileCell.swift in Sources */,
 				CE10731C25FDCDD3003777D6 /* HeartRateManager.swift in Sources */,
 				CE10736625FE7449003777D6 /* CGPoint+.swift in Sources */,
-				1D1B8216263003DC0037D3E8 /* HearRateDetector.swift in Sources */,
+				1D1B8216263003DC0037D3E8 /* HeartRateDetector.swift in Sources */,
 				CE7F8A3425FCB33A00A2EDC9 /* RoundedView.swift in Sources */,
 				CE10732225FDCDDF003777D6 /* PulseDetector.swift in Sources */,
+				CE16203A263930550076E71F /* CMSampleBuffer+.swift in Sources */,
 				845DF6122603345B00DD26BF /* SignUpVC.swift in Sources */,
 				CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */,
 				CEC78E9A25F73A07007BA177 /* UIViewController+.swift in Sources */,

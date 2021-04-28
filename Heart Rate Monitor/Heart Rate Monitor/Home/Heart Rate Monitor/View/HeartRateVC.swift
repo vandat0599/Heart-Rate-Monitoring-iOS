@@ -108,7 +108,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.dragEnabled = true
         view.setScaleEnabled(false)
         view.pinchZoomEnabled = true
-        view.autoScaleMinMaxEnabled = false
+        view.autoScaleMinMaxEnabled = true
         view.rightAxis.enabled = false
         view.leftAxis.enabled = false
         view.legend.enabled = false
@@ -201,7 +201,10 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private func bindViews() {
         viewModel?.isPlaying
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
+                print(value)
                 self.playViewTopAnchor.constant = value ? 0 : -UIScreen.main.bounds.width*0.2/2
                 self.cameraView.isHidden = !value
                 self.progressView.isHidden = !value
@@ -220,16 +223,21 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 } else {
                     self.heartRateManager.stopCapture()
                 }
+                self.toggleTorch(status: value)
                 self.navigationItem.title = value ? AppString.keepYourFinger : AppString.heartRateMonitor
             })
             .disposed(by: disposeBag)
         
         viewModel?.heartRateTrackNumber
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .map { "\($0 == 0 ? "--" : "\($0)")\nbpm" }
             .bind(to: heartRateTrackLabel.rx.text)
             .disposed(by: disposeBag)
         
         playView.rx.controlEvent(.touchUpInside)
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind {[unowned self] in
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 self.viewModel?.togglePlay()
@@ -237,6 +245,8 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateProgress
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
                 if value == 0 {
                     self.progressView.stop()
@@ -247,40 +257,40 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             })
             .disposed(by: disposeBag)
         
-        viewModel?.touchStatus
-            .subscribe(onNext: {[unowned self] (value) in
-                self.toggleTorch(status: value)
-            })
-            .disposed(by: disposeBag)
-        
         viewModel?.warningText
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
                 self.navigationItem.title = value
             })
             .disposed(by: disposeBag)
         
         viewModel?.guideCoverCameraText
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(to: guideLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel?.isMeasuring
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
-                DispatchQueue.main.async {
-                    if value {
-                        self.chartView.isHidden = false
-                        UIView.animate(withDuration: 0.4) {
-                            self.chartView.alpha = !value ? 0.0 : 1.0
-                        }
-                    } else {
-                        self.chartView.isHidden = true
-                        self.reloadChartData(value: nil)
+                if value {
+                    self.chartView.isHidden = false
+                    UIView.animate(withDuration: 0.4) {
+                        self.chartView.alpha = !value ? 0.0 : 1.0
                     }
-                    self.playView.isUserInteractionEnabled = !value
+                } else {
+                    self.chartView.isHidden = true
+                    self.reloadChartData(value: nil)
                 }
+                self.playView.isUserInteractionEnabled = !value
             })
             .disposed(by: disposeBag)
         
         viewModel?.isHeartRateValid
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
                 if self.viewModel?.isMeasuring.value ?? false {
                     self.guideLabel.isHidden = value
@@ -299,6 +309,8 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.timeupTrigger
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
                 let heartRateHistory = HeartRateHistory(
@@ -320,20 +332,27 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.filteredValueTrigger
+            .skip(1)
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
-                DispatchQueue.main.async {
-                    if chartView.isHidden == true {
-                        chartView.isHidden = false
-                    }
-                    self.reloadChartData(value: value)
+                if chartView.isHidden == true {
+                    chartView.isHidden = false
                 }
+                self.reloadChartData(value: value)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.touchStatus
+            .subscribe(onNext: {[unowned self] (value) in
+                self.toggleTorch(status: value)
             })
             .disposed(by: disposeBag)
     }
     
     func reloadChartData(value: Double?) {
         guard let value = value else {
-            let dataSet = LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 0)])
+            let dataSet = LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 0.8)	])
             dataSet.axisDependency = .left
             dataSet.setColor(.red)
             dataSet.lineWidth = 2
@@ -342,22 +361,24 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             let lineChartData: LineChartData = LineChartData.init(dataSets: [dataSet])
             lineChartData.setValueTextColor(.clear)
             chartView.data = lineChartData
+            chartView.notifyDataSetChanged()
+            chartView.moveViewToX(0)
             return
         }
-        chartView.data?.addEntry(ChartDataEntry(x: Double(viewModel.filtedValues.count), y: value), dataSetIndex: 0)
-        if viewModel.filtedValues.count > 100 {
+        if viewModel.capturedRedmean.count > 100 {
             chartView.setVisibleXRange(minXRange: 1, maxXRange: 100)
         }
+        chartView.data?.addEntry(ChartDataEntry(x: Double(viewModel.capturedRedmean.count), y: value), dataSetIndex: 0)
         chartView.notifyDataSetChanged()
-        chartView.moveViewToX(Double(viewModel.filtedValues.count))
+        chartView.moveViewToX(Double(viewModel.capturedRedmean.count))
     }
     
     // MARK: - Frames Capture Methods
     private func initVideoCapture() {
-        let specs = VideoSpec(fps: 30, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
+        let specs = VideoSpec(fps: 15, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
         heartRateManager = HeartRateManager(cameraType: .back, preferredSpec: specs, previewContainer: cameraView.layer)
         heartRateManager.imageBufferHandler = { [unowned self] (imageBuffer) in
-            self.viewModel.handleImage(with: imageBuffer)
+            self.viewModel.handleImage(with: imageBuffer, fps: Int(specs.fps ?? 0))
         }
     }
 
