@@ -93,8 +93,8 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         return view
     }()
 
-    private lazy var playView: UIControl = {
-        let view = UIControl()
+    private lazy var playView: CustomRippleControl = {
+        let view = CustomRippleControl()
         view.isHidden = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Account: Decodable {
+struct Account: Codable {
     var id: String?
     var username: String?
     var password: String?

@@ -33,14 +33,15 @@ class BottomBarView: UIView {
         return view
     }()
     
-    private lazy var itemHeartRate: UIControl = {
-        let view = UIControl()
+    private lazy var itemHeartRate: CustomRippleControl = {
+        let view = CustomRippleControl()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(itemTapped(_:)), for: .touchUpInside)
         view.cornerRadius = 24
         let imageView = UIImageView(image: UIImage(named: "ic-heart-tab"))
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: 56),
@@ -106,9 +107,6 @@ class BottomBarView: UIView {
     
     @objc private func itemTapped(_ sender: UIControl) {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        if sender == itemHeartRate {
-            sender.performSpringAnimation(duration: 0.4, maxScale: 0.95)
-        }
         [itemHistory, itemUser].forEach {
             $0.isSelected = $0 == sender
         }

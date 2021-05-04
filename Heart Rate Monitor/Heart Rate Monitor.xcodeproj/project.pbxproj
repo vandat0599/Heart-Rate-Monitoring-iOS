@@ -60,6 +60,8 @@
 		CE1E22A325F72A0300C6632E /* Heart_Rate_MonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22A225F72A0300C6632E /* Heart_Rate_MonitorTests.swift */; };
 		CE1E22AE25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */; };
 		CE20A1162606DE480084F2BA /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20A1152606DE480084F2BA /* FFT.swift */; };
+		CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */; };
+		CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE444972264100DA0028A5D4 /* CustomRippleControl.swift */; };
 		CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CF92627F98200159D86 /* lottie-error.json */; };
 		CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFA2627F98200159D86 /* lottie-success.json */; };
 		CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */; };
@@ -215,6 +217,8 @@
 		CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart_Rate_MonitorUITests.swift; sourceTree = "<group>"; };
 		CE1E22AF25F72A0300C6632E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE20A1152606DE480084F2BA /* FFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
+		CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelper.swift; sourceTree = "<group>"; };
+		CE444972264100DA0028A5D4 /* CustomRippleControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRippleControl.swift; sourceTree = "<group>"; };
 		CE4D1CF92627F98200159D86 /* lottie-error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-error.json"; sourceTree = "<group>"; };
 		CE4D1CFA2627F98200159D86 /* lottie-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-success.json"; sourceTree = "<group>"; };
 		CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-internet-connection.json"; sourceTree = "<group>"; };
@@ -560,6 +564,7 @@
 				CE001639261D8FC300B9374F /* LottieSheetOneActionVC.swift */,
 				CE001638261D8FC300B9374F /* LottieSheetViewController.swift */,
 				848645D826201358003599A4 /* TTSegmentedControl.swift */,
+				CE444972264100DA0028A5D4 /* CustomRippleControl.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -692,6 +697,7 @@
 				CEC7EDAA262FBEEC00403671 /* HError.swift */,
 				CEC7EDB2262FCA8A00403671 /* HLog.swift */,
 				1D1B8215263003DC0037D3E8 /* HeartRateDetector.swift */,
+				CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1039,6 +1045,7 @@
 				CE0BE13C261EB0EE00073002 /* HeartRateHistory.swift in Sources */,
 				CEC78E9C25F73A07007BA177 /* UICollectionView+.swift in Sources */,
 				84230D4E2603184900EC9DD0 /* GradientColor.swift in Sources */,
+				CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */,
 				CEC78EA425F73A07007BA177 /* UIImage+.swift in Sources */,
 				CE10732125FDCDDF003777D6 /* Filter.swift in Sources */,
 				CE7F8A2225FC902F00A2EDC9 /* UserVC.swift in Sources */,
@@ -1076,6 +1083,7 @@
 				84C718C62606F85F00BA2C6D /* User.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
 				CE001614261D834800B9374F /* HeartRateStateView.swift in Sources */,
+				CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
 				CEC7EDB7262FCB7B00403671 /* APIResponse.swift in Sources */,
 				844863A4261D529C007CC806 /* HistoryVC.swift in Sources */,
