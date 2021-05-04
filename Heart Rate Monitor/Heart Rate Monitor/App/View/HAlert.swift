@@ -23,7 +23,7 @@ class HAlert: UIView {
             title: "Error!",
             description: message,
             rightActionTitle: "OK",
-            rightAction: nil)
+            rightAction: rightAction)
         vc.rightActionButton.backgroundColor = UIColor(named: "error")
         vc.canDismissOnSwipeDown = false
         vc.closeButton.isHidden = true
@@ -38,7 +38,7 @@ class HAlert: UIView {
             title: "Note!",
             description: message,
             rightActionTitle: "OK",
-            rightAction: nil)
+            rightAction: rightAction)
         vc.rightActionButton.backgroundColor = UIColor(named: "alert")
         vc.canDismissOnSwipeDown = false
         vc.closeButton.isHidden = true

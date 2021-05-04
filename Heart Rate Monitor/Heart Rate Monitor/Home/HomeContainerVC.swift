@@ -112,6 +112,7 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
             HAlert.showWarningBottomSheet(self, message: "Did you have an account?\n You need to login or register an account to use this feature!!") {[weak self] in
                 let loginVC = UINavigationController(rootViewController: SignInVC())
                 self?.present(loginVC, animated: true)
+                print("present")
             }
             bottomBar.selectedIndex = 1
             return
