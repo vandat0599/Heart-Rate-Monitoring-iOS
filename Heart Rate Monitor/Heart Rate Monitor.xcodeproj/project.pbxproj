@@ -48,11 +48,9 @@
 		CE0BE148261EB79400073002 /* HeartRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE147261EB79400073002 /* HeartRateState.swift */; };
 		CE10731425FDCD8B003777D6 /* AVCaptureDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */; };
 		CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731725FDCDC1003777D6 /* ColorUtils.swift */; };
-		CE10731C25FDCDD3003777D6 /* HeartRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731B25FDCDD3003777D6 /* HeartRateManager.swift */; };
+		CE10731C25FDCDD3003777D6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731B25FDCDD3003777D6 /* CameraManager.swift */; };
 		CE10732125FDCDDF003777D6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731F25FDCDDF003777D6 /* Filter.swift */; };
-		CE10732225FDCDDF003777D6 /* PulseDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10732025FDCDDF003777D6 /* PulseDetector.swift */; };
 		CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */ = {isa = PBXBuildFile; fileRef = CE10733525FE1075003777D6 /* lottie-heart-wave.json */; };
-		CE10736125FE7211003777D6 /* HeartWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10736025FE7211003777D6 /* HeartWaveView.swift */; };
 		CE10736625FE7449003777D6 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10736525FE7449003777D6 /* CGPoint+.swift */; };
 		CE16203A263930550076E71F /* CMSampleBuffer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE162039263930550076E71F /* CMSampleBuffer+.swift */; };
 		CE1E228C25F72A0200C6632E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E228B25F72A0200C6632E /* AppDelegate.swift */; };
@@ -62,6 +60,9 @@
 		CE1E22A325F72A0300C6632E /* Heart_Rate_MonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22A225F72A0300C6632E /* Heart_Rate_MonitorTests.swift */; };
 		CE1E22AE25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */; };
 		CE20A1162606DE480084F2BA /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20A1152606DE480084F2BA /* FFT.swift */; };
+		CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */; };
+		CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE444972264100DA0028A5D4 /* CustomRippleControl.swift */; };
+		CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */ = {isa = PBXBuildFile; fileRef = CE44497C26410A490028A5D4 /* lottie-warning.json */; };
 		CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CF92627F98200159D86 /* lottie-error.json */; };
 		CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFA2627F98200159D86 /* lottie-success.json */; };
 		CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */; };
@@ -199,11 +200,9 @@
 		CE0BE147261EB79400073002 /* HeartRateState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateState.swift; sourceTree = "<group>"; };
 		CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureDevice.swift; sourceTree = "<group>"; };
 		CE10731725FDCDC1003777D6 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
-		CE10731B25FDCDD3003777D6 /* HeartRateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateManager.swift; sourceTree = "<group>"; };
+		CE10731B25FDCDD3003777D6 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		CE10731F25FDCDDF003777D6 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
-		CE10732025FDCDDF003777D6 /* PulseDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PulseDetector.swift; sourceTree = "<group>"; };
 		CE10733525FE1075003777D6 /* lottie-heart-wave.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-heart-wave.json"; sourceTree = "<group>"; };
-		CE10736025FE7211003777D6 /* HeartWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartWaveView.swift; sourceTree = "<group>"; };
 		CE10736525FE7449003777D6 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		CE162039263930550076E71F /* CMSampleBuffer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMSampleBuffer+.swift"; sourceTree = "<group>"; };
 		CE1E228825F72A0200C6632E /* Heart Rate Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heart Rate Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +218,9 @@
 		CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart_Rate_MonitorUITests.swift; sourceTree = "<group>"; };
 		CE1E22AF25F72A0300C6632E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE20A1152606DE480084F2BA /* FFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
+		CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelper.swift; sourceTree = "<group>"; };
+		CE444972264100DA0028A5D4 /* CustomRippleControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRippleControl.swift; sourceTree = "<group>"; };
+		CE44497C26410A490028A5D4 /* lottie-warning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-warning.json"; sourceTree = "<group>"; };
 		CE4D1CF92627F98200159D86 /* lottie-error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-error.json"; sourceTree = "<group>"; };
 		CE4D1CFA2627F98200159D86 /* lottie-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-success.json"; sourceTree = "<group>"; };
 		CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-internet-connection.json"; sourceTree = "<group>"; };
@@ -430,7 +432,6 @@
 			isa = PBXGroup;
 			children = (
 				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
-				CE10736025FE7211003777D6 /* HeartWaveView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -565,6 +566,7 @@
 				CE001639261D8FC300B9374F /* LottieSheetOneActionVC.swift */,
 				CE001638261D8FC300B9374F /* LottieSheetViewController.swift */,
 				848645D826201358003599A4 /* TTSegmentedControl.swift */,
+				CE444972264100DA0028A5D4 /* CustomRippleControl.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -688,8 +690,7 @@
 			isa = PBXGroup;
 			children = (
 				CE10731F25FDCDDF003777D6 /* Filter.swift */,
-				CE10732025FDCDDF003777D6 /* PulseDetector.swift */,
-				CE10731B25FDCDD3003777D6 /* HeartRateManager.swift */,
+				CE10731B25FDCDD3003777D6 /* CameraManager.swift */,
 				CE10731725FDCDC1003777D6 /* ColorUtils.swift */,
 				CE20A1152606DE480084F2BA /* FFT.swift */,
 				1DE870852614E55B006A38C2 /* Complex.swift */,
@@ -698,6 +699,7 @@
 				CEC7EDAA262FBEEC00403671 /* HError.swift */,
 				CEC7EDB2262FCA8A00403671 /* HLog.swift */,
 				1D1B8215263003DC0037D3E8 /* HeartRateDetector.swift */,
+				CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -705,6 +707,7 @@
 		CEC78E1925F732C9007BA177 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				CE44497C26410A490028A5D4 /* lottie-warning.json */,
 				CE4D1CF92627F98200159D86 /* lottie-error.json */,
 				CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */,
 				CE4D1CFA2627F98200159D86 /* lottie-success.json */,
@@ -895,6 +898,7 @@
 				84575B7B2607845800711760 /* ProfileCell.xib in Resources */,
 				84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */,
 				848645E4262037D2003599A4 /* WeekMonthRecordTableViewCell.xib in Resources */,
+				CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */,
 				CEC78E2225F73365007BA177 /* Staging.xcconfig in Resources */,
 				CEC78E2325F73365007BA177 /* Development.xcconfig in Resources */,
 				845DF6132603345B00DD26BF /* SignUpVC.xib in Resources */,
@@ -1038,7 +1042,6 @@
 				CEC78E9925F73A07007BA177 /* NSObject+.swift in Sources */,
 				CE0BE140261EB29B00073002 /* HeartRateWarning.swift in Sources */,
 				CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */,
-				CE10736125FE7211003777D6 /* HeartWaveView.swift in Sources */,
 				CEC78E1525F732A4007BA177 /* AppString.swift in Sources */,
 				1DE870862614E55B006A38C2 /* Complex.swift in Sources */,
 				CEC78E9725F73A07007BA177 /* String+.swift in Sources */,
@@ -1046,6 +1049,7 @@
 				CE0BE13C261EB0EE00073002 /* HeartRateHistory.swift in Sources */,
 				CEC78E9C25F73A07007BA177 /* UICollectionView+.swift in Sources */,
 				84230D4E2603184900EC9DD0 /* GradientColor.swift in Sources */,
+				CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */,
 				CEC78EA425F73A07007BA177 /* UIImage+.swift in Sources */,
 				CE10732125FDCDDF003777D6 /* Filter.swift in Sources */,
 				CE7F8A2225FC902F00A2EDC9 /* UserVC.swift in Sources */,
@@ -1063,11 +1067,10 @@
 				CE1E228C25F72A0200C6632E /* AppDelegate.swift in Sources */,
 				CEC78E0D25F7329D007BA177 /* AppConstant.swift in Sources */,
 				84575B772607844200711760 /* ProfileCell.swift in Sources */,
-				CE10731C25FDCDD3003777D6 /* HeartRateManager.swift in Sources */,
+				CE10731C25FDCDD3003777D6 /* CameraManager.swift in Sources */,
 				CE10736625FE7449003777D6 /* CGPoint+.swift in Sources */,
 				1D1B8216263003DC0037D3E8 /* HeartRateDetector.swift in Sources */,
 				CE7F8A3425FCB33A00A2EDC9 /* RoundedView.swift in Sources */,
-				CE10732225FDCDDF003777D6 /* PulseDetector.swift in Sources */,
 				CE16203A263930550076E71F /* CMSampleBuffer+.swift in Sources */,
 				845DF6122603345B00DD26BF /* SignUpVC.swift in Sources */,
 				CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */,
@@ -1084,6 +1087,7 @@
 				84C718C62606F85F00BA2C6D /* User.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
 				CE001614261D834800B9374F /* HeartRateStateView.swift in Sources */,
+				CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
 				CEC7EDB7262FCB7B00403671 /* APIResponse.swift in Sources */,
 				844863A4261D529C007CC806 /* HistoryVC.swift in Sources */,

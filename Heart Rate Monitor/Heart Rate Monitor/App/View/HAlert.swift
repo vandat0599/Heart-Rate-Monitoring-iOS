@@ -23,7 +23,23 @@ class HAlert: UIView {
             title: "Error!",
             description: message,
             rightActionTitle: "OK",
-            rightAction: nil)
+            rightAction: rightAction)
+        vc.rightActionButton.backgroundColor = UIColor(named: "error")
+        vc.canDismissOnSwipeDown = false
+        vc.closeButton.isHidden = true
+        viewController.present(vc, animated: true, completion: nil)
+    }
+    
+    static func showWarningBottomSheet(_ viewController: UIViewController, message: String, rightAction: (() -> ())? = nil) {
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
+        let vc = LottieSheetOneActionVC(
+            lottie: AnimationView.init(name: "lottie-warning"),
+            closeImage: UIImage(named: "ic-close")!,
+            title: "Note!",
+            description: message,
+            rightActionTitle: "OK",
+            rightAction: rightAction)
+        vc.rightActionButton.backgroundColor = UIColor(named: "alert")
         vc.canDismissOnSwipeDown = false
         vc.closeButton.isHidden = true
         viewController.present(vc, animated: true, completion: nil)
@@ -38,6 +54,7 @@ class HAlert: UIView {
             description: message,
             rightActionTitle: "OK",
             rightAction: rightAction)
+        vc.rightActionButton.backgroundColor = UIColor(named: "success")
         vc.canDismissOnSwipeDown = false
         vc.closeButton.isHidden = true
         viewController.present(vc, animated: true, completion: nil)
@@ -54,7 +71,7 @@ class HAlert: UIView {
             rightActionTitle: "Settings",
             leftAction: nil) {
             let application = UIApplication.shared
-            if let url = URL(string: "App-Prefs:root=WIFI"), application.canOpenURL(url)    {
+            if let url = URL(string: "App-Prefs:root=WIFI"), application.canOpenURL(url) {
                 application.open(url, options: [:], completionHandler: nil)
             }
         }

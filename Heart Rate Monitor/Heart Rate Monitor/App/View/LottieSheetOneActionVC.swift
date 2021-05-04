@@ -34,15 +34,15 @@ class LottieSheetOneActionVC: BottomSheetViewController {
         return view
     }()
     
-    private lazy var rightActionButton: UIButton = {
+    lazy var rightActionButton: UIButton = {
         let view = UIButton()
         view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         view.setTitle(rightActionTitle, for: .normal)
-        view.titleLabel?.font = .systemFont(ofSize: 14)
+        view.titleLabel?.font = .boldSystemFont(ofSize: 14)
         view.setTitleColor(.white, for: .normal)
         view.clipsToBounds = true
         view.cornerRadius = 22
-        view.backgroundColor = UIColor(named: "red")
+        view.backgroundColor = .red
         view.addTarget(self, action: #selector(rightActionTapped), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
