@@ -36,7 +36,7 @@ struct VideoSpec {
 
 typealias ImageBufferHandler = ((_ imageBuffer: CMSampleBuffer) -> ())
 
-class HeartRateManager: NSObject {
+class CameraManager: NSObject {
     private let captureSession = AVCaptureSession()
     private var videoDevice: AVCaptureDevice!
     private var videoConnection: AVCaptureConnection?
@@ -119,7 +119,7 @@ class HeartRateManager: NSObject {
     }
 }
 
-extension HeartRateManager: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     // MARK: - Export buffer from video frame
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if connection.videoOrientation != .portrait {

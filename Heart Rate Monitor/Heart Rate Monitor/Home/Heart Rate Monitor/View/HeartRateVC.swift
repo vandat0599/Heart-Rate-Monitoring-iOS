@@ -119,7 +119,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         
     private var playViewTopAnchor: NSLayoutConstraint!
     
-    private var heartRateManager: HeartRateManager?
+    private var cameraManager: CameraManager?
     private var viewModel: HeartRateVCVM!
     
     init(viewModel: HeartRateVCVM) {
@@ -219,9 +219,9 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 }
                 self.progressView.currentProgress = 0
                 if value {
-                    self.heartRateManager?.startCapture()
+                    self.cameraManager?.startCapture()
                 } else {
-                    self.heartRateManager?.stopCapture()
+                    self.cameraManager?.stopCapture()
                 }
                 self.toggleTorch(status: value)
                 self.navigationItem.title = value ? AppString.keepYourFinger : AppString.heartRateMonitor
@@ -381,8 +381,8 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     // MARK: - Frames Capture Methods
     private func initVideoCapture() {
         let specs = VideoSpec(fps: 15, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
-        heartRateManager = HeartRateManager(cameraType: .back, preferredSpec: specs, previewContainer: cameraView.layer)
-        heartRateManager?.imageBufferHandler = { [unowned self] (imageBuffer) in
+        cameraManager = CameraManager(cameraType: .back, preferredSpec: specs, previewContainer: cameraView.layer)
+        cameraManager?.imageBufferHandler = { [unowned self] (imageBuffer) in
             self.viewModel.handleImage(with: imageBuffer, fps: Int(specs.fps ?? 0))
         }
     }
