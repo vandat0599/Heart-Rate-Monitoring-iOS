@@ -38,5 +38,13 @@ class SignInVC: BaseVC {
         passwordTextField.layer.borderWidth = 1.0
         passwordTextField.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
     }
+    @IBAction func signupTapped(_ sender: Any) {
+        let vc = SignUpVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func loginTapped(_ sender: Any) {
+        
+    }
 }
 
