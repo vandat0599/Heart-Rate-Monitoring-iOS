@@ -30,6 +30,21 @@ class HAlert: UIView {
         viewController.present(vc, animated: true, completion: nil)
     }
     
+    static func showWarningBottomSheet(_ viewController: UIViewController, message: String, rightAction: (() -> ())? = nil) {
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
+        let vc = LottieSheetOneActionVC(
+            lottie: AnimationView.init(name: "lottie-warning"),
+            closeImage: UIImage(named: "ic-close")!,
+            title: "Note!",
+            description: message,
+            rightActionTitle: "OK",
+            rightAction: nil)
+        vc.rightActionButton.backgroundColor = UIColor(named: "alert")
+        vc.canDismissOnSwipeDown = false
+        vc.closeButton.isHidden = true
+        viewController.present(vc, animated: true, completion: nil)
+    }
+    
     static func showSuccessBottomSheet(_ viewController: UIViewController, message: String, rightAction: (() -> ())? = nil) {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         let vc = LottieSheetOneActionVC(
