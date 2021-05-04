@@ -52,4 +52,30 @@ class APIService {
             return Disposables.create()
         }
     }
+    
+    func register(email: String, phoneNumber: String, password: String) -> Single<User> {
+        Single.create { (single) -> Disposable in
+            let params = [
+                "email": email,
+                "phoneNumber": phoneNumber,
+                "password": password
+            ]
+            AF.request("\(self.baseUrl)login/user_register", method: .post, parameters: params as Parameters)
+                .validate()
+                .responseDecodable(of: APIResponse<User>.self) { res in
+                    HLog.log(tag: APIService.tag, res.result)
+                    switch res.result {
+                    case .success(let data):
+                        guard let user = data.data else {
+                            single(.error(HError.unknown))
+                            return
+                        }
+                        single(.success(user))
+                    case .failure(let error):
+                        single(.error(HError.init(code: error.responseCode, message: error.localizedDescription)))
+                    }
+            }
+            return Disposables.create()
+        }
+    }
 }
