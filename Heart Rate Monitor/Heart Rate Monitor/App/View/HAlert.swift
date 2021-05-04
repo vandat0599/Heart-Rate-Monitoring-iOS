@@ -24,6 +24,7 @@ class HAlert: UIView {
             description: message,
             rightActionTitle: "OK",
             rightAction: nil)
+        vc.rightActionButton.backgroundColor = UIColor(named: "error")
         vc.canDismissOnSwipeDown = false
         vc.closeButton.isHidden = true
         viewController.present(vc, animated: true, completion: nil)
@@ -38,6 +39,7 @@ class HAlert: UIView {
             description: message,
             rightActionTitle: "OK",
             rightAction: rightAction)
+        vc.rightActionButton.backgroundColor = UIColor(named: "success")
         vc.canDismissOnSwipeDown = false
         vc.closeButton.isHidden = true
         viewController.present(vc, animated: true, completion: nil)
@@ -54,7 +56,7 @@ class HAlert: UIView {
             rightActionTitle: "Settings",
             leftAction: nil) {
             let application = UIApplication.shared
-            if let url = URL(string: "App-Prefs:root=WIFI"), application.canOpenURL(url)    {
+            if let url = URL(string: "App-Prefs:root=WIFI"), application.canOpenURL(url) {
                 application.open(url, options: [:], completionHandler: nil)
             }
         }

@@ -13,7 +13,7 @@ enum CameraType: Int {
     case back
     case front
     
-    func captureDevice() -> AVCaptureDevice {
+    func captureDevice() -> AVCaptureDevice? {
         switch self {
         case .front:
             let devices = AVCaptureDevice.DiscoverySession(deviceTypes: [], mediaType: AVMediaType.video, position: .front).devices
@@ -24,7 +24,8 @@ enum CameraType: Int {
         default:
             break
         }
-        return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)!
+        guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { return nil }
+        return camera
     }
 }
 
@@ -38,15 +39,16 @@ typealias ImageBufferHandler = ((_ imageBuffer: CMSampleBuffer) -> ())
 class HeartRateManager: NSObject {
     private let captureSession = AVCaptureSession()
     private var videoDevice: AVCaptureDevice!
-    private var videoConnection: AVCaptureConnection!
-    private var audioConnection: AVCaptureConnection!
+    private var videoConnection: AVCaptureConnection?
+    private var audioConnection: AVCaptureConnection?
     private var previewLayer: AVCaptureVideoPreviewLayer?
     
     var imageBufferHandler: ImageBufferHandler?
     
     init(cameraType: CameraType, preferredSpec: VideoSpec?, previewContainer: CALayer?) {
         super.init()
-        videoDevice = cameraType.captureDevice()
+        guard let camera = cameraType.captureDevice() else { return }
+        videoDevice = camera
         
         // MARK: - Setup Video Format
         do {
