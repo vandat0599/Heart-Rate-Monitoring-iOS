@@ -48,7 +48,7 @@ class APIService {
                     case .failure(let error):
                         single(.error(HError.init(code: error.responseCode, message: error.localizedDescription)))
                     }
-            }
+                }
             return Disposables.create()
         }
     }
