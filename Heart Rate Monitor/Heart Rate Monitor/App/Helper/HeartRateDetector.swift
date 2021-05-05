@@ -7,9 +7,11 @@
 //
 
 import Foundation
-let Windows_Seconds = 6
+
 class HeartRateDetector: NSObject {
 
+    static let Windows_Seconds = 6
+    
     static func Multiplication (_ a : [Double], _ b : [Double]) -> [Double] {
         var result = [Double]()
         

@@ -91,6 +91,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
         guideCoverCameraText.accept(AppString.heartRateGuides)
         pulses.removeAll()
         capturedRedmean.removeAll()
+        timeCounterSubscription?.dispose()
     }
     
     func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
@@ -109,7 +110,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
             }
             capturedRedmean.append(redmean)
             filteredValueTrigger.accept(Double(hsv.2))
-            if capturedRedmean.count >= 6*fps && capturedRedmean.count%15 == 0 {
+            if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%15 == 0 {
                 let heartRate = HeartRateDetector.PulseDetector(Array(capturedRedmean[15*pulses.count..<capturedRedmean.count]), fps: fps)
                 pulses.append(heartRate)
             }
