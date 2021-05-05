@@ -81,17 +81,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private lazy var preparingAnimationView: AnimationView = {
-        let view = AnimationView.init(name: "lottie-heart-wave")
-        view.loopMode = .loop
-        view.backgroundBehavior = .pauseAndRestore
-        view.play()
-        view.isHidden = true
-        view.isUserInteractionEnabled = false
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
 
     private lazy var playView: CustomRippleControl = {
         let view = CustomRippleControl()
@@ -147,7 +136,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         playView.addSubview(cameraView)
         playView.addSubview(playIconImageView)
         playView.addSubview(heartRateTrackLabel)
-        playView.addSubview(preparingAnimationView)
         playViewTopAnchor = playView.topAnchor.constraint(equalTo: centerYView.bottomAnchor, constant: -UIScreen.main.bounds.width*0.2/2)
         NSLayoutConstraint.activate([
             guideLabel.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
@@ -187,11 +175,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
-            
-            preparingAnimationView.leadingAnchor.constraint(equalTo: playView.leadingAnchor, constant: 20),
-            preparingAnimationView.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -20),
-            preparingAnimationView.topAnchor.constraint(equalTo: playView.topAnchor, constant: 20),
-            preparingAnimationView.bottomAnchor.constraint(equalTo: playView.bottomAnchor, constant: -20),
         ])
         view.layoutIfNeeded()
         initVideoCapture()
@@ -281,11 +264,13 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
                 if value {
+                    self.heartRateTrackLabel.isHidden = false
                     self.chartView.isHidden = false
                     UIView.animate(withDuration: 0.4) {
                         self.chartView.alpha = !value ? 0.0 : 1.0
                     }
                 } else {
+                    self.heartRateTrackLabel.isHidden = true
                     self.chartView.isHidden = true
                     self.reloadChartData(value: nil)
                 }
@@ -299,16 +284,11 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .subscribe(onNext: {[unowned self] (value) in
                 if self.viewModel?.isMeasuring.value ?? false {
                     self.guideLabel.isHidden = value
-                    self.heartRateTrackLabel.isHidden = !value
-                    self.preparingAnimationView.isHidden = value
-                    UIView.animate(withDuration: 0.4) {
-                        self.heartRateTrackLabel.alpha = !value ? 0.0 : 1.0
-                        self.preparingAnimationView.alpha = value ? 0.0 : 1.0
-                    }
                 } else {
                     self.guideLabel.isHidden = false
-                    self.preparingAnimationView.isHidden = true
-                    self.heartRateTrackLabel.isHidden = true
+                }
+                if !value {
+                    self.heartRateTrackLabel.text = "--\nbpm"
                 }
             })
             .disposed(by: disposeBag)
@@ -380,7 +360,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     // MARK: - Frames Capture Methods
     private func initVideoCapture() {
-        let specs = VideoSpec(fps: 15, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
+        let specs = VideoSpec(fps: 30, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
         cameraManager = CameraManager(cameraType: .back, preferredSpec: specs, previewContainer: cameraView.layer)
         cameraManager?.imageBufferHandler = { [unowned self] (imageBuffer) in
             self.viewModel.handleImage(with: imageBuffer, fps: Int(specs.fps ?? 0))
