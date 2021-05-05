@@ -93,7 +93,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
         capturedRedmean.removeAll()
     }
     
-    func handleImage(with buffer: CMSampleBuffer, fps: Int = 15) {
+    func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
         touchStatus.accept(true)
         let rgb = buffer.meanRGB
         let redmean = rgb.0
@@ -127,6 +127,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 timeupTrigger.accept(progress >= 1)
                 isHeartRateValid.accept(pulses.count > 0)
                 heartRateProgress.accept(progress)
+                print(capturedRedmean.count)
                 heartRateTrackNumber.accept(pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0)
             })
     }

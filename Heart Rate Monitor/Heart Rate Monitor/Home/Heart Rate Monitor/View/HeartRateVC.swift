@@ -337,7 +337,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     func reloadChartData(value: Double?) {
         guard let value = value else {
-            let dataSet = LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 0.8)	])
+            let dataSet = LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 0.8)    ])
             dataSet.axisDependency = .left
             dataSet.setColor(.red)
             dataSet.lineWidth = 2

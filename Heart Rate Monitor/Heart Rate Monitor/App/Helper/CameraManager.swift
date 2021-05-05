@@ -51,13 +51,7 @@ class CameraManager: NSObject {
         videoDevice = camera
         
         // MARK: - Setup Video Format
-        do {
-            captureSession.sessionPreset = .low
-            if let preferredSpec = preferredSpec {
-                // Update the format with a preferred fps
-                videoDevice.updateFormatWithPreferredVideoSpec(preferredSpec: preferredSpec)
-            }
-        }
+        captureSession.sessionPreset = .low
         
         // MARK: - Setup video device input
         let videoDeviceInput: AVCaptureDeviceInput
@@ -68,16 +62,6 @@ class CameraManager: NSObject {
         }
         guard captureSession.canAddInput(videoDeviceInput) else { fatalError() }
         captureSession.addInput(videoDeviceInput)
-        
-        // MARK: - Setup preview layer
-        if let previewContainer = previewContainer {
-            let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-            previewLayer.frame = previewContainer.bounds
-            previewLayer.contentsGravity = CALayerContentsGravity.resizeAspectFill
-            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            previewContainer.insertSublayer(previewLayer, at: 0)
-            self.previewLayer = previewLayer
-        }
         
         // MARK: - Setup video output
         let videoDataOutput = AVCaptureVideoDataOutput()
@@ -90,6 +74,24 @@ class CameraManager: NSObject {
         }
         captureSession.addOutput(videoDataOutput)
         videoConnection = videoDataOutput.connection(with: .video)
+        
+        // MARK: - Setup preview layer
+        if let previewContainer = previewContainer {
+            let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            previewLayer.frame = previewContainer.bounds
+            previewLayer.contentsGravity = CALayerContentsGravity.resizeAspectFill
+            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            previewContainer.insertSublayer(previewLayer, at: 0)
+            self.previewLayer = previewLayer
+        }
+        
+        if let preferredSpec = preferredSpec {
+            // Update the format with a preferred fps
+            try? videoDevice.lockForConfiguration()
+            videoDevice.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
+            videoDevice.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
+            videoDevice.unlockForConfiguration()
+        }
     }
     
     func startCapture() {
