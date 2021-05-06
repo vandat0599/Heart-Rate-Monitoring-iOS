@@ -293,6 +293,9 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
+                if value {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                }
                 if self.viewModel?.isMeasuring.value ?? false {
                     self.guideLabel.isHidden = value
                 } else {

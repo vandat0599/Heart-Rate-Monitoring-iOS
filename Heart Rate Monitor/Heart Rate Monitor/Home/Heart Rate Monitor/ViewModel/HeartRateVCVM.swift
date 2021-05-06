@@ -34,7 +34,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
     
     let disposeBag = DisposeBag()
     
-    var timeCounterSubscription: Disposable?
     var isPlaying: BehaviorRelay<Bool>
     var heartRateTrackNumber: BehaviorRelay<Int>
     var heartRateProgress: BehaviorRelay<Float>
@@ -48,7 +47,9 @@ class HeartRateVCVMImp: HeartRateVCVM {
     
     var capturedRedmean: [Double] = []
     private var pulses: [Double] = []
-    var maxProgressSecond = 30
+    var timer: Timer?
+    let maxProgressSecond = 30
+    var value = 0
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -70,8 +71,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     func resetAllData() {
-        print("dispose")
-        timeCounterSubscription?.dispose()
         isMeasuring.accept(false)
         isHeartRateValid.accept(false)
         heartRateTrackNumber.accept(0)
@@ -80,17 +79,9 @@ class HeartRateVCVMImp: HeartRateVCVM {
         guideCoverCameraText.accept(AppString.heartRateGuides)
         pulses.removeAll()
         capturedRedmean.removeAll()
-    }
-    
-    private func resetMesuringData() {
-        heartRateTrackNumber.accept(0)
-        heartRateProgress.accept(0.0)
-        isMeasuring.accept(false)
-        isHeartRateValid.accept(false)
-        guideCoverCameraText.accept(AppString.heartRateGuides)
-        pulses.removeAll()
-        capturedRedmean.removeAll()
-        timeCounterSubscription?.dispose()
+        timer?.invalidate()
+        timer = nil
+        value = 0
     }
     
     func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
@@ -115,20 +106,30 @@ class HeartRateVCVMImp: HeartRateVCVM {
             }
         } else {
             // invalid red frame -> stop measure.
-            resetMesuringData()
+            resetAllData()
         }
     }
     
     private func startMeasurement() {
-        
-        timeCounterSubscription = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: {[unowned self] (value) in
-                let progress = Float(value)/Float(maxProgressSecond)
-                timeupTrigger.accept(progress >= 1)
-                isHeartRateValid.accept(pulses.count > 0)
-                heartRateProgress.accept(progress)
-                print(capturedRedmean.count)
-                heartRateTrackNumber.accept(pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0)
-            })
+        DispatchQueue.main.async { [unowned self] in
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+            timer?.fire()
+        }
+    }
+    
+    @objc func fireTimer() {
+        print("Timer fired!")
+        value += 1
+        let progress = Float(value)/Float(maxProgressSecond)
+        timeupTrigger.accept(progress >= 1)
+        isHeartRateValid.accept(pulses.count > 0)
+        heartRateProgress.accept(progress)
+        print("inputs: \(capturedRedmean.count)")
+        heartRateTrackNumber.accept(pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0)
+        if progress >= 1 {
+            self.value = 0
+            self.timer?.invalidate()
+            self.timer = nil
+        }
     }
 }
