@@ -18,6 +18,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         let view = UILabel()
         view.textAlignment = .center
         view.numberOfLines = 0
+        view.isHidden = true
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         paragraphStyle.alignment = .center
@@ -52,6 +53,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         let view = UILabel()
         view.textAlignment = .center
         view.numberOfLines = 0
+        view.isHidden = true
         view.isUserInteractionEnabled = false
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
@@ -70,6 +72,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.backgroundColor = .clear
         view.layer.masksToBounds = true
         view.isUserInteractionEnabled = false
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -91,7 +94,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private lazy var chartView: LineChartView = {
         let view = LineChartView()
-        view.isHidden = false
+        view.isHidden = true
         view.delegate = self
         view.chartDescription?.enabled = false
         view.dragEnabled = true
@@ -184,6 +187,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private func bindViews() {
         viewModel?.isPlaying
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -212,6 +216,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateTrackNumber
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .map { "\($0 == 0 ? "--" : "\($0)")\nbpm" }
@@ -219,6 +224,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         playView.rx.controlEvent(.touchUpInside)
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind {[unowned self] in
@@ -233,6 +239,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateProgress
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
@@ -246,6 +253,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.warningText
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
@@ -254,12 +262,14 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.guideCoverCameraText
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(to: guideLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel?.isMeasuring
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -279,6 +289,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.isHeartRateValid
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
@@ -294,6 +305,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.timeupTrigger
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -317,7 +329,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.filteredValueTrigger
-            .skip(1)
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
