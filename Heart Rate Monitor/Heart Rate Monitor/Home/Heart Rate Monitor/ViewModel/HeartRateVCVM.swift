@@ -118,7 +118,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     @objc func fireTimer() {
-        print("Timer fired!")
         value += 1
         let progress = Float(value)/Float(maxProgressSecond)
         timeupTrigger.accept(progress >= 1)
