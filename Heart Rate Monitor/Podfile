@@ -6,7 +6,6 @@ target 'Heart Rate Monitor' do
   use_frameworks!
   pod 'Alamofire'
   pod 'SDWebImage'
-  pod 'SDWebImage'
   pod 'IQKeyboardManagerSwift'
   pod 'SVProgressHUD'
   pod 'Hero'

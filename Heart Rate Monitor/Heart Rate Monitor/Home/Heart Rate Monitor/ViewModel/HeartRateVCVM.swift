@@ -66,12 +66,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
     
     func togglePlay() {
         isPlaying.accept(!isPlaying.value)
-        if !isPlaying.value {
-            resetAllData()
-        }
+        resetAllData()
     }
     
     func resetAllData() {
+        print("dispose")
         timeCounterSubscription?.dispose()
         isMeasuring.accept(false)
         isHeartRateValid.accept(false)
@@ -117,11 +116,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
         } else {
             // invalid red frame -> stop measure.
             resetMesuringData()
-            timeCounterSubscription?.dispose()
         }
     }
     
     private func startMeasurement() {
+        
         timeCounterSubscription = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: {[unowned self] (value) in
                 let progress = Float(value)/Float(maxProgressSecond)
