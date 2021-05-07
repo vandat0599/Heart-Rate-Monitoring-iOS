@@ -106,7 +106,15 @@ class HeartRateDetector: NSObject {
         let (peaks,locs) = findPeakElement(y)
         var N = peaks.count
         
-        
+        // cablirate
+        let timeP2P = (locs[N-1] - locs[0]) / (N - 1)
+        let Ex = Windows_Seconds * fps - N * timeP2P
+        if (Ex >= timeP2P) {
+            N += 1
+        }
+        if (Ex > timeP2P/2) {
+            N = N - (timeP2P - Ex) * 60/(Windows_Seconds * fps)
+        }
         heartBeat = Double(N) * 60.0 / Double(Windows_Seconds)
         return heartBeat
     }
