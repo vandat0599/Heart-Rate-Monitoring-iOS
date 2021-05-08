@@ -62,7 +62,7 @@ extension AVCaptureDevice {
         if let preferredSize = preferredSpec.size {
             selectedFormat = formatFor(preferredSize: preferredSize, availableFormats: availableFormats)
         } else {
-            selectedFormat = formatWithHighestResolution(availableFormats)
+            selectedFormat = availableFormats.first
         }
         print("selected format: \(String(describing: selectedFormat))")
         
@@ -78,6 +78,7 @@ extension AVCaptureDevice {
             if let preferredFps = preferredSpec.fps {
                 activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: preferredFps)
                 activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: preferredFps)
+                print("set fps: \(preferredFps)")
                 unlockForConfiguration()
             }
         }

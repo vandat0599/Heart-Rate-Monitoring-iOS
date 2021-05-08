@@ -18,6 +18,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         let view = UILabel()
         view.textAlignment = .center
         view.numberOfLines = 0
+        view.isHidden = true
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         paragraphStyle.alignment = .center
@@ -52,6 +53,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         let view = UILabel()
         view.textAlignment = .center
         view.numberOfLines = 0
+        view.isHidden = true
         view.isUserInteractionEnabled = false
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
@@ -70,6 +72,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.backgroundColor = .clear
         view.layer.masksToBounds = true
         view.isUserInteractionEnabled = false
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -78,17 +81,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         let view = AnimationView.init(name: "lottie-progress")
         view.isUserInteractionEnabled = false
         view.animationSpeed = 15/CGFloat(viewModel.maxProgressSecond)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var preparingAnimationView: AnimationView = {
-        let view = AnimationView.init(name: "lottie-heart-wave")
-        view.loopMode = .loop
-        view.backgroundBehavior = .pauseAndRestore
-        view.play()
-        view.isHidden = true
-        view.isUserInteractionEnabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -102,7 +94,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private lazy var chartView: LineChartView = {
         let view = LineChartView()
-        view.isHidden = false
+        view.isHidden = true
         view.delegate = self
         view.chartDescription?.enabled = false
         view.dragEnabled = true
@@ -147,7 +139,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         playView.addSubview(cameraView)
         playView.addSubview(playIconImageView)
         playView.addSubview(heartRateTrackLabel)
-        playView.addSubview(preparingAnimationView)
         playViewTopAnchor = playView.topAnchor.constraint(equalTo: centerYView.bottomAnchor, constant: -UIScreen.main.bounds.width*0.2/2)
         NSLayoutConstraint.activate([
             guideLabel.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
@@ -187,11 +178,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
-            
-            preparingAnimationView.leadingAnchor.constraint(equalTo: playView.leadingAnchor, constant: 20),
-            preparingAnimationView.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -20),
-            preparingAnimationView.topAnchor.constraint(equalTo: playView.topAnchor, constant: 20),
-            preparingAnimationView.bottomAnchor.constraint(equalTo: playView.bottomAnchor, constant: -20),
         ])
         view.layoutIfNeeded()
         initVideoCapture()
@@ -201,6 +187,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private func bindViews() {
         viewModel?.isPlaying
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -229,6 +216,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateTrackNumber
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .map { "\($0 == 0 ? "--" : "\($0)")\nbpm" }
@@ -236,6 +224,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         playView.rx.controlEvent(.touchUpInside)
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind {[unowned self] in
@@ -250,6 +239,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateProgress
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
@@ -263,6 +253,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.warningText
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
@@ -271,21 +262,25 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.guideCoverCameraText
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(to: guideLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel?.isMeasuring
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
                 if value {
+                    self.heartRateTrackLabel.isHidden = false
                     self.chartView.isHidden = false
                     UIView.animate(withDuration: 0.4) {
                         self.chartView.alpha = !value ? 0.0 : 1.0
                     }
                 } else {
+                    self.heartRateTrackLabel.isHidden = true
                     self.chartView.isHidden = true
                     self.reloadChartData(value: nil)
                 }
@@ -294,26 +289,26 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.isHeartRateValid
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
+                if value {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                }
                 if self.viewModel?.isMeasuring.value ?? false {
                     self.guideLabel.isHidden = value
-                    self.heartRateTrackLabel.isHidden = !value
-                    self.preparingAnimationView.isHidden = value
-                    UIView.animate(withDuration: 0.4) {
-                        self.heartRateTrackLabel.alpha = !value ? 0.0 : 1.0
-                        self.preparingAnimationView.alpha = value ? 0.0 : 1.0
-                    }
                 } else {
                     self.guideLabel.isHidden = false
-                    self.preparingAnimationView.isHidden = true
-                    self.heartRateTrackLabel.isHidden = true
+                }
+                if !value {
+                    self.heartRateTrackLabel.text = "--\nbpm"
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel?.timeupTrigger
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -337,7 +332,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.filteredValueTrigger
-            .skip(1)
+            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -357,7 +352,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     func reloadChartData(value: Double?) {
         guard let value = value else {
-            let dataSet = LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 0.8)	])
+            let dataSet = LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 0.8)    ])
             dataSet.axisDependency = .left
             dataSet.setColor(.red)
             dataSet.lineWidth = 2
@@ -380,7 +375,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     // MARK: - Frames Capture Methods
     private func initVideoCapture() {
-        let specs = VideoSpec(fps: 15, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
+        let specs = VideoSpec(fps: 30, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
         cameraManager = CameraManager(cameraType: .back, preferredSpec: specs, previewContainer: cameraView.layer)
         cameraManager?.imageBufferHandler = { [unowned self] (imageBuffer) in
             self.viewModel.handleImage(with: imageBuffer, fps: Int(specs.fps ?? 0))

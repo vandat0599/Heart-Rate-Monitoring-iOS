@@ -1,9 +1,8 @@
 //
-//  HeartRateManager.swift
-//  Pulse
+//  CameraManager.swift
+//  Heart Rate Monitor
 //
-//  Created by Athanasios Papazoglou on 18/7/20.
-//  Copyright © 2020 Athanasios Papazoglou. All rights reserved.
+//  Created by Dat Van on 3/13/21.
 //
 
 import Foundation
@@ -47,75 +46,85 @@ class CameraManager: NSObject {
     
     init(cameraType: CameraType, preferredSpec: VideoSpec?, previewContainer: CALayer?) {
         super.init()
-        guard let camera = cameraType.captureDevice() else { return }
-        videoDevice = camera
-        
-        // MARK: - Setup Video Format
-        do {
+        DispatchQueue.global().async { [unowned self] in
+            guard let camera = cameraType.captureDevice() else { return }
+            videoDevice = camera
+            
+            // MARK: - Setup Video Format
             captureSession.sessionPreset = .low
+            
+            // MARK: - Setup video device input
+            let videoDeviceInput: AVCaptureDeviceInput
+            do {
+                videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
+            } catch let error {
+                fatalError("Could not create AVCaptureDeviceInput instance with error: \(error).")
+            }
+            guard captureSession.canAddInput(videoDeviceInput) else { fatalError() }
+            captureSession.addInput(videoDeviceInput)
+            
+            // MARK: - Setup video output
+            let videoDataOutput = AVCaptureVideoDataOutput()
+            videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey : NSNumber(value: kCVPixelFormatType_32BGRA)] as [String : Any]
+            videoDataOutput.alwaysDiscardsLateVideoFrames = true
+            let queue = DispatchQueue(label: "com.covidsense.videosamplequeue")
+            videoDataOutput.setSampleBufferDelegate(self, queue: queue)
+            guard captureSession.canAddOutput(videoDataOutput) else {
+                fatalError()
+            }
+            captureSession.addOutput(videoDataOutput)
+            videoConnection = videoDataOutput.connection(with: .video)
+            
+            DispatchQueue.main.async {
+                // MARK: - Setup preview layer
+                if let previewContainer = previewContainer {
+                    let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+                    previewLayer.frame = previewContainer.bounds
+                    previewLayer.contentsGravity = CALayerContentsGravity.resizeAspectFill
+                    previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                    self.previewLayer = previewLayer
+                    previewContainer.insertSublayer(previewLayer, at: 0)
+                }
+            }
+            
             if let preferredSpec = preferredSpec {
                 // Update the format with a preferred fps
-                videoDevice.updateFormatWithPreferredVideoSpec(preferredSpec: preferredSpec)
+                try? videoDevice.lockForConfiguration()
+                videoDevice.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
+                videoDevice.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
+                videoDevice.unlockForConfiguration()
             }
         }
-        
-        // MARK: - Setup video device input
-        let videoDeviceInput: AVCaptureDeviceInput
-        do {
-            videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
-        } catch let error {
-            fatalError("Could not create AVCaptureDeviceInput instance with error: \(error).")
-        }
-        guard captureSession.canAddInput(videoDeviceInput) else { fatalError() }
-        captureSession.addInput(videoDeviceInput)
-        
-        // MARK: - Setup preview layer
-        if let previewContainer = previewContainer {
-            let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-            previewLayer.frame = previewContainer.bounds
-            previewLayer.contentsGravity = CALayerContentsGravity.resizeAspectFill
-            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            previewContainer.insertSublayer(previewLayer, at: 0)
-            self.previewLayer = previewLayer
-        }
-        
-        // MARK: - Setup video output
-        let videoDataOutput = AVCaptureVideoDataOutput()
-        videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey : NSNumber(value: kCVPixelFormatType_32BGRA)] as [String : Any]
-        videoDataOutput.alwaysDiscardsLateVideoFrames = true
-        let queue = DispatchQueue(label: "com.covidsense.videosamplequeue")
-        videoDataOutput.setSampleBufferDelegate(self, queue: queue)
-        guard captureSession.canAddOutput(videoDataOutput) else {
-            fatalError()
-        }
-        captureSession.addOutput(videoDataOutput)
-        videoConnection = videoDataOutput.connection(with: .video)
     }
     
     func startCapture() {
-        #if DEBUG
-        print(#function + "\(self.classForCoder)/")
-        #endif
-        if captureSession.isRunning {
+        DispatchQueue.global().async { [unowned self] in
             #if DEBUG
-            print("Capture Session is already running 🏃‍♂️.")
+            print(#function + "\(self.classForCoder)/")
             #endif
-            return
+            if captureSession.isRunning {
+                #if DEBUG
+                print("Capture Session is already running 🏃‍♂️.")
+                #endif
+                return
+            }
+            captureSession.startRunning()
         }
-        captureSession.startRunning()
     }
     
     func stopCapture() {
-        #if DEBUG
-        print(#function + "\(self.classForCoder)/")
-        #endif
-        if !captureSession.isRunning {
+        DispatchQueue.global().async { [unowned self] in
             #if DEBUG
-            print("Capture Session has already stopped 🛑.")
+            print(#function + "\(self.classForCoder)/")
             #endif
-            return
+            if !captureSession.isRunning {
+                #if DEBUG
+                print("Capture Session has already stopped 🛑.")
+                #endif
+                return
+            }
+            captureSession.stopRunning()
         }
-        captureSession.stopRunning()
     }
 }
 

@@ -34,7 +34,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
     
     let disposeBag = DisposeBag()
     
-    var timeCounterSubscription: Disposable?
     var isPlaying: BehaviorRelay<Bool>
     var heartRateTrackNumber: BehaviorRelay<Int>
     var heartRateProgress: BehaviorRelay<Float>
@@ -48,7 +47,9 @@ class HeartRateVCVMImp: HeartRateVCVM {
     
     var capturedRedmean: [Double] = []
     private var pulses: [Double] = []
-    var maxProgressSecond = 30
+    var timer: Timer?
+    let maxProgressSecond = 30
+    var value = 0
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -66,13 +67,10 @@ class HeartRateVCVMImp: HeartRateVCVM {
     
     func togglePlay() {
         isPlaying.accept(!isPlaying.value)
-        if !isPlaying.value {
-            resetAllData()
-        }
+        resetAllData()
     }
     
     func resetAllData() {
-        timeCounterSubscription?.dispose()
         isMeasuring.accept(false)
         isHeartRateValid.accept(false)
         heartRateTrackNumber.accept(0)
@@ -81,19 +79,12 @@ class HeartRateVCVMImp: HeartRateVCVM {
         guideCoverCameraText.accept(AppString.heartRateGuides)
         pulses.removeAll()
         capturedRedmean.removeAll()
+        timer?.invalidate()
+        timer = nil
+        value = 0
     }
     
-    private func resetMesuringData() {
-        heartRateTrackNumber.accept(0)
-        heartRateProgress.accept(0.0)
-        isMeasuring.accept(false)
-        isHeartRateValid.accept(false)
-        guideCoverCameraText.accept(AppString.heartRateGuides)
-        pulses.removeAll()
-        capturedRedmean.removeAll()
-    }
-    
-    func handleImage(with buffer: CMSampleBuffer, fps: Int = 15) {
+    func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
         touchStatus.accept(true)
         let rgb = buffer.meanRGB
         let redmean = rgb.0
@@ -109,25 +100,35 @@ class HeartRateVCVMImp: HeartRateVCVM {
             }
             capturedRedmean.append(redmean)
             filteredValueTrigger.accept(Double(hsv.2))
-            if capturedRedmean.count >= 6*fps && capturedRedmean.count%15 == 0 {
+            if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%15 == 0 {
                 let heartRate = HeartRateDetector.PulseDetector(Array(capturedRedmean[15*pulses.count..<capturedRedmean.count]), fps: fps)
                 pulses.append(heartRate)
             }
         } else {
             // invalid red frame -> stop measure.
-            resetMesuringData()
-            timeCounterSubscription?.dispose()
+            resetAllData()
         }
     }
     
     private func startMeasurement() {
-        timeCounterSubscription = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: {[unowned self] (value) in
-                let progress = Float(value)/Float(maxProgressSecond)
-                timeupTrigger.accept(progress >= 1)
-                isHeartRateValid.accept(pulses.count > 0)
-                heartRateProgress.accept(progress)
-                heartRateTrackNumber.accept(pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0)
-            })
+        DispatchQueue.main.async { [unowned self] in
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+            timer?.fire()
+        }
+    }
+    
+    @objc func fireTimer() {
+        value += 1
+        let progress = Float(value)/Float(maxProgressSecond)
+        timeupTrigger.accept(progress >= 1)
+        isHeartRateValid.accept(pulses.count > 0)
+        heartRateProgress.accept(progress)
+        print("inputs: \(capturedRedmean.count)")
+        heartRateTrackNumber.accept(pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0)
+        if progress >= 1 {
+            self.value = 0
+            self.timer?.invalidate()
+            self.timer = nil
+        }
     }
 }

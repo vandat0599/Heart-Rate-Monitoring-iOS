@@ -14,7 +14,7 @@ extension CMSampleBuffer {
         CVPixelBufferLockBaseAddress(imageBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
         let width = CVPixelBufferGetWidth(imageBuffer)
         let height = CVPixelBufferGetHeight(imageBuffer)
-        
+
         let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer)!
         let byteBuffer = baseAddress.assumingMemoryBound(to: UInt8.self)
         var reds: [Int] = []

@@ -46,7 +46,7 @@
 		CE0BE140261EB29B00073002 /* HeartRateWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE13F261EB29B00073002 /* HeartRateWarning.swift */; };
 		CE0BE144261EB77700073002 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE143261EB77700073002 /* Gender.swift */; };
 		CE0BE148261EB79400073002 /* HeartRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE147261EB79400073002 /* HeartRateState.swift */; };
-		CE10731425FDCD8B003777D6 /* AVCaptureDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */; };
+		CE10731425FDCD8B003777D6 /* AVCaptureDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731325FDCD8B003777D6 /* AVCaptureDevice+.swift */; };
 		CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731725FDCDC1003777D6 /* ColorUtils.swift */; };
 		CE10731C25FDCDD3003777D6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731B25FDCDD3003777D6 /* CameraManager.swift */; };
 		CE10732125FDCDDF003777D6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731F25FDCDDF003777D6 /* Filter.swift */; };
@@ -198,7 +198,7 @@
 		CE0BE13F261EB29B00073002 /* HeartRateWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateWarning.swift; sourceTree = "<group>"; };
 		CE0BE143261EB77700073002 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		CE0BE147261EB79400073002 /* HeartRateState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateState.swift; sourceTree = "<group>"; };
-		CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureDevice.swift; sourceTree = "<group>"; };
+		CE10731325FDCD8B003777D6 /* AVCaptureDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVCaptureDevice+.swift"; sourceTree = "<group>"; };
 		CE10731725FDCDC1003777D6 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
 		CE10731B25FDCDD3003777D6 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		CE10731F25FDCDDF003777D6 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -634,7 +634,7 @@
 				CEC78E8725F73A05007BA177 /* UITextField+.swift */,
 				CEC78E8E25F73A06007BA177 /* UIView+.swift */,
 				CEC78E8925F73A05007BA177 /* UIViewController+.swift */,
-				CE10731325FDCD8B003777D6 /* AVCaptureDevice.swift */,
+				CE10731325FDCD8B003777D6 /* AVCaptureDevice+.swift */,
 				CE10736525FE7449003777D6 /* CGPoint+.swift */,
 				CE162039263930550076E71F /* CMSampleBuffer+.swift */,
 			);
@@ -1060,7 +1060,7 @@
 				848645D926201358003599A4 /* TTSegmentedControl.swift in Sources */,
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
 				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,
-				CE10731425FDCD8B003777D6 /* AVCaptureDevice.swift in Sources */,
+				CE10731425FDCD8B003777D6 /* AVCaptureDevice+.swift in Sources */,
 				CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */,
 				CEC78EA525F73A07007BA177 /* NSLayoutConstraint+.swift in Sources */,
 				CEC78EA225F73A07007BA177 /* UIFont+.swift in Sources */,
