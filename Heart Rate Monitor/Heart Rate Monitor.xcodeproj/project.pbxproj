@@ -1217,13 +1217,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7859BCHX87;
+				DEVELOPMENT_TEAM = L7FP62JQUP;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate202;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1343,13 +1343,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7859BCHX87;
+				DEVELOPMENT_TEAM = L7FP62JQUP;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate202;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1469,13 +1469,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7859BCHX87;
+				DEVELOPMENT_TEAM = L7FP62JQUP;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate202;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
