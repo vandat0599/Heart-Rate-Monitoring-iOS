@@ -92,33 +92,30 @@ class HeartRateDetector: NSObject {
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm 15 frame thì lại gọi hàm
     static func PulseDetector(_ signal: [Double],fps: Int) ->Double {
-        if (signal.count != 6*fps){
-            print("signal truyền vào phải có \(6*fps) giá trị thay vì \(signal.count)")
+        if (signal.count != Windows_Seconds*fps){
+            print("signal truyền vào phải có \(Windows_Seconds*fps) giá trị thay vì \(signal.count)")
             return -1
         }
         var heartBeat = 0.0
         
         let filter = BBFilter()
         
-        let (denC, numC) = filter.butter(order: 2, lowFreq: 2/45, highFreq: 23/90)
-        var y = filter.Filter(signal: signal, denC: denC, numC: numC)
-        y = Multiplication(y, hann(Windows_Seconds*fps))
+        //let (denC, numC) = filter.butter(order: 2, lowFreq: 2/45, highFreq: 23/90)
+        let B = [Double](repeating: 1/20, count: 20)
+        let y = filter.Filter(signal: signal, denC: B, numC: [1])
+        let (peaks,locs) = findPeakElement(y)
+        var N = peaks.count
         
-        let gain = filter.DFT(signal: y)
-        let index_range = Array(5...25)
-        //trueGain : nơi thực sự có tần số chứa giá trị nhịp tim
-        let trueGain = gain.enumerated().filter() {
-            $0.offset >= 5 && $0.offset <= 25
-        }.map(){
-            $0.element
+        // cablirate
+        let timeP2P = (locs[N-1] - locs[0]) / (N - 1)
+        let Ex = Windows_Seconds * fps - N * timeP2P
+        if (Ex >= timeP2P) {
+            N += 1
         }
-        let (peaks,indexs) = findPeakElement(trueGain)
-        let maxPeak = peaks.max() ?? 0
-        let indexOfMaxPeak = peaks.firstIndex(of: maxPeak) ?? 0
-        let maxFreqIndx = index_range[indexs[indexOfMaxPeak]]
-        let temp  = Double(maxFreqIndx-1) * Double(fps) / Double(Windows_Seconds * fps+1)
-        let bpm = Double(temp*60)
-        heartBeat = SmoothingPeak(y: y, bpm, fps)
+        if (Ex > timeP2P/2) {
+            N = N - (timeP2P - Ex) * 60/(Windows_Seconds * fps)
+        }
+        heartBeat = Double(N) * 60.0 / Double(Windows_Seconds)
         return heartBeat
     }
 }
