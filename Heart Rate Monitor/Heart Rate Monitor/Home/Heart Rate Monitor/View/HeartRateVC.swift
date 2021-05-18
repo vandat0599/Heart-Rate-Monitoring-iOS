@@ -219,7 +219,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .map { "\($0 == 0 ? "--" : "\($0)")\nbpm" }
+            .map { "\($0 == 0 ? "--" : "\(Int($0/2))")\nbpm" }
             .bind(to: heartRateTrackLabel.rx.text)
             .disposed(by: disposeBag)
         

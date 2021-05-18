@@ -108,14 +108,14 @@ class HomeContainerVC: BaseVC, BottomBarViewDelegate {
     // MARK: - actions
     func bottomBarViewDelegate(view: BottomBarView, selectedIndex index: Int) {
         guard index < vcArray.count, showingVC != vcArray[index] else { return }
-        if UserDefaultHelper.getLogedUser() == nil {
-            HAlert.showWarningBottomSheet(self, message: "Do you have an account?\n You need to login or register an account to use this feature!!") {[weak self] in
-                let loginVC = UINavigationController(rootViewController: SignInVC())
-                self?.present(loginVC, animated: true)
-            }
-            bottomBar.selectedIndex = vcArray.firstIndex(of: showingVC) ?? 1
-            return
-        }
+//        if UserDefaultHelper.getLogedUser() == nil {
+//            HAlert.showWarningBottomSheet(self, message: "Do you have an account?\n You need to login or register an account to use this feature!!") {[weak self] in
+//                let loginVC = UINavigationController(rootViewController: SignInVC())
+//                self?.present(loginVC, animated: true)
+//            }
+//            bottomBar.selectedIndex = vcArray.firstIndex(of: showingVC) ?? 1
+//            return
+//        }
         cycleVC(from: showingVC, to: vcArray[index])
         showingVC = vcArray[index]
     }
