@@ -318,7 +318,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                             age: "95",
                             gender: .male,
                             createDate: Date().toString(format: "MM-dd-yyyy HH:mm")),
-                    heartRate: "\(self.viewModel.heartRateTrackNumber.value)",
+                    heartRate: "\(Int(self.viewModel.heartRateTrackNumber.value/2))",
                     state: .normal,
                     createDate: Date().toString(format: "MM-dd-yyyy HH:mm"))
                 let vc = UINavigationController(rootViewController: HeartRateResultVC(viewModel: HeartRateResultVMImp(heartRateRecord: heartRateHistory)))
