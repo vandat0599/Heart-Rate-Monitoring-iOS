@@ -48,7 +48,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var capturedRedmean: [Double] = []
     private var pulses: [Double] = []
     var timer: Timer?
-    let maxProgressSecond = 30
+    let maxProgressSecond = 40
     var value = 0
     
     init() {
@@ -73,6 +73,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     func resetAllData() {
         isMeasuring.accept(false)
         isHeartRateValid.accept(false)
+        touchStatus.accept(false)
         heartRateTrackNumber.accept(0)
         heartRateProgress.accept(0.0)
         warningText.accept(AppString.heartRateMonitor)
@@ -129,6 +130,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
             self.value = 0
             self.timer?.invalidate()
             self.timer = nil
+            self.resetAllData()
         }
     }
 }
