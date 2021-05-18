@@ -66,11 +66,12 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     func togglePlay() {
-        isPlaying.accept(!isPlaying.value)
         resetAllData()
+        isPlaying.accept(!isPlaying.value)
     }
     
     func resetAllData() {
+        touchStatus.accept(false)
         isMeasuring.accept(false)
         isHeartRateValid.accept(false)
         touchStatus.accept(false)
@@ -93,9 +94,9 @@ class HeartRateVCVMImp: HeartRateVCVM {
         let bluemean = rgb.2
         let hsv = rgb2hsv(red: CGFloat(redmean), green: CGFloat(greenmean), blue: CGFloat(bluemean))
         if (hsv.1 > 0.5 && hsv.2 > 0.5) {
-            // valid red frame -> start measure
             warningText.accept(AppString.keepYourFinger)
-            if !isMeasuring.value {
+            if !isMeasuring.value && isPlaying.value {
+                print("start measure")
                 startMeasurement()
                 isMeasuring.accept(true)
             }
@@ -106,15 +107,15 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 pulses.append(heartRate)
             }
         } else {
-            // invalid red frame -> stop measure.
             resetAllData()
         }
     }
     
     private func startMeasurement() {
-        DispatchQueue.main.async { [unowned self] in
-            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
-            timer?.fire()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.fireTimer), userInfo: nil, repeats: true)
+            self.timer?.fire()
         }
     }
     
@@ -127,10 +128,10 @@ class HeartRateVCVMImp: HeartRateVCVM {
         print("inputs: \(capturedRedmean.count)")
         heartRateTrackNumber.accept(pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0)
         if progress >= 1 {
-            self.value = 0
+            print("invalidate")
             self.timer?.invalidate()
             self.timer = nil
-            self.resetAllData()
+            self.value = 0
         }
     }
 }

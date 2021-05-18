@@ -187,7 +187,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private func bindViews() {
         viewModel?.isPlaying
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -197,12 +196,14 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 self.progressView.isHidden = !value
                 self.playIconImageView.isHidden = value
                 self.guideLabel.isHidden = !value
+                self.chartView.isHidden = !value
                 UIView.animate(withDuration: 0.4) {
                     self.view.layoutIfNeeded()
                     self.progressView.alpha = !value ? 0.0 : 1.0
                     self.cameraView.alpha = !value ? 0.0 : 1.0
                     self.playIconImageView.alpha = value ? 0.0 : 1.0
                     self.guideLabel.alpha = !value ? 0.0 : 1.0
+                    self.chartView.alpha = !value ? 0.0 : 1.0
                 }
                 self.progressView.currentProgress = 0
                 if value {
@@ -216,7 +217,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateTrackNumber
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .map { "\($0 == 0 ? "--" : "\(Int($0/2))")\nbpm" }
@@ -224,7 +224,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         playView.rx.controlEvent(.touchUpInside)
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind {[unowned self] in
@@ -239,7 +238,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateProgress
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
@@ -253,7 +251,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.warningText
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
@@ -262,14 +259,12 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.guideCoverCameraText
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(to: guideLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel?.isMeasuring
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -289,7 +284,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.isHeartRateValid
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
@@ -305,7 +299,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.timeupTrigger
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -321,15 +314,16 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                     heartRate: "\(Int(self.viewModel.heartRateTrackNumber.value/2))",
                     state: .normal,
                     createDate: Date().toString(format: "MM-dd-yyyy HH:mm"))
+                
                 let vc = UINavigationController(rootViewController: HeartRateResultVC(viewModel: HeartRateResultVMImp(heartRateRecord: heartRateHistory)))
-                self.present(vc, animated: true) {
+                self.present(vc, animated: true) {[weak self] in
+                    guard let self = self else { return }
                     self.viewModel.togglePlay()
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel?.filteredValueTrigger
-            .skip(0)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
