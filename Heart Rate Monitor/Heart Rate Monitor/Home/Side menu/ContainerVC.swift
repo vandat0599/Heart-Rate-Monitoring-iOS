@@ -77,6 +77,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
         view.insertSubview(menuVC.view, at: 0)
+        menuVC.view.fitIn(parentView: view, padding: 0)
         addChild(menuVC)
         menuVC.didMove(toParent: self)
         view.addSubview(containerView)
@@ -117,7 +118,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     private func showMenuVC(show: Bool, completion: (() -> Void)?) {
         if show {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                self.containerView.frame.origin.x = self.containerView.frame.width*0.5
+                self.containerView.frame.origin.x = self.containerView.frame.width*0.6
                 self.menuVC.view.transform = .identity
             }, completion: nil)
         } else {

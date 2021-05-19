@@ -37,7 +37,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         let view = UIView()
         view.backgroundColor = .clear
         view.isHidden = false
-        view.alpha = 0
+        view.alpha = 1
         view.layer.masksToBounds = true
         view.isUserInteractionEnabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -54,10 +54,10 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.endThumbTintColor = .clear
         view.endThumbStrokeColor = .clear
         view.endThumbStrokeHighlightedColor = .clear
-        view.thumbRadius = 4
+        view.thumbRadius = 3
         view.trackFillColor = .white
         view.trackColor = UIColor(named: "white-holder")!
-        view.lineWidth = 4
+        view.lineWidth = 3
         view.backgroundColor = .clear
         view.isUserInteractionEnabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -78,14 +78,17 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.isHidden = false
         view.delegate = self
         view.chartDescription?.enabled = false
-        view.dragEnabled = true
+        view.dragEnabled = false
         view.setScaleEnabled(false)
         view.pinchZoomEnabled = true
-        view.autoScaleMinMaxEnabled = true
+        view.autoScaleMinMaxEnabled = false
+        view.leftAxis.axisMaximum = 260
+        view.leftAxis.axisMinimum = 0
         view.rightAxis.enabled = false
         view.leftAxis.enabled = false
         view.legend.enabled = false
         view.xAxis.enabled = false
+        view.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -99,6 +102,14 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.textAlignment = .center
         view.backgroundColor = .clear
         view.adjustsFontSizeToFitWidth = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var heartImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "ic-heart"))
+        view.backgroundColor = .clear
+        view.tintColor = UIColor(named: "black-background")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -126,6 +137,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.addSubview(chartView)
         playView.addSubview(progressView)
         playView.addSubview(cameraView)
+        playView.addSubview(heartImageView)
         playView.addSubview(heartRateTrackLabel)
         playView.addSubview(tapToStartLabel)
         NSLayoutConstraint.activate([
@@ -138,22 +150,26 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             chartView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            chartView.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
+            chartView.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 40),
             
             progressView.leadingAnchor.constraint(equalTo: playView.leadingAnchor),
             progressView.trailingAnchor.constraint(equalTo: playView.trailingAnchor),
             progressView.topAnchor.constraint(equalTo: playView.topAnchor),
             progressView.bottomAnchor.constraint(equalTo: playView.bottomAnchor),
             
-            cameraView.leadingAnchor.constraint(equalTo: playView.leadingAnchor, constant: 10),
-            cameraView.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -10),
-            cameraView.topAnchor.constraint(equalTo: playView.topAnchor, constant: 10),
-            cameraView.bottomAnchor.constraint(equalTo: playView.bottomAnchor, constant: -10),
-            
             tapToStartLabel.leadingAnchor.constraint(equalTo: playView.leadingAnchor, constant: 24),
             tapToStartLabel.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -24),
-            tapToStartLabel.topAnchor.constraint(equalTo: playView.topAnchor, constant: 24),
-            tapToStartLabel.bottomAnchor.constraint(equalTo: playView.bottomAnchor, constant: -24),
+            tapToStartLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
+            
+            cameraView.topAnchor.constraint(equalTo: tapToStartLabel.bottomAnchor, constant: 20),
+            cameraView.widthAnchor.constraint(equalTo: playView.widthAnchor, multiplier: 0.1),
+            cameraView.heightAnchor.constraint(equalTo: playView.widthAnchor, multiplier: 0.1),
+            cameraView.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
+            
+            heartImageView.centerXAnchor.constraint(equalTo: cameraView.centerXAnchor),
+            heartImageView.centerYAnchor.constraint(equalTo: cameraView.centerYAnchor),
+            heartImageView.widthAnchor.constraint(equalTo: cameraView.widthAnchor),
+            heartImageView.heightAnchor.constraint(equalTo: cameraView.heightAnchor),
             
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
@@ -174,13 +190,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 self.toggleTorch(status: value)
                 self.tapToStartLabel.isHidden = value
                 self.heartRateTrackLabel.isHidden = !value
-                if value {
-                    UIView.animate(withDuration: 1) {
-                        self.cameraView.alpha = 1
-                    }
-                } else {
-                    self.cameraView.alpha = 0
-                }
             })
             .disposed(by: disposeBag)
         
@@ -221,9 +230,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
-                if !value {
-                    self.reloadChartData(value: nil)
-                }
                 self.playView.isUserInteractionEnabled = !value
             })
             .disposed(by: disposeBag)
@@ -263,7 +269,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             })
             .disposed(by: disposeBag)
         
-        viewModel?.filteredValueTrigger
+        viewModel?.grapValues
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
@@ -272,27 +278,23 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
     }
     
-    func reloadChartData(value: Double?) {
-        guard let value = value else {
-            let dataSet = LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 0.8)    ])
-            dataSet.axisDependency = .left
-            dataSet.setColor(.red)
-            dataSet.lineWidth = 2
-            dataSet.drawCirclesEnabled = false
-            dataSet.drawCircleHoleEnabled = false
-            let lineChartData: LineChartData = LineChartData.init(dataSets: [dataSet])
-            lineChartData.setValueTextColor(.clear)
-            chartView.data = lineChartData
-            chartView.notifyDataSetChanged()
-            chartView.moveViewToX(0)
-            return
+    func reloadChartData(value: [Double]) {
+        let yValues = (0..<value.count).map { (i) -> ChartDataEntry in
+            let val = value[i]
+            return ChartDataEntry(x: Double(i), y: val)
         }
-        if viewModel.capturedRedmean.count > 100 {
-            chartView.setVisibleXRange(minXRange: 1, maxXRange: 100)
-        }
-        chartView.data?.addEntry(ChartDataEntry(x: Double(viewModel.capturedRedmean.count), y: value), dataSetIndex: 0)
+        let dataSet = LineChartDataSet(entries: yValues, label: "Graph value")
+        dataSet.axisDependency = .left
+        dataSet.setColor(UIColor(named: "pink")!)
+        dataSet.lineWidth = 1
+        dataSet.drawCirclesEnabled = false
+        dataSet.drawCircleHoleEnabled = false
+        dataSet.fillColor = UIColor(named: "pink")!
+        dataSet.fillAlpha = 1.0
+        dataSet.drawFilledEnabled = true
+        let data: LineChartData = LineChartData.init(dataSets: [dataSet])
+        chartView.data = data
         chartView.notifyDataSetChanged()
-        chartView.moveViewToX(Double(viewModel.capturedRedmean.count))
     }
     
     // MARK: - Frames Capture Methods
