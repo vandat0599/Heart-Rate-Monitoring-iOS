@@ -331,19 +331,9 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
-                let heartRateHistory = HeartRateHistory(
-                    healthInfo:
-                        HealthInfo(
-                            height: "170",
-                            weight: "59",
-                            age: "95",
-                            gender: .male,
-                            createDate: Date().toString(format: "MM-dd-yyyy HH:mm")),
-                    heartRate: "\(Int(self.viewModel.heartRateTrackNumber.value/2))",
-                    state: .normal,
-                    createDate: Date().toString(format: "MM-dd-yyyy HH:mm"))
-                
-                let vc = UINavigationController(rootViewController: HeartRateResultVC(viewModel: HeartRateResultVMImp(heartRateRecord: heartRateHistory)))
+                let vc = ResultBottomSheetVC(heartRate: self.viewModel.heartRateTrackNumber.value/2, grapsValues: self.viewModel.grapValues.value)
+                vc.canDismissOnSwipeDown = false
+                vc.canDismissOnTouchOutSide = false
                 self.present(vc, animated: true) {[weak self] in
                     guard let self = self else { return }
                     self.viewModel.togglePlay()
