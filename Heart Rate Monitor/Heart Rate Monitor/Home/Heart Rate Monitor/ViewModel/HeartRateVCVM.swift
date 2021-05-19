@@ -55,7 +55,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
         heartRateProgress = BehaviorRelay<Float>(value: 0.0)
         timeupTrigger = PublishRelay<Bool>()
         filteredValueTrigger = PublishRelay<Double>()
-        grapValues = BehaviorRelay<[Double]>(value: [])
+        grapValues = BehaviorRelay<[Double]>(value: Array.init(repeating: 220, count: 100))
         capturedRedmean = []
     }
     

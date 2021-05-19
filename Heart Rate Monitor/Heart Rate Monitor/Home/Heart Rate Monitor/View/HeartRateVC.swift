@@ -58,6 +58,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.trackFillColor = .white
         view.trackColor = UIColor(named: "white-holder")!
         view.lineWidth = 3
+        view.backtrackLineWidth = 3
         view.backgroundColor = .clear
         view.isUserInteractionEnabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -174,6 +175,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
         ])
+        reloadChartData(value: Array.init(repeating: 220, count: 100))
         view.layoutIfNeeded()
         cameraView.layer.cornerRadius = cameraView.frame.height/2
         initVideoCapture()
