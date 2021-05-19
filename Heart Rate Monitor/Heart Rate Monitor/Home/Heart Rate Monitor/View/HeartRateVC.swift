@@ -33,6 +33,19 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         return view
     }()
     
+    private lazy var bpmLabel: UILabel = {
+        let view = UILabel()
+        view.textAlignment = .center
+        view.numberOfLines = 0
+        view.isUserInteractionEnabled = false
+        view.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        view.text = "BPM"
+        view.textColor = UIColor(named: "white-holder")!
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var cameraView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -90,6 +103,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.legend.enabled = false
         view.xAxis.enabled = false
         view.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
+        view.highlightPerTapEnabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -111,6 +125,39 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         let view = UIImageView(image: UIImage(named: "ic-heart"))
         view.backgroundColor = .clear
         view.tintColor = UIColor(named: "black-background")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var fireImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "ic-fire"))
+        view.backgroundColor = .clear
+        view.isHidden = true
+        view.tintColor = UIColor(named: "white-holder")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var avgLabelView: BeatLabelView = {
+        let view = BeatLabelView()
+        view.valueLabel.text = "50"
+        view.typeLabel.text = "AVG"
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var minLabelView: BeatLabelView = {
+        let view = BeatLabelView()
+        view.valueLabel.text = "46"
+        view.typeLabel.text = "MIN"
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var maxLabelView: BeatLabelView = {
+        let view = BeatLabelView()
+        view.valueLabel.text = "54"
+        view.typeLabel.text = "MAX"
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -139,10 +186,14 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         playView.addSubview(progressView)
         playView.addSubview(cameraView)
         playView.addSubview(heartImageView)
+        playView.addSubview(fireImageView)
         playView.addSubview(heartRateTrackLabel)
         playView.addSubview(tapToStartLabel)
+        playView.addSubview(bpmLabel)
+        view.addSubview(avgLabelView)
+        view.addSubview(minLabelView)
+        view.addSubview(maxLabelView)
         NSLayoutConstraint.activate([
-            
             playView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             playView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             playView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
@@ -162,6 +213,9 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             tapToStartLabel.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -24),
             tapToStartLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
             
+            bpmLabel.bottomAnchor.constraint(equalTo: heartRateTrackLabel.topAnchor),
+            bpmLabel.leadingAnchor.constraint(equalTo: heartRateTrackLabel.trailingAnchor),
+            
             cameraView.topAnchor.constraint(equalTo: tapToStartLabel.bottomAnchor, constant: 20),
             cameraView.widthAnchor.constraint(equalTo: playView.widthAnchor, multiplier: 0.1),
             cameraView.heightAnchor.constraint(equalTo: playView.widthAnchor, multiplier: 0.1),
@@ -172,8 +226,28 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             heartImageView.widthAnchor.constraint(equalTo: cameraView.widthAnchor),
             heartImageView.heightAnchor.constraint(equalTo: cameraView.heightAnchor),
             
+            fireImageView.topAnchor.constraint(equalTo: playView.topAnchor, constant: 24),
+            fireImageView.widthAnchor.constraint(equalTo: playView.widthAnchor, multiplier: 0.1),
+            fireImageView.heightAnchor.constraint(equalTo: playView.widthAnchor, multiplier: 0.1),
+            fireImageView.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
+            
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
+            
+            minLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor),
+            minLabelView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+            minLabelView.heightAnchor.constraint(equalTo: chartView.heightAnchor, multiplier: 0.5),
+            minLabelView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            avgLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor),
+            avgLabelView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+            avgLabelView.heightAnchor.constraint(equalTo: chartView.heightAnchor, multiplier: 0.5),
+            avgLabelView.trailingAnchor.constraint(equalTo: minLabelView.leadingAnchor),
+            
+            maxLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor),
+            maxLabelView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+            maxLabelView.heightAnchor.constraint(equalTo: chartView.heightAnchor, multiplier: 0.5),
+            maxLabelView.leadingAnchor.constraint(equalTo: minLabelView.trailingAnchor),
         ])
         reloadChartData(value: Array.init(repeating: 220, count: 100))
         view.layoutIfNeeded()
@@ -192,14 +266,20 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 self.toggleTorch(status: value)
                 self.tapToStartLabel.isHidden = value
                 self.heartRateTrackLabel.isHidden = !value
+                self.fireImageView.isHidden = !value
+                self.bpmLabel.isHidden = !value
             })
             .disposed(by: disposeBag)
         
         viewModel?.heartRateTrackNumber
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .map { "\($0 == 0 ? "--" : "\(Int($0/2))")" }
-            .bind(to: heartRateTrackLabel.rx.text)
+            .bind(onNext: { [weak self] (value) in
+                guard let self = self else { return }
+                let beat = Int(value/2)
+                self.heartRateTrackLabel.text = "\(value == 0 ? "--" : "\(beat)")"
+                self.fireImageView.tintColor = beat <= 60 ? UIColor(named: "white-holder") : beat <= 100 ? UIColor(named: "green-1") : UIColor(named: "red-1")
+            })
             .disposed(by: disposeBag)
         
         playView.rx.controlEvent(.touchUpInside)

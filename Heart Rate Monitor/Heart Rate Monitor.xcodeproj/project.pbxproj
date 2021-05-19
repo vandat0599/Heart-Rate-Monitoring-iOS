@@ -62,6 +62,9 @@
 		CE20A1162606DE480084F2BA /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20A1152606DE480084F2BA /* FFT.swift */; };
 		CE2390AD2654B27C00DC05BC /* CustomRippleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2390AC2654B27C00DC05BC /* CustomRippleButton.swift */; };
 		CE2390B12654B47200DC05BC /* MenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2390B02654B47200DC05BC /* MenuVC.xib */; };
+		CE2390EB26554F3500DC05BC /* BeatLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2390EA26554F3500DC05BC /* BeatLabelView.swift */; };
+		CE2390F126554F4C00DC05BC /* BeatLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2390F026554F4C00DC05BC /* BeatLabelView.xib */; };
+		CE2390F92655549500DC05BC /* ViewWithXib.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2390F82655549500DC05BC /* ViewWithXib.swift */; };
 		CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */; };
 		CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE444972264100DA0028A5D4 /* CustomRippleControl.swift */; };
 		CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */ = {isa = PBXBuildFile; fileRef = CE44497C26410A490028A5D4 /* lottie-warning.json */; };
@@ -225,6 +228,9 @@
 		CE20A1152606DE480084F2BA /* FFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
 		CE2390AC2654B27C00DC05BC /* CustomRippleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRippleButton.swift; sourceTree = "<group>"; };
 		CE2390B02654B47200DC05BC /* MenuVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuVC.xib; sourceTree = "<group>"; };
+		CE2390EA26554F3500DC05BC /* BeatLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLabelView.swift; sourceTree = "<group>"; };
+		CE2390F026554F4C00DC05BC /* BeatLabelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BeatLabelView.xib; sourceTree = "<group>"; };
+		CE2390F82655549500DC05BC /* ViewWithXib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithXib.swift; sourceTree = "<group>"; };
 		CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelper.swift; sourceTree = "<group>"; };
 		CE444972264100DA0028A5D4 /* CustomRippleControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRippleControl.swift; sourceTree = "<group>"; };
 		CE44497C26410A490028A5D4 /* lottie-warning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-warning.json"; sourceTree = "<group>"; };
@@ -441,6 +447,8 @@
 		CE00160C261D81ED00B9374F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE2390EA26554F3500DC05BC /* BeatLabelView.swift */,
+				CE2390F026554F4C00DC05BC /* BeatLabelView.xib */,
 				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
 			);
 			path = View;
@@ -579,6 +587,7 @@
 				CE001638261D8FC300B9374F /* LottieSheetViewController.swift */,
 				848645D826201358003599A4 /* TTSegmentedControl.swift */,
 				CE444972264100DA0028A5D4 /* CustomRippleControl.swift */,
+				CE2390F82655549500DC05BC /* ViewWithXib.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -923,6 +932,7 @@
 				84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */,
 				848645E4262037D2003599A4 /* WeekMonthRecordTableViewCell.xib in Resources */,
 				CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */,
+				CE2390F126554F4C00DC05BC /* BeatLabelView.xib in Resources */,
 				CEC78E2225F73365007BA177 /* Staging.xcconfig in Resources */,
 				CEC78E2325F73365007BA177 /* Development.xcconfig in Resources */,
 				845DF6132603345B00DD26BF /* SignUpVC.xib in Resources */,
@@ -1081,6 +1091,7 @@
 				CE0BE144261EB77700073002 /* Gender.swift in Sources */,
 				CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */,
 				CEC78E9F25F73A07007BA177 /* UIView+.swift in Sources */,
+				CE2390F92655549500DC05BC /* ViewWithXib.swift in Sources */,
 				848645D926201358003599A4 /* TTSegmentedControl.swift in Sources */,
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
 				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,
@@ -1104,6 +1115,7 @@
 				CE001619261D83F700B9374F /* UINibView.swift in Sources */,
 				CE0BE134261EAA4500073002 /* Account.swift in Sources */,
 				CEC7EDC5262FF46800403671 /* HeartRateRecord.swift in Sources */,
+				CE2390EB26554F3500DC05BC /* BeatLabelView.swift in Sources */,
 				CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */,
 				CE9965EB26141BDA00104065 /* HeartRateResultVM.swift in Sources */,
 				CEC78EA325F73A07007BA177 /* UITableView+.swift in Sources */,
