@@ -11,43 +11,9 @@ import RxSwift
 import RxCocoa
 import AVFoundation
 import Charts
+import HGCircularSlider
 
 class HeartRateVC: BaseVC, ChartViewDelegate {
-    
-    private lazy var guideLabel: UILabel = {
-        let view = UILabel()
-        view.textAlignment = .center
-        view.numberOfLines = 0
-        view.isHidden = true
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 5
-        paragraphStyle.alignment = .center
-        view.attributedText = NSMutableAttributedString(string: AppString.heartRateGuides as String, attributes: [
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18),
-            NSAttributedString.Key.foregroundColor: UIColor(named: "black-white")!,
-            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-        ])
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var backgroundImage: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "ic-gradient-ball")
-        view.contentMode = .scaleAspectFit
-        view.isUserInteractionEnabled = false
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var playIconImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "ic-play")?.withRenderingMode(.alwaysTemplate))
-        view.tintColor = UIColor(named: "black-white")!
-        view.contentMode = .scaleAspectFit
-        view.isUserInteractionEnabled = false
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     private lazy var heartRateTrackLabel: UILabel = {
         let view = UILabel()
@@ -58,7 +24,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         paragraphStyle.alignment = .center
-        view.attributedText = NSMutableAttributedString(string: "--\nbpm" as String, attributes: [
+        view.attributedText = NSMutableAttributedString(string: "--" as String, attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .bold),
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
@@ -70,17 +36,30 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     private lazy var cameraView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
+        view.isHidden = false
+        view.alpha = 0
         view.layer.masksToBounds = true
         view.isUserInteractionEnabled = false
-        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var progressView: AnimationView = {
-        let view = AnimationView.init(name: "lottie-progress")
+    private lazy var progressView: CircularSlider = {
+        let view = CircularSlider()
+        view.minimumValue = 0
+        view.maximumValue = 1
+        view.endPointValue = 0
+        view.diskFillColor = .clear
+        view.diskColor = .clear
+        view.endThumbTintColor = .clear
+        view.endThumbStrokeColor = .clear
+        view.endThumbStrokeHighlightedColor = .clear
+        view.thumbRadius = 4
+        view.trackFillColor = .white
+        view.trackColor = UIColor(named: "white-holder")!
+        view.lineWidth = 4
+        view.backgroundColor = .clear
         view.isUserInteractionEnabled = false
-        view.animationSpeed = 15/CGFloat(viewModel.maxProgressSecond)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -88,13 +67,15 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     private lazy var playView: CustomRippleControl = {
         let view = CustomRippleControl()
         view.isHidden = false
+        view.alpha = 0
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var chartView: LineChartView = {
         let view = LineChartView()
-        view.isHidden = true
+        view.isHidden = false
         view.delegate = self
         view.chartDescription?.enabled = false
         view.dragEnabled = true
@@ -108,9 +89,20 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-        
-    private var playViewTopAnchor: NSLayoutConstraint!
     
+    private lazy var tapToStartLabel: UILabel = {
+        let view = UILabel()
+        view.isHidden = false
+        view.textColor = .white
+        view.font = UIFont.systemFont(ofSize: 10, weight: .bold)
+        view.text = "TAP HERE TO START"
+        view.textAlignment = .center
+        view.backgroundColor = .clear
+        view.adjustsFontSizeToFitWidth = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+            
     private var cameraManager: CameraManager?
     private var viewModel: HeartRateVCVM!
     
@@ -129,97 +121,73 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     }
     
     private func setupView() {
-        navigationItem.title = AppString.heartRateMonitor
-        view.backgroundColor = UIColor(named: "white-black")!
-        view.addSubview(guideLabel)
+        view.backgroundColor = UIColor(named: "black-background")!
         view.addSubview(playView)
         view.addSubview(chartView)
-        playView.addSubview(backgroundImage)
         playView.addSubview(progressView)
         playView.addSubview(cameraView)
-        playView.addSubview(playIconImageView)
         playView.addSubview(heartRateTrackLabel)
-        playViewTopAnchor = playView.topAnchor.constraint(equalTo: centerYView.bottomAnchor, constant: -UIScreen.main.bounds.width*0.2/2)
+        playView.addSubview(tapToStartLabel)
         NSLayoutConstraint.activate([
-            guideLabel.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
-            guideLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            guideLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            guideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            chartView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            chartView.bottomAnchor.constraint(equalTo: playView.topAnchor),
-            
-            playViewTopAnchor,
-            playView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             playView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             playView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            playView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            backgroundImage.leadingAnchor.constraint(equalTo: playView.leadingAnchor),
-            backgroundImage.trailingAnchor.constraint(equalTo: playView.trailingAnchor),
-            backgroundImage.topAnchor.constraint(equalTo: playView.topAnchor),
-            backgroundImage.bottomAnchor.constraint(equalTo: playView.bottomAnchor),
+            chartView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            chartView.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
             
             progressView.leadingAnchor.constraint(equalTo: playView.leadingAnchor),
             progressView.trailingAnchor.constraint(equalTo: playView.trailingAnchor),
             progressView.topAnchor.constraint(equalTo: playView.topAnchor),
             progressView.bottomAnchor.constraint(equalTo: playView.bottomAnchor),
             
-            playIconImageView.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
-            playIconImageView.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
-            playIconImageView.heightAnchor.constraint(equalTo: playView.heightAnchor, multiplier: 0.2),
-            playIconImageView.widthAnchor.constraint(equalTo: playView.widthAnchor, multiplier: 0.2),
+            cameraView.leadingAnchor.constraint(equalTo: playView.leadingAnchor, constant: 10),
+            cameraView.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -10),
+            cameraView.topAnchor.constraint(equalTo: playView.topAnchor, constant: 10),
+            cameraView.bottomAnchor.constraint(equalTo: playView.bottomAnchor, constant: -10),
             
-            cameraView.leadingAnchor.constraint(equalTo: playView.leadingAnchor, constant: 20),
-            cameraView.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -20),
-            cameraView.topAnchor.constraint(equalTo: playView.topAnchor, constant: 20),
-            cameraView.bottomAnchor.constraint(equalTo: playView.bottomAnchor, constant: -20),
+            tapToStartLabel.leadingAnchor.constraint(equalTo: playView.leadingAnchor, constant: 24),
+            tapToStartLabel.trailingAnchor.constraint(equalTo: playView.trailingAnchor, constant: -24),
+            tapToStartLabel.topAnchor.constraint(equalTo: playView.topAnchor, constant: 24),
+            tapToStartLabel.bottomAnchor.constraint(equalTo: playView.bottomAnchor, constant: -24),
             
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
         ])
         view.layoutIfNeeded()
+        cameraView.layer.cornerRadius = cameraView.frame.height/2
         initVideoCapture()
         bindViews()
-        cameraView.layer.cornerRadius = cameraView.frame.height/2
     }
     
     private func bindViews() {
         viewModel?.isPlaying
+            .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .bind(onNext: {[unowned self] (value) in
-                print(value)
-                self.playViewTopAnchor.constant = value ? 0 : -UIScreen.main.bounds.width*0.2/2
-                self.cameraView.isHidden = !value
-                self.progressView.isHidden = !value
-                self.playIconImageView.isHidden = value
-                self.guideLabel.isHidden = !value
-                self.chartView.isHidden = !value
-                UIView.animate(withDuration: 0.4) {
-                    self.view.layoutIfNeeded()
-                    self.progressView.alpha = !value ? 0.0 : 1.0
-                    self.cameraView.alpha = !value ? 0.0 : 1.0
-                    self.playIconImageView.alpha = value ? 0.0 : 1.0
-                    self.guideLabel.alpha = !value ? 0.0 : 1.0
-                    self.chartView.alpha = !value ? 0.0 : 1.0
-                }
-                self.progressView.currentProgress = 0
-                if value {
-                    self.cameraManager?.startCapture()
-                } else {
-                    self.cameraManager?.stopCapture()
-                }
+            .bind(onNext: {[weak self] (value) in
+                guard let self = self else { return }
                 self.toggleTorch(status: value)
-                self.navigationItem.title = value ? AppString.keepYourFinger : AppString.heartRateMonitor
+                self.tapToStartLabel.isHidden = value
+                self.heartRateTrackLabel.isHidden = !value
+                if value {
+                    UIView.animate(withDuration: 1) {
+                        self.cameraView.alpha = 1
+                    }
+                } else {
+                    self.cameraView.alpha = 0
+                }
             })
             .disposed(by: disposeBag)
         
         viewModel?.heartRateTrackNumber
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .map { "\($0 == 0 ? "--" : "\(Int($0/2))")\nbpm" }
+            .map { "\($0 == 0 ? "--" : "\(Int($0/2))")" }
             .bind(to: heartRateTrackLabel.rx.text)
             .disposed(by: disposeBag)
         
@@ -229,7 +197,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .bind {[unowned self] in
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 guard CameraType.back.captureDevice() != nil else {
-                    self.initVideoCapture()
                     HAlert.showErrorBottomSheet(self, message: "Something wrong with your phone's camera, please try again!!")
                     return
                 }
@@ -238,45 +205,23 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateProgress
+            .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
                 if value == 0 {
-                    self.progressView.stop()
-                    self.progressView.currentProgress = 0
+                    self.progressView.endPointValue = 0
                 } else {
-                    self.progressView.play()
+                    self.progressView.endPointValue = CGFloat(value)
                 }
             })
-            .disposed(by: disposeBag)
-        
-        viewModel?.warningText
-            .observeOn(MainScheduler.instance)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .subscribe(onNext: {[unowned self] (value) in
-                self.navigationItem.title = value
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel?.guideCoverCameraText
-            .observeOn(MainScheduler.instance)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .bind(to: guideLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel?.isMeasuring
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
-                if value {
-                    self.heartRateTrackLabel.isHidden = false
-                    self.chartView.isHidden = false
-                    UIView.animate(withDuration: 0.4) {
-                        self.chartView.alpha = !value ? 0.0 : 1.0
-                    }
-                } else {
-                    self.heartRateTrackLabel.isHidden = true
-                    self.chartView.isHidden = true
+                if !value {
                     self.reloadChartData(value: nil)
                 }
                 self.playView.isUserInteractionEnabled = !value
@@ -287,13 +232,8 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: {[unowned self] (value) in
-                if self.viewModel?.isMeasuring.value ?? false {
-                    self.guideLabel.isHidden = value
-                } else {
-                    self.guideLabel.isHidden = false
-                }
                 if !value {
-                    self.heartRateTrackLabel.text = "--\nbpm"
+                    self.heartRateTrackLabel.text = "--"
                 }
             })
             .disposed(by: disposeBag)
@@ -327,16 +267,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
-                if chartView.isHidden == true {
-                    chartView.isHidden = false
-                }
                 self.reloadChartData(value: value)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel?.touchStatus
-            .subscribe(onNext: {[unowned self] (value) in
-                self.toggleTorch(status: value)
             })
             .disposed(by: disposeBag)
     }
@@ -367,7 +298,14 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     // MARK: - Frames Capture Methods
     private func initVideoCapture() {
         let specs = VideoSpec(fps: 30, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
-        cameraManager = CameraManager(cameraType: .back, preferredSpec: specs, previewContainer: cameraView.layer)
+        cameraManager = CameraManager(cameraType: .back, preferredSpec: specs, previewContainer: cameraView.layer, completion: {[weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 1) {
+                    self.playView.alpha = 1
+                }
+            }
+        })
         cameraManager?.imageBufferHandler = { [unowned self] (imageBuffer) in
             self.viewModel.handleImage(with: imageBuffer, fps: Int(specs.fps ?? 0))
         }
@@ -375,6 +313,18 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
 
     private func toggleTorch(status: Bool) {
         guard let device = AVCaptureDevice.default(for: .video) else { return }
-        device.toggleTorch(on: status)
+        print("toggleTorch: \(status)")
+        guard device.hasTorch else { return }
+        do {
+            try device.lockForConfiguration()
+            if status {
+                try device.setTorchModeOn(level: 0.1)
+            } else {
+                device.torchMode = .off
+            }
+            device.unlockForConfiguration()
+        } catch {
+            print(error)
+        }
     }
 }

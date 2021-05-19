@@ -9,6 +9,11 @@ import UIKit
 import RxSwift
 
 class BaseVC: UIViewController {
+        
+    //MARK: -Properties
+    @IBAction func backButtonTapped(){
+        self.navigationController?.popViewController(animated: true)
+    }
     
     var hideStatusBar: Bool = false {
         didSet {
@@ -46,7 +51,6 @@ class BaseVC: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = UIColor(named: "background")
         view.addSubview(centerXView)
         view.addSubview(centerYView)
         NSLayoutConstraint.activate([

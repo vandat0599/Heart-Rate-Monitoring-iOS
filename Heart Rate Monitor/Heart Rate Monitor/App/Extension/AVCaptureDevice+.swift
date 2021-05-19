@@ -92,6 +92,7 @@ extension AVCaptureDevice {
         do {
             try lockForConfiguration()
             torchMode = on ? .on : .off
+            try setTorchModeOn(level: 1.0)
             unlockForConfiguration()
         } catch {
             print("Torch could not be used \(error)")
