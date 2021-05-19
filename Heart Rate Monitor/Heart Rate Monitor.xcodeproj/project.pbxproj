@@ -65,6 +65,7 @@
 		CE2390EB26554F3500DC05BC /* BeatLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2390EA26554F3500DC05BC /* BeatLabelView.swift */; };
 		CE2390F126554F4C00DC05BC /* BeatLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2390F026554F4C00DC05BC /* BeatLabelView.xib */; };
 		CE2390F92655549500DC05BC /* ViewWithXib.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2390F82655549500DC05BC /* ViewWithXib.swift */; };
+		CE2391202655669400DC05BC /* ResultBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE23911F2655669400DC05BC /* ResultBottomSheetVC.swift */; };
 		CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */; };
 		CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE444972264100DA0028A5D4 /* CustomRippleControl.swift */; };
 		CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */ = {isa = PBXBuildFile; fileRef = CE44497C26410A490028A5D4 /* lottie-warning.json */; };
@@ -231,6 +232,7 @@
 		CE2390EA26554F3500DC05BC /* BeatLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLabelView.swift; sourceTree = "<group>"; };
 		CE2390F026554F4C00DC05BC /* BeatLabelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BeatLabelView.xib; sourceTree = "<group>"; };
 		CE2390F82655549500DC05BC /* ViewWithXib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithXib.swift; sourceTree = "<group>"; };
+		CE23911F2655669400DC05BC /* ResultBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultBottomSheetVC.swift; sourceTree = "<group>"; };
 		CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelper.swift; sourceTree = "<group>"; };
 		CE444972264100DA0028A5D4 /* CustomRippleControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRippleControl.swift; sourceTree = "<group>"; };
 		CE44497C26410A490028A5D4 /* lottie-warning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-warning.json"; sourceTree = "<group>"; };
@@ -447,9 +449,8 @@
 		CE00160C261D81ED00B9374F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CE2390EA26554F3500DC05BC /* BeatLabelView.swift */,
-				CE2390F026554F4C00DC05BC /* BeatLabelView.xib */,
-				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
+				CE23911E2655665400DC05BC /* CustomView */,
+				CE23911D2655664B00DC05BC /* ViewController */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -540,6 +541,24 @@
 				CE1E22AF25F72A0300C6632E /* Info.plist */,
 			);
 			path = "Heart Rate MonitorUITests";
+			sourceTree = "<group>";
+		};
+		CE23911D2655664B00DC05BC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
+				CE23911F2655669400DC05BC /* ResultBottomSheetVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CE23911E2655665400DC05BC /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				CE2390EA26554F3500DC05BC /* BeatLabelView.swift */,
+				CE2390F026554F4C00DC05BC /* BeatLabelView.xib */,
+			);
+			path = CustomView;
 			sourceTree = "<group>";
 		};
 		CE7F89DD25FC680B00A2EDC9 /* View */ = {
@@ -1086,6 +1105,7 @@
 				CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */,
 				CEC78EA425F73A07007BA177 /* UIImage+.swift in Sources */,
 				CE10732125FDCDDF003777D6 /* Filter.swift in Sources */,
+				CE2391202655669400DC05BC /* ResultBottomSheetVC.swift in Sources */,
 				CE7F8A2225FC902F00A2EDC9 /* UserVC.swift in Sources */,
 				CEC78E9525F73A07007BA177 /* UIColor+.swift in Sources */,
 				CE0BE144261EB77700073002 /* Gender.swift in Sources */,
