@@ -234,17 +234,17 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
             
-            minLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor),
+            minLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor, constant: 20),
             minLabelView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
             minLabelView.heightAnchor.constraint(equalTo: chartView.heightAnchor, multiplier: 0.5),
             minLabelView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            avgLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor),
+            avgLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor, constant: 20),
             avgLabelView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
             avgLabelView.heightAnchor.constraint(equalTo: chartView.heightAnchor, multiplier: 0.5),
             avgLabelView.trailingAnchor.constraint(equalTo: minLabelView.leadingAnchor),
             
-            maxLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor),
+            maxLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor, constant: 20),
             maxLabelView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
             maxLabelView.heightAnchor.constraint(equalTo: chartView.heightAnchor, multiplier: 0.5),
             maxLabelView.leadingAnchor.constraint(equalTo: minLabelView.trailingAnchor),
