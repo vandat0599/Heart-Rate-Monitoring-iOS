@@ -91,7 +91,7 @@ class HeartRateDetector: NSObject {
     }
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm 15 frame thì lại gọi hàm
-    static func PulseDetector(_ signal: [Double],fps: Int) ->Double {
+    static func PulseDetector(_ signal: [Double],fps: Int) -> Double {
         if (signal.count != Windows_Seconds*fps){
             print("signal truyền vào phải có \(Windows_Seconds*fps) giá trị thay vì \(signal.count)")
             return -1
@@ -102,7 +102,7 @@ class HeartRateDetector: NSObject {
         
         //let (denC, numC) = filter.butter(order: 2, lowFreq: 2/45, highFreq: 23/90)
         let B = [Double](repeating: 1/20, count: 20)
-        let y = filter.Filter(signal: signal, denC: B, numC: [1])
+        let y = filter.Filter(signal: signal, denC: B, numC: [1]) // 0 -> 255
         let (peaks,locs) = findPeakElement(y)
         var N = peaks.count
         

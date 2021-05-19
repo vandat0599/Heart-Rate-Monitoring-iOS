@@ -60,6 +60,11 @@
 		CE1E22A325F72A0300C6632E /* Heart_Rate_MonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22A225F72A0300C6632E /* Heart_Rate_MonitorTests.swift */; };
 		CE1E22AE25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */; };
 		CE20A1162606DE480084F2BA /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20A1152606DE480084F2BA /* FFT.swift */; };
+		CE2390AD2654B27C00DC05BC /* CustomRippleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2390AC2654B27C00DC05BC /* CustomRippleButton.swift */; };
+		CE2390B12654B47200DC05BC /* MenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2390B02654B47200DC05BC /* MenuVC.xib */; };
+		CE2390EB26554F3500DC05BC /* BeatLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2390EA26554F3500DC05BC /* BeatLabelView.swift */; };
+		CE2390F126554F4C00DC05BC /* BeatLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2390F026554F4C00DC05BC /* BeatLabelView.xib */; };
+		CE2390F92655549500DC05BC /* ViewWithXib.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2390F82655549500DC05BC /* ViewWithXib.swift */; };
 		CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */; };
 		CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE444972264100DA0028A5D4 /* CustomRippleControl.swift */; };
 		CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */ = {isa = PBXBuildFile; fileRef = CE44497C26410A490028A5D4 /* lottie-warning.json */; };
@@ -74,6 +79,9 @@
 		CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */; };
 		CE7F8A3425FCB33A00A2EDC9 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A3325FCB33A00A2EDC9 /* RoundedView.swift */; };
 		CE7F8A5125FCB74100A2EDC9 /* HeartRateVCVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */; };
+		CE8DFA072653DA8600385F3B /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DFA052653DA8500385F3B /* MenuVC.swift */; };
+		CE8DFA082653DA8600385F3B /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DFA062653DA8500385F3B /* ContainerVC.swift */; };
+		CE8DFA102653DB5400385F3B /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DFA0F2653DB5400385F3B /* UIStoryboard+.swift */; };
 		CE9965E726141BCF00104065 /* HeartRateResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9965E626141BCF00104065 /* HeartRateResultVC.swift */; };
 		CE9965EB26141BDA00104065 /* HeartRateResultVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */; };
 		CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DF725F730A2007BA177 /* BaseVC.swift */; };
@@ -218,6 +226,11 @@
 		CE1E22AD25F72A0300C6632E /* Heart_Rate_MonitorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart_Rate_MonitorUITests.swift; sourceTree = "<group>"; };
 		CE1E22AF25F72A0300C6632E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE20A1152606DE480084F2BA /* FFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
+		CE2390AC2654B27C00DC05BC /* CustomRippleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRippleButton.swift; sourceTree = "<group>"; };
+		CE2390B02654B47200DC05BC /* MenuVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuVC.xib; sourceTree = "<group>"; };
+		CE2390EA26554F3500DC05BC /* BeatLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLabelView.swift; sourceTree = "<group>"; };
+		CE2390F026554F4C00DC05BC /* BeatLabelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BeatLabelView.xib; sourceTree = "<group>"; };
+		CE2390F82655549500DC05BC /* ViewWithXib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithXib.swift; sourceTree = "<group>"; };
 		CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelper.swift; sourceTree = "<group>"; };
 		CE444972264100DA0028A5D4 /* CustomRippleControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRippleControl.swift; sourceTree = "<group>"; };
 		CE44497C26410A490028A5D4 /* lottie-warning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-warning.json"; sourceTree = "<group>"; };
@@ -232,6 +245,9 @@
 		CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemView.swift; sourceTree = "<group>"; };
 		CE7F8A3325FCB33A00A2EDC9 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		CE7F8A5025FCB74100A2EDC9 /* HeartRateVCVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVCVM.swift; sourceTree = "<group>"; };
+		CE8DFA052653DA8500385F3B /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
+		CE8DFA062653DA8500385F3B /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
+		CE8DFA0F2653DB5400385F3B /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		CE9965E626141BCF00104065 /* HeartRateResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateResultVC.swift; sourceTree = "<group>"; };
 		CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateResultVM.swift; sourceTree = "<group>"; };
 		CEC78DF725F730A2007BA177 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
@@ -431,6 +447,8 @@
 		CE00160C261D81ED00B9374F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE2390EA26554F3500DC05BC /* BeatLabelView.swift */,
+				CE2390F026554F4C00DC05BC /* BeatLabelView.xib */,
 				CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */,
 			);
 			path = View;
@@ -543,6 +561,7 @@
 		CE7F89F525FC786100A2EDC9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				CE8DF9E82653DA5300385F3B /* Side menu */,
 				844863A0261D5246007CC806 /* HistoryTab */,
 				84C718952606EACD00BA2C6D /* ProfileTab */,
 				CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */,
@@ -558,6 +577,7 @@
 		CE7F8A3725FCB35300A2EDC9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE2390AC2654B27C00DC05BC /* CustomRippleButton.swift */,
 				CE7F8A3325FCB33A00A2EDC9 /* RoundedView.swift */,
 				84230D4D2603184900EC9DD0 /* GradientColor.swift */,
 				CE001618261D83F700B9374F /* UINibView.swift */,
@@ -567,6 +587,7 @@
 				CE001638261D8FC300B9374F /* LottieSheetViewController.swift */,
 				848645D826201358003599A4 /* TTSegmentedControl.swift */,
 				CE444972264100DA0028A5D4 /* CustomRippleControl.swift */,
+				CE2390F82655549500DC05BC /* ViewWithXib.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -578,6 +599,16 @@
 				CE00160C261D81ED00B9374F /* View */,
 			);
 			path = "Heart Rate Monitor";
+			sourceTree = "<group>";
+		};
+		CE8DF9E82653DA5300385F3B /* Side menu */ = {
+			isa = PBXGroup;
+			children = (
+				CE8DFA062653DA8500385F3B /* ContainerVC.swift */,
+				CE8DFA052653DA8500385F3B /* MenuVC.swift */,
+				CE2390B02654B47200DC05BC /* MenuVC.xib */,
+			);
+			path = "Side menu";
 			sourceTree = "<group>";
 		};
 		CEC78DC825F72BC6007BA177 /* App */ = {
@@ -637,6 +668,7 @@
 				CE10731325FDCD8B003777D6 /* AVCaptureDevice+.swift */,
 				CE10736525FE7449003777D6 /* CGPoint+.swift */,
 				CE162039263930550076E71F /* CMSampleBuffer+.swift */,
+				CE8DFA0F2653DB5400385F3B /* UIStoryboard+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -892,6 +924,7 @@
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,
 				844863A5261D529C007CC806 /* HistoryVC.xib in Resources */,
 				84E460B126158C0200F60040 /* InputRelationshipTableViewCell.xib in Resources */,
+				CE2390B12654B47200DC05BC /* MenuVC.xib in Resources */,
 				84E46096261566F700F60040 /* RelationshipTableViewCell.xib in Resources */,
 				CEC78E2425F73365007BA177 /* Production.xcconfig in Resources */,
 				84CD8231261EDDEC00ABD9B5 /* RecordTableViewCell.xib in Resources */,
@@ -899,6 +932,7 @@
 				84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */,
 				848645E4262037D2003599A4 /* WeekMonthRecordTableViewCell.xib in Resources */,
 				CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */,
+				CE2390F126554F4C00DC05BC /* BeatLabelView.xib in Resources */,
 				CEC78E2225F73365007BA177 /* Staging.xcconfig in Resources */,
 				CEC78E2325F73365007BA177 /* Development.xcconfig in Resources */,
 				845DF6132603345B00DD26BF /* SignUpVC.xib in Resources */,
@@ -1057,6 +1091,7 @@
 				CE0BE144261EB77700073002 /* Gender.swift in Sources */,
 				CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */,
 				CEC78E9F25F73A07007BA177 /* UIView+.swift in Sources */,
+				CE2390F92655549500DC05BC /* ViewWithXib.swift in Sources */,
 				848645D926201358003599A4 /* TTSegmentedControl.swift in Sources */,
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
 				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,
@@ -1069,15 +1104,18 @@
 				84575B772607844200711760 /* ProfileCell.swift in Sources */,
 				CE10731C25FDCDD3003777D6 /* CameraManager.swift in Sources */,
 				CE10736625FE7449003777D6 /* CGPoint+.swift in Sources */,
+				CE8DFA072653DA8600385F3B /* MenuVC.swift in Sources */,
 				1D1B8216263003DC0037D3E8 /* HeartRateDetector.swift in Sources */,
 				CE7F8A3425FCB33A00A2EDC9 /* RoundedView.swift in Sources */,
 				CE16203A263930550076E71F /* CMSampleBuffer+.swift in Sources */,
 				845DF6122603345B00DD26BF /* SignUpVC.swift in Sources */,
 				CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */,
+				CE8DFA082653DA8600385F3B /* ContainerVC.swift in Sources */,
 				CEC78E9A25F73A07007BA177 /* UIViewController+.swift in Sources */,
 				CE001619261D83F700B9374F /* UINibView.swift in Sources */,
 				CE0BE134261EAA4500073002 /* Account.swift in Sources */,
 				CEC7EDC5262FF46800403671 /* HeartRateRecord.swift in Sources */,
+				CE2390EB26554F3500DC05BC /* BeatLabelView.swift in Sources */,
 				CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */,
 				CE9965EB26141BDA00104065 /* HeartRateResultVM.swift in Sources */,
 				CEC78EA325F73A07007BA177 /* UITableView+.swift in Sources */,
@@ -1086,6 +1124,7 @@
 				CE0BE148261EB79400073002 /* HeartRateState.swift in Sources */,
 				84C718C62606F85F00BA2C6D /* User.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
+				CE8DFA102653DB5400385F3B /* UIStoryboard+.swift in Sources */,
 				CE001614261D834800B9374F /* HeartRateStateView.swift in Sources */,
 				CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
@@ -1105,6 +1144,7 @@
 				CEC78E9D25F73A07007BA177 /* UITapGestureRecognizer+.swift in Sources */,
 				CEC78E0525F7327B007BA177 /* Environment.swift in Sources */,
 				848645E3262037D2003599A4 /* WeekMonthRecordTableViewCell.swift in Sources */,
+				CE2390AD2654B27C00DC05BC /* CustomRippleButton.swift in Sources */,
 				CEC78E9825F73A07007BA177 /* UITextField+.swift in Sources */,
 				CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */,
 			);
@@ -1217,7 +1257,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L7FP62JQUP;
+				DEVELOPMENT_TEAM = 7859BCHX87;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1343,13 +1383,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L7FP62JQUP;
+				DEVELOPMENT_TEAM = 7859BCHX87;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate202;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1469,7 +1509,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L7FP62JQUP;
+				DEVELOPMENT_TEAM = 7859BCHX87;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

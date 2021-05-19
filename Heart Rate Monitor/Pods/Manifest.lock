@@ -4,6 +4,7 @@ PODS:
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
   - Hero (1.5.0)
+  - HGCircularSlider (2.2.0)
   - IQKeyboardManagerSwift (6.5.6)
   - lottie-ios (3.1.9)
   - RxCocoa (5.1.1):
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - Alamofire
   - Charts
   - Hero
+  - HGCircularSlider (~> 2.2.0)
   - IQKeyboardManagerSwift
   - lottie-ios
   - RxCocoa (~> 5)
@@ -33,6 +35,7 @@ SPEC REPOS:
     - Alamofire
     - Charts
     - Hero
+    - HGCircularSlider
     - IQKeyboardManagerSwift
     - lottie-ios
     - RxCocoa
@@ -45,6 +48,7 @@ SPEC CHECKSUMS:
   Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
+  HGCircularSlider: afb1942743a2df156dcc7a3500216e523e14266b
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
@@ -53,6 +57,6 @@ SPEC CHECKSUMS:
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 1a30f4aae2db73cc6eb1a459f89107bd57f956e4
+PODFILE CHECKSUM: 77cb015e1ff650154c639200d01740cfaf452338
 
 COCOAPODS: 1.10.1

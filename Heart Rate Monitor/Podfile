@@ -13,6 +13,7 @@ target 'Heart Rate Monitor' do
   pod 'RxSwift', '~> 5'
   pod 'RxCocoa', '~> 5'
   pod 'Charts'
+  pod 'HGCircularSlider', '~> 2.2.0'
 
   # Pods for Heart Rate Monitor
 

@@ -44,13 +44,14 @@ class CameraManager: NSObject {
     
     var imageBufferHandler: ImageBufferHandler?
     
-    init(cameraType: CameraType, preferredSpec: VideoSpec?, previewContainer: CALayer?) {
+    init(cameraType: CameraType, preferredSpec: VideoSpec?, previewContainer: CALayer?, completion: (() -> ())?) {
         super.init()
         DispatchQueue.global().async { [unowned self] in
             guard let camera = cameraType.captureDevice() else { return }
             videoDevice = camera
             
             // MARK: - Setup Video Format
+            captureSession.beginConfiguration()
             captureSession.sessionPreset = .low
             
             // MARK: - Setup video device input
@@ -74,6 +75,7 @@ class CameraManager: NSObject {
             }
             captureSession.addOutput(videoDataOutput)
             videoConnection = videoDataOutput.connection(with: .video)
+            videoConnection?.videoOrientation = .portrait
             
             DispatchQueue.main.async {
                 // MARK: - Setup preview layer
@@ -94,6 +96,9 @@ class CameraManager: NSObject {
                 videoDevice.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
                 videoDevice.unlockForConfiguration()
             }
+            captureSession.commitConfiguration()
+            startCapture()
+            completion?()
         }
     }
     
@@ -129,14 +134,7 @@ class CameraManager: NSObject {
 }
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
-    // MARK: - Export buffer from video frame
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        if connection.videoOrientation != .portrait {
-            connection.videoOrientation = .portrait
-            return
-        }
-        if let imageBufferHandler = imageBufferHandler {
-            imageBufferHandler(sampleBuffer)
-        }
+        imageBufferHandler?(sampleBuffer)
     }
 }

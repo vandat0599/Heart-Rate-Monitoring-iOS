@@ -9,31 +9,19 @@ import UIKit
 import AVFoundation
 
 extension CMSampleBuffer {
-    var meanRGB: (meanRed: Double, meanGreen: Double, meanBlue: Double) {
-        guard let imageBuffer = CMSampleBufferGetImageBuffer(self) else { return (0, 0, 0) }
-        CVPixelBufferLockBaseAddress(imageBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
-        let width = CVPixelBufferGetWidth(imageBuffer)
-        let height = CVPixelBufferGetHeight(imageBuffer)
+    var meanRGB: (meanRed: CGFloat, meanGreen: CGFloat, meanBlue: CGFloat) {
+        
+        let pixelBuffer = CMSampleBufferGetImageBuffer(self)
+        let inputImage = CIImage(cvPixelBuffer: pixelBuffer!)
+        let extentVector = CIVector(x: inputImage.extent.origin.x, y: inputImage.extent.origin.y, z: inputImage.extent.size.width, w: inputImage.extent.size.height)
 
-        let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer)!
-        let byteBuffer = baseAddress.assumingMemoryBound(to: UInt8.self)
-        var reds: [Int] = []
-        var greens: [Int] = []
-        var blues: [Int] = []
-        for j in 0..<height {
-            for i in 0..<width {
-                let index = (j * width + i) * 4
-                let b = byteBuffer[index] // blue
-                let g = byteBuffer[index+1] // green
-                let r = byteBuffer[index+2] // red
-                reds.append(Int(r))
-                greens.append(Int(g))
-                blues.append(Int(b))
-            }
-        }
-        let redmean = Double(reds.reduce(0, +))/Double(reds.count)
-        let greenmean = Double(greens.reduce(0, +))/Double(greens.count)
-        let bluemean = Double(blues.reduce(0, +))/Double(blues.count)
-        return (redmean, greenmean, bluemean)
+        guard let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return (0, 0, 0) }
+        guard let outputImage = filter.outputImage else { return (0, 0, 0) }
+
+        var bitmap = [UInt8](repeating: 0, count: 4)
+        let context = CIContext(options: [.workingColorSpace: kCFNull as Any])
+        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
+
+        return (CGFloat(bitmap[0]), CGFloat(bitmap[1]), CGFloat(bitmap[2]))
     }
 }
