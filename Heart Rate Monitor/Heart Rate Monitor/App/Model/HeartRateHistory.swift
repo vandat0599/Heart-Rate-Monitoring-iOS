@@ -8,19 +8,19 @@
 import Foundation
 
 struct HeartRateHistory: Decodable {
-    var id: String?
-    var healthInfo: HealthInfo?
-    var heartRate: String?
-    var state: HeartRateState?
-    var note: String?
+    var id: Int?
+    var grapValues: [Double] = []
+    var heartRateNumber: Int?
+    var label: String?
     var createDate: String?
+    var isSubmitted: Bool?
     
     enum CodingKeys: String, CodingKey {
         case id
-        case healthInfo = "health_info"
-        case heartRate = "heart_rate"
-        case state
-        case note
+        case grapValues = "grap_values"
+        case heartRateNumber = "heart_rate_number"
+        case label
         case createDate = "create_date"
+        case isSubmitted = "is_submitted"
     }
 }

@@ -39,6 +39,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func applicationWillTerminate(_ application: UIApplication) {
+        PersistenceManager.shared.saveContext()
+    }
+    
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        PersistenceManager.shared.saveContext()
+    }
+    
     // MARK: - Remote Notification
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }

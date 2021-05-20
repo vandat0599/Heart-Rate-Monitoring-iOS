@@ -31,9 +31,7 @@
 		84E46096261566F700F60040 /* RelationshipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E46094261566F700F60040 /* RelationshipTableViewCell.xib */; };
 		84E460B026158C0200F60040 /* InputRelationshipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E460AE26158C0200F60040 /* InputRelationshipTableViewCell.swift */; };
 		84E460B126158C0200F60040 /* InputRelationshipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E460AF26158C0200F60040 /* InputRelationshipTableViewCell.xib */; };
-		CE001614261D834800B9374F /* HeartRateStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001613261D834800B9374F /* HeartRateStateView.swift */; };
 		CE001619261D83F700B9374F /* UINibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001618261D83F700B9374F /* UINibView.swift */; };
-		CE001629261D846600B9374F /* HeartRateStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE001628261D846600B9374F /* HeartRateStateView.xib */; };
 		CE001631261D8F4200B9374F /* HHud.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001630261D8F4200B9374F /* HHud.swift */; };
 		CE001635261D8F8000B9374F /* HAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001634261D8F8000B9374F /* HAlert.swift */; };
 		CE00163A261D8FC300B9374F /* LottieSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001638261D8FC300B9374F /* LottieSheetViewController.swift */; };
@@ -72,7 +70,6 @@
 		CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CF92627F98200159D86 /* lottie-error.json */; };
 		CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFA2627F98200159D86 /* lottie-success.json */; };
 		CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */; };
-		CE7AF9BC261431490035AD17 /* HeartRateResultVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */; };
 		CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */; };
 		CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */; };
 		CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */; };
@@ -83,8 +80,6 @@
 		CE8DFA072653DA8600385F3B /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DFA052653DA8500385F3B /* MenuVC.swift */; };
 		CE8DFA082653DA8600385F3B /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DFA062653DA8500385F3B /* ContainerVC.swift */; };
 		CE8DFA102653DB5400385F3B /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DFA0F2653DB5400385F3B /* UIStoryboard+.swift */; };
-		CE9965E726141BCF00104065 /* HeartRateResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9965E626141BCF00104065 /* HeartRateResultVC.swift */; };
-		CE9965EB26141BDA00104065 /* HeartRateResultVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */; };
 		CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DF725F730A2007BA177 /* BaseVC.swift */; };
 		CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */; };
 		CEC78E0525F7327B007BA177 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E0425F7327B007BA177 /* Environment.swift */; };
@@ -119,6 +114,11 @@
 		CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDB2262FCA8A00403671 /* HLog.swift */; };
 		CEC7EDB7262FCB7B00403671 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDB6262FCB7B00403671 /* APIResponse.swift */; };
 		CEC7EDC5262FF46800403671 /* HeartRateRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */; };
+		CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */; };
+		CEFF400B26561C2A0049EA68 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */; };
+		CEFF4050265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF404E265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift */; };
+		CEFF4051265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF404F265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift */; };
+		CEFF406926562A210049EA68 /* LocalDatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,9 +192,7 @@
 		BA640A8AFBAE7C0DBAFB2B35 /* Pods-Heart Rate Monitor-Heart Rate MonitorUITests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor-Heart Rate MonitorUITests.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor-Heart Rate MonitorUITests/Pods-Heart Rate Monitor-Heart Rate MonitorUITests.production.xcconfig"; sourceTree = "<group>"; };
 		C3B3E9323FA191E33E0E8E3A /* Pods-Heart Rate MonitorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.release.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.release.xcconfig"; sourceTree = "<group>"; };
 		C7186A67983926F1BFAF72A5 /* Pods_Heart_Rate_Monitor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heart_Rate_Monitor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE001613261D834800B9374F /* HeartRateStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateStateView.swift; sourceTree = "<group>"; };
 		CE001618261D83F700B9374F /* UINibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINibView.swift; sourceTree = "<group>"; };
-		CE001628261D846600B9374F /* HeartRateStateView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeartRateStateView.xib; sourceTree = "<group>"; };
 		CE001630261D8F4200B9374F /* HHud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HHud.swift; sourceTree = "<group>"; };
 		CE001634261D8F8000B9374F /* HAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HAlert.swift; sourceTree = "<group>"; };
 		CE001638261D8FC300B9374F /* LottieSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieSheetViewController.swift; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 		CE4D1CF92627F98200159D86 /* lottie-error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-error.json"; sourceTree = "<group>"; };
 		CE4D1CFA2627F98200159D86 /* lottie-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-success.json"; sourceTree = "<group>"; };
 		CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-internet-connection.json"; sourceTree = "<group>"; };
-		CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeartRateResultVC.xib; sourceTree = "<group>"; };
 		CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerVC.swift; sourceTree = "<group>"; };
 		CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVC.swift; sourceTree = "<group>"; };
 		CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
@@ -250,8 +247,6 @@
 		CE8DFA052653DA8500385F3B /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		CE8DFA062653DA8500385F3B /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		CE8DFA0F2653DB5400385F3B /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
-		CE9965E626141BCF00104065 /* HeartRateResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateResultVC.swift; sourceTree = "<group>"; };
-		CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateResultVM.swift; sourceTree = "<group>"; };
 		CEC78DF725F730A2007BA177 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresentVC.swift; sourceTree = "<group>"; };
 		CEC78E0425F7327B007BA177 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -284,6 +279,11 @@
 		CEC7EDB2262FCA8A00403671 /* HLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLog.swift; sourceTree = "<group>"; };
 		CEC7EDB6262FCB7B00403671 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateRecord.swift; sourceTree = "<group>"; };
+		CEFF400026561AB10049EA68 /* HeartRate.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HeartRate.xcdatamodel; sourceTree = "<group>"; };
+		CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		CEFF404E265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CEFF404F265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDatabaseHandler.swift; sourceTree = "<group>"; };
 		EA0CA797C01A5CC5331E7137 /* Pods-Heart Rate Monitor.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.production.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -463,34 +463,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		CE00160E261D81FB00B9374F /* Result */ = {
-			isa = PBXGroup;
-			children = (
-				CE001610261D820600B9374F /* ViewModel */,
-				CE00160F261D820200B9374F /* View */,
-			);
-			path = Result;
-			sourceTree = "<group>";
-		};
-		CE00160F261D820200B9374F /* View */ = {
-			isa = PBXGroup;
-			children = (
-				CE9965E626141BCF00104065 /* HeartRateResultVC.swift */,
-				CE7AF9BB261431490035AD17 /* HeartRateResultVC.xib */,
-				CE001613261D834800B9374F /* HeartRateStateView.swift */,
-				CE001628261D846600B9374F /* HeartRateStateView.xib */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		CE001610261D820600B9374F /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				CE9965EA26141BDA00104065 /* HeartRateResultVM.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		CE1E227F25F72A0200C6632E = {
 			isa = PBXGroup;
 			children = (
@@ -588,7 +560,6 @@
 				CE7F8A2125FC902F00A2EDC9 /* UserVC.swift */,
 				CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */,
 				CE7F8A4F25FCB71F00A2EDC9 /* Heart Rate Monitor */,
-				CE00160E261D81FB00B9374F /* Result */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -706,6 +677,7 @@
 		CEC78DF425F73026007BA177 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				CEFF3FFE26561A380049EA68 /* LocalDatabase */,
 				CEC78EA825F73A22007BA177 /* APIService.swift */,
 				CEC7EDB6262FCB7B00403671 /* APIResponse.swift */,
 			);
@@ -809,6 +781,18 @@
 				CEC78E0425F7327B007BA177 /* Environment.swift */,
 			);
 			path = Environment;
+			sourceTree = "<group>";
+		};
+		CEFF3FFE26561A380049EA68 /* LocalDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */,
+				CEFF404E265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift */,
+				CEFF404F265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift */,
+				CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */,
+				CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */,
+			);
+			path = LocalDatabase;
 			sourceTree = "<group>";
 		};
 		ECDB9A994802453680A98570 /* Frameworks */ = {
@@ -934,10 +918,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE001629261D846600B9374F /* HeartRateStateView.xib in Resources */,
 				CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */,
 				CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */,
-				CE7AF9BC261431490035AD17 /* HeartRateResultVC.xib in Resources */,
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
 				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,
@@ -1085,7 +1067,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE9965E726141BCF00104065 /* HeartRateResultVC.swift in Sources */,
 				CE00163B261D8FC300B9374F /* LottieSheetOneActionVC.swift in Sources */,
 				84CD8230261EDDEC00ABD9B5 /* RecordTableViewCell.swift in Sources */,
 				CE001635261D8F8000B9374F /* HAlert.swift in Sources */,
@@ -1099,6 +1080,7 @@
 				1DE870862614E55B006A38C2 /* Complex.swift in Sources */,
 				CEC78E9725F73A07007BA177 /* String+.swift in Sources */,
 				CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */,
+				CEFF4050265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift in Sources */,
 				CE0BE13C261EB0EE00073002 /* HeartRateHistory.swift in Sources */,
 				CEC78E9C25F73A07007BA177 /* UICollectionView+.swift in Sources */,
 				84230D4E2603184900EC9DD0 /* GradientColor.swift in Sources */,
@@ -1108,6 +1090,7 @@
 				CE2391202655669400DC05BC /* ResultBottomSheetVC.swift in Sources */,
 				CE7F8A2225FC902F00A2EDC9 /* UserVC.swift in Sources */,
 				CEC78E9525F73A07007BA177 /* UIColor+.swift in Sources */,
+				CEFF400B26561C2A0049EA68 /* PersistenceManager.swift in Sources */,
 				CE0BE144261EB77700073002 /* Gender.swift in Sources */,
 				CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */,
 				CEC78E9F25F73A07007BA177 /* UIView+.swift in Sources */,
@@ -1116,8 +1099,10 @@
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
 				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,
 				CE10731425FDCD8B003777D6 /* AVCaptureDevice+.swift in Sources */,
+				CEFF4051265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift in Sources */,
 				CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */,
 				CEC78EA525F73A07007BA177 /* NSLayoutConstraint+.swift in Sources */,
+				CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */,
 				CEC78EA225F73A07007BA177 /* UIFont+.swift in Sources */,
 				CE1E228C25F72A0200C6632E /* AppDelegate.swift in Sources */,
 				CEC78E0D25F7329D007BA177 /* AppConstant.swift in Sources */,
@@ -1137,7 +1122,6 @@
 				CEC7EDC5262FF46800403671 /* HeartRateRecord.swift in Sources */,
 				CE2390EB26554F3500DC05BC /* BeatLabelView.swift in Sources */,
 				CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */,
-				CE9965EB26141BDA00104065 /* HeartRateResultVM.swift in Sources */,
 				CEC78EA325F73A07007BA177 /* UITableView+.swift in Sources */,
 				CE00163F261D909D00B9374F /* BottomSheetViewController.swift in Sources */,
 				84E46095261566F700F60040 /* RelationshipTableViewCell.swift in Sources */,
@@ -1145,7 +1129,6 @@
 				84C718C62606F85F00BA2C6D /* User.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
 				CE8DFA102653DB5400385F3B /* UIStoryboard+.swift in Sources */,
-				CE001614261D834800B9374F /* HeartRateStateView.swift in Sources */,
 				CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,
 				CEC7EDB7262FCB7B00403671 /* APIResponse.swift in Sources */,
@@ -1163,6 +1146,7 @@
 				CE0BE138261EB01C00073002 /* HealthInfo.swift in Sources */,
 				CEC78E9D25F73A07007BA177 /* UITapGestureRecognizer+.swift in Sources */,
 				CEC78E0525F7327B007BA177 /* Environment.swift in Sources */,
+				CEFF406926562A210049EA68 /* LocalDatabaseHandler.swift in Sources */,
 				848645E3262037D2003599A4 /* WeekMonthRecordTableViewCell.swift in Sources */,
 				CE2390AD2654B27C00DC05BC /* CustomRippleButton.swift in Sources */,
 				CEC78E9825F73A07007BA177 /* UITextField+.swift in Sources */,
@@ -1629,6 +1613,19 @@
 			defaultConfigurationName = Development;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CEFF400026561AB10049EA68 /* HeartRate.xcdatamodel */,
+			);
+			currentVersion = CEFF400026561AB10049EA68 /* HeartRate.xcdatamodel */;
+			path = HeartRate.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CE1E228025F72A0200C6632E /* Project object */;
 }
