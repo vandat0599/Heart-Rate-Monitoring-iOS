@@ -27,6 +27,9 @@
 		84C718C62606F85F00BA2C6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C718C52606F85F00BA2C6D /* User.swift */; };
 		84CD8230261EDDEC00ABD9B5 /* RecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD822E261EDDEC00ABD9B5 /* RecordTableViewCell.swift */; };
 		84CD8231261EDDEC00ABD9B5 /* RecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CD822F261EDDEC00ABD9B5 /* RecordTableViewCell.xib */; };
+		84E3963526569CEC006D73A0 /* StatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3963326569CEC006D73A0 /* StatsVC.swift */; };
+		84E3963626569CEC006D73A0 /* StatsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E3963426569CEC006D73A0 /* StatsVC.xib */; };
+		84E3963826569F9F006D73A0 /* StatsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3963726569F9F006D73A0 /* StatsVM.swift */; };
 		84E46095261566F700F60040 /* RelationshipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E46093261566F700F60040 /* RelationshipTableViewCell.swift */; };
 		84E46096261566F700F60040 /* RelationshipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E46094261566F700F60040 /* RelationshipTableViewCell.xib */; };
 		84E460B026158C0200F60040 /* InputRelationshipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E460AE26158C0200F60040 /* InputRelationshipTableViewCell.swift */; };
@@ -99,7 +102,6 @@
 		CEC78E2325F73365007BA177 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CEC78E2025F73365007BA177 /* Development.xcconfig */; };
 		CEC78E2425F73365007BA177 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CEC78E2125F73365007BA177 /* Production.xcconfig */; };
 		CEC78E6D25F7361B007BA177 /* Pods_Heart_Rate_Monitor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7186A67983926F1BFAF72A5 /* Pods_Heart_Rate_Monitor.framework */; };
-		CEC78E6E25F7361B007BA177 /* Pods_Heart_Rate_Monitor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C7186A67983926F1BFAF72A5 /* Pods_Heart_Rate_Monitor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEC78E9525F73A07007BA177 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E8425F73A05007BA177 /* UIColor+.swift */; };
 		CEC78E9625F73A07007BA177 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E8525F73A05007BA177 /* Date+.swift */; };
 		CEC78E9725F73A07007BA177 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E8625F73A05007BA177 /* String+.swift */; };
@@ -146,20 +148,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		CEC78E6F25F7361B007BA177 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				CEC78E6E25F7361B007BA177 /* Pods_Heart_Rate_Monitor.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		0B74324F843F9DBE87023F05 /* Pods-Heart Rate MonitorTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.staging.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.staging.xcconfig"; sourceTree = "<group>"; };
 		13946A76B8F33140617BC1A8 /* Pods-Heart Rate MonitorTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate MonitorTests.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate MonitorTests/Pods-Heart Rate MonitorTests.production.xcconfig"; sourceTree = "<group>"; };
@@ -187,6 +175,9 @@
 		84C718C52606F85F00BA2C6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = "Heart Rate Monitor/Home/ProfileTab/View/User.swift"; sourceTree = SOURCE_ROOT; };
 		84CD822E261EDDEC00ABD9B5 /* RecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordTableViewCell.swift; sourceTree = "<group>"; };
 		84CD822F261EDDEC00ABD9B5 /* RecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordTableViewCell.xib; sourceTree = "<group>"; };
+		84E3963326569CEC006D73A0 /* StatsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsVC.swift; sourceTree = "<group>"; };
+		84E3963426569CEC006D73A0 /* StatsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsVC.xib; sourceTree = "<group>"; };
+		84E3963726569F9F006D73A0 /* StatsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsVM.swift; sourceTree = "<group>"; };
 		84E46093261566F700F60040 /* RelationshipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipTableViewCell.swift; sourceTree = "<group>"; };
 		84E46094261566F700F60040 /* RelationshipTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelationshipTableViewCell.xib; sourceTree = "<group>"; };
 		84E460AE26158C0200F60040 /* InputRelationshipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRelationshipTableViewCell.swift; sourceTree = "<group>"; };
@@ -435,6 +426,16 @@
 			path = RecordTableViewCell;
 			sourceTree = "<group>";
 		};
+		84E3963226569C6F006D73A0 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				84E3963326569CEC006D73A0 /* StatsVC.swift */,
+				84E3963426569CEC006D73A0 /* StatsVC.xib */,
+				84E3963726569F9F006D73A0 /* StatsVM.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
 		84E46090261565B200F60040 /* RelationshipTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,6 +509,7 @@
 				CE7F89F525FC786100A2EDC9 /* Home */,
 				845DF60D2603339400DD26BF /* SignUp */,
 				CEC78E1C25F73324007BA177 /* Login */,
+				84E3963226569C6F006D73A0 /* Stats */,
 				CEC78E1D25F7332E007BA177 /* Dashboard */,
 			);
 			path = "Heart Rate Monitor";
@@ -848,7 +850,6 @@
 				CE1E228425F72A0200C6632E /* Sources */,
 				CE1E228525F72A0200C6632E /* Frameworks */,
 				CE1E228625F72A0200C6632E /* Resources */,
-				CEC78E6F25F7361B007BA177 /* Embed Frameworks */,
 				CC89137FE44285375B8EC938 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -967,6 +968,7 @@
 				84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */,
 				848645E4262037D2003599A4 /* WeekMonthRecordTableViewCell.xib in Resources */,
 				CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */,
+				84E3963626569CEC006D73A0 /* StatsVC.xib in Resources */,
 				CE2390F126554F4C00DC05BC /* BeatLabelView.xib in Resources */,
 				CEC78E2225F73365007BA177 /* Staging.xcconfig in Resources */,
 				CEC78E2325F73365007BA177 /* Development.xcconfig in Resources */,
@@ -1161,7 +1163,9 @@
 				CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */,
 				CEC78EA325F73A07007BA177 /* UITableView+.swift in Sources */,
 				CE00163F261D909D00B9374F /* BottomSheetViewController.swift in Sources */,
+				84E3963526569CEC006D73A0 /* StatsVC.swift in Sources */,
 				84E46095261566F700F60040 /* RelationshipTableViewCell.swift in Sources */,
+				84E3963826569F9F006D73A0 /* StatsVM.swift in Sources */,
 				CE0BE148261EB79400073002 /* HeartRateState.swift in Sources */,
 				84C718C62606F85F00BA2C6D /* User.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
@@ -1301,13 +1305,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7859BCHX87;
+				DEVELOPMENT_TEAM = L7FP62JQUP;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate202;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate20211;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1427,13 +1431,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7859BCHX87;
+				DEVELOPMENT_TEAM = L7FP62JQUP;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate20211;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1553,13 +1557,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7859BCHX87;
+				DEVELOPMENT_TEAM = L7FP62JQUP;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate202;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.heartrate20211;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

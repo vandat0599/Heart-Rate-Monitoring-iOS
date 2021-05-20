@@ -20,7 +20,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     }()
     
     private lazy var statVC: UINavigationController = {
-        let vc = UINavigationController(rootViewController: HistoryVC())
+        let vc = UINavigationController(rootViewController: StatsVC())
         return vc
     }()
     
