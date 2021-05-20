@@ -124,6 +124,8 @@
 		CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDB2262FCA8A00403671 /* HLog.swift */; };
 		CEC7EDB7262FCB7B00403671 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDB6262FCB7B00403671 /* APIResponse.swift */; };
 		CEC7EDC5262FF46800403671 /* HeartRateRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */; };
+		CED575012656BE9100AAC1AB /* CalmSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED575002656BE9100AAC1AB /* CalmSelectionVC.swift */; };
+		CED575192656CD0200AAC1AB /* lottie-menu.json in Resources */ = {isa = PBXBuildFile; fileRef = CED575182656CD0200AAC1AB /* lottie-menu.json */; };
 		CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */; };
 		CEFF400B26561C2A0049EA68 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */; };
 		CEFF406926562A210049EA68 /* LocalDatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */; };
@@ -297,6 +299,8 @@
 		CEC7EDB2262FCA8A00403671 /* HLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLog.swift; sourceTree = "<group>"; };
 		CEC7EDB6262FCB7B00403671 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateRecord.swift; sourceTree = "<group>"; };
+		CED575002656BE9100AAC1AB /* CalmSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalmSelectionVC.swift; sourceTree = "<group>"; };
+		CED575182656CD0200AAC1AB /* lottie-menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-menu.json"; sourceTree = "<group>"; };
 		CEFF400026561AB10049EA68 /* HeartRate.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HeartRate.xcdatamodel; sourceTree = "<group>"; };
 		CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDatabaseHandler.swift; sourceTree = "<group>"; };
@@ -568,6 +572,7 @@
 		CE7F89F525FC786100A2EDC9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				CED574FF2656BE7300AAC1AB /* HeartCalm */,
 				CE8DF9E82653DA5300385F3B /* Side menu */,
 				844863A0261D5246007CC806 /* HistoryTab */,
 				84C718952606EACD00BA2C6D /* ProfileTab */,
@@ -762,6 +767,7 @@
 		CEC78E1925F732C9007BA177 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				CED575182656CD0200AAC1AB /* lottie-menu.json */,
 				CE44497C26410A490028A5D4 /* lottie-warning.json */,
 				CE4D1CF92627F98200159D86 /* lottie-error.json */,
 				CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */,
@@ -813,6 +819,14 @@
 				CEC78E0425F7327B007BA177 /* Environment.swift */,
 			);
 			path = Environment;
+			sourceTree = "<group>";
+		};
+		CED574FF2656BE7300AAC1AB /* HeartCalm */ = {
+			isa = PBXGroup;
+			children = (
+				CED575002656BE9100AAC1AB /* CalmSelectionVC.swift */,
+			);
+			path = HeartCalm;
 			sourceTree = "<group>";
 		};
 		CEFF3FFE26561A380049EA68 /* LocalDatabase */ = {
@@ -970,6 +984,7 @@
 				CE2390F126554F4C00DC05BC /* BeatLabelView.xib in Resources */,
 				CEC78E2225F73365007BA177 /* Staging.xcconfig in Resources */,
 				CEC78E2325F73365007BA177 /* Development.xcconfig in Resources */,
+				CED575192656CD0200AAC1AB /* lottie-menu.json in Resources */,
 				845DF6132603345B00DD26BF /* SignUpVC.xib in Resources */,
 				CE1E229525F72A0300C6632E /* Assets.xcassets in Resources */,
 				CE06D10125FD1DA4007CE81C /* lottie-progress.json in Resources */,
@@ -1132,6 +1147,7 @@
 				CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */,
 				CEC78E9F25F73A07007BA177 /* UIView+.swift in Sources */,
 				CE2390F92655549500DC05BC /* ViewWithXib.swift in Sources */,
+				CED575012656BE9100AAC1AB /* CalmSelectionVC.swift in Sources */,
 				848645D926201358003599A4 /* TTSegmentedControl.swift in Sources */,
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
 				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,

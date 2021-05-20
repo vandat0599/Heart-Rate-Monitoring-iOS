@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 class ContainerVC: BaseVC, MenuVCDelegate {
     //MARK: - Properties
@@ -29,18 +30,32 @@ class ContainerVC: BaseVC, MenuVCDelegate {
         return vc
     }()
     
+    private lazy var calmSelectionVC: UINavigationController = {
+        let vc = UINavigationController(rootViewController: CalmSelectionVC())
+        return vc
+    }()
+    
     private lazy var menuVC: MenuVC = {
         let menuVC = MenuVC()
         menuVC.delegate = self
         return menuVC
     }()
     
-    public lazy var menuButton: CustomRippleButton = {
-        let button = CustomRippleButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-        button.setImage(UIImage(named: "ic-menu")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        button.addTarget(self, action: #selector(menuTapped), for: .touchUpInside)
-        button.imageView?.tintColor = .white
-        return button
+    private lazy var lottieMenu: AnimationView = {
+        let view = AnimationView.init(name: "lottie-menu")
+        view.currentProgress = 0
+        view.animationSpeed = 4
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    
+    private lazy var menuControl: UIControl = {
+        let control = UIControl(frame: CGRect(x: -12, y: 0, width: 44, height: 44))
+        control.addSubview(lottieMenu)
+        lottieMenu.frame = CGRect(x: control.center.x, y: control.center.y, width: control.bounds.width*0.5, height: control.bounds.height*0.5)
+        lottieMenu.center = control.center
+        control.addTarget(self, action: #selector(menuTapped), for: .touchUpInside)
+        return control
     }()
     
     lazy var containerView: UIView = {
@@ -63,6 +78,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
             measureVC,
             statVC,
             historyVC,
+            calmSelectionVC,
         ]
         showingVC = vcArray[0]
         display(showingVC)
@@ -75,7 +91,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     //MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuControl)
         view.insertSubview(menuVC.view, at: 0)
         menuVC.view.fitIn(parentView: view, padding: 0)
         addChild(menuVC)
@@ -142,10 +158,10 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     func toggleMenu() {
         isSHowingMenu.toggle()
         if isSHowingMenu {
-            menuButton.setImage(UIImage(named: "ic-back")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            lottieMenu.play(toProgress: 1)
             containerView.addSubview(tapView)
         } else {
-            menuButton.setImage(UIImage(named: "ic-menu")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            lottieMenu.play(toProgress: 0)
             tapView.removeFromSuperview()
         }
         showMenuVC(show: isSHowingMenu, completion: nil)
