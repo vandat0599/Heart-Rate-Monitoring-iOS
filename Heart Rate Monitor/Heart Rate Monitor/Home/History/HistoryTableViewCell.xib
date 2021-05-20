@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="122" id="KGk-i7-Jjw" customClass="HistoryTableViewCell" customModule="Heart_Rate_Monitor" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="458" height="122"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="458" height="122"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYi-zh-bNv">
+                        <rect key="frame" x="20" y="46.5" width="30" height="29"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                        <color key="textColor" name="pink"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="BPM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVR-ls-TNT">
+                        <rect key="frame" x="50" y="34.5" width="23" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" name="white-holder"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRj-eF-fnA">
+                        <rect key="frame" x="363" y="24" width="40" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="18/5/2021\n17:30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMx-3l-sEO">
+                        <rect key="frame" x="327.5" y="49" width="110.5" height="49"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" name="white-holder"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5Z-MS-idk" customClass="LineChartView" customModule="Charts">
+                        <rect key="frame" x="93" y="24" width="214.5" height="74"/>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" name="black-background"/>
+                <constraints>
+                    <constraint firstItem="U5Z-MS-idk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="5hT-yD-IwQ"/>
+                    <constraint firstItem="U5Z-MS-idk" firstAttribute="leading" secondItem="eVR-ls-TNT" secondAttribute="trailing" constant="20" id="5hf-1a-n6j"/>
+                    <constraint firstItem="YYi-zh-bNv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Dlg-3X-hCU"/>
+                    <constraint firstItem="hMx-3l-sEO" firstAttribute="top" secondItem="tRj-eF-fnA" secondAttribute="bottom" constant="5" id="FNC-Eb-DwI"/>
+                    <constraint firstAttribute="bottom" secondItem="U5Z-MS-idk" secondAttribute="bottom" constant="24" id="MP9-xJ-Fgp"/>
+                    <constraint firstItem="YYi-zh-bNv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PfK-1t-cER"/>
+                    <constraint firstAttribute="bottom" secondItem="hMx-3l-sEO" secondAttribute="bottom" constant="24" id="SJs-Gs-BFb"/>
+                    <constraint firstItem="tRj-eF-fnA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="YDi-ME-nRd"/>
+                    <constraint firstItem="YYi-zh-bNv" firstAttribute="top" secondItem="eVR-ls-TNT" secondAttribute="bottom" id="bUo-C2-xdO"/>
+                    <constraint firstItem="hMx-3l-sEO" firstAttribute="leading" secondItem="U5Z-MS-idk" secondAttribute="trailing" constant="20" id="e9j-EZ-3G7"/>
+                    <constraint firstAttribute="trailing" secondItem="hMx-3l-sEO" secondAttribute="trailing" constant="20" id="fJ9-KN-cmY"/>
+                    <constraint firstItem="eVR-ls-TNT" firstAttribute="leading" secondItem="YYi-zh-bNv" secondAttribute="trailing" id="jBf-qi-age"/>
+                    <constraint firstItem="tRj-eF-fnA" firstAttribute="centerX" secondItem="hMx-3l-sEO" secondAttribute="centerX" id="jz1-wF-tjs"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="chartView" destination="U5Z-MS-idk" id="qRv-Co-3xf"/>
+                <outlet property="heartRateNumberLabel" destination="YYi-zh-bNv" id="SUC-CX-X0P"/>
+                <outlet property="noteLabel" destination="tRj-eF-fnA" id="5HY-t0-lCx"/>
+                <outlet property="timeLabel" destination="hMx-3l-sEO" id="S3G-eL-jHC"/>
+            </connections>
+            <point key="canvasLocation" x="189.85507246376812" y="117.85714285714285"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="black-background">
+            <color red="0.15294117647058825" green="0.19607843137254902" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pink">
+            <color red="0.62352941176470589" green="0.082352941176470587" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white-holder">
+            <color red="1" green="1" blue="1" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

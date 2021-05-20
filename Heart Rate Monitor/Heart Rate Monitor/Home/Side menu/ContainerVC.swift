@@ -19,13 +19,13 @@ class ContainerVC: BaseVC, MenuVCDelegate {
         return vc
     }()
     
-    private lazy var historyVC: UINavigationController = {
+    private lazy var statVC: UINavigationController = {
         let vc = UINavigationController(rootViewController: HistoryVC())
         return vc
     }()
     
-    private lazy var infomationVC: UINavigationController = {
-        let vc = UINavigationController(rootViewController: ProfileVC())
+    private lazy var historyVC: UINavigationController = {
+        let vc = UINavigationController(rootViewController: HistoryVC1(viewModel: HistoryVM()))
         return vc
     }()
     
@@ -61,8 +61,8 @@ class ContainerVC: BaseVC, MenuVCDelegate {
         super.init(nibName: nil, bundle: nil)
         vcArray = [
             measureVC,
+            statVC,
             historyVC,
-            infomationVC,
         ]
         showingVC = vcArray[0]
         display(showingVC)

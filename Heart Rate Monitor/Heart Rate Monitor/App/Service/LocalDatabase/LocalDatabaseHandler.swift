@@ -55,6 +55,21 @@ final class LocalDatabaseHandler {
         return ((try? PersistenceManager.shared.context.fetch(fetchRequest)) ?? []).map { $0.toRemoteHistory() }
     }
     
+    func getAllLabels() -> [String] {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = LocalHeartHistory.fetchRequest()
+        fetchRequest.returnsDistinctResults = true
+        fetchRequest.propertiesToFetch = ["label"]
+        let res = try? PersistenceManager.shared.context.fetch(fetchRequest) as? [[String: String]]
+        return res?.compactMap { $0["label"] } ?? []
+    }
+    
+    func searchHistoryByLabel(label: String) -> [HeartRateHistory] {
+        guard label != "ALL LABELS" else { return getAllHistory() }
+        let fetchRequest: NSFetchRequest<LocalHeartHistory> = LocalHeartHistory.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "label == %@", label)
+        return ((try? PersistenceManager.shared.context.fetch(fetchRequest)) ?? []).map { $0.toRemoteHistory() }
+    }
+    
     func getHeartRateHistoryById(id: Int) -> HeartRateHistory? {
         let fetchRequest: NSFetchRequest<LocalHeartHistory> = LocalHeartHistory.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)

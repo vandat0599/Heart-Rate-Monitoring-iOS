@@ -80,6 +80,13 @@
 		CE8DFA072653DA8600385F3B /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DFA052653DA8500385F3B /* MenuVC.swift */; };
 		CE8DFA082653DA8600385F3B /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DFA062653DA8500385F3B /* ContainerVC.swift */; };
 		CE8DFA102653DB5400385F3B /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DFA0F2653DB5400385F3B /* UIStoryboard+.swift */; };
+		CEB7548326566DCC00AF434F /* HistoryVC1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7548226566DCC00AF434F /* HistoryVC1.swift */; };
+		CEB7548726566F6300AF434F /* HistoryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7548626566F6300AF434F /* HistoryVM.swift */; };
+		CEB7548C2656705C00AF434F /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7548A2656705C00AF434F /* HistoryTableViewCell.swift */; };
+		CEB7548D2656705C00AF434F /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB7548B2656705C00AF434F /* HistoryTableViewCell.xib */; };
+		CEB754912656793800AF434F /* LabelPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB754902656793800AF434F /* LabelPickerView.xib */; };
+		CEB754952656794D00AF434F /* LabelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754942656794D00AF434F /* LabelPickerView.swift */; };
+		CEB754992656841F00AF434F /* FormInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754982656841F00AF434F /* FormInputView.swift */; };
 		CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DF725F730A2007BA177 /* BaseVC.swift */; };
 		CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */; };
 		CEC78E0525F7327B007BA177 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E0425F7327B007BA177 /* Environment.swift */; };
@@ -247,6 +254,13 @@
 		CE8DFA052653DA8500385F3B /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		CE8DFA062653DA8500385F3B /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		CE8DFA0F2653DB5400385F3B /* UIStoryboard+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
+		CEB7548226566DCC00AF434F /* HistoryVC1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC1.swift; sourceTree = "<group>"; };
+		CEB7548626566F6300AF434F /* HistoryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVM.swift; sourceTree = "<group>"; };
+		CEB7548A2656705C00AF434F /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		CEB7548B2656705C00AF434F /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
+		CEB754902656793800AF434F /* LabelPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelPickerView.xib; sourceTree = "<group>"; };
+		CEB754942656794D00AF434F /* LabelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPickerView.swift; sourceTree = "<group>"; };
+		CEB754982656841F00AF434F /* FormInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormInputView.swift; sourceTree = "<group>"; };
 		CEC78DF725F730A2007BA177 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresentVC.swift; sourceTree = "<group>"; };
 		CEC78E0425F7327B007BA177 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -560,6 +574,7 @@
 				CE7F8A2125FC902F00A2EDC9 /* UserVC.swift */,
 				CE7F8A2B25FC9E6F00A2EDC9 /* TabItemView.swift */,
 				CE7F8A4F25FCB71F00A2EDC9 /* Heart Rate Monitor */,
+				CEB7547D26566DA800AF434F /* History */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -578,6 +593,7 @@
 				848645D826201358003599A4 /* TTSegmentedControl.swift */,
 				CE444972264100DA0028A5D4 /* CustomRippleControl.swift */,
 				CE2390F82655549500DC05BC /* ViewWithXib.swift */,
+				CEB754982656841F00AF434F /* FormInputView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -599,6 +615,19 @@
 				CE2390B02654B47200DC05BC /* MenuVC.xib */,
 			);
 			path = "Side menu";
+			sourceTree = "<group>";
+		};
+		CEB7547D26566DA800AF434F /* History */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7548226566DCC00AF434F /* HistoryVC1.swift */,
+				CEB7548626566F6300AF434F /* HistoryVM.swift */,
+				CEB7548A2656705C00AF434F /* HistoryTableViewCell.swift */,
+				CEB7548B2656705C00AF434F /* HistoryTableViewCell.xib */,
+				CEB754902656793800AF434F /* LabelPickerView.xib */,
+				CEB754942656794D00AF434F /* LabelPickerView.swift */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 		CEC78DC825F72BC6007BA177 /* App */ = {
@@ -923,6 +952,7 @@
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
 				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,
+				CEB7548D2656705C00AF434F /* HistoryTableViewCell.xib in Resources */,
 				844863A5261D529C007CC806 /* HistoryVC.xib in Resources */,
 				84E460B126158C0200F60040 /* InputRelationshipTableViewCell.xib in Resources */,
 				CE2390B12654B47200DC05BC /* MenuVC.xib in Resources */,
@@ -930,6 +960,7 @@
 				CEC78E2425F73365007BA177 /* Production.xcconfig in Resources */,
 				84CD8231261EDDEC00ABD9B5 /* RecordTableViewCell.xib in Resources */,
 				84575B7B2607845800711760 /* ProfileCell.xib in Resources */,
+				CEB754912656793800AF434F /* LabelPickerView.xib in Resources */,
 				84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */,
 				848645E4262037D2003599A4 /* WeekMonthRecordTableViewCell.xib in Resources */,
 				CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */,
@@ -1068,6 +1099,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE00163B261D8FC300B9374F /* LottieSheetOneActionVC.swift in Sources */,
+				CEB7548326566DCC00AF434F /* HistoryVC1.swift in Sources */,
 				84CD8230261EDDEC00ABD9B5 /* RecordTableViewCell.swift in Sources */,
 				CE001635261D8F8000B9374F /* HAlert.swift in Sources */,
 				CEC78E9625F73A07007BA177 /* Date+.swift in Sources */,
@@ -1077,6 +1109,7 @@
 				CE0BE140261EB29B00073002 /* HeartRateWarning.swift in Sources */,
 				CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */,
 				CEC78E1525F732A4007BA177 /* AppString.swift in Sources */,
+				CEB7548726566F6300AF434F /* HistoryVM.swift in Sources */,
 				1DE870862614E55B006A38C2 /* Complex.swift in Sources */,
 				CEC78E9725F73A07007BA177 /* String+.swift in Sources */,
 				CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */,
@@ -1101,6 +1134,7 @@
 				CE10731425FDCD8B003777D6 /* AVCaptureDevice+.swift in Sources */,
 				CEFF4051265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift in Sources */,
 				CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */,
+				CEB7548C2656705C00AF434F /* HistoryTableViewCell.swift in Sources */,
 				CEC78EA525F73A07007BA177 /* NSLayoutConstraint+.swift in Sources */,
 				CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */,
 				CEC78EA225F73A07007BA177 /* UIFont+.swift in Sources */,
@@ -1137,6 +1171,7 @@
 				CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */,
 				CE20A1162606DE480084F2BA /* FFT.swift in Sources */,
 				CE001631261D8F4200B9374F /* HHud.swift in Sources */,
+				CEB754952656794D00AF434F /* LabelPickerView.swift in Sources */,
 				CE7F8A5125FCB74100A2EDC9 /* HeartRateVCVM.swift in Sources */,
 				CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */,
 				84C718992606EB3200BA2C6D /* ProfileVC.swift in Sources */,
@@ -1147,6 +1182,7 @@
 				CEC78E9D25F73A07007BA177 /* UITapGestureRecognizer+.swift in Sources */,
 				CEC78E0525F7327B007BA177 /* Environment.swift in Sources */,
 				CEFF406926562A210049EA68 /* LocalDatabaseHandler.swift in Sources */,
+				CEB754992656841F00AF434F /* FormInputView.swift in Sources */,
 				848645E3262037D2003599A4 /* WeekMonthRecordTableViewCell.swift in Sources */,
 				CE2390AD2654B27C00DC05BC /* CustomRippleButton.swift in Sources */,
 				CEC78E9825F73A07007BA177 /* UITextField+.swift in Sources */,
