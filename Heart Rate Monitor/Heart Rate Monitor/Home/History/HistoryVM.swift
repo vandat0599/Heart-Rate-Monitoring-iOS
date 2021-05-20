@@ -21,21 +21,16 @@ class HistoryVM: PHistoryVM {
         historyData = BehaviorRelay<[HeartRateHistory]>(value: [])
     }
     
-    func reloadData() {
-        var history = LocalDatabaseHandler.shared.getAllHistory()
+    func reloadData(label: String) {
+        var history = LocalDatabaseHandler.shared.searchHistoryByLabel(label: label)
         history.reverse()
         historyData.accept(history)
+        reloadLabels()
     }
     
     func reloadLabels() {
         let history = LocalDatabaseHandler.shared.getAllHistory()
         allLabels = Array(Set(history.map { $0.label ?? "" }))
         allLabels.insert("ALL LABELS", at: 0)
-    }
-    
-    func searchHistoryByLabel(label: String) {
-        var history = LocalDatabaseHandler.shared.searchHistoryByLabel(label: label)
-        history.reverse()
-        historyData.accept(history)
     }
 }

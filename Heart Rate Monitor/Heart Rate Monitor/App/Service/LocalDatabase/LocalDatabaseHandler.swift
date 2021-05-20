@@ -23,9 +23,11 @@ final class LocalDatabaseHandler {
     func insertHistory(heartRateHistory: HeartRateHistory) -> HeartRateHistory? {
         let localHeartRate = LocalHeartHistory(context: PersistenceManager.shared.context)
         localHeartRate.fromRemoteHistory(model: heartRateHistory)
-        localHeartRate.id = Int16(getAllHistory().count + 1)
+        let maxId = getAllHistory().map { ($0.id ?? -1) }.max() ?? -1
+        localHeartRate.id = "\(maxId + 1)"
         PersistenceManager.shared.saveContext()
         didInsertHistory.accept(true)
+        print("Inserted: \(maxId + 1)")
         return localHeartRate.toRemoteHistory()
     }
     
@@ -42,11 +44,11 @@ final class LocalDatabaseHandler {
     }
     
     func deleteHistory(id: Int) {
-        let fetchRequest: NSFetchRequest<LocalHeartHistory> = LocalHeartHistory.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-        let result = try? PersistenceManager.shared.context.fetch(fetchRequest)
-        guard let localModel = result?.first else { return }
-        PersistenceManager.shared.context.delete(localModel)
+        guard let history = getLocalHeartRateHistoryById(id: id) else {
+            print("Delete \(id) failed")
+            return
+        }
+        PersistenceManager.shared.context.delete(history)
         didDeleteHistory.accept(true)
     }
     
@@ -72,7 +74,7 @@ final class LocalDatabaseHandler {
     
     func getHeartRateHistoryById(id: Int) -> HeartRateHistory? {
         let fetchRequest: NSFetchRequest<LocalHeartHistory> = LocalHeartHistory.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
         let result = try? PersistenceManager.shared.context.fetch(fetchRequest)
         guard let model = result?.first else { return nil }
         return model.toRemoteHistory()
@@ -80,7 +82,7 @@ final class LocalDatabaseHandler {
     
     func getLocalHeartRateHistoryById(id: Int) -> LocalHeartHistory? {
         let fetchRequest: NSFetchRequest<LocalHeartHistory> = LocalHeartHistory.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
         let result = try? PersistenceManager.shared.context.fetch(fetchRequest)
         guard let model = result?.first else { return nil }
         return model

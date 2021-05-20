@@ -87,6 +87,9 @@
 		CEB754912656793800AF434F /* LabelPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB754902656793800AF434F /* LabelPickerView.xib */; };
 		CEB754952656794D00AF434F /* LabelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754942656794D00AF434F /* LabelPickerView.swift */; };
 		CEB754992656841F00AF434F /* FormInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754982656841F00AF434F /* FormInputView.swift */; };
+		CEB7549D26568F3200AF434F /* EditHistoryBottoSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7549C26568F3200AF434F /* EditHistoryBottoSheetVC.swift */; };
+		CEB754A62656942000AF434F /* LocalHeartHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754A42656942000AF434F /* LocalHeartHistory+CoreDataClass.swift */; };
+		CEB754A72656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754A52656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift */; };
 		CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DF725F730A2007BA177 /* BaseVC.swift */; };
 		CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */; };
 		CEC78E0525F7327B007BA177 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E0425F7327B007BA177 /* Environment.swift */; };
@@ -123,8 +126,6 @@
 		CEC7EDC5262FF46800403671 /* HeartRateRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */; };
 		CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */; };
 		CEFF400B26561C2A0049EA68 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */; };
-		CEFF4050265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF404E265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift */; };
-		CEFF4051265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF404F265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift */; };
 		CEFF406926562A210049EA68 /* LocalDatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */; };
 /* End PBXBuildFile section */
 
@@ -261,6 +262,9 @@
 		CEB754902656793800AF434F /* LabelPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelPickerView.xib; sourceTree = "<group>"; };
 		CEB754942656794D00AF434F /* LabelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPickerView.swift; sourceTree = "<group>"; };
 		CEB754982656841F00AF434F /* FormInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormInputView.swift; sourceTree = "<group>"; };
+		CEB7549C26568F3200AF434F /* EditHistoryBottoSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHistoryBottoSheetVC.swift; sourceTree = "<group>"; };
+		CEB754A42656942000AF434F /* LocalHeartHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CEB754A52656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CEC78DF725F730A2007BA177 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresentVC.swift; sourceTree = "<group>"; };
 		CEC78E0425F7327B007BA177 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -295,8 +299,6 @@
 		CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateRecord.swift; sourceTree = "<group>"; };
 		CEFF400026561AB10049EA68 /* HeartRate.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HeartRate.xcdatamodel; sourceTree = "<group>"; };
 		CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
-		CEFF404E265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CEFF404F265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDatabaseHandler.swift; sourceTree = "<group>"; };
 		EA0CA797C01A5CC5331E7137 /* Pods-Heart Rate Monitor.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.production.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -626,6 +628,7 @@
 				CEB7548B2656705C00AF434F /* HistoryTableViewCell.xib */,
 				CEB754902656793800AF434F /* LabelPickerView.xib */,
 				CEB754942656794D00AF434F /* LabelPickerView.swift */,
+				CEB7549C26568F3200AF434F /* EditHistoryBottoSheetVC.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -815,9 +818,9 @@
 		CEFF3FFE26561A380049EA68 /* LocalDatabase */ = {
 			isa = PBXGroup;
 			children = (
+				CEB754A42656942000AF434F /* LocalHeartHistory+CoreDataClass.swift */,
+				CEB754A52656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift */,
 				CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */,
-				CEFF404E265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift */,
-				CEFF404F265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift */,
 				CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */,
 				CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */,
 			);
@@ -1098,6 +1101,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEB754A62656942000AF434F /* LocalHeartHistory+CoreDataClass.swift in Sources */,
 				CE00163B261D8FC300B9374F /* LottieSheetOneActionVC.swift in Sources */,
 				CEB7548326566DCC00AF434F /* HistoryVC1.swift in Sources */,
 				84CD8230261EDDEC00ABD9B5 /* RecordTableViewCell.swift in Sources */,
@@ -1113,7 +1117,6 @@
 				1DE870862614E55B006A38C2 /* Complex.swift in Sources */,
 				CEC78E9725F73A07007BA177 /* String+.swift in Sources */,
 				CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */,
-				CEFF4050265622F40049EA68 /* LocalHeartHistory+CoreDataClass.swift in Sources */,
 				CE0BE13C261EB0EE00073002 /* HeartRateHistory.swift in Sources */,
 				CEC78E9C25F73A07007BA177 /* UICollectionView+.swift in Sources */,
 				84230D4E2603184900EC9DD0 /* GradientColor.swift in Sources */,
@@ -1125,6 +1128,7 @@
 				CEC78E9525F73A07007BA177 /* UIColor+.swift in Sources */,
 				CEFF400B26561C2A0049EA68 /* PersistenceManager.swift in Sources */,
 				CE0BE144261EB77700073002 /* Gender.swift in Sources */,
+				CEB754A72656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift in Sources */,
 				CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */,
 				CEC78E9F25F73A07007BA177 /* UIView+.swift in Sources */,
 				CE2390F92655549500DC05BC /* ViewWithXib.swift in Sources */,
@@ -1132,7 +1136,6 @@
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
 				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,
 				CE10731425FDCD8B003777D6 /* AVCaptureDevice+.swift in Sources */,
-				CEFF4051265622F40049EA68 /* LocalHeartHistory+CoreDataProperties.swift in Sources */,
 				CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */,
 				CEB7548C2656705C00AF434F /* HistoryTableViewCell.swift in Sources */,
 				CEC78EA525F73A07007BA177 /* NSLayoutConstraint+.swift in Sources */,
@@ -1179,6 +1182,7 @@
 				CEC78EA025F73A07007BA177 /* Double+.swift in Sources */,
 				1DE8708A2614E588006A38C2 /* FloatingPointMath.swift in Sources */,
 				CE0BE138261EB01C00073002 /* HealthInfo.swift in Sources */,
+				CEB7549D26568F3200AF434F /* EditHistoryBottoSheetVC.swift in Sources */,
 				CEC78E9D25F73A07007BA177 /* UITapGestureRecognizer+.swift in Sources */,
 				CEC78E0525F7327B007BA177 /* Environment.swift in Sources */,
 				CEFF406926562A210049EA68 /* LocalDatabaseHandler.swift in Sources */,

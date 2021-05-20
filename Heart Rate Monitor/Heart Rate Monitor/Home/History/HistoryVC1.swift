@@ -64,8 +64,7 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.reloadData()
-        viewModel.reloadLabels()
+        viewModel.reloadData(label: labelHeaderFilterView.label.text ?? "ALL LABELS")
     }
     
     func setupView() {
@@ -93,14 +92,24 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(HeartRateHistory.self)
-            .bind {_ in
-                print("Selected cell")
+            .bind { (model) in
+                let vc = EditHistoryBottoSheetVC(heartRateHistory: model)
+                self.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
         tableView.rx.itemSelected
             .bind {[weak self] (indexPath) in
                 self?.tableView.deselectRow(at: indexPath, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.of(LocalDatabaseHandler.shared.didInsertHistory, LocalDatabaseHandler.shared.didUpdateHistory, LocalDatabaseHandler.shared.didDeleteHistory).merge()
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .bind { [weak self] (_) in
+                guard let self = self else { return }
+                self.viewModel.reloadData(label: self.labelHeaderFilterView.label.text ?? "ALL LABELS")
             }
             .disposed(by: disposeBag)
     }
@@ -127,7 +136,7 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         labelHeaderFilterView.label.text = viewModel.allLabels[row]
-        viewModel.searchHistoryByLabel(label: viewModel.allLabels[row])
+        viewModel.reloadData(label: viewModel.allLabels[row])
     }
 }
 
