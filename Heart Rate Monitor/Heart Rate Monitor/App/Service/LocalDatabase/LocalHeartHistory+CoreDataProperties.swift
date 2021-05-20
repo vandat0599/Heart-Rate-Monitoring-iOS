@@ -19,7 +19,7 @@ extension LocalHeartHistory {
     @NSManaged public var createDate: String?
     @NSManaged public var grapValues: String?
     @NSManaged public var heartRateNumber: Int16
-    @NSManaged public var id: Int16
+    @NSManaged public var id: String?
     @NSManaged public var isSubmitted: Bool
     @NSManaged public var label: String?
 
