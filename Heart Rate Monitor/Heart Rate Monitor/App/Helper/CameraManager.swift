@@ -76,19 +76,6 @@ class CameraManager: NSObject {
             captureSession.addOutput(videoDataOutput)
             videoConnection = videoDataOutput.connection(with: .video)
             videoConnection?.videoOrientation = .portrait
-            
-            DispatchQueue.main.async {
-                // MARK: - Setup preview layer
-                if let previewContainer = previewContainer {
-                    let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                    previewLayer.frame = previewContainer.bounds
-                    previewLayer.contentsGravity = CALayerContentsGravity.resizeAspectFill
-                    previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-                    self.previewLayer = previewLayer
-                    previewContainer.insertSublayer(previewLayer, at: 0)
-                }
-            }
-            
             if let preferredSpec = preferredSpec {
                 // Update the format with a preferred fps
                 try? videoDevice.lockForConfiguration()
@@ -99,6 +86,16 @@ class CameraManager: NSObject {
             captureSession.commitConfiguration()
             startCapture()
             completion?()
+            if let previewContainer = previewContainer {
+                let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+                previewLayer.frame = previewContainer.bounds
+                previewLayer.contentsGravity = CALayerContentsGravity.resizeAspectFill
+                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                self.previewLayer = previewLayer
+                DispatchQueue.main.async {
+                    previewContainer.insertSublayer(previewLayer, at: 0)
+                }
+            }
         }
     }
     

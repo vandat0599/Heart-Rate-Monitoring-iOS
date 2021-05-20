@@ -177,11 +177,11 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        updateBottomHeartRateViews()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        LocalDatabaseHandler.shared.didInsertHistory.accept(true)
     }
     
     private func setupView() {
@@ -359,15 +359,23 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind { [weak self] (_) in
                 guard let self = self else { return }
-                let heartRateNumber = LocalDatabaseHandler.shared.getAllHistory().map { $0.heartRateNumber ?? 0 }
-                let min = Int(heartRateNumber.min() ?? 0)
-                let max = Int(heartRateNumber.max() ?? 0)
-                let avg = Int(heartRateNumber.reduce(0, +)/heartRateNumber.count)
+                self.updateBottomHeartRateViews()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func updateBottomHeartRateViews() {
+        DispatchQueue.global().async {
+            let heartRateNumber = LocalDatabaseHandler.shared.getAllHistory().map { $0.heartRateNumber ?? 0 }
+            let min = Int(heartRateNumber.min() ?? 0)
+            let max = Int(heartRateNumber.max() ?? 0)
+            let avg = Int(heartRateNumber.reduce(0, +)/heartRateNumber.count)
+            DispatchQueue.main.async {
                 self.minLabelView.valueLabel.text = min == 0 ? "--" : "\(min)"
                 self.maxLabelView.valueLabel.text = max == 0 ? "--" : "\(max)"
                 self.avgLabelView.valueLabel.text = avg == 0 ? "--" : "\(avg)"
             }
-            .disposed(by: disposeBag)
+        }
     }
     
     func reloadChartData(value: [Double]) {
