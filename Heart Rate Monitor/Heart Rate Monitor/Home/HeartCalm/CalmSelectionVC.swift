@@ -15,7 +15,7 @@ class CalmSelectionVC: BaseVC {
     }
     
     private func setupView() {
-        view.backgroundColor = UIColor(named: "black-holder")
+        view.backgroundColor = UIColor(named: "black-background")
     }
 }
 
