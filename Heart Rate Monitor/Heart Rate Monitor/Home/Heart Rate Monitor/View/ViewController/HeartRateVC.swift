@@ -140,7 +140,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private lazy var avgLabelView: BeatLabelView = {
         let view = BeatLabelView()
-        view.valueLabel.text = "50"
+        view.valueLabel.text = "--"
         view.typeLabel.text = "AVG"
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -148,7 +148,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private lazy var minLabelView: BeatLabelView = {
         let view = BeatLabelView()
-        view.valueLabel.text = "46"
+        view.valueLabel.text = "--"
         view.typeLabel.text = "MIN"
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -156,7 +156,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     private lazy var maxLabelView: BeatLabelView = {
         let view = BeatLabelView()
-        view.valueLabel.text = "54"
+        view.valueLabel.text = "--"
         view.typeLabel.text = "MAX"
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -177,6 +177,11 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        LocalDatabaseHandler.shared.didInsertHistory.accept(true)
     }
     
     private func setupView() {
@@ -347,6 +352,21 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .bind(onNext: {[unowned self] (value) in
                 self.reloadChartData(value: value)
             })
+            .disposed(by: disposeBag)
+        
+        Observable.of(LocalDatabaseHandler.shared.didInsertHistory, LocalDatabaseHandler.shared.didUpdateHistory, LocalDatabaseHandler.shared.didDeleteHistory).merge()
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .bind { [weak self] (_) in
+                guard let self = self else { return }
+                let heartRateNumber = LocalDatabaseHandler.shared.getAllHistory().map { $0.heartRateNumber ?? 0 }
+                let min = Int(heartRateNumber.min() ?? 0)
+                let max = Int(heartRateNumber.max() ?? 0)
+                let avg = Int(heartRateNumber.reduce(0, +)/heartRateNumber.count)
+                self.minLabelView.valueLabel.text = min == 0 ? "--" : "\(min)"
+                self.maxLabelView.valueLabel.text = max == 0 ? "--" : "\(max)"
+                self.avgLabelView.valueLabel.text = avg == 0 ? "--" : "\(avg)"
+            }
             .disposed(by: disposeBag)
     }
     
