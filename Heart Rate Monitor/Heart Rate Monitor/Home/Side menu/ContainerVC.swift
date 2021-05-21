@@ -45,7 +45,9 @@ class ContainerVC: BaseVC, MenuVCDelegate {
         let view = AnimationView.init(name: "lottie-menu")
         view.currentProgress = 0
         view.animationSpeed = 4
-        view.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
+        view.addGestureRecognizer(tap)
         return view
     }()
     
