@@ -193,9 +193,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
                 self.toggleTorch(status: value)
                 self.heartRateTrackLabel.isHidden = !value
                 self.guideLabel.isHidden = !value
-                if !value {
-                    self.chartView.isHidden = true
-                }
+                self.chartView.isHidden = true
                 self.startButton.setTitle(value ? "STOP" : "START", for: .normal)
                 self.exTypePickerView.isHidden = value
             })
@@ -206,8 +204,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: { [weak self] (value) in
                 guard let self = self else { return }
-                let beat = Int(value/2)
-                self.heartRateTrackLabel.text = "\(value == 0 ? "" : "\(beat)")"
+                self.heartRateTrackLabel.text = "\(value == 0 ? "" : "\(value)")"
             })
             .disposed(by: disposeBag)
         
@@ -235,17 +232,23 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
                     //show charts & move guide label
-                print(self.viewModel.pulses)
                 self.reloadChartData(value: self.viewModel.pulses)
                 self.chartView.isHidden = false
                 self.guideLabel.isHidden = true
-                viewModel.togglePlay()
+                viewModel.resetAllData()
+                self.toggleTorch(status: false)
+                self.startButton.setTitle("START", for: .normal)
             })
             .disposed(by: disposeBag)
     }
     
     @objc private func startButtonTapped() {
-        viewModel.togglePlay()
+        viewModel.resetAllData()
+        if startButton.titleLabel?.text == "STOP" {
+            viewModel.isPlaying.accept(false)
+        } else {
+            viewModel.isPlaying.accept(true)
+        }
     }
     
     // MARK: - Frames Capture Methods

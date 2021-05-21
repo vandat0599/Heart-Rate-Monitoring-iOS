@@ -95,7 +95,7 @@ class HeartExserciseVM: PHeartExserciseVM {
             if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%fps == 0 {
                 let windowArray = Array(capturedRedmean[fps*pulses.count..<capturedRedmean.count])
                 let heartRate = HeartRateDetector.PulseDetector(windowArray, fps: fps)
-                pulses.append(heartRate == -1 ? (pulses.last ?? 60) : heartRate)
+                pulses.append((heartRate == -1 ? (pulses.last ?? 120) : heartRate)/2)
             }
         } else {
             resetAllData()
