@@ -410,10 +410,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             self.viewModel.handleImage(with: imageBuffer, fps: Int(CameraManager.shared.spec?.fps ?? 30))
         }
         
-        if CameraManager.shared.previewLayer != nil {
-            cameraView.layer.insertSublayer(CameraManager.shared.previewLayer!, at: 0)
-        }
-        
         CameraManager.shared.previewPlayerAvailable = { [weak self] in
             DispatchQueue.main.async {
                 self?.cameraView.layer.insertSublayer(CameraManager.shared.previewLayer!, at: 0)
