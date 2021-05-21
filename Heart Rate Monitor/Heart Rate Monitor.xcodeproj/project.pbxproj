@@ -37,6 +37,8 @@
 		CE00163A261D8FC300B9374F /* LottieSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001638261D8FC300B9374F /* LottieSheetViewController.swift */; };
 		CE00163B261D8FC300B9374F /* LottieSheetOneActionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE001639261D8FC300B9374F /* LottieSheetOneActionVC.swift */; };
 		CE00163F261D909D00B9374F /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE00163E261D909D00B9374F /* BottomSheetViewController.swift */; };
+		CE021EF9265764E000728A20 /* HeartExserciseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE021EF8265764E000728A20 /* HeartExserciseVM.swift */; };
+		CE021F0326576DD200728A20 /* AVCaptureDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE021F0226576DD200728A20 /* AVCaptureDevice+.swift */; };
 		CE06D10125FD1DA4007CE81C /* lottie-progress.json in Resources */ = {isa = PBXBuildFile; fileRef = CE06D10025FD1DA4007CE81C /* lottie-progress.json */; };
 		CE0BE134261EAA4500073002 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE133261EAA4500073002 /* Account.swift */; };
 		CE0BE138261EB01C00073002 /* HealthInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE137261EB01C00073002 /* HealthInfo.swift */; };
@@ -44,7 +46,6 @@
 		CE0BE140261EB29B00073002 /* HeartRateWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE13F261EB29B00073002 /* HeartRateWarning.swift */; };
 		CE0BE144261EB77700073002 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE143261EB77700073002 /* Gender.swift */; };
 		CE0BE148261EB79400073002 /* HeartRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE147261EB79400073002 /* HeartRateState.swift */; };
-		CE10731425FDCD8B003777D6 /* AVCaptureDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731325FDCD8B003777D6 /* AVCaptureDevice+.swift */; };
 		CE10731825FDCDC1003777D6 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731725FDCDC1003777D6 /* ColorUtils.swift */; };
 		CE10731C25FDCDD3003777D6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731B25FDCDD3003777D6 /* CameraManager.swift */; };
 		CE10732125FDCDDF003777D6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10731F25FDCDDF003777D6 /* Filter.swift */; };
@@ -70,6 +71,7 @@
 		CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CF92627F98200159D86 /* lottie-error.json */; };
 		CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFA2627F98200159D86 /* lottie-success.json */; };
 		CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */; };
+		CE5309CF26582CA300AD6202 /* CalmInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5309CE26582CA300AD6202 /* CalmInfoVC.swift */; };
 		CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */; };
 		CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */; };
 		CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */; };
@@ -124,7 +126,7 @@
 		CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDB2262FCA8A00403671 /* HLog.swift */; };
 		CEC7EDB7262FCB7B00403671 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDB6262FCB7B00403671 /* APIResponse.swift */; };
 		CEC7EDC5262FF46800403671 /* HeartRateRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */; };
-		CED575012656BE9100AAC1AB /* CalmSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED575002656BE9100AAC1AB /* CalmSelectionVC.swift */; };
+		CED575012656BE9100AAC1AB /* HeartExserciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED575002656BE9100AAC1AB /* HeartExserciseVC.swift */; };
 		CED575192656CD0200AAC1AB /* lottie-menu.json in Resources */ = {isa = PBXBuildFile; fileRef = CED575182656CD0200AAC1AB /* lottie-menu.json */; };
 		CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */; };
 		CEFF400B26561C2A0049EA68 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */; };
@@ -208,6 +210,8 @@
 		CE001638261D8FC300B9374F /* LottieSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieSheetViewController.swift; sourceTree = "<group>"; };
 		CE001639261D8FC300B9374F /* LottieSheetOneActionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieSheetOneActionVC.swift; sourceTree = "<group>"; };
 		CE00163E261D909D00B9374F /* BottomSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
+		CE021EF8265764E000728A20 /* HeartExserciseVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartExserciseVM.swift; sourceTree = "<group>"; };
+		CE021F0226576DD200728A20 /* AVCaptureDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVCaptureDevice+.swift"; sourceTree = "<group>"; };
 		CE06D10025FD1DA4007CE81C /* lottie-progress.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-progress.json"; sourceTree = "<group>"; };
 		CE0BE133261EAA4500073002 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		CE0BE137261EB01C00073002 /* HealthInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthInfo.swift; sourceTree = "<group>"; };
@@ -215,7 +219,6 @@
 		CE0BE13F261EB29B00073002 /* HeartRateWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateWarning.swift; sourceTree = "<group>"; };
 		CE0BE143261EB77700073002 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		CE0BE147261EB79400073002 /* HeartRateState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateState.swift; sourceTree = "<group>"; };
-		CE10731325FDCD8B003777D6 /* AVCaptureDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVCaptureDevice+.swift"; sourceTree = "<group>"; };
 		CE10731725FDCDC1003777D6 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
 		CE10731B25FDCDD3003777D6 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		CE10731F25FDCDDF003777D6 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -247,6 +250,7 @@
 		CE4D1CF92627F98200159D86 /* lottie-error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-error.json"; sourceTree = "<group>"; };
 		CE4D1CFA2627F98200159D86 /* lottie-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-success.json"; sourceTree = "<group>"; };
 		CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-internet-connection.json"; sourceTree = "<group>"; };
+		CE5309CE26582CA300AD6202 /* CalmInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalmInfoVC.swift; sourceTree = "<group>"; };
 		CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerVC.swift; sourceTree = "<group>"; };
 		CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVC.swift; sourceTree = "<group>"; };
 		CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
@@ -299,7 +303,7 @@
 		CEC7EDB2262FCA8A00403671 /* HLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLog.swift; sourceTree = "<group>"; };
 		CEC7EDB6262FCB7B00403671 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateRecord.swift; sourceTree = "<group>"; };
-		CED575002656BE9100AAC1AB /* CalmSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalmSelectionVC.swift; sourceTree = "<group>"; };
+		CED575002656BE9100AAC1AB /* HeartExserciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartExserciseVC.swift; sourceTree = "<group>"; };
 		CED575182656CD0200AAC1AB /* lottie-menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-menu.json"; sourceTree = "<group>"; };
 		CEFF400026561AB10049EA68 /* HeartRate.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HeartRate.xcdatamodel; sourceTree = "<group>"; };
 		CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
@@ -675,6 +679,7 @@
 		CEC78DF225F7301D007BA177 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				CE021F0226576DD200728A20 /* AVCaptureDevice+.swift */,
 				CEC78E8525F73A05007BA177 /* Date+.swift */,
 				CEC78E8F25F73A06007BA177 /* Double+.swift */,
 				CEC78E8A25F73A06007BA177 /* Int+.swift */,
@@ -692,7 +697,6 @@
 				CEC78E8725F73A05007BA177 /* UITextField+.swift */,
 				CEC78E8E25F73A06007BA177 /* UIView+.swift */,
 				CEC78E8925F73A05007BA177 /* UIViewController+.swift */,
-				CE10731325FDCD8B003777D6 /* AVCaptureDevice+.swift */,
 				CE10736525FE7449003777D6 /* CGPoint+.swift */,
 				CE162039263930550076E71F /* CMSampleBuffer+.swift */,
 				CE8DFA0F2653DB5400385F3B /* UIStoryboard+.swift */,
@@ -824,7 +828,9 @@
 		CED574FF2656BE7300AAC1AB /* HeartCalm */ = {
 			isa = PBXGroup;
 			children = (
-				CED575002656BE9100AAC1AB /* CalmSelectionVC.swift */,
+				CED575002656BE9100AAC1AB /* HeartExserciseVC.swift */,
+				CE021EF8265764E000728A20 /* HeartExserciseVM.swift */,
+				CE5309CE26582CA300AD6202 /* CalmInfoVC.swift */,
 			);
 			path = HeartCalm;
 			sourceTree = "<group>";
@@ -1147,11 +1153,11 @@
 				CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */,
 				CEC78E9F25F73A07007BA177 /* UIView+.swift in Sources */,
 				CE2390F92655549500DC05BC /* ViewWithXib.swift in Sources */,
-				CED575012656BE9100AAC1AB /* CalmSelectionVC.swift in Sources */,
+				CED575012656BE9100AAC1AB /* HeartExserciseVC.swift in Sources */,
+				CE5309CF26582CA300AD6202 /* CalmInfoVC.swift in Sources */,
 				848645D926201358003599A4 /* TTSegmentedControl.swift in Sources */,
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
 				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,
-				CE10731425FDCD8B003777D6 /* AVCaptureDevice+.swift in Sources */,
 				CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */,
 				CEB7548C2656705C00AF434F /* HistoryTableViewCell.swift in Sources */,
 				CEC78EA525F73A07007BA177 /* NSLayoutConstraint+.swift in Sources */,
@@ -1180,6 +1186,7 @@
 				84E46095261566F700F60040 /* RelationshipTableViewCell.swift in Sources */,
 				CE0BE148261EB79400073002 /* HeartRateState.swift in Sources */,
 				84C718C62606F85F00BA2C6D /* User.swift in Sources */,
+				CE021F0326576DD200728A20 /* AVCaptureDevice+.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
 				CE8DFA102653DB5400385F3B /* UIStoryboard+.swift in Sources */,
 				CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */,
@@ -1194,6 +1201,7 @@
 				CE7F8A5125FCB74100A2EDC9 /* HeartRateVCVM.swift in Sources */,
 				CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */,
 				84C718992606EB3200BA2C6D /* ProfileVC.swift in Sources */,
+				CE021EF9265764E000728A20 /* HeartExserciseVM.swift in Sources */,
 				84E460B026158C0200F60040 /* InputRelationshipTableViewCell.swift in Sources */,
 				CEC78EA025F73A07007BA177 /* Double+.swift in Sources */,
 				1DE8708A2614E588006A38C2 /* FloatingPointMath.swift in Sources */,

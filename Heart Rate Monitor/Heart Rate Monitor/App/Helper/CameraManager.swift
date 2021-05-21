@@ -34,20 +34,28 @@ struct VideoSpec {
 }
 
 typealias ImageBufferHandler = ((_ imageBuffer: CMSampleBuffer) -> ())
+typealias PreviewPlayerAvailable = (() -> ())
 
 class CameraManager: NSObject {
-    private let captureSession = AVCaptureSession()
-    private var videoDevice: AVCaptureDevice!
-    private var videoConnection: AVCaptureConnection?
-    private var audioConnection: AVCaptureConnection?
-    private var previewLayer: AVCaptureVideoPreviewLayer?
+    
+    static let shared = CameraManager(cameraType: .back, preferredSpec: VideoSpec(fps: 30, size: CGSize(width: 100, height: 100)), completion: nil)
+    private override init() {}
+    
+    let captureSession = AVCaptureSession()
+    var videoDevice: AVCaptureDevice!
+    var videoConnection: AVCaptureConnection?
+    var audioConnection: AVCaptureConnection?
+    var previewLayer: AVCaptureVideoPreviewLayer?
+    var spec: VideoSpec?
     
     var imageBufferHandler: ImageBufferHandler?
+    var previewPlayerAvailable: PreviewPlayerAvailable?
     
-    init(cameraType: CameraType, preferredSpec: VideoSpec?, previewContainer: CALayer?, completion: (() -> ())?) {
+    init(cameraType: CameraType, preferredSpec: VideoSpec?, completion: (() -> ())?) {
         super.init()
         DispatchQueue.global().async { [unowned self] in
             guard let camera = cameraType.captureDevice() else { return }
+            self.spec = preferredSpec
             videoDevice = camera
             
             // MARK: - Setup Video Format
@@ -83,19 +91,18 @@ class CameraManager: NSObject {
                 videoDevice.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
                 videoDevice.unlockForConfiguration()
             }
+            let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            previewLayer.frame = CGRect(x: 0, y: 0, width: preferredSpec?.size?.width ?? 0, height: preferredSpec?.size?.height ?? 0)
+            previewLayer.contentsGravity = CALayerContentsGravity.resizeAspectFill
+            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            self.previewLayer = previewLayer
+            if previewLayer != nil {
+                print("preview player available")
+                previewPlayerAvailable?()
+            }
             captureSession.commitConfiguration()
             startCapture()
             completion?()
-            if let previewContainer = previewContainer {
-                let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                previewLayer.frame = previewContainer.bounds
-                previewLayer.contentsGravity = CALayerContentsGravity.resizeAspectFill
-                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-                self.previewLayer = previewLayer
-                DispatchQueue.main.async {
-                    previewContainer.insertSublayer(previewLayer, at: 0)
-                }
-            }
         }
     }
     

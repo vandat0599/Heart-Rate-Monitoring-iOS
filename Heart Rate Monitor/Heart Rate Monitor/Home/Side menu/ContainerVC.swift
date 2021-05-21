@@ -15,6 +15,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     private var showingVC: UINavigationController!
     private var vcArray: [UINavigationController] = []
     
+    
     private lazy var measureVC: UINavigationController = {
         let vc = UINavigationController(rootViewController: HeartRateVC(viewModel: HeartRateVCVMImp()))
         return vc
@@ -31,7 +32,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     }()
     
     private lazy var calmSelectionVC: UINavigationController = {
-        let vc = UINavigationController(rootViewController: CalmSelectionVC())
+        let vc = UINavigationController(rootViewController: HeartExserciseVC(viewModel: HeartExserciseVM()))
         return vc
     }()
     
@@ -45,7 +46,9 @@ class ContainerVC: BaseVC, MenuVCDelegate {
         let view = AnimationView.init(name: "lottie-menu")
         view.currentProgress = 0
         view.animationSpeed = 4
-        view.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
+        view.addGestureRecognizer(tap)
         return view
     }()
     
@@ -172,12 +175,16 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     }
     
     func onItemTapped(index: Int) {
+        UISelectionFeedbackGenerator().selectionChanged()
         guard index <= vcArray.count, showingVC != vcArray[index - 1] else {
             toggleMenu()
             return
         }
+        NotificationCenter.default.post(name: AppConstant.AppNotificationName.menuButtonTapped, object: nil)
         toggleMenu()
         cycleVC(from: showingVC, to: vcArray[index - 1])
         showingVC = vcArray[index - 1]
+        (showingVC.topViewController as? HeartRateVC)?.initVideoCapture()
+        (showingVC.topViewController as? HeartExserciseVC)?.initVideoCapture()
     }
 }
