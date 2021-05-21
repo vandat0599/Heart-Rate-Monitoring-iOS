@@ -81,7 +81,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     private lazy var playView: CustomRippleControl = {
         let view = CustomRippleControl()
         view.isHidden = false
-        view.alpha = 0
+        view.alpha = 1
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -162,7 +162,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         return view
     }()
             
-    private var cameraManager: CameraManager?
     private var viewModel: HeartRateVCVM!
     
     init(viewModel: HeartRateVCVM) {
@@ -259,6 +258,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         cameraView.layer.cornerRadius = cameraView.frame.height/2
         initVideoCapture()
         bindViews()
+        NotificationCenter.default.addObserver(self, selector: #selector(menuButtonTapped), name: AppConstant.AppNotificationName.menuButtonTapped, object: nil)
     }
     
     private func bindViews() {
@@ -379,6 +379,12 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         }
     }
     
+    @objc private func menuButtonTapped() {
+        if viewModel.isPlaying.value == true {
+            viewModel.togglePlay()
+        }
+    }
+    
     func reloadChartData(value: [Double]) {
         let yValues = (0..<value.count).map { (i) -> ChartDataEntry in
             let val = value[i]
@@ -399,18 +405,19 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     }
     
     // MARK: - Frames Capture Methods
-    private func initVideoCapture() {
-        let specs = VideoSpec(fps: 30, size: CGSize(width: cameraView.frame.width, height: cameraView.frame.height))
-        cameraManager = CameraManager(cameraType: .back, preferredSpec: specs, previewContainer: cameraView.layer, completion: {[weak self] in
-            guard let self = self else { return }
+    func initVideoCapture() {
+        CameraManager.shared.imageBufferHandler = { [unowned self] (imageBuffer) in
+            self.viewModel.handleImage(with: imageBuffer, fps: Int(CameraManager.shared.spec?.fps ?? 30))
+        }
+        
+        if CameraManager.shared.previewLayer != nil {
+            cameraView.layer.insertSublayer(CameraManager.shared.previewLayer!, at: 0)
+        }
+        
+        CameraManager.shared.previewPlayerAvailable = { [weak self] in
             DispatchQueue.main.async {
-                UIView.animate(withDuration: 1) {
-                    self.playView.alpha = 1
-                }
+                self?.cameraView.layer.insertSublayer(CameraManager.shared.previewLayer!, at: 0)
             }
-        })
-        cameraManager?.imageBufferHandler = { [unowned self] (imageBuffer) in
-            self.viewModel.handleImage(with: imageBuffer, fps: Int(specs.fps ?? 0))
         }
     }
 

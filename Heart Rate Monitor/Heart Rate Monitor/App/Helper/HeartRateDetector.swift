@@ -107,6 +107,9 @@ class HeartRateDetector: NSObject {
         var N = peaks.count
         
         // cablirate
+        if locs.isEmpty || (N - 1 == 0) || (N-1 >= locs.count) {
+            return -1
+        }
         let timeP2P = (locs[N-1] - locs[0]) / (N - 1)
         let Ex = Windows_Seconds * fps - N * timeP2P
         if (Ex >= timeP2P) {

@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+class AppConstant {
+    struct AppNotificationName {
+        static let menuButtonTapped = Notification.Name("menuButtonTapped")
+    }
+}

@@ -15,6 +15,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     private var showingVC: UINavigationController!
     private var vcArray: [UINavigationController] = []
     
+    
     private lazy var measureVC: UINavigationController = {
         let vc = UINavigationController(rootViewController: HeartRateVC(viewModel: HeartRateVCVMImp()))
         return vc
@@ -178,8 +179,11 @@ class ContainerVC: BaseVC, MenuVCDelegate {
             toggleMenu()
             return
         }
+        NotificationCenter.default.post(name: AppConstant.AppNotificationName.menuButtonTapped, object: nil)
         toggleMenu()
         cycleVC(from: showingVC, to: vcArray[index - 1])
         showingVC = vcArray[index - 1]
+        (showingVC.topViewController as? HeartRateVC)?.initVideoCapture()
+        (showingVC.topViewController as? HeartExserciseVC)?.initVideoCapture()
     }
 }
