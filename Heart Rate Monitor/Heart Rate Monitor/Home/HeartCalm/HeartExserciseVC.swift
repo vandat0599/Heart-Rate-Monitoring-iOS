@@ -74,9 +74,10 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         let view = UILabel()
         view.text = "Please place your finger on camera"
         view.textColor = .white
-        view.font = .systemFont(ofSize: 16, weight: .medium)
+        view.font = .systemFont(ofSize: 18, weight: .medium)
         view.textAlignment = .center
         view.isHidden = true
+        view.numberOfLines = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -102,9 +103,18 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         view.legend.enabled = false
         view.xAxis.enabled = false
         view.xAxis.drawAxisLineEnabled = false
-//        view.value
-//        view.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
         view.highlightPerTapEnabled = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var welldoneLabel: UILabel = {
+        let view = UILabel()
+        view.text = "Well Done!"
+        view.font = .systemFont(ofSize: 24, weight: .medium)
+        view.textColor = .white
+        view.textAlignment = .center
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -137,6 +147,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         playView.addSubview(heartImageView)
         playView.addSubview(heartRateTrackLabel)
         view.addSubview(guideLabel)
+        view.addSubview(welldoneLabel)
         view.addSubview(chartView)
         NSLayoutConstraint.activate([
             playView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
@@ -158,8 +169,11 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             exTypePickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             exTypePickerView.bottomAnchor.constraint(equalTo: startButton.topAnchor),
             
+            welldoneLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            welldoneLabel.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
+            
             chartView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            chartView.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 20),
+            chartView.topAnchor.constraint(equalTo: welldoneLabel.bottomAnchor, constant: 20),
             chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             chartView.bottomAnchor.constraint(equalTo: startButton.topAnchor, constant: -20),
@@ -194,6 +208,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
                 self.heartRateTrackLabel.isHidden = !value
                 self.guideLabel.isHidden = !value
                 self.chartView.isHidden = true
+                self.welldoneLabel.isHidden = true
                 self.startButton.setTitle(value ? "STOP" : "START", for: .normal)
                 self.exTypePickerView.isHidden = value
             })
@@ -231,9 +246,9 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
-                    //show charts & move guide label
                 self.reloadChartData(value: self.viewModel.pulses)
                 self.chartView.isHidden = false
+                self.welldoneLabel.isHidden = false
                 self.guideLabel.isHidden = true
                 viewModel.resetAllData()
                 self.toggleTorch(status: false)
