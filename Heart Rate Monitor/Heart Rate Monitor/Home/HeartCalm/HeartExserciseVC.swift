@@ -12,6 +12,7 @@ import RxCocoa
 import AVFoundation
 import Charts
 import HGCircularSlider
+import Hero
 
 class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
     
@@ -37,6 +38,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         let view = CustomRippleControl()
         view.isHidden = false
         view.backgroundColor = .clear
+        view.heroID = "playView"
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -64,11 +66,18 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         view.setTitleColor(.white, for: .normal)
         view.backgroundColor = UIColor(named: "pink")
         view.clipsToBounds = true
-        view.buttonScaleOnAnimate = 0.95
+        view.buttonScaleOnAnimate = 0.97
+        view.heroID = "button"
+        view.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-            
+    
+    var breathPermins = [7, 6, 5]
+    var mins = [1, 2, 3, 4, 5]
+    
+    
+    
     private var cameraManager: CameraManager?
     private var viewModel: HeartExserciseVM!
     
@@ -91,12 +100,12 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
     }
     
     private func setupView() {
+        view.isHeroEnabled = true
         view.backgroundColor = UIColor(named: "black-background")!
         view.addSubview(playView)
         view.addSubview(exTypePickerView)
         view.addSubview(startButton)
         playView.addSubview(heartImageView)
-        playView.addSubview(heartRateTrackLabel)
         NSLayoutConstraint.activate([
             playView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             playView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
@@ -119,16 +128,19 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             startButton.topAnchor.constraint(equalTo: exTypePickerView.bottomAnchor, constant: 0),
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startButton.heightAnchor.constraint(equalToConstant: 44),
-            startButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
+            startButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
             startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
         ])
         view.layoutIfNeeded()
         startButton.cornerRadius = startButton.frame.height/2
         view.layoutIfNeeded()
-        bindViews()
     }
     
     private func bindViews() {
+        
+    }
+    
+    @objc private func startButtonTapped() {
         
     }
     
@@ -172,14 +184,18 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return viewModel.breathPerMins.count
+        if component == 0 {
+            return breathPermins.count
+        } else {
+            return mins.count
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         if component == 0 {
-            return attributedStringPickerView(string: "\(viewModel.breathPerMins[row].0) breaths/min")
+            return attributedStringPickerView(string: "\(breathPermins[row]) breaths/min")
         } else {
-            return attributedStringPickerView(string: "\(viewModel.breathPerMins[row].1) min")
+            return attributedStringPickerView(string: "\(mins[row]) min")
         }
     }
     
@@ -194,5 +210,6 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         ])
     }
 }
+
 
 
