@@ -23,7 +23,7 @@ protocol PHeartExserciseVM {
     var capturedRedmean: [Double] { get }
     var breathinTrigger: PublishRelay<Double> { get }
     var breathoutTrigger: PublishRelay<Double> { get }
-    var resetDataTrigger: PublishRelay<Bool> { get }
+    var resetDataTrigger: BehaviorRelay<Bool> { get }
     func handleImage(with buffer: CMSampleBuffer, fps: Int)
     func togglePlay()
     func resetAllData()
@@ -42,7 +42,7 @@ class HeartExserciseVM: PHeartExserciseVM {
     var filteredValueTrigger: PublishRelay<Double>
     var breathinTrigger: PublishRelay<Double>
     var breathoutTrigger: PublishRelay<Double>
-    var resetDataTrigger: PublishRelay<Bool>
+    var resetDataTrigger: BehaviorRelay<Bool>
     
     var capturedRedmean: [Double] = []
     var pulses: [Double] = []
@@ -54,7 +54,6 @@ class HeartExserciseVM: PHeartExserciseVM {
     var selectedBreathPerminIndex = 0
     var selectedMinIndex = 0
     var breathPerMaxSecond = 0
-    var isResetDataTriggered = false
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -66,7 +65,7 @@ class HeartExserciseVM: PHeartExserciseVM {
         filteredValueTrigger = PublishRelay<Double>()
         breathinTrigger = PublishRelay<Double>()
         breathoutTrigger = PublishRelay<Double>()
-        resetDataTrigger = PublishRelay<Bool>()
+        resetDataTrigger = BehaviorRelay<Bool>(value: false)
         capturedRedmean = []
         maxProgressSecond = mins[selectedMinIndex]*60
         breathPerMaxSecond = mins[selectedMinIndex]*60/breathPermins[selectedBreathPerminIndex]
@@ -78,6 +77,7 @@ class HeartExserciseVM: PHeartExserciseVM {
     }
     
     func resetAllData() {
+        resetDataTrigger.accept(true)
         isMeasuring.accept(false)
         isHeartRateValid.accept(false)
         heartRateTrackNumber.accept(0)
@@ -87,7 +87,6 @@ class HeartExserciseVM: PHeartExserciseVM {
         timer?.invalidate()
         timer = nil
         value = 0
-        resetDataTrigger.accept(true)
     }
     
     func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
@@ -96,9 +95,8 @@ class HeartExserciseVM: PHeartExserciseVM {
         let greenmean = rgb.1
         let bluemean = rgb.2
         let hsv = rgb2hsv(red: CGFloat(redmean), green: CGFloat(greenmean), blue: CGFloat(bluemean))
-        //((hsv.0 >= 0) && (hsv.0 <= 10)) || ((hsv.0 >= 160) && (hsv.0 <= 180))
         if  (hsv.1 > 0.5) && (hsv.2 > 0.5) {
-            isResetDataTriggered = false
+            resetDataTrigger.accept(false)
             if !isMeasuring.value && isPlaying.value {
                 print("Start measure")
                 startMeasurement()
@@ -112,9 +110,8 @@ class HeartExserciseVM: PHeartExserciseVM {
                 pulses.append((heartRate == -1 ? (pulses.last ?? 120) : heartRate)/2)
             }
         } else {
-            if isResetDataTriggered == false {
+            if resetDataTrigger.value == false {
                 resetAllData()
-                isResetDataTriggered = true
             }
         }
     }

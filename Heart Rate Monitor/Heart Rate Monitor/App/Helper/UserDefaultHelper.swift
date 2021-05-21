@@ -14,6 +14,7 @@ class UserDefaultHelper {
         case deviceToken
         case loggedInAccount
         case userPassword
+        case openCalmCount
     }
     
     private static let defaults = UserDefaults.standard

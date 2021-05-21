@@ -336,6 +336,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
                 let vc = ResultBottomSheetVC(heartRate: self.viewModel.heartRateTrackNumber.value/2, grapsValues: self.viewModel.grapValues.value)
                 vc.canDismissOnSwipeDown = false
                 vc.canDismissOnTouchOutSide = false

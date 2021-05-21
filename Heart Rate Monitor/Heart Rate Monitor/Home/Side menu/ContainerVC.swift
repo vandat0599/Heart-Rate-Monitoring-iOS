@@ -175,6 +175,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     }
     
     func onItemTapped(index: Int) {
+        UISelectionFeedbackGenerator().selectionChanged()
         guard index <= vcArray.count, showingVC != vcArray[index - 1] else {
             toggleMenu()
             return

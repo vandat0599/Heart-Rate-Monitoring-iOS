@@ -33,8 +33,8 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         return view
     }()
 
-    private lazy var playView: CustomRippleControl = {
-        let view = CustomRippleControl()
+    private lazy var playView: UIView = {
+        let view = UIView()
         view.isHidden = false
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -119,6 +119,17 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         return view
     }()
     
+    public lazy var infoButton: UIButton = {
+        let view = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        view.setImage(UIImage(named: "ic-info")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        view.tintColor = .white
+        view.contentMode = .scaleAspectFit
+        view.imageView?.contentMode = .scaleAspectFit
+        view.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
+        view.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: -12)
+        return view
+    }()
+    
     private var viewModel: HeartExserciseVM!
     
     init(viewModel: HeartExserciseVM) {
@@ -135,11 +146,18 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         setupView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let openCount = (UserDefaultHelper.get(key: .openCalmCount) as? Int) ?? 0
+        if openCount == 0 {
+            let vc = CalmInfoVC()
+            present(vc, animated: true)
+        }
+        UserDefaultHelper.save(value: openCount + 1, key: .openCalmCount)
     }
     
     private func setupView() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: infoButton)
         view.backgroundColor = UIColor(named: "black-background")!
         view.addSubview(playView)
         view.addSubview(exTypePickerView)
@@ -243,6 +261,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
                 self.reloadChartData(value: self.viewModel.pulses)
                 self.chartView.isHidden = false
                 self.welldoneLabel.isHidden = false
@@ -289,17 +308,25 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[weak self] (value) in
                 guard let self = self else { return }
-                self.guideLabel.text = "Please place your finger on camera"
-                print("reset trigger")
-                UIView.animate(withDuration: 0.2) {
-                    self.playView.transform = .identity
-                    self.guideLabel.alpha = 1
+                if value == true {
+                    self.guideLabel.text = "Please place your finger on camera"
+                    print("resetDataTrigger")
+                    UIView.animate(withDuration: 0.2) {
+                        self.playView.transform = .identity
+                        self.guideLabel.alpha = 1
+                    }
                 }
             })
             .disposed(by: disposeBag)
     }
     
+    @objc private func infoButtonTapped() {
+        let vc = CalmInfoVC()
+        present(vc, animated: true)
+    }
+    
     @objc private func startButtonTapped() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         viewModel.resetAllData()
         if startButton.titleLabel?.text == "STOP" {
             viewModel.isPlaying.accept(false)
