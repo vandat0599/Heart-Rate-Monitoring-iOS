@@ -1,0 +1,122 @@
+//
+//  CalmSelectionVM.swift
+//  Heart Rate Monitor
+//
+//  Created by Dat Van on 21/05/2021.
+//
+
+import UIKit
+import RxSwift
+import RxRelay
+import RxCocoa
+import AVFoundation
+
+protocol PHeartExserciseVM {
+    var maxProgressSecond: Int { get }
+    var isMeasuring: BehaviorRelay<Bool> { get }
+    var heartRateTrackNumber: BehaviorRelay<Int> { get }
+    var heartRateProgress: BehaviorRelay<Float> { get }
+    var isHeartRateValid: BehaviorRelay<Bool> { get }
+    var timeupTrigger: PublishRelay<Bool> { get }
+    var filteredValueTrigger: PublishRelay<Double> { get }
+    var capturedRedmean: [Double] { get }
+    func handleImage(with buffer: CMSampleBuffer, fps: Int)
+    func resetAllData()
+}
+
+class HeartExserciseVM: PHeartExserciseVM {
+
+
+    let disposeBag = DisposeBag()
+
+    var heartRateTrackNumber: BehaviorRelay<Int>
+    var heartRateProgress: BehaviorRelay<Float>
+    var isMeasuring: BehaviorRelay<Bool>
+    var isHeartRateValid: BehaviorRelay<Bool>
+    var timeupTrigger: PublishRelay<Bool>
+    var filteredValueTrigger: PublishRelay<Double>
+
+    var capturedRedmean: [Double] = []
+    private var pulses: [Double] = []
+    var timer: Timer?
+    let maxProgressSecond = 20
+    var value = 0
+    var breathPerMins = [
+        (7, 1),
+        (6, 2),
+        (5, 3),
+        (4, 4),
+        (3, 5),
+    ]
+
+    init() {
+        isMeasuring = BehaviorRelay<Bool>(value: false)
+        isHeartRateValid = BehaviorRelay<Bool>(value: false)
+        heartRateTrackNumber = BehaviorRelay<Int>(value: 0)
+        heartRateProgress = BehaviorRelay<Float>(value: 0.0)
+        timeupTrigger = PublishRelay<Bool>()
+        filteredValueTrigger = PublishRelay<Double>()
+        capturedRedmean = []
+    }
+
+    func resetAllData() {
+        isMeasuring.accept(false)
+        isHeartRateValid.accept(false)
+        heartRateTrackNumber.accept(0)
+        heartRateProgress.accept(0.0)
+        pulses.removeAll()
+        capturedRedmean.removeAll()
+        timer?.invalidate()
+        timer = nil
+        value = 0
+    }
+
+    func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
+        let rgb = buffer.meanRGB
+        let redmean = rgb.0
+        let greenmean = rgb.1
+        let bluemean = rgb.2
+        let hsv = rgb2hsv(red: CGFloat(redmean), green: CGFloat(greenmean), blue: CGFloat(bluemean))
+        //((hsv.0 >= 0) && (hsv.0 <= 10)) || ((hsv.0 >= 160) && (hsv.0 <= 180))
+        if  (hsv.1 > 0.5) && (hsv.2 > 0.5) {
+            if !isMeasuring.value {
+                startMeasurement()
+                isMeasuring.accept(true)
+            }
+            capturedRedmean.append(Double(redmean))
+            filteredValueTrigger.accept(Double(hsv.2))
+            if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%fps == 0 {
+                let windowArray = Array(capturedRedmean[fps*pulses.count..<capturedRedmean.count]) //draw charts
+                let heartRate = HeartRateDetector.PulseDetector(windowArray, fps: fps)
+                pulses.append(heartRate)
+            }
+        } else {
+            resetAllData()
+        }
+    }
+
+    private func startMeasurement() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.fireTimer), userInfo: nil, repeats: true)
+            self.timer?.fire()
+        }
+    }
+
+    @objc func fireTimer() {
+        value += 1
+        let progress = Float(value)/Float(maxProgressSecond)
+        timeupTrigger.accept(progress >= 1)
+        isHeartRateValid.accept(pulses.count > 0)
+        heartRateProgress.accept(progress)
+        heartRateTrackNumber.accept(pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0)
+        print("inputs: \(capturedRedmean.count)")
+        if progress >= 1 {
+            print("invalidate")
+            self.timer?.invalidate()
+            self.timer = nil
+            self.value = 0
+        }
+    }
+}
+

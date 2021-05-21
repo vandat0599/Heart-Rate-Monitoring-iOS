@@ -283,7 +283,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 guard let self = self else { return }
                 let beat = Int(value/2)
                 self.heartRateTrackLabel.text = "\(value == 0 ? "--" : "\(beat)")"
-                self.fireImageView.tintColor = beat <= 60 ? UIColor(named: "white-holder") : beat <= 100 ? UIColor(named: "green-1") : UIColor(named: "red-1")
+                self.fireImageView.tintColor = beat < 60 ? UIColor(named: "white-holder") : beat <= 100 ? UIColor(named: "green-1") : UIColor(named: "red-1")
             })
             .disposed(by: disposeBag)
         

@@ -31,7 +31,7 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     }()
     
     private lazy var calmSelectionVC: UINavigationController = {
-        let vc = UINavigationController(rootViewController: CalmSelectionVC())
+        let vc = UINavigationController(rootViewController: HeartExserciseVC(viewModel: HeartExserciseVM()))
         return vc
     }()
     
