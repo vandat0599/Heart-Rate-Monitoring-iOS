@@ -12,7 +12,6 @@ import RxCocoa
 import AVFoundation
 import Charts
 import HGCircularSlider
-import Hero
 
 class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
     
@@ -38,7 +37,6 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         let view = CustomRippleControl()
         view.isHidden = false
         view.backgroundColor = .clear
-        view.heroID = "playView"
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -67,7 +65,6 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         view.backgroundColor = UIColor(named: "pink")
         view.clipsToBounds = true
         view.buttonScaleOnAnimate = 0.97
-        view.heroID = "button"
         view.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -100,12 +97,12 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
     }
     
     private func setupView() {
-        view.isHeroEnabled = true
         view.backgroundColor = UIColor(named: "black-background")!
         view.addSubview(playView)
         view.addSubview(exTypePickerView)
         view.addSubview(startButton)
         playView.addSubview(heartImageView)
+        playView.addSubview(heartRateTrackLabel)
         NSLayoutConstraint.activate([
             playView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             playView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
@@ -134,6 +131,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         view.layoutIfNeeded()
         startButton.cornerRadius = startButton.frame.height/2
         view.layoutIfNeeded()
+        bindViews()
     }
     
     private func bindViews() {
