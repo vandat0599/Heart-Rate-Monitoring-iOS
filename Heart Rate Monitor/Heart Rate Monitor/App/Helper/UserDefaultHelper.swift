@@ -15,6 +15,7 @@ class UserDefaultHelper {
         case loggedInAccount
         case userPassword
         case openCalmCount
+        case openMonitorCount
     }
     
     private static let defaults = UserDefaults.standard

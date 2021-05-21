@@ -36,6 +36,16 @@ class ContainerVC: BaseVC, MenuVCDelegate {
         return vc
     }()
     
+    private lazy var settingVC: UINavigationController = {
+        let vc = UINavigationController(rootViewController: SettingVC())
+        return vc
+    }()
+    
+    private lazy var helpVC: UINavigationController = {
+        let vc = UINavigationController(rootViewController: HelpVC())
+        return vc
+    }()
+    
     private lazy var menuVC: MenuVC = {
         let menuVC = MenuVC()
         menuVC.delegate = self
@@ -82,6 +92,8 @@ class ContainerVC: BaseVC, MenuVCDelegate {
             statVC,
             historyVC,
             calmSelectionVC,
+            settingVC,
+            helpVC,
         ]
         showingVC = vcArray[0]
         display(showingVC)

@@ -161,6 +161,17 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    public lazy var infoButton: UIButton = {
+        let view = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        view.setImage(UIImage(named: "ic-info")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        view.tintColor = .white
+        view.contentMode = .scaleAspectFit
+        view.imageView?.contentMode = .scaleAspectFit
+        view.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
+        view.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: -12)
+        return view
+    }()
             
     private var viewModel: HeartRateVCVM!
     
@@ -179,11 +190,18 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         updateBottomHeartRateViews()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let openCount = (UserDefaultHelper.get(key: .openMonitorCount) as? Int) ?? 0
+        if openCount == 0 {
+            let vc = GuideVC()
+            present(vc, animated: true)
+        }
+        UserDefaultHelper.save(value: openCount + 1, key: .openMonitorCount)
     }
     
     private func setupView() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: infoButton)
         view.backgroundColor = UIColor(named: "black-background")!
         view.addSubview(playView)
         view.addSubview(chartView)
@@ -384,6 +402,11 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         if viewModel.isPlaying.value == true {
             viewModel.togglePlay()
         }
+    }
+    
+    @objc private func infoButtonTapped() {
+        let vc = GuideVC()
+        present(vc, animated: true)
     }
     
     func reloadChartData(value: [Double]) {
