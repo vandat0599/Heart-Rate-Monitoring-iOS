@@ -211,6 +211,11 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
                 self.welldoneLabel.isHidden = true
                 self.startButton.setTitle(value ? "STOP" : "START", for: .normal)
                 self.exTypePickerView.isHidden = value
+                self.guideLabel.text = "Please place your finger on camera"
+                UIView.animate(withDuration: 0.2) {
+                    self.playView.transform = .identity
+                    self.guideLabel.alpha = 1
+                }
             })
             .disposed(by: disposeBag)
         
@@ -220,14 +225,6 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             .bind(onNext: { [weak self] (value) in
                 guard let self = self else { return }
                 self.heartRateTrackLabel.text = "\(value == 0 ? "" : "\(value)")"
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel?.heartRateProgress
-            .skip(1)
-            .observeOn(MainScheduler.instance)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .subscribe(onNext: {[unowned self] (value) in
             })
             .disposed(by: disposeBag)
         
@@ -251,8 +248,53 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
                 self.welldoneLabel.isHidden = false
                 self.guideLabel.isHidden = true
                 viewModel.resetAllData()
+                self.heartRateTrackLabel.isHidden = false
                 self.toggleTorch(status: false)
                 self.startButton.setTitle("START", for: .normal)
+                UIView.animate(withDuration: 0.2) {
+                    self.playView.transform = .identity
+                    self.guideLabel.alpha = 1
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.breathinTrigger
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .bind(onNext: {[weak self] (value) in
+                guard let self = self else { return }
+                self.guideLabel.text = "Breath in..."
+                UIView.animate(withDuration: value) {
+                    self.playView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                    self.guideLabel.alpha = 1
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.breathoutTrigger
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .bind(onNext: {[weak self] (value) in
+                guard let self = self else { return }
+                self.guideLabel.text = "Breath out..."
+                UIView.animate(withDuration: value) {
+                    self.playView.transform = .identity
+                    self.guideLabel.alpha = 0.3
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.resetDataTrigger
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .bind(onNext: {[weak self] (value) in
+                guard let self = self else { return }
+                self.guideLabel.text = "Please place your finger on camera"
+                print("reset trigger")
+                UIView.animate(withDuration: 0.2) {
+                    self.playView.transform = .identity
+                    self.guideLabel.alpha = 1
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -342,6 +384,8 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         } else {
             viewModel.selectedMinIndex = row
         }
+        viewModel.breathPerMaxSecond = viewModel.mins[viewModel.selectedMinIndex]*60/viewModel.breathPermins[viewModel.selectedBreathPerminIndex]
+        print(viewModel.breathPerMaxSecond)
     }
     
     private func attributedStringPickerView(string: String) -> NSAttributedString {

@@ -21,6 +21,9 @@ protocol PHeartExserciseVM {
     var timeupTrigger: PublishRelay<Bool> { get }
     var filteredValueTrigger: PublishRelay<Double> { get }
     var capturedRedmean: [Double] { get }
+    var breathinTrigger: PublishRelay<Double> { get }
+    var breathoutTrigger: PublishRelay<Double> { get }
+    var resetDataTrigger: PublishRelay<Bool> { get }
     func handleImage(with buffer: CMSampleBuffer, fps: Int)
     func togglePlay()
     func resetAllData()
@@ -37,6 +40,9 @@ class HeartExserciseVM: PHeartExserciseVM {
     var isHeartRateValid: BehaviorRelay<Bool>
     var timeupTrigger: PublishRelay<Bool>
     var filteredValueTrigger: PublishRelay<Double>
+    var breathinTrigger: PublishRelay<Double>
+    var breathoutTrigger: PublishRelay<Double>
+    var resetDataTrigger: PublishRelay<Bool>
     
     var capturedRedmean: [Double] = []
     var pulses: [Double] = []
@@ -47,6 +53,8 @@ class HeartExserciseVM: PHeartExserciseVM {
     var mins = [1, 2, 3, 4, 5]
     var selectedBreathPerminIndex = 0
     var selectedMinIndex = 0
+    var breathPerMaxSecond = 0
+    var isResetDataTriggered = false
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -56,8 +64,12 @@ class HeartExserciseVM: PHeartExserciseVM {
         heartRateProgress = BehaviorRelay<Float>(value: 0.0)
         timeupTrigger = PublishRelay<Bool>()
         filteredValueTrigger = PublishRelay<Double>()
+        breathinTrigger = PublishRelay<Double>()
+        breathoutTrigger = PublishRelay<Double>()
+        resetDataTrigger = PublishRelay<Bool>()
         capturedRedmean = []
         maxProgressSecond = mins[selectedMinIndex]*60
+        breathPerMaxSecond = mins[selectedMinIndex]*60/breathPermins[selectedBreathPerminIndex]
     }
     
     func togglePlay() {
@@ -75,6 +87,7 @@ class HeartExserciseVM: PHeartExserciseVM {
         timer?.invalidate()
         timer = nil
         value = 0
+        resetDataTrigger.accept(true)
     }
     
     func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
@@ -85,6 +98,7 @@ class HeartExserciseVM: PHeartExserciseVM {
         let hsv = rgb2hsv(red: CGFloat(redmean), green: CGFloat(greenmean), blue: CGFloat(bluemean))
         //((hsv.0 >= 0) && (hsv.0 <= 10)) || ((hsv.0 >= 160) && (hsv.0 <= 180))
         if  (hsv.1 > 0.5) && (hsv.2 > 0.5) {
+            isResetDataTriggered = false
             if !isMeasuring.value && isPlaying.value {
                 print("Start measure")
                 startMeasurement()
@@ -98,7 +112,10 @@ class HeartExserciseVM: PHeartExserciseVM {
                 pulses.append((heartRate == -1 ? (pulses.last ?? 120) : heartRate)/2)
             }
         } else {
-            resetAllData()
+            if isResetDataTriggered == false {
+                resetAllData()
+                isResetDataTriggered = true
+            }
         }
     }
     
@@ -111,6 +128,11 @@ class HeartExserciseVM: PHeartExserciseVM {
     }
     
     @objc func fireTimer() {
+        if Int(value%breathPerMaxSecond) == 0 {
+            breathinTrigger.accept(Double(breathPerMaxSecond/2))
+        } else if Int(value%breathPerMaxSecond) == Int(breathPerMaxSecond/2) {
+            breathoutTrigger.accept(Double(breathPerMaxSecond/2))
+        }
         value += 1
         let progress = Float(value)/Float(maxProgressSecond)
         timeupTrigger.accept(progress >= 1)
