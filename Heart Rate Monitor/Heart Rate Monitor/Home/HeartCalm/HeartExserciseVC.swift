@@ -222,7 +222,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[weak self] (value) in
                 guard let self = self else { return }
-                self.toggleTorch(status: value)
+                CameraManager.shared.toggleTorch(status: value)
                 self.heartRateTrackLabel.isHidden = !value
                 self.guideLabel.isHidden = !value
                 self.chartView.isHidden = true
@@ -268,7 +268,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
                 self.guideLabel.isHidden = true
                 viewModel.resetAllData()
                 self.heartRateTrackLabel.isHidden = false
-                self.toggleTorch(status: false)
+                CameraManager.shared.toggleTorch(status: false)
                 self.startButton.setTitle("START", for: .normal)
                 UIView.animate(withDuration: 0.2) {
                     self.playView.transform = .identity
@@ -320,6 +320,16 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             .disposed(by: disposeBag)
     }
     
+    override func settingDidChange(notification: Notification?) {
+        super.settingDidChange(notification: notification)
+        viewModel.shouldSaveHeartWaves = UserDefaults.standard.bool(forKey: "heartwaves_preference")
+    }
+    
+    override func resetSettings() {
+        super.resetSettings()
+        viewModel.shouldSaveHeartWaves = UserDefaults.standard.bool(forKey: "heartwaves_preference")
+    }
+    
     @objc private func infoButtonTapped() {
         let vc = CalmInfoVC()
         present(vc, animated: true)
@@ -339,23 +349,6 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
     func initVideoCapture() {
         CameraManager.shared.imageBufferHandler = { [unowned self] (imageBuffer) in
             self.viewModel.handleImage(with: imageBuffer, fps: Int(CameraManager.shared.spec?.fps ?? 30))
-        }
-    }
-
-    private func toggleTorch(status: Bool) {
-        guard let device = AVCaptureDevice.default(for: .video) else { return }
-        print("toggleTorch: \(status)")
-        guard device.hasTorch else { return }
-        do {
-            try device.lockForConfiguration()
-            if status {
-                try device.setTorchModeOn(level: 0.1)
-            } else {
-                device.torchMode = .off
-            }
-            device.unlockForConfiguration()
-        } catch {
-            print(error)
         }
     }
     

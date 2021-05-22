@@ -54,6 +54,7 @@ class HeartExserciseVM: PHeartExserciseVM {
     var selectedBreathPerminIndex = 0
     var selectedMinIndex = 0
     var breathPerMaxSecond = 0
+    var shouldSaveHeartWaves = true
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -125,6 +126,9 @@ class HeartExserciseVM: PHeartExserciseVM {
     }
     
     @objc func fireTimer() {
+        if isHeartRateValid.value == true {
+            HeartRateDetector.playMedicalAudio()
+        }
         if Int(value%breathPerMaxSecond) == 0 {
             breathinTrigger.accept(Double(breathPerMaxSecond/2))
         } else if Int(value%breathPerMaxSecond) == Int(breathPerMaxSecond/2) {

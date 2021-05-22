@@ -36,6 +36,7 @@ class HistoryTableViewCell: UITableViewCell {
         chartView.xAxis.enabled = false
         chartView.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
         chartView.highlightPerTapEnabled = false
+        chartView.noDataText = ""
     }
     
     func setData(model: HeartRateHistory) {

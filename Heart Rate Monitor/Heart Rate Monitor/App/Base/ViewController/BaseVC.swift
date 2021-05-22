@@ -48,9 +48,11 @@ class BaseVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        resetSettings()
     }
     
     private func setupView() {
+        NotificationCenter.default.addObserver(self, selector: #selector(settingDidChange(notification:)), name: Notification.Name.IASKSettingChanged, object: nil)
         view.addSubview(centerXView)
         view.addSubview(centerYView)
         NSLayoutConstraint.activate([
@@ -71,4 +73,15 @@ class BaseVC: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.title = ""
     }
+    
+    @objc func settingDidChange(notification: Notification?) {
+        let sensivity = UserDefaults.standard.integer(forKey: "sensitivity_preference")
+        if sensivity == 0 {
+            CameraManager.shared.updateSensivity(sensivty: .low)
+        } else {
+            CameraManager.shared.updateSensivity(sensivty: .high)
+        }
+    }
+    
+    @objc func resetSettings() { }
 }

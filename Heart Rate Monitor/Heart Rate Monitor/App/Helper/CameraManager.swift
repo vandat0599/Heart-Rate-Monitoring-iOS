@@ -135,6 +135,32 @@ class CameraManager: NSObject {
             captureSession.stopRunning()
         }
     }
+    
+    func toggleTorch(status: Bool) {
+        guard let device = AVCaptureDevice.default(for: .video) else { return }
+        print("toggleTorch: \(status)")
+        let shouldUseFlash = UserDefaults.standard.bool(forKey: "flash_preference")
+        guard device.hasTorch else { return }
+        do {
+            try device.lockForConfiguration()
+            if status && shouldUseFlash {
+                try device.setTorchModeOn(level: 0.1)
+            } else {
+                device.torchMode = .off
+            }
+            device.unlockForConfiguration()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateSensivity(sensivty: AVCaptureSession.Preset) {
+        DispatchQueue.global().async {
+            self.captureSession.beginConfiguration()
+            self.captureSession.sessionPreset = sensivty
+            self.captureSession.commitConfiguration()
+        }
+    }
 }
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {

@@ -286,7 +286,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[weak self] (value) in
                 guard let self = self else { return }
-                self.toggleTorch(status: value)
+                CameraManager.shared.toggleTorch(status: value)
                 self.tapToStartLabel.isHidden = value
                 self.heartRateTrackLabel.isHidden = !value
                 self.fireImageView.isHidden = !value
@@ -295,6 +295,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel?.heartRateTrackNumber
+            .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: { [weak self] (value) in
@@ -355,7 +356,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
-                let vc = ResultBottomSheetVC(heartRate: self.viewModel.heartRateTrackNumber.value/2, grapsValues: self.viewModel.grapValues.value)
+                let vc = ResultBottomSheetVC(heartRate: self.viewModel.heartRateTrackNumber.value/2, grapsValues: self.viewModel.shouldSaveHeartWaves ? self.viewModel.grapValues.value : [])
                 vc.canDismissOnSwipeDown = false
                 vc.canDismissOnTouchOutSide = false
                 self.present(vc, animated: true) {[weak self] in
@@ -428,6 +429,20 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         chartView.notifyDataSetChanged()
     }
     
+    override func settingDidChange(notification: Notification?) {
+        super.settingDidChange(notification: notification)
+        let settingMeasureSecond = UserDefaults.standard.integer(forKey: "measurementtime_preference")
+        viewModel.maxProgressSecond = (settingMeasureSecond == 0) || (settingMeasureSecond < 20) ? 20 : settingMeasureSecond
+        viewModel.shouldSaveHeartWaves = UserDefaults.standard.bool(forKey: "heartwaves_preference")
+    }
+    
+    override func resetSettings() {
+        super.resetSettings()
+        let settingMeasureSecond = UserDefaults.standard.integer(forKey: "measurementtime_preference")
+        viewModel.maxProgressSecond = (settingMeasureSecond == 0) || (settingMeasureSecond < 20) ? 20 : settingMeasureSecond
+        viewModel.shouldSaveHeartWaves = UserDefaults.standard.bool(forKey: "heartwaves_preference")
+    }
+    
     // MARK: - Frames Capture Methods
     func initVideoCapture() {
         CameraManager.shared.imageBufferHandler = { [unowned self] (imageBuffer) in
@@ -438,23 +453,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             DispatchQueue.main.async {
                 self?.cameraView.layer.insertSublayer(CameraManager.shared.previewLayer!, at: 0)
             }
-        }
-    }
-
-    private func toggleTorch(status: Bool) {
-        guard let device = AVCaptureDevice.default(for: .video) else { return }
-        print("toggleTorch: \(status)")
-        guard device.hasTorch else { return }
-        do {
-            try device.lockForConfiguration()
-            if status {
-                try device.setTorchModeOn(level: 0.1)
-            } else {
-                device.torchMode = .off
-            }
-            device.unlockForConfiguration()
-        } catch {
-            print(error)
         }
     }
 }

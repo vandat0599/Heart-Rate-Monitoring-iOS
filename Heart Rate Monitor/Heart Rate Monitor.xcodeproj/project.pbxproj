@@ -39,6 +39,9 @@
 		CE00163F261D909D00B9374F /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE00163E261D909D00B9374F /* BottomSheetViewController.swift */; };
 		CE021EF9265764E000728A20 /* HeartExserciseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE021EF8265764E000728A20 /* HeartExserciseVM.swift */; };
 		CE021F0326576DD200728A20 /* AVCaptureDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE021F0226576DD200728A20 /* AVCaptureDevice+.swift */; };
+		CE040E242658C5D700A86649 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CE040E232658C5D700A86649 /* Settings.bundle */; };
+		CE040E3B2658E92900A86649 /* medical.wav in Resources */ = {isa = PBXBuildFile; fileRef = CE040E3A2658E92900A86649 /* medical.wav */; };
+		CE040E3F2658E9B200A86649 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE040E3E2658E9B200A86649 /* Utils.swift */; };
 		CE06D10125FD1DA4007CE81C /* lottie-progress.json in Resources */ = {isa = PBXBuildFile; fileRef = CE06D10025FD1DA4007CE81C /* lottie-progress.json */; };
 		CE0BE134261EAA4500073002 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE133261EAA4500073002 /* Account.swift */; };
 		CE0BE138261EB01C00073002 /* HealthInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE137261EB01C00073002 /* HealthInfo.swift */; };
@@ -215,6 +218,9 @@
 		CE00163E261D909D00B9374F /* BottomSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		CE021EF8265764E000728A20 /* HeartExserciseVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartExserciseVM.swift; sourceTree = "<group>"; };
 		CE021F0226576DD200728A20 /* AVCaptureDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVCaptureDevice+.swift"; sourceTree = "<group>"; };
+		CE040E232658C5D700A86649 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		CE040E3A2658E92900A86649 /* medical.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = medical.wav; sourceTree = "<group>"; };
+		CE040E3E2658E9B200A86649 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		CE06D10025FD1DA4007CE81C /* lottie-progress.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-progress.json"; sourceTree = "<group>"; };
 		CE0BE133261EAA4500073002 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		CE0BE137261EB01C00073002 /* HealthInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthInfo.swift; sourceTree = "<group>"; };
@@ -493,6 +499,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		CE040E392658E92300A86649 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				CE040E3A2658E92900A86649 /* medical.wav */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		CE1E227F25F72A0200C6632E = {
 			isa = PBXGroup;
 			children = (
@@ -732,10 +746,12 @@
 		CEC78DF325F73022007BA177 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				CE040E392658E92300A86649 /* Audio */,
 				CE1E229425F72A0300C6632E /* Assets.xcassets */,
 				CEC78E1B25F732E3007BA177 /* Value */,
 				CEC78E1A25F732D0007BA177 /* Font */,
 				CEC78E1925F732C9007BA177 /* Lottie */,
+				CE040E232658C5D700A86649 /* Settings.bundle */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -789,6 +805,7 @@
 				CEC7EDB2262FCA8A00403671 /* HLog.swift */,
 				1D1B8215263003DC0037D3E8 /* HeartRateDetector.swift */,
 				CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */,
+				CE040E3E2658E9B200A86649 /* Utils.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -997,6 +1014,7 @@
 			files = (
 				CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */,
 				CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */,
+				CE040E242658C5D700A86649 /* Settings.bundle in Resources */,
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
 				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,
@@ -1020,6 +1038,7 @@
 				CE1E229525F72A0300C6632E /* Assets.xcassets in Resources */,
 				CE06D10125FD1DA4007CE81C /* lottie-progress.json in Resources */,
 				CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */,
+				CE040E3B2658E92900A86649 /* medical.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1214,6 +1233,7 @@
 				84C718C62606F85F00BA2C6D /* User.swift in Sources */,
 				CE021F0326576DD200728A20 /* AVCaptureDevice+.swift in Sources */,
 				CEC78E9E25F73A07007BA177 /* UIDevice+.swift in Sources */,
+				CE040E3F2658E9B200A86649 /* Utils.swift in Sources */,
 				CE8DFA102653DB5400385F3B /* UIStoryboard+.swift in Sources */,
 				CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */,
 				CEC78EA125F73A07007BA177 /* NSAttributedString+.swift in Sources */,

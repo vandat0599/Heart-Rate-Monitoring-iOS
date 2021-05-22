@@ -5,6 +5,7 @@ PODS:
   - Charts/Core (3.6.0)
   - Hero (1.5.0)
   - HGCircularSlider (2.2.0)
+  - InAppSettingsKit (3.3.1)
   - IQKeyboardManagerSwift (6.5.6)
   - lottie-ios (3.1.9)
   - MaterialComponents/AnimationTiming (124.2.0)
@@ -80,6 +81,7 @@ DEPENDENCIES:
   - Charts
   - Hero
   - HGCircularSlider (~> 2.2.0)
+  - InAppSettingsKit (~> 3.3.1)
   - IQKeyboardManagerSwift
   - lottie-ios
   - "MaterialComponents/TextControls+FilledTextAreas"
@@ -97,6 +99,7 @@ SPEC REPOS:
     - Charts
     - Hero
     - HGCircularSlider
+    - InAppSettingsKit
     - IQKeyboardManagerSwift
     - lottie-ios
     - MaterialComponents
@@ -112,6 +115,7 @@ SPEC CHECKSUMS:
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   HGCircularSlider: afb1942743a2df156dcc7a3500216e523e14266b
+  InAppSettingsKit: 5ca0b43b3fff3caab2e8fe5590a1216ab708e365
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   MaterialComponents: 1a9b2d9d45b1601ae544de85089adc4c464306d4
@@ -122,6 +126,6 @@ SPEC CHECKSUMS:
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: c7fb8514b8d95b8dacccffb4f6ca3f93547dc3b5
+PODFILE CHECKSUM: c4e7b0642f4cc50b98bc477c139171d3496f064d
 
 COCOAPODS: 1.10.1

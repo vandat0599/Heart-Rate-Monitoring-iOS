@@ -8,6 +8,7 @@
 
 import UIKit
 import Lottie
+import InAppSettingsKit
 
 class ContainerVC: BaseVC, MenuVCDelegate {
     //MARK: - Properties
