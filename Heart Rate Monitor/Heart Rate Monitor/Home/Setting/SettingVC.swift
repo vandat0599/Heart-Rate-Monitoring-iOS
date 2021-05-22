@@ -19,14 +19,12 @@ class SettingVC: IASKAppSettingsViewController {
         setupNavigationBar()
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .dark
-        } else {
-            // Fallback on earlier versions
         }
-//        navigationController?.setNavigationBarHidden(true, animated: false)
         navigationItem.rightBarButtonItem = nil
         view.backgroundColor = UIColor(named: "black-background")
         showDoneButton = false
         showCreditsFooter = false
+        NotificationCenter.default.addObserver(self, selector: #selector(settingDidChange(notification:)), name: Notification.Name.IASKSettingChanged, object: nil)
     }
     
     private func setupNavigationBar() {
@@ -34,5 +32,10 @@ class SettingVC: IASKAppSettingsViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.view.backgroundColor = UIColor(named: "black-background")
         navigationController?.navigationBar.tintColor = .white
+    }
+    
+    @objc func settingDidChange(notification: Notification?) {
+        print("settingDidChange")
+        print(UserDefaults.standard.bool(forKey: "flash_preference"))
     }
 }

@@ -51,6 +51,7 @@ class BaseVC: UIViewController {
     }
     
     private func setupView() {
+        NotificationCenter.default.addObserver(self, selector: #selector(settingDidChange(notification:)), name: Notification.Name.IASKSettingChanged, object: nil)
         view.addSubview(centerXView)
         view.addSubview(centerYView)
         NSLayoutConstraint.activate([
@@ -71,4 +72,6 @@ class BaseVC: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.title = ""
     }
+    
+    @objc func settingDidChange(notification: Notification?) { }
 }

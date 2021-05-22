@@ -90,7 +90,6 @@
 				<string>SENSITIVITY_HIGH</string>
 			</array>
 		</dict>
-        
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
@@ -107,12 +106,11 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>MEASUREMENT TIME (SEC)</string>
+			<string>MEASUREMENT TIME (SEC) ( &gt;= 20 )</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -132,23 +130,22 @@
 			<key>AutocorrectionType</key>
 			<string>No</string>
 		</dict>
-        
-        <dict>
-            <key>Type</key>
-            <string>PSGroupSpecifier</string>
-            <key>Title</key>
-            <string>SOUND</string>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Beep With Pulse</string>
-            <key>Key</key>
-            <string>sound_preference</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>SOUND</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Beep With Pulse</string>
+			<key>Key</key>
+			<string>sound_preference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 	</array>
 </dict>
 </plist>

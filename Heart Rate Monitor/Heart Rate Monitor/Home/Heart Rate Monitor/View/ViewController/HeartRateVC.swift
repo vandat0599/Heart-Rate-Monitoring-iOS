@@ -286,7 +286,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: {[weak self] (value) in
                 guard let self = self else { return }
-                self.toggleTorch(status: value)
+                CameraManager.shared.toggleTorch(status: value)
                 self.tapToStartLabel.isHidden = value
                 self.heartRateTrackLabel.isHidden = !value
                 self.fireImageView.isHidden = !value
@@ -438,23 +438,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             DispatchQueue.main.async {
                 self?.cameraView.layer.insertSublayer(CameraManager.shared.previewLayer!, at: 0)
             }
-        }
-    }
-
-    private func toggleTorch(status: Bool) {
-        guard let device = AVCaptureDevice.default(for: .video) else { return }
-        print("toggleTorch: \(status)")
-        guard device.hasTorch else { return }
-        do {
-            try device.lockForConfiguration()
-            if status {
-                try device.setTorchModeOn(level: 0.1)
-            } else {
-                device.torchMode = .off
-            }
-            device.unlockForConfiguration()
-        } catch {
-            print(error)
         }
     }
 }
