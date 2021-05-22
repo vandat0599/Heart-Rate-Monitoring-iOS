@@ -356,7 +356,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
-                let vc = ResultBottomSheetVC(heartRate: self.viewModel.heartRateTrackNumber.value/2, grapsValues: self.viewModel.grapValues.value)
+                let vc = ResultBottomSheetVC(heartRate: self.viewModel.heartRateTrackNumber.value/2, grapsValues: self.viewModel.shouldSaveHeartWaves ? self.viewModel.grapValues.value : [])
                 vc.canDismissOnSwipeDown = false
                 vc.canDismissOnTouchOutSide = false
                 self.present(vc, animated: true) {[weak self] in
@@ -433,12 +433,14 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         super.settingDidChange(notification: notification)
         let settingMeasureSecond = UserDefaults.standard.integer(forKey: "measurementtime_preference")
         viewModel.maxProgressSecond = (settingMeasureSecond == 0) || (settingMeasureSecond < 20) ? 20 : settingMeasureSecond
+        viewModel.shouldSaveHeartWaves = UserDefaults.standard.bool(forKey: "heartwaves_preference")
     }
     
     override func resetSettings() {
         super.resetSettings()
         let settingMeasureSecond = UserDefaults.standard.integer(forKey: "measurementtime_preference")
         viewModel.maxProgressSecond = (settingMeasureSecond == 0) || (settingMeasureSecond < 20) ? 20 : settingMeasureSecond
+        viewModel.shouldSaveHeartWaves = UserDefaults.standard.bool(forKey: "heartwaves_preference")
     }
     
     // MARK: - Frames Capture Methods

@@ -51,6 +51,7 @@ class ResultBottomSheetVC: BottomSheetViewController {
         view.xAxis.enabled = false
         view.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
         view.highlightPerTapEnabled = false
+        view.noDataText = ""
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

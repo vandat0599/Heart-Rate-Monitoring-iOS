@@ -54,6 +54,7 @@ class HeartExserciseVM: PHeartExserciseVM {
     var selectedBreathPerminIndex = 0
     var selectedMinIndex = 0
     var breathPerMaxSecond = 0
+    var shouldSaveHeartWaves = true
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)

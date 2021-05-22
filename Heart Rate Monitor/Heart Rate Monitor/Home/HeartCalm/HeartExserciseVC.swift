@@ -320,6 +320,16 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             .disposed(by: disposeBag)
     }
     
+    override func settingDidChange(notification: Notification?) {
+        super.settingDidChange(notification: notification)
+        viewModel.shouldSaveHeartWaves = UserDefaults.standard.bool(forKey: "heartwaves_preference")
+    }
+    
+    override func resetSettings() {
+        super.resetSettings()
+        viewModel.shouldSaveHeartWaves = UserDefaults.standard.bool(forKey: "heartwaves_preference")
+    }
+    
     @objc private func infoButtonTapped() {
         let vc = CalmInfoVC()
         present(vc, animated: true)
