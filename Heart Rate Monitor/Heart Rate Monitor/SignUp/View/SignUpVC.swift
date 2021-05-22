@@ -8,7 +8,7 @@
 import UIKit
 
 class SignUpVC: BaseVC {
-
+    var window: UIWindow?
     //Outlets
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var phoneTextField: UITextField!
@@ -43,5 +43,48 @@ class SignUpVC: BaseVC {
     
     private func setupView() {
         Gradient.horizontal(signupButton)
+    }
+    @IBAction func signupTapped(_ sender: Any) {
+        let valid = Utils.checkValidateField(email: emailTextField.text, password: passwordTextField.text, passwordConf: confirmPasswordTextField.text, phoneNum: phoneTextField.text)
+        switch (valid) {
+            
+        case 1:
+            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        case 2:
+            let alert = UIAlertController(title: "Error", message: "Email is not correct", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        case 3:
+            let alert = UIAlertController(title: "Password is not secure enough", message: "Make sure your password is at least  8 characters, contain special character and a number", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        case 4:
+            let alert = UIAlertController(title: "Error", message: "Make sure your password & confirm password match", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        default:
+            let API = APIService.shared
+    
+                API.register1(username: emailTextField.text!, password: passwordTextField.text!,phoneNumber: phoneTextField.text!,completion: { [self] (response) -> Void in
+                    if (response.data != nil){
+                        let vc = UINavigationController(rootViewController: ContainerVC())
+                        window = UIWindow(frame: UIScreen.main.bounds)
+                        window?.rootViewController = vc
+                        window?.makeKeyAndVisible()
+                    }else{
+                        let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    }
+                )
+            break;
+        }
     }
 }

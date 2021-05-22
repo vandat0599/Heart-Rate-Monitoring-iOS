@@ -124,6 +124,9 @@
                             <integer key="value" value="13"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="signupTapped:" destination="-1" eventType="touchUpInside" id="gTh-hE-C1Y"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="plw-65-H9p"/>
