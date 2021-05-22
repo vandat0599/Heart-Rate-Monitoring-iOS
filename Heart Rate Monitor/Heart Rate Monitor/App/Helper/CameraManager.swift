@@ -13,18 +13,25 @@ enum CameraType: Int {
     case front
     
     func captureDevice() -> AVCaptureDevice? {
-        switch self {
-        case .front:
-            let devices = AVCaptureDevice.DiscoverySession(deviceTypes: [], mediaType: AVMediaType.video, position: .front).devices
-            print("devices:\(devices)")
-            for device in devices where device.position == .front {
-                return device
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            switch self {
+            case .front:
+                let devices = AVCaptureDevice.DiscoverySession(deviceTypes: [], mediaType: AVMediaType.video, position: .front).devices
+                print("devices:\(devices)")
+                for device in devices where device.position == .front {
+                    return device
+                }
+            default:
+                break
             }
-        default:
-            break
+            guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { return nil }
+            return camera
+        case .notDetermined, .restricted, .denied:
+            return nil
+        @unknown default:
+            return nil
         }
-        guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { return nil }
-        return camera
     }
 }
 
@@ -38,7 +45,7 @@ typealias PreviewPlayerAvailable = (() -> ())
 
 class CameraManager: NSObject {
     
-    static let shared = CameraManager(cameraType: .back, preferredSpec: VideoSpec(fps: 30, size: CGSize(width: 100, height: 100)), completion: nil)
+    static var shared = CameraManager()
     private override init() {}
     
     let captureSession = AVCaptureSession()
@@ -51,26 +58,26 @@ class CameraManager: NSObject {
     var imageBufferHandler: ImageBufferHandler?
     var previewPlayerAvailable: PreviewPlayerAvailable?
     
-    init(cameraType: CameraType, preferredSpec: VideoSpec?, completion: (() -> ())?) {
-        super.init()
-        DispatchQueue.global().async { [unowned self] in
+    func reloadCamera(cameraType: CameraType, preferredSpec: VideoSpec?, completion: (() -> ())?) {
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
             guard let camera = cameraType.captureDevice() else { return }
             self.spec = preferredSpec
-            videoDevice = camera
+            self.videoDevice = camera
             
             // MARK: - Setup Video Format
-            captureSession.beginConfiguration()
-            captureSession.sessionPreset = .low
+            self.captureSession.beginConfiguration()
+            self.captureSession.sessionPreset = .low
             
             // MARK: - Setup video device input
             let videoDeviceInput: AVCaptureDeviceInput
             do {
-                videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
+                videoDeviceInput = try AVCaptureDeviceInput(device: self.videoDevice)
+                guard self.captureSession.canAddInput(videoDeviceInput) else { fatalError() }
+                self.captureSession.addInput(videoDeviceInput)
             } catch let error {
-                fatalError("Could not create AVCaptureDeviceInput instance with error: \(error).")
+                print("Could not create AVCaptureDeviceInput instance with error: \(error).")
             }
-            guard captureSession.canAddInput(videoDeviceInput) else { fatalError() }
-            captureSession.addInput(videoDeviceInput)
             
             // MARK: - Setup video output
             let videoDataOutput = AVCaptureVideoDataOutput()
@@ -78,61 +85,63 @@ class CameraManager: NSObject {
             videoDataOutput.alwaysDiscardsLateVideoFrames = true
             let queue = DispatchQueue(label: "com.covidsense.videosamplequeue")
             videoDataOutput.setSampleBufferDelegate(self, queue: queue)
-            guard captureSession.canAddOutput(videoDataOutput) else {
+            guard self.captureSession.canAddOutput(videoDataOutput) else {
                 fatalError()
             }
-            captureSession.addOutput(videoDataOutput)
-            videoConnection = videoDataOutput.connection(with: .video)
-            videoConnection?.videoOrientation = .portrait
+            self.captureSession.addOutput(videoDataOutput)
+            self.videoConnection = videoDataOutput.connection(with: .video)
+            self.videoConnection?.videoOrientation = .portrait
             if let preferredSpec = preferredSpec {
                 // Update the format with a preferred fps
-                try? videoDevice.lockForConfiguration()
-                videoDevice.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
-                videoDevice.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
-                videoDevice.unlockForConfiguration()
+                try? self.videoDevice.lockForConfiguration()
+                self.videoDevice.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
+                self.videoDevice.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: preferredSpec.fps!)
+                self.videoDevice.unlockForConfiguration()
             }
-            let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            let previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
             previewLayer.frame = CGRect(x: 0, y: 0, width: preferredSpec?.size?.width ?? 0, height: preferredSpec?.size?.height ?? 0)
             previewLayer.contentsGravity = CALayerContentsGravity.resizeAspectFill
             previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
             self.previewLayer = previewLayer
             if previewLayer != nil {
                 print("preview player available")
-                previewPlayerAvailable?()
+                self.previewPlayerAvailable?()
             }
-            captureSession.commitConfiguration()
-            startCapture()
+            self.captureSession.commitConfiguration()
+            self.startCapture()
             completion?()
         }
     }
     
     func startCapture() {
-        DispatchQueue.global().async { [unowned self] in
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
             #if DEBUG
             print(#function + "\(self.classForCoder)/")
             #endif
-            if captureSession.isRunning {
+            if self.captureSession.isRunning {
                 #if DEBUG
                 print("Capture Session is already running 🏃‍♂️.")
                 #endif
                 return
             }
-            captureSession.startRunning()
+            self.captureSession.startRunning()
         }
     }
     
     func stopCapture() {
-        DispatchQueue.global().async { [unowned self] in
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
             #if DEBUG
             print(#function + "\(self.classForCoder)/")
             #endif
-            if !captureSession.isRunning {
+            if !self.captureSession.isRunning {
                 #if DEBUG
                 print("Capture Session has already stopped 🛑.")
                 #endif
                 return
             }
-            captureSession.stopRunning()
+            self.captureSession.stopRunning()
         }
     }
     
@@ -159,6 +168,15 @@ class CameraManager: NSObject {
             self.captureSession.beginConfiguration()
             self.captureSession.sessionPreset = sensivty
             self.captureSession.commitConfiguration()
+        }
+    }
+    
+    static func reloadCaptureSession() {
+        if CameraManager.shared.previewLayer == nil {
+            print("camera nil ok setup camera")
+            CameraManager.shared.reloadCamera(cameraType: .back, preferredSpec: VideoSpec(fps: 30, size: CGSize(width: 100, height: 100)), completion: nil)
+        } else {
+            print("camera ok")
         }
     }
 }

@@ -80,6 +80,23 @@ class HAlert: UIView {
         viewController.present(vc, animated: true, completion: nil)
     }
     
+    static func showPermissionCameraAlert(_ viewController: UIViewController, leftAction: (() -> ())?, rightAction: (() -> ())?) {
+        UINotificationFeedbackGenerator().notificationOccurred(.warning)
+        let vc = LottieSheetViewController(
+            lottie: AnimationView.init(name: "lottie-permission-camera"),
+            closeImage: UIImage(named: "ic-close")!,
+            title: "Camera Permission",
+            description: "We would like to use your camera, please give access to the camera to be able to measure your heart rate!",
+            leftActionTitle: "CANCEL",
+            rightActionTitle: "OK",
+            leftAction: leftAction,
+            rightAction: rightAction)
+        vc.canDismissOnSwipeDown = false
+        vc.closeButton.isHidden = true
+        vc.canDismissOnTouchOutSide = false
+        viewController.present(vc, animated: true, completion: nil)
+    }
+    
     static func showAlertWithTwoAction(_ viewController: UIViewController, lottieName: String, title: String, message: String, leftTitle: String, rightTitle: String, leftAction: (() -> ())? = nil, rightAction: (() -> ())? = nil) {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
         let vc = LottieSheetViewController(

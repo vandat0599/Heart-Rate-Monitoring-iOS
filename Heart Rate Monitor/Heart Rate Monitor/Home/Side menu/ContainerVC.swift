@@ -10,6 +10,7 @@ import UIKit
 import Lottie
 import InAppSettingsKit
 import Messages
+import AVFoundation
 
 class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
     //MARK: - Properties
@@ -108,6 +109,10 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
     //MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+    }
+    
+    private func setupView() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuControl)
         view.insertSubview(menuVC.view, at: 0)
         menuVC.view.fitIn(parentView: view, padding: 0)

@@ -187,17 +187,14 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        updateBottomHeartRateViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let openCount = (UserDefaultHelper.get(key: .openMonitorCount) as? Int) ?? 0
-        if openCount == 0 {
-            let vc = GuideVC()
-            present(vc, animated: true)
+        checkPermissionIfNeeded() {[weak self] in
+            guard let self = self else { return }
+            self.onOKCameraPermission()
         }
-        UserDefaultHelper.save(value: openCount + 1, key: .openMonitorCount)
     }
     
     private func setupView() {
@@ -277,6 +274,55 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         initVideoCapture()
         bindViews()
         NotificationCenter.default.addObserver(self, selector: #selector(menuButtonTapped), name: AppConstant.AppNotificationName.menuButtonTapped, object: nil)
+        updateBottomHeartRateViews()
+    }
+    
+    func checkPermissionIfNeeded(complete: (() -> ())? = nil) {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            complete?()
+        case .notDetermined:
+            DispatchQueue.main.async {
+                HAlert.showPermissionCameraAlert(self) { [weak self] in
+                    guard let self = self else { return }
+                    self.checkPermissionIfNeeded() {
+                        self.onOKCameraPermission()
+                    }
+                } rightAction: { [weak self] in
+                    guard let self = self else { return }
+                    AVCaptureDevice.requestAccess(for: .video) {[weak self] granted in
+                        guard let self = self else { return }
+                        if granted {
+                            complete?()
+                        } else {
+                            self.checkPermissionIfNeeded() {
+                                self.onOKCameraPermission()
+                            }
+                        }
+                    }
+                }
+            }
+        case .denied, .restricted:
+            DispatchQueue.main.async {
+                HAlert.showPermissionCameraAlert(self) { [weak self] in
+                    guard let self = self else { return }
+                    self.checkPermissionIfNeeded() {
+                        CameraManager.reloadCaptureSession()
+                    }
+                } rightAction: { [weak self] in
+                    guard let self = self else { return }
+                    guard let url = URL(string: UIApplication.openSettingsURLString) else {
+                        self.checkPermissionIfNeeded() {
+                            self.onOKCameraPermission()
+                        }
+                        return
+                    }
+                    UIApplication.shared.open(url, options: [:])
+                }
+            }
+        @unknown default:
+            print("error")
+        }
     }
     
     private func bindViews() {
@@ -382,6 +428,18 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 self.updateBottomHeartRateViews()
             }
             .disposed(by: disposeBag)
+    }
+    
+    private func onOKCameraPermission() {
+        CameraManager.reloadCaptureSession()
+        let openCount = (UserDefaultHelper.get(key: .openMonitorCount) as? Int) ?? 0
+        if openCount == 0 {
+            DispatchQueue.main.async {
+                let vc = GuideVC()
+                self.present(vc, animated: true)
+            }
+        }
+        UserDefaultHelper.save(value: openCount + 1, key: .openMonitorCount)
     }
     
     func updateBottomHeartRateViews() {

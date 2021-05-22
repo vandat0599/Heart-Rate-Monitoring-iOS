@@ -21,7 +21,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>Please give access to the camera to be able to measure your heart rate</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -53,13 +53,12 @@
 	<string>${baseUrl}</string>
 	<key>logEnabled</key>
 	<string>${logEnabled}</string>
-    
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>googlegmail</string>
-        <string>ms-outlook</string>
-        <string>readdle-spark</string>
-        <string>ymail</string>
-    </array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>googlegmail</string>
+		<string>ms-outlook</string>
+		<string>readdle-spark</string>
+		<string>ymail</string>
+	</array>
 </dict>
 </plist>

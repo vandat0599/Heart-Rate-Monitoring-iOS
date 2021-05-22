@@ -20,6 +20,7 @@ class LottieSheetViewController: BottomSheetViewController {
         view.text = popupTitle
         view.numberOfLines = 0
         view.textAlignment = .center
+        view.textColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -30,19 +31,20 @@ class LottieSheetViewController: BottomSheetViewController {
         view.text = popupDescription
         view.numberOfLines = 0
         view.textAlignment = .center
+        view.textColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var leftActionButton: UIButton = {
         let view = UIButton()
-        view.setTitle(leftActionTitle, for: .normal)
+        view.setTitle("CANCEL", for: .normal)
         view.titleLabel?.font = .systemFont(ofSize: 14)
         view.setTitleColor(UIColor(named: "red"), for: .normal)
         view.clipsToBounds = true
         view.cornerRadius = 22
-        view.backgroundColor = .white
-        view.borderColor = .systemPink
+        view.backgroundColor = .clear
+        view.borderColor = UIColor(named: "white-holder")
         view.borderWidth = 1
         view.addTarget(self, action: #selector(leftActionTapped), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -51,12 +53,12 @@ class LottieSheetViewController: BottomSheetViewController {
     
     private lazy var rightActionButton: UIButton = {
         let view = UIButton()
-        view.setTitle(rightActionTitle, for: .normal)
+        view.setTitle("OK", for: .normal)
         view.titleLabel?.font = .systemFont(ofSize: 14)
         view.setTitleColor(.white, for: .normal)
         view.clipsToBounds = true
         view.cornerRadius = 22
-        view.backgroundColor = UIColor(named: "red")
+        view.backgroundColor = UIColor(named: "white-holder")
         view.addTarget(self, action: #selector(rightActionTapped), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -112,6 +114,8 @@ class LottieSheetViewController: BottomSheetViewController {
     
     override func layoutViews() {
         super.layoutViews()
+        view.backgroundColor = UIColor(named: "black-background")
+        contentView.backgroundColor = UIColor(named: "black-background")
         setupViewAttribute()
         contentView.addSubview(closeButton)
         contentView.addSubview(lottieView)
