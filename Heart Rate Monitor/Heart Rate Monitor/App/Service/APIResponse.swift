@@ -9,9 +9,9 @@ import Foundation
 
 struct APIResponsed: Codable {
     var data: dataResponse?
-    var errorCode: Int?
+    var error_code: Int?
     var message: String?
-    var status: Bool?
+    var status: Int?
     
 }
 

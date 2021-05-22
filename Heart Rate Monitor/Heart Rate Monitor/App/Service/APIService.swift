@@ -108,13 +108,13 @@ class APIService {
         AF.request("https://heart-rate-monitor-hcmus.herokuapp.com/api/users/signup", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
                 //debugPrint(response)
                 guard let data = response.data else { return }
-                            do {
-                                let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
-                                result = apiResponse
-                                completion(result)
-                            } catch let error {
-                                print(error)
-                            }
+                        do {
+                            let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
+                            result = apiResponse
+                            completion(result)
+                        } catch let error {
+                            print(error)
+                        }
         }
     }
 }
