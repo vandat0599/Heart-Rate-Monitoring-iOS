@@ -153,6 +153,14 @@ class CameraManager: NSObject {
             print(error)
         }
     }
+    
+    func updateSensivity(sensivty: AVCaptureSession.Preset) {
+        DispatchQueue.global().async {
+            self.captureSession.beginConfiguration()
+            self.captureSession.sessionPreset = sensivty
+            self.captureSession.commitConfiguration()
+        }
+    }
 }
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {

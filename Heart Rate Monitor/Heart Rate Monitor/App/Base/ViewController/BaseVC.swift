@@ -74,7 +74,14 @@ class BaseVC: UIViewController {
         navigationItem.title = ""
     }
     
-    @objc func settingDidChange(notification: Notification?) { }
+    @objc func settingDidChange(notification: Notification?) {
+        let sensivity = UserDefaults.standard.integer(forKey: "sensitivity_preference")
+        if sensivity == 0 {
+            CameraManager.shared.updateSensivity(sensivty: .low)
+        } else {
+            CameraManager.shared.updateSensivity(sensivty: .high)
+        }
+    }
     
     @objc func resetSettings() { }
 }
