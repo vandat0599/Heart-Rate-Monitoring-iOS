@@ -9,8 +9,9 @@
 import UIKit
 import Lottie
 import InAppSettingsKit
+import Messages
 
-class ContainerVC: BaseVC, MenuVCDelegate {
+class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
     //MARK: - Properties
     var isSHowingMenu = false
     private var showingVC: UINavigationController!
@@ -189,6 +190,11 @@ class ContainerVC: BaseVC, MenuVCDelegate {
     
     func onItemTapped(index: Int) {
         UISelectionFeedbackGenerator().selectionChanged()
+        if index > vcArray.count {
+            toggleMenu()
+            openMailBox()
+            return
+        }
         guard index <= vcArray.count, showingVC != vcArray[index - 1] else {
             toggleMenu()
             return
@@ -199,5 +205,48 @@ class ContainerVC: BaseVC, MenuVCDelegate {
         showingVC = vcArray[index - 1]
         (showingVC.topViewController as? HeartRateVC)?.initVideoCapture()
         (showingVC.topViewController as? HeartExserciseVC)?.initVideoCapture()
+    }
+    
+    func openMailBox() {
+        let recipientEmail = "doantotnghiep.fit@gmail.com"
+        let subject = "Heart Rate Monitor 2021 Feedback"
+        let body = ""
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([recipientEmail])
+            mail.setSubject(subject)
+            mail.setMessageBody(body, isHTML: false)
+            
+            present(mail, animated: true)
+        } else if let emailUrl = createEmailUrl(to: recipientEmail, subject: subject, body: body) {
+            UIApplication.shared.open(emailUrl)
+        }
+    }
+        
+    private func createEmailUrl(to: String, subject: String, body: String) -> URL? {
+        let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let bodyEncoded = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        
+        let gmailUrl = URL(string: "googlegmail://co?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let outlookUrl = URL(string: "ms-outlook://compose?to=\(to)&subject=\(subjectEncoded)")
+        let yahooMail = URL(string: "ymail://mail/compose?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let sparkUrl = URL(string: "readdle-spark://compose?recipient=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let defaultUrl = URL(string: "mailto:\(to)?subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        
+        if let gmailUrl = gmailUrl, UIApplication.shared.canOpenURL(gmailUrl) {
+            return gmailUrl
+        } else if let outlookUrl = outlookUrl, UIApplication.shared.canOpenURL(outlookUrl) {
+            return outlookUrl
+        } else if let yahooMail = yahooMail, UIApplication.shared.canOpenURL(yahooMail) {
+            return yahooMail
+        } else if let sparkUrl = sparkUrl, UIApplication.shared.canOpenURL(sparkUrl) {
+            return sparkUrl
+        }
+        return defaultUrl
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
 }
