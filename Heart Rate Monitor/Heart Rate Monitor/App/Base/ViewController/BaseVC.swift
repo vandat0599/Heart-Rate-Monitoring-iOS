@@ -48,6 +48,7 @@ class BaseVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        resetSettings()
     }
     
     private func setupView() {
@@ -74,4 +75,6 @@ class BaseVC: UIViewController {
     }
     
     @objc func settingDidChange(notification: Notification?) { }
+    
+    @objc func resetSettings() { }
 }

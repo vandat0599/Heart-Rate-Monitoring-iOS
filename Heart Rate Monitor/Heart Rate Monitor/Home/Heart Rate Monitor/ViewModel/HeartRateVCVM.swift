@@ -12,7 +12,7 @@ import RxCocoa
 import AVFoundation
 
 protocol HeartRateVCVM {
-    var maxProgressSecond: Int { get }
+    var maxProgressSecond: Int { get set }
     var isPlaying: BehaviorRelay<Bool> { get }
     var isMeasuring: BehaviorRelay<Bool> { get }
     var heartRateTrackNumber: BehaviorRelay<Int> { get }
@@ -44,7 +44,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var capturedRedmean: [Double] = []
     private var pulses: [Double] = []
     var timer: Timer?
-    let maxProgressSecond = 20
+    var maxProgressSecond = 20
     var value = 0
     
     init() {

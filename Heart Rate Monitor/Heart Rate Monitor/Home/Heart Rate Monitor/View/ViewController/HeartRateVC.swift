@@ -428,6 +428,18 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         chartView.notifyDataSetChanged()
     }
     
+    override func settingDidChange(notification: Notification?) {
+        super.settingDidChange(notification: notification)
+        let settingMeasureSecond = UserDefaults.standard.integer(forKey: "measurementtime_preference")
+        viewModel.maxProgressSecond = (settingMeasureSecond == 0) || (settingMeasureSecond < 20) ? 20 : settingMeasureSecond
+    }
+    
+    override func resetSettings() {
+        super.resetSettings()
+        let settingMeasureSecond = UserDefaults.standard.integer(forKey: "measurementtime_preference")
+        viewModel.maxProgressSecond = (settingMeasureSecond == 0) || (settingMeasureSecond < 20) ? 20 : settingMeasureSecond
+    }
+    
     // MARK: - Frames Capture Methods
     func initVideoCapture() {
         CameraManager.shared.imageBufferHandler = { [unowned self] (imageBuffer) in
