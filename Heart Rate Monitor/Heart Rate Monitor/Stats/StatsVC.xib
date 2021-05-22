@@ -12,10 +12,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StatsVC" customModule="Heart_Rate_Monitor" customModuleProvider="target">
             <connections>
-                <outlet property="allLabelsButton" destination="WBC-Oh-zyw" id="TEo-kR-qwY"/>
+                <outlet property="avgLabel" destination="Kuj-mv-JDg" id="cNX-zb-GbT"/>
                 <outlet property="chartView" destination="ItC-g9-IMU" id="lej-IR-Na6"/>
+                <outlet property="labelButton" destination="WBC-Oh-zyw" id="9OL-jb-jwV"/>
+                <outlet property="labelPickerView" destination="ySm-OU-eaH" id="2He-mG-HWG"/>
+                <outlet property="maxDateLabel" destination="BBL-aP-8TV" id="WZ5-bE-REN"/>
+                <outlet property="maxLabel" destination="SF1-sb-ENQ" id="lGM-IQ-pvq"/>
+                <outlet property="minDateLabel" destination="GQh-je-mfQ" id="gZ5-hg-OCQ"/>
+                <outlet property="minLabel" destination="E9d-tm-8BV" id="p7d-qY-iny"/>
                 <outlet property="monthButton" destination="4wC-2P-CyP" id="pHi-Mq-rEV"/>
                 <outlet property="statsView" destination="I1T-j7-fpK" id="hXy-sR-eJ7"/>
+                <outlet property="toolBar" destination="tUN-pv-lEM" id="0S2-IQ-5K9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="Vth-OE-KuV"/>
                 <outlet property="weekButton" destination="a2A-yy-BW5" id="clJ-xv-Pob"/>
             </connections>
@@ -88,7 +95,7 @@
                             <color key="textColor" systemColor="opaqueSeparatorColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ItC-g9-IMU">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ItC-g9-IMU" customClass="BarChartView" customModule="Charts">
                             <rect key="frame" x="20" y="20" width="354" height="583.5"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
@@ -130,7 +137,7 @@
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                            <real key="value" value="1.5"/>
+                            <real key="value" value="1"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                             <color key="value" systemColor="opaqueSeparatorColor"/>
@@ -140,20 +147,49 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tUN-pv-lEM">
+                    <rect key="frame" x="0.0" y="668" width="414" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="VUu-iA-xci"/>
+                    </constraints>
+                    <items>
+                        <barButtonItem title="Cancel" id="xb1-cA-zxr">
+                            <color key="tintColor" name="pink"/>
+                            <connections>
+                                <action selector="cancelToolbarButtonTapped:" destination="-1" id="jeA-kc-4UJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                    <color key="barTintColor" name="black-background"/>
+                </toolbar>
+                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ySm-OU-eaH">
+                    <rect key="frame" x="0.0" y="712" width="414" height="150"/>
+                    <color key="backgroundColor" name="black-background"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="150" id="P0I-sJ-tNN"/>
+                    </constraints>
+                </pickerView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WBC-Oh-zyw">
-                    <rect key="frame" x="47.5" y="44" width="76" height="30"/>
-                    <state key="normal" title="ALL LABEL">
+                    <rect key="frame" x="47.5" y="44" width="85" height="30"/>
+                    <state key="normal" title="ALL LABELS">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <connections>
+                        <action selector="labelButtonTapped:" destination="-1" eventType="touchUpInside" id="dVI-ME-AmN"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wC-2P-CyP">
                     <rect key="frame" x="314" y="44" width="80" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="d51-vD-BZO"/>
                     </constraints>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="MONTH">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <connections>
+                        <action selector="weekMonthButtonsTapped:" destination="-1" eventType="touchUpInside" id="d9J-E3-Jlm"/>
+                    </connections>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tag.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="YVl-lG-3u2">
                     <rect key="frame" x="15" y="44" width="22.5" height="31"/>
@@ -161,14 +197,19 @@
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2A-yy-BW5">
                     <rect key="frame" x="229" y="44" width="80" height="30"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="WEEK">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <connections>
+                        <action selector="weekMonthButtonsTapped:" destination="-1" eventType="touchUpInside" id="YQy-lo-Szc"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="black-background"/>
             <constraints>
+                <constraint firstItem="ySm-OU-eaH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="0ax-x4-qTQ"/>
                 <constraint firstItem="I1T-j7-fpK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="0fa-7H-zaS"/>
                 <constraint firstItem="4wC-2P-CyP" firstAttribute="leading" secondItem="a2A-yy-BW5" secondAttribute="trailing" constant="5" id="5UJ-G3-7Vr"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4wC-2P-CyP" secondAttribute="trailing" constant="20" id="8Sn-I7-aRm"/>
@@ -177,10 +218,15 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="I1T-j7-fpK" secondAttribute="bottom" constant="10" id="OYZ-2O-W6i"/>
                 <constraint firstItem="WBC-Oh-zyw" firstAttribute="leading" secondItem="YVl-lG-3u2" secondAttribute="trailing" constant="10" id="R79-TR-SSF"/>
                 <constraint firstItem="4wC-2P-CyP" firstAttribute="bottom" secondItem="WBC-Oh-zyw" secondAttribute="bottom" id="Y0Z-DE-Pia"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ySm-OU-eaH" secondAttribute="trailing" id="dCC-Ba-fZS"/>
                 <constraint firstItem="I1T-j7-fpK" firstAttribute="top" secondItem="WBC-Oh-zyw" secondAttribute="bottom" constant="20" id="e73-tU-SXa"/>
+                <constraint firstItem="tUN-pv-lEM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ksC-sN-eRY"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tUN-pv-lEM" secondAttribute="trailing" id="lwu-Ma-5ja"/>
                 <constraint firstItem="a2A-yy-BW5" firstAttribute="width" secondItem="4wC-2P-CyP" secondAttribute="width" id="mDh-YP-403"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="I1T-j7-fpK" secondAttribute="trailing" constant="10" id="mi3-lY-Bf0"/>
                 <constraint firstItem="WBC-Oh-zyw" firstAttribute="bottom" secondItem="YVl-lG-3u2" secondAttribute="bottom" id="pWx-24-I9Z"/>
+                <constraint firstItem="ySm-OU-eaH" firstAttribute="top" secondItem="tUN-pv-lEM" secondAttribute="bottom" id="qnk-Rb-EJB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ySm-OU-eaH" secondAttribute="bottom" id="tdw-Rw-1w2"/>
                 <constraint firstItem="WBC-Oh-zyw" firstAttribute="top" secondItem="YVl-lG-3u2" secondAttribute="top" id="w1E-fw-zZv"/>
                 <constraint firstItem="YVl-lG-3u2" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="wC7-ZX-MbP"/>
             </constraints>
@@ -191,6 +237,9 @@
         <image name="tag.fill" catalog="system" width="128" height="119"/>
         <namedColor name="black-background">
             <color red="0.15294117647058825" green="0.19607843137254902" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pink">
+            <color red="0.62352941176470589" green="0.082352941176470587" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
