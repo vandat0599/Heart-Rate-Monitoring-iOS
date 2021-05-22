@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuVC" customModule="Heart_Rate_Monitor" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="z2D-ts-u4h" id="2EQ-jg-cP7"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="z2D-ts-u4h">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="7gX-hC-IfI">
+                    <rect key="frame" x="0.0" y="64" width="248.5" height="398"/>
+                    <subviews>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K4j-ez-kDi">
+                            <rect key="frame" x="0.0" y="0.0" width="248.5" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="POb-sQ-dHh"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="MEASURE" image="ic-fingerprint">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="itemTapped:" destination="-1" eventType="touchUpInside" id="qcm-sN-AjW"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JD5-wd-xrl">
+                            <rect key="frame" x="0.0" y="59" width="248.5" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="vF4-Ml-fpx"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="STATS" image="ic-barchart">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="itemTapped:" destination="-1" eventType="touchUpInside" id="NaO-zC-I4i"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KzA-6T-AKj">
+                            <rect key="frame" x="0.0" y="118" width="248.5" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="vvY-kI-xY5"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="HISTORY" image="ic-history-clock">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="itemTapped:" destination="-1" eventType="touchUpInside" id="hOO-zv-Ofb"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIf-iQ-CPr">
+                            <rect key="frame" x="0.0" y="177" width="248.5" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="puO-ue-krX"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="CALM" image="ic-calm">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="itemTapped:" destination="-1" eventType="touchUpInside" id="F7Q-yN-KqU"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hUA-Wz-P9f">
+                            <rect key="frame" x="0.0" y="236" width="248.5" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="PRR-2t-abT"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="SETTING" image="ic-setting">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="itemTapped:" destination="-1" eventType="touchUpInside" id="E4f-Sb-GCd"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1us-4R-6fX">
+                            <rect key="frame" x="0.0" y="295" width="248.5" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="eBu-8L-1eU"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="HELP" image="ic-help">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="itemTapped:" destination="-1" eventType="touchUpInside" id="Rwc-yw-xB4"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcn-MZ-x9u">
+                            <rect key="frame" x="0.0" y="354" width="248.5" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="JUr-QL-ZSH"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="contentEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="FEEDBACK" image="ic-feedback">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="itemTapped:" destination="-1" eventType="touchUpInside" id="BtU-9w-fhK"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="0rc-dL-nTE"/>
+            <color key="backgroundColor" name="black-background"/>
+            <constraints>
+                <constraint firstItem="7gX-hC-IfI" firstAttribute="top" secondItem="0rc-dL-nTE" secondAttribute="top" constant="20" id="EXH-nZ-hoF"/>
+                <constraint firstItem="7gX-hC-IfI" firstAttribute="leading" secondItem="0rc-dL-nTE" secondAttribute="leading" id="T3A-zx-tI2"/>
+                <constraint firstItem="7gX-hC-IfI" firstAttribute="width" secondItem="z2D-ts-u4h" secondAttribute="width" multiplier="0.6" id="onb-cK-dvE"/>
+            </constraints>
+            <point key="canvasLocation" x="132" y="14"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic-barchart" width="24" height="24"/>
+        <image name="ic-calm" width="24" height="24"/>
+        <image name="ic-feedback" width="24" height="24"/>
+        <image name="ic-fingerprint" width="24" height="24"/>
+        <image name="ic-help" width="24" height="24"/>
+        <image name="ic-history-clock" width="24" height="24"/>
+        <image name="ic-setting" width="24" height="24"/>
+        <namedColor name="black-background">
+            <color red="0.15294117647058825" green="0.19607843137254902" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

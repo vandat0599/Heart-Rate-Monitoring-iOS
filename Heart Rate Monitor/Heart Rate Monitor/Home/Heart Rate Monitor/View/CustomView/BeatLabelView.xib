@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BeatLabelView" customModule="Heart_Rate_Monitor" customModuleProvider="target">
+            <connections>
+                <outlet property="typeLabel" destination="Q3K-gg-oEd" id="hqb-yf-3MG"/>
+                <outlet property="valueLabel" destination="GLA-Rh-nJl" id="pg1-Az-X9T"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="387" height="343"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLA-Rh-nJl">
+                    <rect key="frame" x="182" y="160.66666666666666" width="23.333333333333343" height="21.666666666666657"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AVG" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3K-gg-oEd">
+                    <rect key="frame" x="178" y="182.33333333333334" width="31.333333333333343" height="19.333333333333343"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BPM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKo-m5-hxD">
+                    <rect key="frame" x="205.33333333333334" y="148.66666666666666" width="21.333333333333343" height="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="GLA-Rh-nJl" firstAttribute="top" secondItem="KKo-m5-hxD" secondAttribute="bottom" id="690-U4-quV"/>
+                <constraint firstItem="Q3K-gg-oEd" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="G86-KM-vhP"/>
+                <constraint firstItem="Q3K-gg-oEd" firstAttribute="top" secondItem="GLA-Rh-nJl" secondAttribute="bottom" priority="998" id="OvK-UV-nDV"/>
+                <constraint firstItem="KKo-m5-hxD" firstAttribute="leading" secondItem="GLA-Rh-nJl" secondAttribute="trailing" id="bFV-sC-GNZ"/>
+                <constraint firstItem="GLA-Rh-nJl" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="iGE-AT-nRf"/>
+                <constraint firstItem="GLA-Rh-nJl" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="yt0-xe-ZYb"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-42.753623188405797" y="63.994565217391312"/>
+        </view>
+    </objects>
+</document>

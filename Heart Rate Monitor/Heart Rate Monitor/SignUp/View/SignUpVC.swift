@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SignUpVC: UIViewController {
+class SignUpVC: BaseVC {
 
     //Outlets
     @IBOutlet weak var emailTextField: UITextField!
@@ -18,23 +18,30 @@ class SignUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
+        setupView()
     }
     
-    func configUI() {
-        Gradient.horizontal(signupButton)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         emailTextField.layer.masksToBounds = true
         emailTextField.layer.borderColor = UIColor(named: "label")?.cgColor
         emailTextField.layer.borderWidth = 1.0
+        
         phoneTextField.layer.masksToBounds = true
         phoneTextField.layer.borderColor = UIColor(named: "label")?.cgColor
         phoneTextField.layer.borderWidth = 1.0
+        
         passwordTextField.layer.masksToBounds = true
         passwordTextField.layer.borderColor = UIColor(named: "label")?.cgColor
         passwordTextField.layer.borderWidth = 1.0
+        
         confirmPasswordTextField.layer.masksToBounds = true
         confirmPasswordTextField.layer.borderColor = UIColor(named: "label")?.cgColor
         confirmPasswordTextField.layer.borderWidth = 1.0
+    }
+    
+    private func setupView() {
+        Gradient.horizontal(signupButton)
     }
 }

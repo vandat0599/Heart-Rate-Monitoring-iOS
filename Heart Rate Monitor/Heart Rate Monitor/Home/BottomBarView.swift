@@ -18,7 +18,7 @@ class BottomBarView: UIView {
     private lazy var itemHistory: TabItemView = {
         let view = TabItemView()
         view.backgroundColor = .clear
-        view.config(iconName: "ic-history-tab", title: "History", normalColor: .lightGray, selectedColor: .black)
+        view.config(iconName: "ic-history-tab", title: "History", normalColor: .lightGray, selectedColor: UIColor(named: "black-white")!)
         view.addTarget(self, action: #selector(itemTapped(_:)), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -27,20 +27,21 @@ class BottomBarView: UIView {
     private lazy var itemUser: TabItemView = {
         let view = TabItemView()
         view.backgroundColor = .clear
-        view.config(iconName: "ic-user-tab", title: "Profile", normalColor: .lightGray, selectedColor: .black)
+        view.config(iconName: "ic-user-tab", title: "Profile", normalColor: .lightGray, selectedColor: UIColor(named: "black-white")!)
         view.addTarget(self, action: #selector(itemTapped(_:)), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var itemHeartRate: UIControl = {
-        let view = UIControl()
+    private lazy var itemHeartRate: CustomRippleControl = {
+        let view = CustomRippleControl()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(itemTapped(_:)), for: .touchUpInside)
         view.cornerRadius = 24
         let imageView = UIImageView(image: UIImage(named: "ic-heart-tab"))
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: 56),
@@ -106,9 +107,6 @@ class BottomBarView: UIView {
     
     @objc private func itemTapped(_ sender: UIControl) {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        if sender == itemHeartRate {
-            sender.performSpringAnimation(duration: 0.4, maxScale: 0.95)
-        }
         [itemHistory, itemUser].forEach {
             $0.isSelected = $0 == sender
         }

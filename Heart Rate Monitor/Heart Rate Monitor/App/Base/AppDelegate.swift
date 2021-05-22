@@ -7,14 +7,18 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Accelerate
+import UserNotifications
+import InAppSettingsKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var deviceToken: String?
     
     let rootViewController: UIViewController = {
-        return UINavigationController(rootViewController: SignUpVC())
+        return UINavigationController(rootViewController: ContainerVC())
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -26,5 +30,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         return true
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        PersistenceManager.shared.saveContext()
+    }
+    
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        PersistenceManager.shared.saveContext()
+    }
+    
+    // MARK: - other
 }
 

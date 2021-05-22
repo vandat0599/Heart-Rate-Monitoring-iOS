@@ -6,13 +6,19 @@ target 'Heart Rate Monitor' do
   use_frameworks!
   pod 'Alamofire'
   pod 'SDWebImage'
-  pod 'SDWebImage'
   pod 'IQKeyboardManagerSwift'
   pod 'SVProgressHUD'
   pod 'Hero'
   pod "lottie-ios"
   pod 'RxSwift', '~> 5'
   pod 'RxCocoa', '~> 5'
+  pod 'Charts'
+  pod 'HGCircularSlider', '~> 2.2.0'
+  pod 'MaterialComponents/TextControls+FilledTextAreas'
+  pod 'MaterialComponents/TextControls+FilledTextFields'
+  pod 'MaterialComponents/TextControls+OutlinedTextAreas'
+  pod 'MaterialComponents/TextControls+OutlinedTextFields'
+  pod 'InAppSettingsKit', '~> 3.3.1'
 
   # Pods for Heart Rate Monitor
 

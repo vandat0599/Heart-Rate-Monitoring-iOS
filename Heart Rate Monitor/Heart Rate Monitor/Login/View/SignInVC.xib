@@ -65,6 +65,9 @@
                             <integer key="value" value="13"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="loginTapped:" destination="-1" eventType="touchUpInside" id="68H-SG-VDo"/>
+                    </connections>
                 </button>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kc9-p5-RvQ">
                     <rect key="frame" x="40" y="517" width="259" height="34"/>
@@ -107,6 +110,9 @@
                             <integer key="value" value="13"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="signupTapped:" destination="-1" eventType="touchUpInside" id="gYB-bO-Wfb"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tm-UR-vp0">
                     <rect key="frame" x="163.5" y="559" width="87" height="25"/>

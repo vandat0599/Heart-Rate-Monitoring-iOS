@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TabItemView: UIControl {
+class TabItemView: CustomRippleControl {
     
     private lazy var iconImageView: UIImageView = {
         let view = UIImageView()
