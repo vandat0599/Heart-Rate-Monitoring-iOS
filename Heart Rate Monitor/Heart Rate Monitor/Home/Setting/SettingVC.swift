@@ -6,10 +6,25 @@
 //
 
 import UIKit
+import InAppSettingsKit
 
-class SettingVC: BaseVC {
+class SettingVC: IASKAppSettingsViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+    }
+    
+    private func setupView() {
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .dark
+        } else {
+            // Fallback on earlier versions
+        }
+        navigationController?.setNavigationBarHidden(true, animated: false)
         view.backgroundColor = UIColor(named: "black-background")
+        showDoneButton = false
+        
+        
     }
 }

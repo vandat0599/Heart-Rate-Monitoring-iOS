@@ -39,6 +39,7 @@
 		CE00163F261D909D00B9374F /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE00163E261D909D00B9374F /* BottomSheetViewController.swift */; };
 		CE021EF9265764E000728A20 /* HeartExserciseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE021EF8265764E000728A20 /* HeartExserciseVM.swift */; };
 		CE021F0326576DD200728A20 /* AVCaptureDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE021F0226576DD200728A20 /* AVCaptureDevice+.swift */; };
+		CE040E242658C5D700A86649 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CE040E232658C5D700A86649 /* Settings.bundle */; };
 		CE06D10125FD1DA4007CE81C /* lottie-progress.json in Resources */ = {isa = PBXBuildFile; fileRef = CE06D10025FD1DA4007CE81C /* lottie-progress.json */; };
 		CE0BE134261EAA4500073002 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE133261EAA4500073002 /* Account.swift */; };
 		CE0BE138261EB01C00073002 /* HealthInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0BE137261EB01C00073002 /* HealthInfo.swift */; };
@@ -215,6 +216,7 @@
 		CE00163E261D909D00B9374F /* BottomSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		CE021EF8265764E000728A20 /* HeartExserciseVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartExserciseVM.swift; sourceTree = "<group>"; };
 		CE021F0226576DD200728A20 /* AVCaptureDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVCaptureDevice+.swift"; sourceTree = "<group>"; };
+		CE040E232658C5D700A86649 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		CE06D10025FD1DA4007CE81C /* lottie-progress.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-progress.json"; sourceTree = "<group>"; };
 		CE0BE133261EAA4500073002 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		CE0BE137261EB01C00073002 /* HealthInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthInfo.swift; sourceTree = "<group>"; };
@@ -736,6 +738,7 @@
 				CEC78E1B25F732E3007BA177 /* Value */,
 				CEC78E1A25F732D0007BA177 /* Font */,
 				CEC78E1925F732C9007BA177 /* Lottie */,
+				CE040E232658C5D700A86649 /* Settings.bundle */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -997,6 +1000,7 @@
 			files = (
 				CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */,
 				CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */,
+				CE040E242658C5D700A86649 /* Settings.bundle in Resources */,
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
 				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,

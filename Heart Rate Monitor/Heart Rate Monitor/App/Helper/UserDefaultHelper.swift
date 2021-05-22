@@ -16,6 +16,16 @@ class UserDefaultHelper {
         case userPassword
         case openCalmCount
         case openMonitorCount
+        
+        // setting key
+        case basicInfomation
+        case weight
+        case flash
+        case sensitivity
+        case heartWaves
+        case measurementTime
+        case sound
+        case exportHistory
     }
     
     private static let defaults = UserDefaults.standard

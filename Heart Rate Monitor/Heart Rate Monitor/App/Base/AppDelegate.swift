@@ -14,7 +14,6 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
     var deviceToken: String?
     
     let rootViewController: UIViewController = {
