@@ -9,20 +9,20 @@ import Foundation
 
 struct User: Codable {
     var id: String?
-    var account: Account?
     var name: String?
     var email: String?
     var phoneNumber: String?
     var address: String?
-    var accessToken: String?
+    var createAt: String?
+    var updateAt: String?
     
     enum CodingKeys: String, CodingKey {
         case id
-        case account
         case name
         case email
-        case phoneNumber = "phone_number"
+        case phoneNumber
         case address
-        case accessToken = "access_token"
+        case createAt
+        case updateAt
     }
 }
