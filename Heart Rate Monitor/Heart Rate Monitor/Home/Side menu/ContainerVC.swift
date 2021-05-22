@@ -100,6 +100,9 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
         ]
         showingVC = vcArray[0]
         display(showingVC)
+        let appDefaults = (settingVC.topViewController as? SettingVC)?.settingsReader?.gatherDefaultsLimited(toEditableFields: true) ?? [:]
+        UserDefaults.standard.register(defaults: appDefaults)
+        UserDefaults.standard.synchronize()
     }
     
     required init?(coder: NSCoder) {

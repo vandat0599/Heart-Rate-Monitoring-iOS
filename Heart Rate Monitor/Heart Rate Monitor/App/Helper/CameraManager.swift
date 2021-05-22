@@ -149,6 +149,7 @@ class CameraManager: NSObject {
         guard let device = AVCaptureDevice.default(for: .video) else { return }
         print("toggleTorch: \(status)")
         let shouldUseFlash = UserDefaults.standard.bool(forKey: "flash_preference")
+        print("setting torch: \(shouldUseFlash)")
         guard device.hasTorch else { return }
         do {
             try device.lockForConfiguration()

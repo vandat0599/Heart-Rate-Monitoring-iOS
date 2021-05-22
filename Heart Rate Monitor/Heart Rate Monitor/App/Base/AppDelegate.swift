@@ -9,6 +9,7 @@ import UIKit
 import IQKeyboardManagerSwift
 import Accelerate
 import UserNotifications
+import InAppSettingsKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,5 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidFinishLaunching(_ application: UIApplication) {
         PersistenceManager.shared.saveContext()
     }
+    
+    // MARK: - other
 }
 
