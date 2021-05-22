@@ -7,6 +7,21 @@
 
 import Foundation
 
+struct APIResponsed: Codable {
+    var data: dataResponse?
+    var errorCode: Int?
+    var message: String?
+    var status: Bool?
+    
+}
+
+struct dataResponse: Codable {
+    var user: User?
+    var token: String?
+    
+}
+
+// old code...
 struct APIResponse<T: Decodable>: Decodable {
     var data: T?
     var errorCode: Int?
