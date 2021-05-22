@@ -110,6 +110,9 @@ class HeartRateVCVMImp: HeartRateVCVM {
     }
     
     @objc func fireTimer() {
+        if isHeartRateValid.value == true {
+            HeartRateDetector.playMedicalAudio()
+        }
         value += 1
         let progress = Float(value)/Float(maxProgressSecond)
         timeupTrigger.accept(progress >= 1)

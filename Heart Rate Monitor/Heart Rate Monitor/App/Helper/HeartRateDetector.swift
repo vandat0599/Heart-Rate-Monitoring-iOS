@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import AVFoundation
 
 class HeartRateDetector: NSObject {
 
     static let Windows_Seconds = 6
+    static var beepSoundEffect: AVAudioPlayer?
     
     static func Multiplication (_ a : [Double], _ b : [Double]) -> [Double] {
         var result = [Double]()
@@ -120,5 +122,19 @@ class HeartRateDetector: NSObject {
         }
         heartBeat = Double(N) * 60.0 / Double(Windows_Seconds)
         return heartBeat
+    }
+    
+    static func playMedicalAudio() {
+        guard UserDefaults.standard.bool(forKey: "sound_preference") == true else { return }
+        DispatchQueue.global().async {
+            guard let beepPath = Bundle.main.path(forResource: "medical.wav", ofType: nil) else { return }
+            let beepURL = URL(fileURLWithPath: beepPath)
+            do {
+                beepSoundEffect = try AVAudioPlayer(contentsOf: beepURL)
+                beepSoundEffect?.play()
+            } catch {
+                return
+            }
+        }
     }
 }
