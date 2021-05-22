@@ -8,7 +8,7 @@
 import UIKit
 
 class SignInVC: BaseVC {
-    
+    var window: UIWindow?
     //Outlets
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -44,7 +44,33 @@ class SignInVC: BaseVC {
     }
     
     @IBAction func loginTapped(_ sender: Any) {
+        let API = APIService.shared
+        if (Utils.isValidEmail(emailTextField.text!) == false){
+            let alert = UIAlertController(title: "Error", message: "Email is not correct", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         
+            
+        }
+        if (Utils.isPasswordValid(passwordTextField.text!) == false){
+            let alert = UIAlertController(title: "Password is not secure enough", message: "Make sure your password is at least  8 characters, contain special character and a number", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else{
+            API.login1(username: emailTextField.text!, password: passwordTextField.text!,completion: { [self] (response) -> Void in
+                if (response.data != nil){
+                    let vc = UINavigationController(rootViewController: ContainerVC())
+                    window = UIWindow(frame: UIScreen.main.bounds)
+                    window?.rootViewController = vc
+                    window?.makeKeyAndVisible()
+                }else{
+                    let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            })
+        }
     }
 }
 
