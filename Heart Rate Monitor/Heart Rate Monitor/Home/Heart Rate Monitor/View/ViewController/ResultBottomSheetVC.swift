@@ -42,9 +42,9 @@ class ResultBottomSheetVC: BottomSheetViewController {
         view.dragEnabled = false
         view.setScaleEnabled(false)
         view.pinchZoomEnabled = true
-        view.autoScaleMinMaxEnabled = false
-        view.leftAxis.axisMaximum = 255
-        view.leftAxis.axisMinimum = 200
+        view.autoScaleMinMaxEnabled = true
+//        view.leftAxis.axisMaximum = 255
+//        view.leftAxis.axisMinimum = 200
         view.rightAxis.enabled = false
         view.leftAxis.enabled = false
         view.legend.enabled = false
@@ -128,6 +128,7 @@ class ResultBottomSheetVC: BottomSheetViewController {
         self.grapsValues = grapsValues
         self.leftAction = leftAction
         self.rightAction = rightAction
+        print(grapsValues)
         super.init()
     }
     

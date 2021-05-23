@@ -24,7 +24,6 @@ class HAlert: UIView {
             description: message,
             rightActionTitle: "OK",
             rightAction: rightAction)
-        vc.rightActionButton.backgroundColor = UIColor(named: "error")
         vc.canDismissOnSwipeDown = false
         vc.closeButton.isHidden = true
         viewController.present(vc, animated: true, completion: nil)
@@ -39,7 +38,6 @@ class HAlert: UIView {
             description: message,
             rightActionTitle: "OK",
             rightAction: rightAction)
-        vc.rightActionButton.backgroundColor = UIColor(named: "alert")
         vc.canDismissOnSwipeDown = false
         vc.closeButton.isHidden = true
         viewController.present(vc, animated: true, completion: nil)
@@ -54,7 +52,6 @@ class HAlert: UIView {
             description: message,
             rightActionTitle: "OK",
             rightAction: rightAction)
-        vc.rightActionButton.backgroundColor = UIColor(named: "success")
         vc.canDismissOnSwipeDown = false
         vc.closeButton.isHidden = true
         viewController.present(vc, animated: true, completion: nil)
