@@ -135,4 +135,20 @@ class OtpVC : BaseVC, UITextFieldDelegate {
             }
         }
     }
+    @IBAction func resendOTPTapped(_ sender: Any) {
+        let API = APIService.shared
+        
+        API.resendOtpCode(username: email!) {[self] response in
+            let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                otp1TextField.text = ""
+                otp2TextField.text = ""
+                otp3TextField.text = ""
+                otp4TextField.text = ""
+                
+                otp1TextField.becomeFirstResponder()
+            }))
+            self.present(alert, animated: true,completion: nil)
+        }
+    }
 }
