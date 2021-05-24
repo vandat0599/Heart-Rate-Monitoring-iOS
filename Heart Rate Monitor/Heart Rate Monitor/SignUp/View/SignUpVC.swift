@@ -72,11 +72,15 @@ class SignUpVC: BaseVC {
             let API = APIService.shared
     
                 API.register1(username: emailTextField.text!, password: passwordTextField.text!,phoneNumber: phoneTextField.text!,completion: { [self] (response) -> Void in
-                    if (response.data != nil){
-                        let vc = UINavigationController(rootViewController: ContainerVC())
-                        window = UIWindow(frame: UIScreen.main.bounds)
-                        window?.rootViewController = vc
-                        window?.makeKeyAndVisible()
+                    if (response.error_code == 2){
+                        
+                        let alertOTP = OtpVC()
+                        alertOTP.modalTransitionStyle = .crossDissolve
+                        alertOTP.titleAlert = "Enter OTP to active your account"
+                        alertOTP.email = emailTextField.text!
+                        alertOTP.password = passwordTextField.text!
+                        present(alertOTP, animated: true)
+                        
                     }else{
                         let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
