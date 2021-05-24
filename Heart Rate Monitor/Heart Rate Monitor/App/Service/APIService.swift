@@ -80,12 +80,13 @@ class APIService {
     }
     
     func login1(username: String, password: String,completion : @escaping (_ result : APIResponsed)->()){
+        
         let parameter: [String: String] = [
             "email": username,
             "password": password
         ]
         var result = APIResponsed()
-        AF.request("https://heart-rate-monitor-hcmus.herokuapp.com/api/users/login", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
+        AF.request("\(self.baseUrl)/api/users/login", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
                 //debugPrint(response)
                 guard let data = response.data else { return }
                             do {
@@ -105,7 +106,27 @@ class APIService {
             "phoneNumber": phoneNumber
         ]
         var result = APIResponsed()
-        AF.request("https://heart-rate-monitor-hcmus.herokuapp.com/api/users/signup", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
+        AF.request("\(self.baseUrl)/api/users/signup", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
+                //debugPrint(response)
+                guard let data = response.data else { return }
+                        do {
+                            let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
+                            result = apiResponse
+                            completion(result)
+                        } catch let error {
+                            print(error)
+                        }
+        }
+    }
+    
+    func authOtpCode(username: String, password: String,otpCode : String,completion : @escaping (_ result : APIResponsed)->()){
+        let parameter: [String: String] = [
+            "email": username,
+            "password": password,
+            "otpCode": otpCode
+        ]
+        var result = APIResponsed()
+        AF.request("\(self.baseUrl)/api/users/otp", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
                 //debugPrint(response)
                 guard let data = response.data else { return }
                         do {
