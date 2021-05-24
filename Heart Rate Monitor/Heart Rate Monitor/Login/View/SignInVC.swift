@@ -65,9 +65,19 @@ class SignInVC: BaseVC {
                     window?.rootViewController = vc
                     window?.makeKeyAndVisible()
                 }else{
-                    let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    if (response.error_code == 2){
+                        let alertOTP = OtpVC()
+                        alertOTP.modalTransitionStyle = .crossDissolve
+                        alertOTP.titleAlert = "Your account has not been activated"
+                        alertOTP.email = emailTextField.text!
+                        alertOTP.password = passwordTextField.text!
+                        present(alertOTP, animated: true)
+                    }else{
+                        let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    
                 }
             })
         }
