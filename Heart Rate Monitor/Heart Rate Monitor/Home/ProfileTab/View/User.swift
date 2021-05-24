@@ -15,8 +15,10 @@ struct User: Codable {
     var address: String?
     var createAt: String?
     var updateAt: String?
+    var isActive: Bool?
     
     enum CodingKeys: String, CodingKey {
+        case isActive
         case id
         case name
         case email
