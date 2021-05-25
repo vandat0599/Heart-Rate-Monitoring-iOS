@@ -23,6 +23,7 @@ class OtpVC : BaseVC, UITextFieldDelegate {
     var email : String?
     var password: String?
     var otpCode : String?
+    var caseOTP: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -105,7 +106,7 @@ class OtpVC : BaseVC, UITextFieldDelegate {
     func handleOTP() {
         let API = APIService.shared
         
-        API.authOtpCode(username: email!,password: password!,otpCode: otpCode!) {[self] response in
+        API.authOtpCode(username: email!,password: password!,otpCode: otpCode!, caseOTP: caseOTP!) {[self] response in
             
             if (response.data != nil ){
                 let vc = UINavigationController(rootViewController: ContainerVC())
@@ -125,6 +126,7 @@ class OtpVC : BaseVC, UITextFieldDelegate {
                 self.present(alert, animated: true,completion: nil)
             }
         }
+        
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
