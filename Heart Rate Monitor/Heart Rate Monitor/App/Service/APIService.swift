@@ -119,11 +119,12 @@ class APIService {
         }
     }
     
-    func authOtpCode(username: String, password: String,otpCode : String,completion : @escaping (_ result : APIResponsed)->()){
+    func authOtpCode(username: String, password: String,otpCode : String,caseOTP: String,completion : @escaping (_ result : APIResponsed)->()){
         let parameter: [String: String] = [
             "email": username,
             "password": password,
-            "otpCode": otpCode
+            "otpCode": otpCode,
+            "case": caseOTP // 1 : resetpassword
         ]
         var result = APIResponsed()
         AF.request("\(self.baseUrl)/api/users/otp", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
@@ -157,6 +158,23 @@ class APIService {
         }
     }
     
+    func forgotPassword(username: String,completion : @escaping (_ result : APIResponsed)->()){
+        let parameter: [String: String] = [
+            "email": username
+        ]
+        var result = APIResponsed()
+        AF.request("\(self.baseUrl)/api/users/forgotpw", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
+                //debugPrint(response)
+                guard let data = response.data else { return }
+                        do {
+                            let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
+                            result = apiResponse
+                            completion(result)
+                        } catch let error {
+                            print(error)
+                        }
+        }
+    }
     
     
     func changePassword(username: String,password: String,completion : @escaping (_ result : APIResponsed)->()){
