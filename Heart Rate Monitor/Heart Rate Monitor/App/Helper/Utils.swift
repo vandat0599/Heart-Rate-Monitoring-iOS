@@ -30,7 +30,7 @@ class Utils {
     }
     
     
-    static func checkValidateField(email: String?, password: String?, passwordConf: String?,phoneNum: String?)->Int?{
+    static func checkValidateField(email: String?, password: String?, passwordConf: String?)->Int?{
         if email!.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
             password!.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
             passwordConf!.trimmingCharacters(in: .whitespacesAndNewlines) == ""  {

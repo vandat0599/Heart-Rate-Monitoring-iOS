@@ -45,7 +45,7 @@ class SignUpVC: BaseVC {
         Gradient.horizontal(signupButton)
     }
     @IBAction func signupTapped(_ sender: Any) {
-        let valid = Utils.checkValidateField(email: emailTextField.text, password: passwordTextField.text, passwordConf: confirmPasswordTextField.text, phoneNum: phoneTextField.text)
+        let valid = Utils.checkValidateField(email: emailTextField.text, password: passwordTextField.text, passwordConf: confirmPasswordTextField.text)
         switch (valid) {
             
         case 1:

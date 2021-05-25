@@ -43,21 +43,48 @@ class ForgotpwVC : BaseVC, UITextFieldDelegate {
     
     @IBAction func confirmTapped(_ sender: Any) {
         let API = APIService.shared
-        print(emailTextField.text!)
-        API.forgotPassword(username: emailTextField.text!) { [self] response in
-                if (response.error_code == 4){
-                    let alertOTP = OtpVC()
-                    alertOTP.modalTransitionStyle = .crossDissolve
-                    alertOTP.titleAlert = "OTP reset Password"
-                    alertOTP.email = emailTextField.text!
-                    alertOTP.password = passwordTextField.text!
-                    alertOTP.caseOTP = "1"
-                    present(alertOTP, animated: true)
-                }else{
-                    let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+        
+        let valid = Utils.checkValidateField(email: emailTextField.text, password: passwordTextField.text, passwordConf: confirmPasswordTextField.text)
+        switch (valid) {
+            
+        case 1:
+            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        case 2:
+            let alert = UIAlertController(title: "Error", message: "Email is not correct", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        case 3:
+            let alert = UIAlertController(title: "Password is not secure enough", message: "Make sure your password is at least  8 characters, contain special character and a number", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        case 4:
+            let alert = UIAlertController(title: "Error", message: "Make sure your password & confirm password match", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        default:
+            API.forgotPassword(username: emailTextField.text!) { [self] response in
+                    if (response.error_code == 4){
+                        let alertOTP = OtpVC()
+                        alertOTP.modalTransitionStyle = .crossDissolve
+                        alertOTP.titleAlert = "OTP reset Password"
+                        alertOTP.email = emailTextField.text!
+                        alertOTP.password = passwordTextField.text!
+                        alertOTP.caseOTP = "1"
+                        present(alertOTP, animated: true)
+                    }else{
+                        let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
                 }
-            }
+            break
+    
         }
+    }
 }
