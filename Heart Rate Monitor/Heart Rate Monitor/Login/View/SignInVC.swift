@@ -82,5 +82,9 @@ class SignInVC: BaseVC {
             })
         }
     }
+    @IBAction func forgotPasswordTapped(_ sender: Any) {
+        let vc = ForgotpwVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 

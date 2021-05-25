@@ -120,6 +120,9 @@
                     <state key="normal" title="Forgot password?">
                         <color key="titleColor" red="0.94901960780000005" green="0.25882352939999997" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="forgotPasswordTapped:" destination="-1" eventType="touchUpInside" id="rbu-4M-DsA"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="nIa-R9-2hk"/>
