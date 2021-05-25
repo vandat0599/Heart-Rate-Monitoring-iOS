@@ -156,4 +156,25 @@ class APIService {
                         }
         }
     }
+    
+    
+    
+    func changePassword(username: String,password: String,completion : @escaping (_ result : APIResponsed)->()){
+        let parameter: [String: String] = [
+            "email": username,
+            "password": password
+        ]
+        var result = APIResponsed()
+        AF.request("\(self.baseUrl)/api/users/changepassword", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
+                //debugPrint(response)
+                guard let data = response.data else { return }
+                        do {
+                            let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
+                            result = apiResponse
+                            completion(result)
+                        } catch let error {
+                            print(error)
+                        }
+        }
+    }
 }
