@@ -124,10 +124,10 @@ class HeartRateDetector: NSObject {
         heartBeat = Double(N) * 60.0 / Double(Windows_Seconds)
         
         if (signal.count == Windows_Seconds * fps){
-            newSignal = signalFiltered
+            newSignal = signal
         }
         else{
-            newSignal = Array(signalFiltered[(signalFiltered.count - fps - 1)..<signalFiltered.count])
+            newSignal = Array(signal[(signalFiltered.count - fps - 1)..<signalFiltered.count])
         }
         return (heartBeat,newSignal)
     }
