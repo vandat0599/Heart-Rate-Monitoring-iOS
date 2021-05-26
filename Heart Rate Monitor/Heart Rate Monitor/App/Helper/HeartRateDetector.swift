@@ -11,7 +11,7 @@ import AVFoundation
 
 class HeartRateDetector: NSObject {
 
-    static let Windows_Seconds = 6
+    static let Windows_Seconds = 10
     static var beepSoundEffect: AVAudioPlayer?
     
     static func Multiplication (_ a : [Double], _ b : [Double]) -> [Double] {
@@ -91,26 +91,27 @@ class HeartRateDetector: NSObject {
         return bpm_Smoothing
         
     }
-    // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
-    // sau đó mỗi lần signal có thêm 15 frame thì lại gọi hàm
-    static func PulseDetector(_ signal: [Double],fps: Int) -> Double {
-        if (signal.count != Windows_Seconds*fps){
-            print("signal truyền vào phải có \(Windows_Seconds*fps) giá trị thay vì \(signal.count)")
-            return -1
-        }
+
+    static func PulseDetector(_ signal: [Double],fps: Int,pulseCount : Int) -> (Double,[Double]) {
         var heartBeat = 0.0
-        
         let filter = BBFilter()
-        
-        //let (denC, numC) = filter.butter(order: 2, lowFreq: 2/45, highFreq: 23/90)
         let B = [Double](repeating: 1/20, count: 20)
-        let y = filter.Filter(signal: signal, denC: B, numC: [1]) // 0 -> 255
-        let (peaks,locs) = findPeakElement(y)
+        var newSignal = [Double]()  // dùng cho vẽ đồ thị
+        
+        let signalFiltered = filter.Filter(signal: signal, denC: B, numC: [1])
+        let windowArray = Array(signalFiltered[fps*pulseCount..<signalFiltered.count])
+        
+        if (windowArray.count != Windows_Seconds*fps){
+            print("signal truyền vào phải có \(Windows_Seconds*fps) giá trị thay vì \(signal.count)")
+            return (-1,[0])
+        }
+       
+        let (peaks,locs) = findPeakElement(windowArray)
         var N = peaks.count
         
         // cablirate
         if locs.isEmpty || (N - 1 == 0) || (N-1 >= locs.count) {
-            return -1
+            return (-1,[0])
         }
         let timeP2P = (locs[N-1] - locs[0]) / (N - 1)
         let Ex = Windows_Seconds * fps - N * timeP2P
@@ -121,7 +122,14 @@ class HeartRateDetector: NSObject {
             N = N - (timeP2P - Ex) * 60/(Windows_Seconds * fps)
         }
         heartBeat = Double(N) * 60.0 / Double(Windows_Seconds)
-        return heartBeat
+        
+        if (signal.count == Windows_Seconds * fps){
+            newSignal = signalFiltered
+        }
+        else{
+            newSignal = Array(signalFiltered[(signalFiltered.count - fps - 1)..<signalFiltered.count])
+        }
+        return (heartBeat,newSignal)
     }
     
     static func playMedicalAudio() {
