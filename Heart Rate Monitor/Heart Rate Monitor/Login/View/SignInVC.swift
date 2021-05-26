@@ -71,6 +71,7 @@ class SignInVC: BaseVC {
                         alertOTP.titleAlert = "Your account has not been activated"
                         alertOTP.email = emailTextField.text!
                         alertOTP.password = passwordTextField.text!
+                        alertOTP.caseOTP = "0"
                         present(alertOTP, animated: true)
                     }else{
                         let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
@@ -84,6 +85,7 @@ class SignInVC: BaseVC {
     }
     @IBAction func forgotPasswordTapped(_ sender: Any) {
         let vc = ForgotpwVC()
+        vc.email = emailTextField.text!
         navigationController?.pushViewController(vc, animated: true)
     }
 }
