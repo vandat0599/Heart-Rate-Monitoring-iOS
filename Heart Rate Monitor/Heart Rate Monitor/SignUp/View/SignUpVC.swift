@@ -79,6 +79,7 @@ class SignUpVC: BaseVC {
                         alertOTP.titleAlert = "Enter OTP to active your account"
                         alertOTP.email = emailTextField.text!
                         alertOTP.password = passwordTextField.text!
+                        alertOTP.caseOTP = "0"
                         present(alertOTP, animated: true)
                         
                     }else{
