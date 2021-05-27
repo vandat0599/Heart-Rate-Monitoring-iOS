@@ -18,10 +18,9 @@ extension CMSampleBuffer {
         guard let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return (0, 0, 0) }
         guard let outputImage = filter.outputImage else { return (0, 0, 0) }
 
-        var bitmap = [UInt8](repeating: 0, count: 4)
+        var bitmap = [Float](repeating: 0, count: 4)
         let context = CIContext(options: [.workingColorSpace: kCFNull as Any])
-        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
-
-        return (CGFloat(bitmap[0]), CGFloat(bitmap[1]), CGFloat(bitmap[2]))
+        context.render(outputImage, toBitmap: &bitmap, rowBytes: 16, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBAf, colorSpace: nil)
+        return (CGFloat(bitmap[0]*255), CGFloat(bitmap[1]*255), CGFloat(bitmap[2]*255))
     }
 }

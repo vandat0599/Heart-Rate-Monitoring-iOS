@@ -11,7 +11,7 @@ import AVFoundation
 
 class HeartRateDetector: NSObject {
 
-    static let Windows_Seconds = 6
+    static let Windows_Seconds = 10
     static var beepSoundEffect: AVAudioPlayer?
     
     static func Multiplication (_ a : [Double], _ b : [Double]) -> [Double] {
@@ -93,19 +93,20 @@ class HeartRateDetector: NSObject {
     }
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm 15 frame thì lại gọi hàm
-    static func PulseDetector(_ signal: [Double],fps: Int) -> Double {
-        if (signal.count != Windows_Seconds*fps){
+    static func PulseDetector(_ signal: [Double], fps: Int, pulseCount: Int) -> Double {
+        var heartBeat = 0.0
+        let filter = BBFilter()
+        let B = [Double](repeating: 1/20, count: 20)
+        
+        let signalFiltered = filter.Filter(signal: signal, denC: B, numC: [1])
+        let windowArray = Array(signalFiltered[fps*pulseCount..<signalFiltered.count])
+        
+        if (windowArray.count != Windows_Seconds*fps){
             print("signal truyền vào phải có \(Windows_Seconds*fps) giá trị thay vì \(signal.count)")
             return -1
         }
-        var heartBeat = 0.0
-        
-        let filter = BBFilter()
-        
-        //let (denC, numC) = filter.butter(order: 2, lowFreq: 2/45, highFreq: 23/90)
-        let B = [Double](repeating: 1/20, count: 20)
-        let y = filter.Filter(signal: signal, denC: B, numC: [1]) // 0 -> 255
-        let (peaks,locs) = findPeakElement(y)
+       
+        let (peaks,locs) = findPeakElement(windowArray)
         var N = peaks.count
         
         // cablirate
@@ -121,7 +122,7 @@ class HeartRateDetector: NSObject {
             N = N - (timeP2P - Ex) * 60/(Windows_Seconds * fps)
         }
         heartBeat = Double(N) * 60.0 / Double(Windows_Seconds)
-        return heartBeat
+        return heartBeat/2
     }
     
     static func playMedicalAudio() {
@@ -136,5 +137,10 @@ class HeartRateDetector: NSObject {
                 return
             }
         }
+    }
+    
+    static func isValidRGB(r: Double, g: Double, b: Double) -> Bool {
+        let hsv = rgb2hsv(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b))
+        return (hsv.1 > 0.5) && (hsv.2 > 0.1)
     }
 }

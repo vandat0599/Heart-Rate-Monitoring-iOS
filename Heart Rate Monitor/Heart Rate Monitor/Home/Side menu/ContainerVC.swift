@@ -113,6 +113,8 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        
+        print("HSV: \(rgb2hsv(red: 14, green: 25, blue: 45))")
     }
     
     private func setupView() {
