@@ -154,7 +154,7 @@ class CameraManager: NSObject {
         do {
             try device.lockForConfiguration()
             if status && shouldUseFlash {
-                try device.setTorchModeOn(level: 0.1)
+                device.torchMode = .on
             } else {
                 device.torchMode = .off
             }
