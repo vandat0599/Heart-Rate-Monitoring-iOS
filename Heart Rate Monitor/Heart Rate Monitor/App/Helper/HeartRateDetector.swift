@@ -124,7 +124,6 @@ class HeartRateDetector: NSObject {
             print("signal truyền vào phải có \(Windows_Seconds*fps) giá trị thay vì \(signal.count)")
             return -1
         }
-        windowArray = Multiplication(windowArray, hann(Windows_Seconds*fps + 1))
         
         let threshold = 10.0
         let (peaks,locs) = findPeakElement(windowArray, threshold)
