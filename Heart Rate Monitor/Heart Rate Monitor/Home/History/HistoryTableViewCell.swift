@@ -27,9 +27,7 @@ class HistoryTableViewCell: UITableViewCell {
         chartView.dragEnabled = false
         chartView.setScaleEnabled(false)
         chartView.pinchZoomEnabled = true
-        chartView.autoScaleMinMaxEnabled = false
-        chartView.leftAxis.axisMaximum = 255
-        chartView.leftAxis.axisMinimum = 200
+        chartView.autoScaleMinMaxEnabled = true
         chartView.rightAxis.enabled = false
         chartView.leftAxis.enabled = false
         chartView.legend.enabled = false

@@ -42,9 +42,7 @@ class EditHistoryBottoSheetVC: BottomSheetViewController {
         view.dragEnabled = false
         view.setScaleEnabled(false)
         view.pinchZoomEnabled = true
-        view.autoScaleMinMaxEnabled = false
-        view.leftAxis.axisMaximum = 255
-        view.leftAxis.axisMinimum = 200
+        view.autoScaleMinMaxEnabled = true
         view.rightAxis.enabled = false
         view.leftAxis.enabled = false
         view.legend.enabled = false

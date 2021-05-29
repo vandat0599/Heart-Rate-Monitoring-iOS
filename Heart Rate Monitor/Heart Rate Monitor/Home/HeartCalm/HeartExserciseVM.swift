@@ -19,7 +19,6 @@ protocol PHeartExserciseVM {
     var heartRateProgress: BehaviorRelay<Float> { get }
     var isHeartRateValid: BehaviorRelay<Bool> { get }
     var timeupTrigger: PublishRelay<Bool> { get }
-    var filteredValueTrigger: PublishRelay<Double> { get }
     var capturedRedmean: [Double] { get }
     var breathinTrigger: PublishRelay<Double> { get }
     var breathoutTrigger: PublishRelay<Double> { get }
@@ -39,7 +38,6 @@ class HeartExserciseVM: PHeartExserciseVM {
     var isMeasuring: BehaviorRelay<Bool>
     var isHeartRateValid: BehaviorRelay<Bool>
     var timeupTrigger: PublishRelay<Bool>
-    var filteredValueTrigger: PublishRelay<Double>
     var breathinTrigger: PublishRelay<Double>
     var breathoutTrigger: PublishRelay<Double>
     var resetDataTrigger: BehaviorRelay<Bool>
@@ -63,7 +61,6 @@ class HeartExserciseVM: PHeartExserciseVM {
         heartRateTrackNumber = BehaviorRelay<Int>(value: 0)
         heartRateProgress = BehaviorRelay<Float>(value: 0.0)
         timeupTrigger = PublishRelay<Bool>()
-        filteredValueTrigger = PublishRelay<Double>()
         breathinTrigger = PublishRelay<Double>()
         breathoutTrigger = PublishRelay<Double>()
         resetDataTrigger = BehaviorRelay<Bool>(value: false)
@@ -95,8 +92,7 @@ class HeartExserciseVM: PHeartExserciseVM {
         let redmean = rgb.0
         let greenmean = rgb.1
         let bluemean = rgb.2
-        let hsv = rgb2hsv(red: CGFloat(redmean), green: CGFloat(greenmean), blue: CGFloat(bluemean))
-        if  (hsv.1 > 0.5) && (hsv.2 > 0.5) {
+        if  HeartRateDetector.isValidRGB(r: Double(redmean), g: Double(greenmean), b: Double(bluemean)) {
             resetDataTrigger.accept(false)
             if !isMeasuring.value && isPlaying.value {
                 print("Start measure")
@@ -104,11 +100,9 @@ class HeartExserciseVM: PHeartExserciseVM {
                 isMeasuring.accept(true)
             }
             capturedRedmean.append(Double(redmean))
-            filteredValueTrigger.accept(Double(hsv.2))
             if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%fps == 0 {
-                let windowArray = Array(capturedRedmean[fps*pulses.count..<capturedRedmean.count])
-                let heartRate = HeartRateDetector.PulseDetector(windowArray, fps: fps)
-                pulses.append((heartRate == -1 ? (pulses.last ?? 120) : heartRate)/2)
+                let heartRate = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulseCount: pulses.count)
+                pulses.append((heartRate == -1 ? (pulses.last ?? 80) : heartRate))
             }
         } else {
             if resetDataTrigger.value == false {

@@ -20,29 +20,30 @@ class LottieSheetOneActionVC: BottomSheetViewController {
         view.text = popupTitle
         view.numberOfLines = 0
         view.textAlignment = .center
+        view.textColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var descriptionLabel: UILabel = {
+    lazy var descriptionLabel: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 14)
         view.text = popupDescription
         view.numberOfLines = 0
         view.textAlignment = .center
+        view.textColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     lazy var rightActionButton: UIButton = {
         let view = UIButton()
-        view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        view.setTitle(rightActionTitle, for: .normal)
-        view.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        view.setTitle("OK", for: .normal)
+        view.titleLabel?.font = .systemFont(ofSize: 14)
         view.setTitleColor(.white, for: .normal)
         view.clipsToBounds = true
         view.cornerRadius = 22
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor(named: "white-holder")
         view.addTarget(self, action: #selector(rightActionTapped), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -92,6 +93,8 @@ class LottieSheetOneActionVC: BottomSheetViewController {
     
     override func layoutViews() {
         super.layoutViews()
+        view.backgroundColor = UIColor(named: "black-background")
+        contentView.backgroundColor = UIColor(named: "black-background")
         setupViewAttribute()
         contentView.addSubview(closeButton)
         contentView.addSubview(lottieView)

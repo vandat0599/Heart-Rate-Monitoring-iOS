@@ -20,10 +20,10 @@ protocol HeartRateVCVM {
     var heartRateProgress: BehaviorRelay<Float> { get }
     var isHeartRateValid: BehaviorRelay<Bool> { get }
     var timeupTrigger: PublishRelay<Bool> { get }
-    var filteredValueTrigger: PublishRelay<Double> { get }
     var capturedRedmean: [Double] { get }
     var grapValues: BehaviorRelay<[Double]> { get }
     func handleImage(with buffer: CMSampleBuffer, fps: Int)
+    func getAverageHeartRate() -> Int
     func togglePlay()
     func resetAllData()
 }
@@ -39,7 +39,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var isMeasuring: BehaviorRelay<Bool>
     var isHeartRateValid: BehaviorRelay<Bool>
     var timeupTrigger: PublishRelay<Bool>
-    var filteredValueTrigger: PublishRelay<Double>
     var grapValues: BehaviorRelay<[Double]>
     
     var capturedRedmean: [Double] = []
@@ -56,7 +55,6 @@ class HeartRateVCVMImp: HeartRateVCVM {
         heartRateTrackNumber = BehaviorRelay<Int>(value: 0)
         heartRateProgress = BehaviorRelay<Float>(value: 0.0)
         timeupTrigger = PublishRelay<Bool>()
-        filteredValueTrigger = PublishRelay<Double>()
         grapValues = BehaviorRelay<[Double]>(value: Array.init(repeating: 220, count: 100))
         capturedRedmean = []
     }
@@ -83,18 +81,15 @@ class HeartRateVCVMImp: HeartRateVCVM {
         let redmean = rgb.0
         let greenmean = rgb.1
         let bluemean = rgb.2
-        let hsv = rgb2hsv(red: CGFloat(redmean), green: CGFloat(greenmean), blue: CGFloat(bluemean))
-        //((hsv.0 >= 0) && (hsv.0 <= 10)) || ((hsv.0 >= 160) && (hsv.0 <= 180))
-        if  (hsv.1 > 0.5) && (hsv.2 > 0.5) {
+        if HeartRateDetector.isValidRGB(r: Double(redmean), g: Double(greenmean), b: Double(bluemean)) {
             if !isMeasuring.value && isPlaying.value {
                 startMeasurement()
                 isMeasuring.accept(true)
             }
             capturedRedmean.append(Double(redmean))
-            filteredValueTrigger.accept(Double(hsv.2))
             if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%fps == 0 {
                 let windowArray = Array(capturedRedmean[fps*pulses.count..<capturedRedmean.count])
-                let heartRate = HeartRateDetector.PulseDetector(windowArray, fps: fps)
+                let heartRate = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulseCount: pulses.count)
                 pulses.append(heartRate)
                 grapValues.accept(windowArray)
             }
@@ -120,7 +115,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
         timeupTrigger.accept(progress >= 1)
         isHeartRateValid.accept(pulses.count > 0)
         heartRateProgress.accept(progress)
-        heartRateTrackNumber.accept(pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0)
+        heartRateTrackNumber.accept(getAverageHeartRate())
         print("inputs: \(capturedRedmean.count)")
         if progress >= 1 {
             print("invalidate")
@@ -128,5 +123,9 @@ class HeartRateVCVMImp: HeartRateVCVM {
             self.timer = nil
             self.value = 0
         }
+    }
+    
+    func getAverageHeartRate() -> Int {
+        return pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0
     }
 }

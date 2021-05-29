@@ -95,9 +95,9 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.dragEnabled = false
         view.setScaleEnabled(false)
         view.pinchZoomEnabled = true
-        view.autoScaleMinMaxEnabled = false
-        view.leftAxis.axisMaximum = 260
-        view.leftAxis.axisMinimum = 0
+        view.autoScaleMinMaxEnabled = true
+//        view.leftAxis.axisMaximum = 260
+//        view.leftAxis.axisMinimum = 0
         view.rightAxis.enabled = false
         view.leftAxis.enabled = false
         view.legend.enabled = false
@@ -162,7 +162,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         return view
     }()
     
-    public lazy var infoButton: UIButton = {
+    private lazy var infoButton: UIButton = {
         let view = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         view.setImage(UIImage(named: "ic-info")?.withRenderingMode(.alwaysTemplate), for: .normal)
         view.tintColor = .white
@@ -170,6 +170,13 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.imageView?.contentMode = .scaleAspectFit
         view.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
         view.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: -12)
+        return view
+    }()
+    
+    private lazy var bottomBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "pink")
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
             
@@ -209,6 +216,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         playView.addSubview(heartRateTrackLabel)
         playView.addSubview(tapToStartLabel)
         playView.addSubview(bpmLabel)
+        view.addSubview(bottomBackgroundView)
         view.addSubview(avgLabelView)
         view.addSubview(minLabelView)
         view.addSubview(maxLabelView)
@@ -218,10 +226,15 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             playView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             playView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            chartView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             chartView.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 40),
+            chartView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2),
+            
+            bottomBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bottomBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomBackgroundView.topAnchor.constraint(equalTo: chartView.bottomAnchor),
             
             progressView.leadingAnchor.constraint(equalTo: playView.leadingAnchor),
             progressView.trailingAnchor.constraint(equalTo: playView.trailingAnchor),
@@ -253,19 +266,19 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
             
-            minLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor, constant: 20),
+            minLabelView.centerYAnchor.constraint(equalTo: bottomBackgroundView.centerYAnchor, constant: 20),
             minLabelView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-            minLabelView.heightAnchor.constraint(equalTo: chartView.heightAnchor, multiplier: 0.5),
+            minLabelView.heightAnchor.constraint(equalTo: bottomBackgroundView.heightAnchor, multiplier: 0.5),
             minLabelView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            avgLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor, constant: 20),
+            avgLabelView.centerYAnchor.constraint(equalTo: bottomBackgroundView.centerYAnchor, constant: 20),
             avgLabelView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-            avgLabelView.heightAnchor.constraint(equalTo: chartView.heightAnchor, multiplier: 0.5),
+            avgLabelView.heightAnchor.constraint(equalTo: bottomBackgroundView.heightAnchor, multiplier: 0.5),
             avgLabelView.trailingAnchor.constraint(equalTo: minLabelView.leadingAnchor),
             
-            maxLabelView.centerYAnchor.constraint(equalTo: chartView.centerYAnchor, constant: 20),
+            maxLabelView.centerYAnchor.constraint(equalTo: bottomBackgroundView.centerYAnchor, constant: 20),
             maxLabelView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-            maxLabelView.heightAnchor.constraint(equalTo: chartView.heightAnchor, multiplier: 0.5),
+            maxLabelView.heightAnchor.constraint(equalTo: bottomBackgroundView.heightAnchor, multiplier: 0.5),
             maxLabelView.leadingAnchor.constraint(equalTo: minLabelView.trailingAnchor),
         ])
         reloadChartData(value: Array.init(repeating: 220, count: 100))
@@ -346,7 +359,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .bind(onNext: { [weak self] (value) in
                 guard let self = self else { return }
-                let beat = Int(value/2)
+                let beat = Int(value)
                 self.heartRateTrackLabel.text = "\(value == 0 ? "--" : "\(beat)")"
                 self.fireImageView.tintColor = beat < 60 ? UIColor(named: "white-holder") : beat <= 100 ? UIColor(named: "green-1") : UIColor(named: "red-1")
             })
@@ -402,7 +415,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             .bind(onNext: {[unowned self] (value) in
                 guard value else { return }
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
-                let vc = ResultBottomSheetVC(heartRate: self.viewModel.heartRateTrackNumber.value/2, grapsValues: self.viewModel.shouldSaveHeartWaves ? self.viewModel.grapValues.value : [])
+                let vc = ResultBottomSheetVC(heartRate: viewModel.getAverageHeartRate(), grapsValues: self.viewModel.shouldSaveHeartWaves ? self.viewModel.grapValues.value : [])
                 vc.canDismissOnSwipeDown = false
                 vc.canDismissOnTouchOutSide = false
                 self.present(vc, animated: true) {[weak self] in
