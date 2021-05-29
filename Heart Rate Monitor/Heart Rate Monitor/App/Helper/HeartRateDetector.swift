@@ -128,6 +128,9 @@ class HeartRateDetector: NSObject {
         var peakCount = peaks.count
         var grapValue = [Double]()
         
+        grapValue = signalFiltered
+        grapValue.removeFirst(10)
+        
         print("peakCount before: \(peakCount)")
         // cablirate
         if locs.isEmpty || (peakCount - 1 == 0) || (peakCount-1 >= locs.count) {
@@ -152,7 +155,7 @@ class HeartRateDetector: NSObject {
         heartBeat = Double(peakCount) * 60.0 / Double(Windows_Seconds)
         
         
-        return (heartBeat,signalFiltered)
+        return (heartBeat,grapValue)
     }
     
     static func playMedicalAudio() {
