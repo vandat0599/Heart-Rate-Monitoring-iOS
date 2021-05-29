@@ -24,7 +24,8 @@ class HeartRateDetector: NSObject {
         return result
     }
     
-    static func findPeakElement(_ freqs: [Double]) -> ([Double],[Int]){
+    static func findPeakElement(_ freqs: [Double], _ threshold: Double) -> ([Double],[Int]){
+        print(freqs.count)
         var ascending = false
         var peaks: [Double] = []
         var index = [Int]()
@@ -35,16 +36,32 @@ class HeartRateDetector: NSObject {
                 }
                 if $0.element < last && ascending  {
                     ascending = false
-                    peaks.append(last)
-                    var idx = $0.offset - 1
-                    while(freqs[idx] == last){
-                        if (freqs[idx-1] != last){
-                            peaks.append(freqs[idx])
-                            index.append(idx)
+                    if (index.count == 0){
+                        peaks.append(last)
+                        var idx = $0.offset - 1
+                        while(freqs[idx] == last){
+                            if (freqs[idx-1] != last){
+                                peaks.append(freqs[idx])
+                                index.append(idx)
+                            }
+                            idx -= 1
                         }
-                        idx -= 1
+                        index.append($0.offset)
                     }
-                    index.append($0.offset)
+                    else{
+                        if (Double($0.offset) - Double(index[index.count - 1]) >= threshold ){
+                            peaks.append(last)
+                            var idx = $0.offset - 1
+                            while(freqs[idx] == last){
+                                if (freqs[idx-1] != last){
+                                    peaks.append(freqs[idx])
+                                    index.append(idx)
+                                }
+                                idx -= 1
+                            }
+                            index.append($0.offset)
+                        }
+                    }
                 }
                 last = $0.element
             }
