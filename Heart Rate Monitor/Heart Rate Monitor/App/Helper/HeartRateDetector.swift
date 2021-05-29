@@ -127,9 +127,12 @@ class HeartRateDetector: NSObject {
         let (peaks,locs) = findPeakElement(windowArray, threshold)
         var peakCount = peaks.count
         var grapValue = [Double]()
-        
-        grapValue = signalFiltered
-        grapValue.removeFirst(10)
+        if (signal.count == fps*Windows_Seconds){
+            grapValue = signalFiltered
+            grapValue.removeFirst(10)
+        }else{
+            grapValue = windowArray
+        }
         
         print("peakCount before: \(peakCount)")
         // cablirate
