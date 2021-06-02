@@ -18,13 +18,13 @@ struct User: Codable {
     var isActive: Bool?
     
     enum CodingKeys: String, CodingKey {
-        case isActive
-        case id
+        case id = "_id"
         case name
         case email
         case phoneNumber
         case address
         case createAt
         case updateAt
+        case isActive
     }
 }

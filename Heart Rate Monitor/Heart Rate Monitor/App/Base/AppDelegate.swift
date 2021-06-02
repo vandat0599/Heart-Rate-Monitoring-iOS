@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var deviceToken: String?
     
     let rootViewController: UIViewController = {
-        return UINavigationController(rootViewController: ContainerVC())
+        return UINavigationController(rootViewController: SignInVC())
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

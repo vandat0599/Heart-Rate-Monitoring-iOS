@@ -34,7 +34,7 @@ class CustomRippleButton: UIButton {
         }
     }
     
-    @IBInspectable open var buttonScaleOnAnimate: CGFloat = 0.85
+    @IBInspectable open var buttonScaleOnAnimate: CGFloat = 0.95
     
     @IBInspectable open var rippleAnimationDuration: TimeInterval = 0.4
     
