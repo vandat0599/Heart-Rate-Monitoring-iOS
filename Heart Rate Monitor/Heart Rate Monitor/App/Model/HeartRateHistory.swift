@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct HeartRateHistory: Decodable {
+struct HeartRateHistory: Codable {
     var id: Int?
+    var remoteId: String?
     var grapValues: [Double] = []
     var heartRateNumber: Int?
     var label: String?
@@ -16,11 +17,12 @@ struct HeartRateHistory: Decodable {
     var isSubmitted: Bool?
     
     enum CodingKeys: String, CodingKey {
-        case id
-        case grapValues = "grap_values"
-        case heartRateNumber = "heart_rate_number"
+        case id = "local_id"
+        case remoteId = "_id"
+        case grapValues
+        case heartRateNumber
         case label
-        case createDate = "create_date"
-        case isSubmitted = "is_submitted"
+        case createDate
+        case isSubmitted
     }
 }

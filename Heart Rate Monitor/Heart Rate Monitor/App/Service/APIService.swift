@@ -179,120 +179,39 @@ class APIService {
         }
     }
     
-    func login1(username: String, password: String,completion : @escaping (_ result : APIResponsed)->()){
-        
-        let parameter: [String: String] = [
-            "email": username,
-            "password": password
-        ]
-        var result = APIResponsed()
-        AF.request("\(self.baseUrl)/api/users/login", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
-                //debugPrint(response)
-                guard let data = response.data else { return }
-                            do {
-                                let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
-                                result = apiResponse
-                                completion(result)
-                            } catch let error {
-                                print(error)
-                            }
-        }
-    }
-    
-    func register1(username: String, password: String, phoneNumber: String,completion : @escaping (_ result : APIResponsed)->()){
-        let parameter: [String: String] = [
-            "email": username,
-            "password": password,
-            "phoneNumber": phoneNumber
-        ]
-        var result = APIResponsed()
-        AF.request("\(self.baseUrl)/api/users/signup", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
-                //debugPrint(response)
-                guard let data = response.data else { return }
-                        do {
-                            let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
-                            result = apiResponse
-                            completion(result)
-                        } catch let error {
-                            print(error)
+    func postHeartRate(heartRates: [HeartRateHistory]) -> Single<[HeartRateHistory]> {
+        Single.create { (single) -> Disposable in
+            let params: [String: Any] = [
+                "rates": Array(heartRates).map {[
+                            "localId": $0.id ?? 0,
+                            "grapValues": $0.grapValues,
+                            "heartRateNumber": $0.heartRateNumber ?? 0,
+                            "label": $0.label ?? "",
+                            "createDate": $0.createDate ?? "",
+                            "isSubmiited": $0.isSubmitted ?? false
+                        ]}
+            ]
+            print(params)
+            AF.request("\(self.baseUrl)rates/arr",
+                       method: .post,
+                       parameters: params as Parameters,
+                       encoding: JSONEncoding.default,
+                       headers: self.headers)
+                .responseDecodable(of: APIResponse<[HeartRateHistory]>.self) { res in
+                    HLog.log(tag: APIService.tag, res.result)
+                    switch res.result {
+                    case .success(let data):
+                        guard let data = data.data else {
+                            single(.error(HError.unknown))
+                            return
                         }
+                        single(.success(data))
+                    case .failure(let error):
+                        single(.error(HError.init(code: error.responseCode, message: error.localizedDescription)))
+                    }
+                }
+            return Disposables.create()
         }
     }
     
-    func authOtpCode(username: String, password: String,otpCode : String,caseOTP: String,completion : @escaping (_ result : APIResponsed)->()){
-        let parameter: [String: String] = [
-            "email": username,
-            "password": password,
-            "otpCode": otpCode,
-            "case": caseOTP // 1 : resetpassword
-        ]
-        var result = APIResponsed()
-        AF.request("\(self.baseUrl)/api/users/otp", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
-                //debugPrint(response)
-                guard let data = response.data else { return }
-                        do {
-                            let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
-                            result = apiResponse
-                            completion(result)
-                        } catch let error {
-                            print(error)
-                        }
-        }
-    }
-    
-    func resendOtpCode(username: String,completion : @escaping (_ result : APIResponsed)->()){
-        let parameter: [String: String] = [
-            "email": username
-        ]
-        var result = APIResponsed()
-        AF.request("\(self.baseUrl)/api/users/resendOTP", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
-                //debugPrint(response)
-                guard let data = response.data else { return }
-                        do {
-                            let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
-                            result = apiResponse
-                            completion(result)
-                        } catch let error {
-                            print(error)
-                        }
-        }
-    }
-    
-    func forgotPassword(username: String,completion : @escaping (_ result : APIResponsed)->()){
-        let parameter: [String: String] = [
-            "email": username
-        ]
-        var result = APIResponsed()
-        AF.request("\(self.baseUrl)/api/users/forgotpw", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
-                //debugPrint(response)
-                guard let data = response.data else { return }
-                        do {
-                            let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
-                            result = apiResponse
-                            completion(result)
-                        } catch let error {
-                            print(error)
-                        }
-        }
-    }
-    
-    
-    func changePassword(username: String,password: String,completion : @escaping (_ result : APIResponsed)->()){
-        let parameter: [String: String] = [
-            "email": username,
-            "password": password
-        ]
-        var result = APIResponsed()
-        AF.request("\(self.baseUrl)/api/users/changepassword", method: .post, parameters: parameter,encoder: JSONParameterEncoder.default).responseJSON { response in
-                //debugPrint(response)
-                guard let data = response.data else { return }
-                        do {
-                            let apiResponse = try JSONDecoder().decode(APIResponsed.self, from: data)
-                            result = apiResponse
-                            completion(result)
-                        } catch let error {
-                            print(error)
-                        }
-        }
-    }
 }
