@@ -44,6 +44,11 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
         return vc
     }()
     
+    private lazy var signinVC: UINavigationController = {
+        let vc = UINavigationController(rootViewController: SignInVC())
+        return vc
+    }()
+    
     private lazy var helpVC: UINavigationController = {
         let vc = UINavigationController(rootViewController: HelpVC())
         return vc
@@ -97,6 +102,7 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
             calmSelectionVC,
             settingVC,
             helpVC,
+            signinVC
         ]
         showingVC = vcArray[0]
         display(showingVC)

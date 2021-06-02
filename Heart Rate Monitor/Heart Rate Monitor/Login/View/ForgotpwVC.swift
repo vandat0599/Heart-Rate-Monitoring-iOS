@@ -1,36 +1,33 @@
 //
-//  SignUpVC.swift
+//  ForgotpwVC.swift
 //  Heart Rate Monitor
 //
-//  Created by Thành Nguyên on 18/03/2021.
+//  Created by AlexisPQA on 25/05/2021.
 //
+
 
 import UIKit
 
-class SignUpVC: BaseVC {
+class ForgotpwVC : BaseVC, UITextFieldDelegate {
     var window: UIWindow?
-    //Outlets
+    
+    var email : String?
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
-    @IBOutlet weak var signupButton: UIButton!
-    
+    @IBOutlet weak var confirmButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    private func setupView() {
+        
+        Gradient.horizontal(confirmButton)
         
         emailTextField.layer.masksToBounds = true
         emailTextField.layer.borderColor = UIColor(named: "label")?.cgColor
         emailTextField.layer.borderWidth = 1.0
-        
-        phoneTextField.layer.masksToBounds = true
-        phoneTextField.layer.borderColor = UIColor(named: "label")?.cgColor
-        phoneTextField.layer.borderWidth = 1.0
         
         passwordTextField.layer.masksToBounds = true
         passwordTextField.layer.borderColor = UIColor(named: "label")?.cgColor
@@ -39,12 +36,14 @@ class SignUpVC: BaseVC {
         confirmPasswordTextField.layer.masksToBounds = true
         confirmPasswordTextField.layer.borderColor = UIColor(named: "label")?.cgColor
         confirmPasswordTextField.layer.borderWidth = 1.0
+        
+        emailTextField.text = email
+
     }
     
-    private func setupView() {
-        Gradient.horizontal(signupButton)
-    }
-    @IBAction func signupTapped(_ sender: Any) {
+    @IBAction func confirmTapped(_ sender: Any) {
+        let API = APIService.shared
+        
         let valid = Utils.checkValidateField(email: emailTextField.text, password: passwordTextField.text, passwordConf: confirmPasswordTextField.text)
         switch (valid) {
             
@@ -69,27 +68,23 @@ class SignUpVC: BaseVC {
             self.present(alert, animated: true, completion: nil)
             break
         default:
-            let API = APIService.shared
-    
-                API.register1(username: emailTextField.text!, password: passwordTextField.text!,phoneNumber: phoneTextField.text!,completion: { [self] (response) -> Void in
-                    if (response.error_code == 2){
-                        
+            API.forgotPassword(username: emailTextField.text!) { [self] response in
+                    if (response.error_code == 4){
                         let alertOTP = OtpVC()
                         alertOTP.modalTransitionStyle = .crossDissolve
-                        alertOTP.titleAlert = "Enter OTP to active your account"
+                        alertOTP.titleAlert = "OTP reset Password"
                         alertOTP.email = emailTextField.text!
                         alertOTP.password = passwordTextField.text!
-                        alertOTP.caseOTP = "0"
+                        alertOTP.caseOTP = "1"
                         present(alertOTP, animated: true)
-                        
                     }else{
                         let alert = UIAlertController(title: "Error", message: response.message!, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     }
-                    }
-                )
-            break;
+                }
+            break
+    
         }
     }
 }

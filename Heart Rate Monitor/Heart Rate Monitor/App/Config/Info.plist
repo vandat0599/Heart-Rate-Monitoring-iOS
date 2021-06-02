@@ -59,7 +59,7 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Dark</string>
 	<key>baseUrl</key>
-	<string>${baseUrl}</string>
+	<string>https://ancient-chamber-71101.herokuapp.com</string>
 	<key>logEnabled</key>
 	<string>${logEnabled}</string>
 </dict>
