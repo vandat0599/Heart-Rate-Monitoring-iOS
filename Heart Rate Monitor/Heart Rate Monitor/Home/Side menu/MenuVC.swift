@@ -15,11 +15,20 @@ protocol MenuVCDelegate: AnyObject {
 
 class MenuVC: BaseVC {
     //MARK: - Properties
+    @IBOutlet weak var loginButton: UIButton!
     weak var delegate: MenuVCDelegate!
     
     //MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        let loggedAccount = UserDefaultHelper.getLogedUser()
+        if loggedAccount == nil {
+            loginButton.setImage(UIImage(named: "ic-login"), for: .normal)
+            loginButton.setTitle("Login", for: .normal)
+        } else {
+            loginButton.setImage(UIImage(named: "ic-logout"), for: .normal)
+            loginButton.setTitle("Logout", for: .normal)
+        }
     }
 
     //MARK: -Actions
@@ -29,5 +38,17 @@ class MenuVC: BaseVC {
     
     @IBAction func itemTapped(_ sender: UIButton) {
         self.delegate.onItemTapped(index: sender.tag)
+    }
+    
+    override func didLogin() {
+        super.didLogin()
+        loginButton.setImage(UIImage(named: "ic-logout"), for: .normal)
+        loginButton.setTitle("Logout", for: .normal)
+    }
+    
+    override func didLogout() {
+        super.didLogout()
+        loginButton.setImage(UIImage(named: "ic-login"), for: .normal)
+        loginButton.setTitle("Login", for: .normal)
     }
 }

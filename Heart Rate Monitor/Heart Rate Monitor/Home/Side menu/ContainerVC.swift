@@ -44,11 +44,6 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
         return vc
     }()
     
-    private lazy var signinVC: UINavigationController = {
-        let vc = UINavigationController(rootViewController: SignInVC())
-        return vc
-    }()
-    
     private lazy var helpVC: UINavigationController = {
         let vc = UINavigationController(rootViewController: HelpVC())
         return vc
@@ -102,7 +97,6 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
             calmSelectionVC,
             settingVC,
             helpVC,
-            signinVC
         ]
         showingVC = vcArray[0]
         display(showingVC)
@@ -206,7 +200,20 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
         UISelectionFeedbackGenerator().selectionChanged()
         if index > vcArray.count {
             toggleMenu()
-            openMailBox()
+            if index == 7 {
+                openMailBox()
+            } else if index == 8 {
+                let loggedInAccount = UserDefaultHelper.getLogedUser()
+                guard loggedInAccount != nil else {
+                    let loginVC = UINavigationController(rootViewController: SignInVC())
+                    present(loginVC, animated: true)
+                    return
+                }
+                HAlert.showWarningBottomSheet(self, message: "If you log out of your account, your heart rate data will no longer be synced to our server.") {
+                    UserDefaultHelper.remove(key: .loggedInAccount, async: true)
+                    NotificationCenter.default.post(name: AppConstant.AppNotificationName.didLogout, object: nil)
+                }
+            }
             return
         }
         guard index <= vcArray.count, showingVC != vcArray[index - 1] else {

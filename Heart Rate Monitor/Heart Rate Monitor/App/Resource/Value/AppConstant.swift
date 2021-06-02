@@ -10,5 +10,7 @@ import Foundation
 class AppConstant {
     struct AppNotificationName {
         static let menuButtonTapped = Notification.Name("menuButtonTapped")
+        static let didLogin = Notification.Name("didLogin")
+        static let didLogout = Notification.Name("didLogout")
     }
 }

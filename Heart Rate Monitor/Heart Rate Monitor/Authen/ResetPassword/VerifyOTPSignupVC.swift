@@ -1,13 +1,13 @@
 //
-//  ResetPasswordVC.swift
+//  VerifyOTP.swift
 //  Heart Rate Monitor
 //
-//  Created by Dat Vo on 6/2/21.
+//  Created by Dat Van on 02/06/2021.
 //
 
 import UIKit
 
-final class ResetPasswordVC: BaseVC {
+final class VerifyOTPSignupVC: BaseVC {
     
     private lazy var signInButton: UIButton = {
         let view = FillRoundedButton()
@@ -24,7 +24,7 @@ final class ResetPasswordVC: BaseVC {
     private lazy var headerView: UIView = {
         let view = UIView()
         let signInLabel = UILabel()
-        signInLabel.text = "RESET PASSWORD"
+        signInLabel.text = "OTP"
         signInLabel.font = .systemFont(ofSize: 24, weight: .bold)
         signInLabel.textColor = .white
         signInLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +32,7 @@ final class ResetPasswordVC: BaseVC {
         signInDescriptionLabel.numberOfLines = 0
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
-        signInDescriptionLabel.attributedText = NSMutableAttributedString(string: "Enter your email address", attributes: [
+        signInDescriptionLabel.attributedText = NSMutableAttributedString(string: "Enter the OTP code just sent to your email", attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
@@ -57,9 +57,9 @@ final class ResetPasswordVC: BaseVC {
         let textField = FormInputView()
         textField.setData(model: FormInputViewModel(
             text: "",
-            placeHolder: "Email Adress",
+            placeHolder: "OTP code",
             inputType: .email,
-            authenticationType: .csEmail,
+            authenticationType: .csEmpty,
             dataPicker: nil
         ))
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +78,7 @@ final class ResetPasswordVC: BaseVC {
     
     private lazy var resetButton: UIButton = {
         let view = FillRoundedButton()
-        view.setTitle("RESET", for: .normal)
+        view.setTitle("VERIFY", for: .normal)
         view.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         view.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         view.isEnabled = true
@@ -100,6 +100,19 @@ final class ResetPasswordVC: BaseVC {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private let username: String
+    private let password: String
+    
+    init(username: String, password: String) {
+        self.username = username
+        self.password = password
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,15 +172,17 @@ final class ResetPasswordVC: BaseVC {
         let inputViews = [emailFormView]
         if inputViews.filter({ $0.isValidationError() }).count == 0 {
             HHud.showHud()
-            APIService.shared.sendOtpResetPassword(email: emailFormView.text ?? "")
+            print(username, password, emailFormView.text ?? "0")
+            APIService.shared.verifyRegister(email: username, password: password, otp: emailFormView.text ?? "0")
                 .subscribe {[weak self] (user) in
                     HHud.hideHud()
                     guard let self = self else { return }
-                    let vc = ChangePasswordWithOTPVC(email: self.emailFormView.text ?? "")
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    UserDefaultHelper.saveCodableObject(user, key: .loggedInAccount)
+                    NotificationCenter.default.post(name: AppConstant.AppNotificationName.didLogin, object: nil)
+                    self.dismiss(animated: true)
                 } onError: { (error) in
                     HHud.hideHud()
-                    HAlert.showErrorBottomSheet(self, message: "Your email is incorect or something went wrong, please try again!")
+                    HAlert.showErrorBottomSheet(self, message: "Something went wrong, please try again!")
                 }
                 .disposed(by: disposeBag)
         } else {
@@ -175,4 +190,3 @@ final class ResetPasswordVC: BaseVC {
         }
     }
 }
-

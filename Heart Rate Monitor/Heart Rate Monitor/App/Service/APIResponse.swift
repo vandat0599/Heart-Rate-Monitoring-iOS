@@ -26,13 +26,13 @@ struct APIResponse<T: Decodable>: Decodable {
     var data: T?
     var errorCode: Int?
     var message: String?
-    var success: Bool?
+    var status: Int?
     
     enum CodingKeys: String, CodingKey {
         case data
         case errorCode = "error_code"
         case message
-        case success
+        case status
     }
     
     init(from decoder: Decoder) throws {
@@ -44,6 +44,11 @@ struct APIResponse<T: Decodable>: Decodable {
         }
         errorCode = try? container?.decode(Int.self, forKey: .errorCode) ?? -1
         message = try? container?.decode(String.self, forKey: .message) ?? "unknown"
-        success = try? container?.decode(Bool.self, forKey: .success) ?? false
+        status = try? container?.decode(Int.self, forKey: .status) ?? 0
     }
+}
+
+struct UserResponse: Codable {
+    var user: User?
+    var token: String?
 }

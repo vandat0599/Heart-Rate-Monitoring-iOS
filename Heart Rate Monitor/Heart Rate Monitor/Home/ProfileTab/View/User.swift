@@ -16,6 +16,7 @@ struct User: Codable {
     var createAt: String?
     var updateAt: String?
     var isActive: Bool?
+    var accessToken: String?
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
@@ -26,5 +27,6 @@ struct User: Codable {
         case createAt
         case updateAt
         case isActive
+        case accessToken
     }
 }

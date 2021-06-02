@@ -59,7 +59,7 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Dark</string>
 	<key>baseUrl</key>
-	<string>${baseUrl}</string>
+	<string>https://heart-rate-monitor-hcmus.herokuapp.com/api/</string>
 	<key>logEnabled</key>
 	<string>${logEnabled}</string>
 </dict>

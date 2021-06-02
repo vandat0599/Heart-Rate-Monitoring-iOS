@@ -63,15 +63,15 @@ final class SignInVC: BaseVC {
         signInDescriptionLabel.numberOfLines = 0
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
-        signInDescriptionLabel.attributedText = NSMutableAttributedString(string: "Sign in with your email. Don’t remember your username or password?", attributes: [
+        signInDescriptionLabel.attributedText = NSMutableAttributedString(string: "Sign in with your email. If you don’t remember your email or password?", attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
         ])
         signInDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        let clickHereButton = UIButton()
+        let clickHereButton = CustomRippleButton()
         clickHereButton.setTitle("Click here.", for: .normal)
-        clickHereButton.setTitleColor(.red, for: .normal)
+        clickHereButton.setTitleColor(.systemRed, for: .normal)
         clickHereButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
         clickHereButton.addTarget(self, action: #selector(clickHereTapped), for: .touchUpInside)
         clickHereButton.translatesAutoresizingMaskIntoConstraints = false
@@ -222,54 +222,24 @@ final class SignInVC: BaseVC {
     }
     
     @objc private func loginTapped() {
-//        let inputViews = [usernameView, passwordView]
-//        if inputViews.filter({ $0.isValidationError() }).count == 0 {
-//            MHud.showHud()
-//            var account = Account()
-//            account.userEmail = usernameView.text
-//            account.userPassword = passwordView.text
-//            APIService.shared.login(object: account) {[weak self] response in
-//                guard let self  = self else { return }
-//                switch response {
-//                case .success(let data):
-//                    guard let success = data.success, success else {
-//                        if data.errorCode == 3 {
-//                            account.userID = data.data?.first?.userID
-//                            APIService.shared.logout(object: account) {[weak self] response in
-//                                guard let self = self else { return }
-//                                switch response {
-//                                case .success(let data):
-//                                    guard let success = data.success, success else {
-//                                        MAlert.showErrorBottomSheet(self, message: data.message ?? "")
-//                                        return
-//                                    }
-//                                    self.loginTapped()
-//                                case .failure(let error):
-//                                    MHud.hideHud()
-//                                    MAlert.showErrorBottomSheet(self, message: error.localizedDescription)
-//                                }
-//                            }
-//                        } else {
-//                            inputViews.forEach { $0.forceShowError() }
-//                            MAlert.showErrorBottomSheet(self, message: data.message ?? "")
-//                        }
-//                        return
-//                    }
-//                    MUserDefaults.saveCodableObject(data.data?.first, key: .logedInAccount)
-//                    MUserDefaults.save(value: account.userPassword, key: .userPassword)
-//                    MHud.hideHud()
-//                    let vc = SideMenuContainerVC()
-//                    vc.modalTransitionStyle = .crossDissolve
-//                    vc.modalPresentationStyle = .fullScreen
-//                    self.present(vc, animated: true, completion: nil)
-//                case .failure(let error):
-//                    MHud.hideHud()
-//                    MAlert.showErrorBottomSheet(self, message: error.localizedDescription)
-//                }
-//            }
-//        } else {
-//            inputViews.forEach { $0.showErrorIfNeeded() }
-//        }
+        let inputViews = [usernameView, passwordView]
+        if inputViews.filter({ $0.isValidationError() }).count == 0 {
+            HHud.showHud()
+            APIService.shared.login(username: usernameView.text ?? "", password: passwordView.text ?? "")
+                .subscribe {[weak self] (user) in
+                    HHud.hideHud()
+                    guard let self = self else { return }
+                    UserDefaultHelper.saveCodableObject(user, key: .loggedInAccount)
+                    NotificationCenter.default.post(name: AppConstant.AppNotificationName.didLogin, object: nil)
+                    self.dismiss(animated: true)
+                } onError: { (error) in
+                    HHud.hideHud()
+                    HAlert.showErrorBottomSheet(self, message: "Your email/password is incorect or something went wrong, please try again!")
+                }
+                .disposed(by: disposeBag)
+        } else {
+            inputViews.forEach { $0.showErrorIfNeeded() }
+        }
     }
     
     @objc private func privacyTapped() {

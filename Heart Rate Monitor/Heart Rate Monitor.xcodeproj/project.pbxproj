@@ -86,6 +86,8 @@
 		CE62628A266770CA00B2F736 /* FormInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE626289266770CA00B2F736 /* FormInputView.swift */; };
 		CE6262972667746300B2F736 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6262962667746300B2F736 /* CheckBox.swift */; };
 		CE62629C26677EF200B2F736 /* FillRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62629B26677EF200B2F736 /* FillRoundedButton.swift */; };
+		CE6262B626679F3100B2F736 /* VerifyOTPSignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6262B526679F3100B2F736 /* VerifyOTPSignupVC.swift */; };
+		CE6262C12667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6262C02667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift */; };
 		CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */; };
 		CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */; };
 		CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */; };
@@ -262,6 +264,8 @@
 		CE626289266770CA00B2F736 /* FormInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormInputView.swift; sourceTree = "<group>"; };
 		CE6262962667746300B2F736 /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		CE62629B26677EF200B2F736 /* FillRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FillRoundedButton.swift; sourceTree = "<group>"; };
+		CE6262B526679F3100B2F736 /* VerifyOTPSignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPSignupVC.swift; sourceTree = "<group>"; };
+		CE6262C02667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordWithOTPVC.swift; sourceTree = "<group>"; };
 		CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerVC.swift; sourceTree = "<group>"; };
 		CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVC.swift; sourceTree = "<group>"; };
 		CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
@@ -607,6 +611,8 @@
 			isa = PBXGroup;
 			children = (
 				CE62625C26676DAD00B2F736 /* ResetPasswordVC.swift */,
+				CE6262B526679F3100B2F736 /* VerifyOTPSignupVC.swift */,
+				CE6262C02667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift */,
 			);
 			path = ResetPassword;
 			sourceTree = "<group>";
@@ -1202,6 +1208,7 @@
 				CEC78EA425F73A07007BA177 /* UIImage+.swift in Sources */,
 				CE10732125FDCDDF003777D6 /* Filter.swift in Sources */,
 				CE2391202655669400DC05BC /* ResultBottomSheetVC.swift in Sources */,
+				CE6262B626679F3100B2F736 /* VerifyOTPSignupVC.swift in Sources */,
 				CE7F8A2225FC902F00A2EDC9 /* UserVC.swift in Sources */,
 				CEC78E9525F73A07007BA177 /* UIColor+.swift in Sources */,
 				CE62626426676DAE00B2F736 /* SignUpVC.swift in Sources */,
@@ -1220,6 +1227,7 @@
 				CEC78EA525F73A07007BA177 /* NSLayoutConstraint+.swift in Sources */,
 				CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */,
 				CEC78EA225F73A07007BA177 /* UIFont+.swift in Sources */,
+				CE6262C12667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift in Sources */,
 				CE1E228C25F72A0200C6632E /* AppDelegate.swift in Sources */,
 				CE6262972667746300B2F736 /* CheckBox.swift in Sources */,
 				CE62626226676DAE00B2F736 /* ResetPasswordVC.swift in Sources */,

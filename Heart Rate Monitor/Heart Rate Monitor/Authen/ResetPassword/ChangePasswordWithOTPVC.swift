@@ -1,30 +1,31 @@
 //
-//  ResetPasswordVC.swift
+//  changePasswordWithOTPVC.swift
 //  Heart Rate Monitor
 //
-//  Created by Dat Vo on 6/2/21.
+//  Created by Dat Van on 02/06/2021.
 //
 
 import UIKit
 
-final class ResetPasswordVC: BaseVC {
+class ChangePasswordWithOTPVC: BaseVC {
     
-    private lazy var signInButton: UIButton = {
+    private lazy var signInButton: FillRoundedButton = {
         let view = FillRoundedButton()
         view.setTitleColor(.white, for: .normal)
         view.backgroundColor = UIColor(named: "pink")
         view.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         view.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         view.setTitle("SIGN IN", for: .normal)
-        view.addTarget(self, action: #selector(signIpTapped), for: .touchUpInside)
+        view.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var headerView: UIView = {
+    private lazy var signUnHeaderView: UIView = {
         let view = UIView()
         let signInLabel = UILabel()
-        signInLabel.text = "RESET PASSWORD"
+        signInLabel.text = "CHANGE PASSWORD"
         signInLabel.font = .systemFont(ofSize: 24, weight: .bold)
         signInLabel.textColor = .white
         signInLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +33,7 @@ final class ResetPasswordVC: BaseVC {
         signInDescriptionLabel.numberOfLines = 0
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
-        signInDescriptionLabel.attributedText = NSMutableAttributedString(string: "Enter your email address", attributes: [
+        signInDescriptionLabel.attributedText = NSMutableAttributedString(string: "Please enter the OTP code just sent to your email and enter new password", attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
@@ -44,7 +45,7 @@ final class ResetPasswordVC: BaseVC {
             signInLabel.topAnchor.constraint(equalTo: view.topAnchor),
             signInLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             
-            signInDescriptionLabel.topAnchor.constraint(equalTo: signInLabel.bottomAnchor, constant: 10),
+            signInDescriptionLabel.topAnchor.constraint(equalTo: signInLabel.bottomAnchor, constant: 15),
             signInDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             signInDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             signInDescriptionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -53,15 +54,46 @@ final class ResetPasswordVC: BaseVC {
         return view
     }()
     
-    private lazy var emailFormView: FormInputView = {
+    private lazy var emailView: FormInputView = {
         let textField = FormInputView()
         textField.setData(model: FormInputViewModel(
             text: "",
-            placeHolder: "Email Adress",
+            placeHolder: "OTP Code",
             inputType: .email,
-            authenticationType: .csEmail,
+            authenticationType: .csEmpty,
             dataPicker: nil
         ))
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private lazy var passwordView: FormInputView = {
+        let textField = FormInputView()
+        textField.setData(model: FormInputViewModel(
+            text: "",
+            placeHolder: "New Password",
+            inputType: .password,
+            authenticationType: .csPassword,
+            dataPicker: nil
+        ))
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private lazy var confirmPasswordView: FormInputView = {
+        let textField = FormInputView()
+        textField.setData(model: FormInputViewModel(
+            text: "",
+            placeHolder: "Confirm New Password",
+            inputType: .password,
+            authenticationType: .csPassword,
+            dataPicker: nil
+        ))
+        textField.onTextEditing = {[weak self] text in
+            if self?.passwordView.text != textField.text {
+                textField.forceShowError()
+            }
+        }
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -76,14 +108,14 @@ final class ResetPasswordVC: BaseVC {
         return stackView
     }()
     
-    private lazy var resetButton: UIButton = {
+    private lazy var registerButton: UIButton = {
         let view = FillRoundedButton()
-        view.setTitle("RESET", for: .normal)
+        view.setTitle("SUBMIT", for: .normal)
         view.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         view.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         view.isEnabled = true
         view.backgroundColor = UIColor(named: "pink")
-        view.addTarget(self, action: #selector(resetTapped), for: .touchUpInside)
+        view.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -101,22 +133,39 @@ final class ResetPasswordVC: BaseVC {
         return view
     }()
     
+    private let email: String
+    
+    init(email: String) {
+        self.email = email
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        [emailView, passwordView, confirmPasswordView].forEach { $0.text = "" }
+    }
+    
     private func setupView() {
-        view.backgroundColor = UIColor(named: "black-background")
+        navigationController?.navigationBar.tintColor = .white
+        view.backgroundColor = UIColor.init(named: "black-background")
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        
         contentView.addSubview(signInButton)
         contentView.addSubview(stackForm)
-        stackForm.addArrangedSubview(emailFormView)
-        contentView.addSubview(resetButton)
-        contentView.addSubview(headerView)
-        contentView.addSubview(resetButton)
+        stackForm.addArrangedSubview(emailView)
+        stackForm.addArrangedSubview(passwordView)
+        stackForm.addArrangedSubview(confirmPasswordView)
+        contentView.addSubview(registerButton)
+        contentView.addSubview(signUnHeaderView)
         NSLayoutConstraint.activate([
             
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -132,47 +181,56 @@ final class ResetPasswordVC: BaseVC {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             signInButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            signInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
-            headerView.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 30),
-            headerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            headerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            signUnHeaderView.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 20),
+            signUnHeaderView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            signUnHeaderView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
-            stackForm.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20),
+            stackForm.topAnchor.constraint(equalTo: signUnHeaderView.bottomAnchor, constant: 30),
             stackForm.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             stackForm.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
-            emailFormView.widthAnchor.constraint(equalTo: stackForm.widthAnchor),
+            emailView.widthAnchor.constraint(equalTo: stackForm.widthAnchor),
+            passwordView.widthAnchor.constraint(equalTo: stackForm.widthAnchor),
+            confirmPasswordView.widthAnchor.constraint(equalTo: stackForm.widthAnchor),
             
-            resetButton.topAnchor.constraint(equalTo: stackForm.bottomAnchor, constant: 30),
-            resetButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            resetButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            resetButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            registerButton.topAnchor.constraint(equalTo: stackForm.bottomAnchor, constant: 30),
+            registerButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            registerButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            registerButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
         ])
     }
     
-    @objc private func signIpTapped() {
+    @objc private func signInTapped() {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc private func resetTapped() {
-        let inputViews = [emailFormView]
-        if inputViews.filter({ $0.isValidationError() }).count == 0 {
+    @objc private func clickHereTapped() {
+        
+    }
+    
+    @objc private func registerTapped() {
+        let inputViews = [emailView, passwordView, confirmPasswordView]
+        if inputViews.filter({ $0.isValidationError() }).count == 0 && passwordView.text == confirmPasswordView.text {
             HHud.showHud()
-            APIService.shared.sendOtpResetPassword(email: emailFormView.text ?? "")
-                .subscribe {[weak self] (user) in
-                    HHud.hideHud()
+            APIService.shared.changePasswordWithOTP(email: email, password: passwordView.text ?? "", otp: emailView.text ?? "0")
+                .subscribe { [weak self] (user) in
                     guard let self = self else { return }
-                    let vc = ChangePasswordWithOTPVC(email: self.emailFormView.text ?? "")
-                    self.navigationController?.pushViewController(vc, animated: true)
-                } onError: { (error) in
                     HHud.hideHud()
-                    HAlert.showErrorBottomSheet(self, message: "Your email is incorect or something went wrong, please try again!")
+                    UserDefaultHelper.saveCodableObject(user, key: .loggedInAccount)
+                    NotificationCenter.default.post(name: AppConstant.AppNotificationName.didLogin, object: nil)
+                    self.dismiss(animated: true)
+                } onError: { (err) in
+                    HHud.hideHud()
+                    HAlert.showErrorBottomSheet(self, message: "Something went wrong, please try again!")
                 }
                 .disposed(by: disposeBag)
         } else {
             inputViews.forEach { $0.showErrorIfNeeded() }
+            if passwordView.text != confirmPasswordView.text {
+                confirmPasswordView.forceShowError()
+            }
         }
     }
 }
-
