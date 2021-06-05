@@ -28,7 +28,7 @@ class MenuVC: BaseVC {
             loginButton.setImage(UIImage(named: "ic-logout"), for: .normal)
             loginButton.setTitle("Logout", for: .normal)
             userEmailButton.isHidden = false
-            userEmailButton.setTitle(account.email, for: .normal)
+            userEmailButton.setTitle("Hi, \(account.name ?? "unknow")", for: .normal)
         } else {
             loginButton.setImage(UIImage(named: "ic-login"), for: .normal)
             loginButton.setTitle("Login", for: .normal)
@@ -55,7 +55,7 @@ class MenuVC: BaseVC {
         loginButton.setTitle("Logout", for: .normal)
         if let account = UserDefaultHelper.getLogedUser() {
             userEmailButton.isHidden = false
-            userEmailButton.setTitle(account.email, for: .normal)
+            userEmailButton.setTitle("Hi, \(account.name ?? "unknow")", for: .normal)
         } else {
             userEmailButton.isHidden = true
             userEmailButton.setTitle("", for: .normal)
@@ -68,7 +68,7 @@ class MenuVC: BaseVC {
         loginButton.setTitle("Login", for: .normal)
         if let account = UserDefaultHelper.getLogedUser() {
             userEmailButton.isHidden = false
-            userEmailButton.setTitle(account.email, for: .normal)
+            userEmailButton.setTitle("Hi, \(account.name ?? "unknow")", for: .normal)
         } else {
             userEmailButton.isHidden = true
             userEmailButton.setTitle("", for: .normal)

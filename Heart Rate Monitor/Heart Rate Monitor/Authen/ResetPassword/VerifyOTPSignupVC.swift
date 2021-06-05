@@ -101,10 +101,12 @@ final class VerifyOTPSignupVC: BaseVC {
         return view
     }()
     
+    private let name: String
     private let username: String
     private let password: String
     
-    init(username: String, password: String) {
+    init(name: String, username: String, password: String) {
+        self.name = name
         self.username = username
         self.password = password
         super.init(nibName: nil, bundle: nil)

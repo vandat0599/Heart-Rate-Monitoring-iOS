@@ -43,8 +43,6 @@ class ResultBottomSheetVC: BottomSheetViewController {
         view.setScaleEnabled(false)
         view.pinchZoomEnabled = true
         view.autoScaleMinMaxEnabled = true
-//        view.leftAxis.axisMaximum = 255
-//        view.leftAxis.axisMinimum = 200
         view.rightAxis.enabled = false
         view.leftAxis.enabled = false
         view.legend.enabled = false

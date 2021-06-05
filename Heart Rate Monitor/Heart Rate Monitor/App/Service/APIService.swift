@@ -62,10 +62,11 @@ class APIService {
         }
     }
     
-    func register(email: String, password: String) -> Single<User?> {
+    func register(name: String, email: String, password: String) -> Single<User?> {
         Single.create { (single) -> Disposable in
             let params: [String: Any] = [
                 "email": email,
+                "name": name,
                 "password": password
             ]
             AF.request("\(self.baseUrl)users/signup",
@@ -188,7 +189,7 @@ class APIService {
                             "heartRateNumber": $0.heartRateNumber ?? 0,
                             "label": $0.label ?? "",
                             "createDate": $0.createDate ?? "",
-                            "isSubmiited": $0.isSubmitted ?? false
+                            "isSubmitted": $0.isSubmitted ?? false
                         ]}
             ]
             print(params)
@@ -213,5 +214,4 @@ class APIService {
             return Disposables.create()
         }
     }
-    
 }

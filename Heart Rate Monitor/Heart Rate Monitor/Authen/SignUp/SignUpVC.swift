@@ -245,11 +245,11 @@ final class SignUpVC: BaseVC, CheckBoxDelegate {
         let inputViews = [emailView, nameView, passwordView, confirmPasswordView]
         if inputViews.filter({ $0.isValidationError() }).count == 0 && passwordView.text == confirmPasswordView.text {
             HHud.showHud()
-            APIService.shared.register(email: emailView.text ?? "", password: passwordView.text ?? "")
+            APIService.shared.register(name: nameView.text ?? "", email: emailView.text ?? "", password: passwordView.text ?? "")
                 .subscribe { [weak self] (user) in
                     guard let self = self else { return }
                     HHud.hideHud()
-                    let vc = VerifyOTPSignupVC(username: self.emailView.text ?? "", password: self.passwordView.text ?? "")
+                    let vc = VerifyOTPSignupVC(name: self.nameView.text ?? "", username: self.emailView.text ?? "", password: self.passwordView.text ?? "")
                     self.navigationController?.pushViewController(vc, animated: true)
                 } onError: { (err) in
                     HHud.hideHud()
