@@ -43,7 +43,12 @@ class HistoryTableViewCell: UITableViewCell {
         noteLabel.text = model.label
         timeLabel.text = Date().fromTimeMilli(timeMilli: model.createDate ?? "").dateAndTimetoString()
         setupChartData(values: model.grapValues)
-        submitView.backgroundColor = UIColor(named: (model.isSubmitted ?? false) ? "success" : "red-1")!
+        if UserDefaultHelper.getLogedUser() != nil {
+            submitView.backgroundColor = UIColor(named: (model.isSubmitted ?? false) ? "success" : "red-1")!
+        } else {
+            submitView.backgroundColor = UIColor(named: "red-1")!
+        }
+        
     }
     
     private func setupChartData(values: [Double]) {

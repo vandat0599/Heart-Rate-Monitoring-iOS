@@ -66,12 +66,7 @@ class MenuVC: BaseVC {
         super.didLogout()
         loginButton.setImage(UIImage(named: "ic-login"), for: .normal)
         loginButton.setTitle("Login", for: .normal)
-        if let account = UserDefaultHelper.getLogedUser() {
-            userEmailButton.isHidden = false
-            userEmailButton.setTitle("Hi, \(account.name ?? "unknow")", for: .normal)
-        } else {
-            userEmailButton.isHidden = true
-            userEmailButton.setTitle("", for: .normal)
-        }
+        userEmailButton.isHidden = true
+        userEmailButton.setTitle("", for: .normal)
     }
 }

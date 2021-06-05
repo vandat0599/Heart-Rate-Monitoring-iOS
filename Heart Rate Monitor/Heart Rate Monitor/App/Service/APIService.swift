@@ -226,4 +226,26 @@ class APIService {
             return Disposables.create()
         }
     }
+    
+    func getHeartRates(limitDay: Int = 999999999999) -> Single<[HeartRateHistory]> {
+        return Single.create { (single) -> Disposable in
+            AF.request("\(self.baseUrl)rates?limitDay=\(limitDay)",
+                       method: .get,
+                       headers: self.getHeader())
+                .responseDecodable(of: APIResponse<[HeartRateHistory]>.self) { res in
+                    HLog.log(tag: APIService.tag, res.result)
+                    switch res.result {
+                    case .success(let data):
+                        guard let rates = data.data else {
+                            single(.error(HError.unknown))
+                            return
+                        }
+                        single(.success(rates))
+                    case .failure(let error):
+                        single(.error(HError.init(code: error.responseCode, message: error.localizedDescription)))
+                    }
+                }
+            return Disposables.create()
+        }
+    }
 }

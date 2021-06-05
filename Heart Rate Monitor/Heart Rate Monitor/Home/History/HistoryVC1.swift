@@ -118,6 +118,16 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
         tmpTextField.becomeFirstResponder()
     }
     
+    override func didLogin() {
+        super.didLogin()
+        viewModel.reloadData(label: labelHeaderFilterView.label.text ?? "ALL LABELS")
+    }
+    
+    override func didLogout() {
+        super.didLogout()
+        viewModel.reloadData(label: labelHeaderFilterView.label.text ?? "ALL LABELS")
+    }
+    
     // MARK: - Action
     
     // UIPicker Delegate & Datasource
