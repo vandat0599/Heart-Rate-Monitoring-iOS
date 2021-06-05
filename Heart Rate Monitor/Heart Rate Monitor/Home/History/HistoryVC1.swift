@@ -91,25 +91,28 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
             }
             .disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(HeartRateHistory.self)
-            .bind { (model) in
-                let vc = EditHistoryBottoSheetVC(heartRateHistory: model)
-                self.present(vc, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
         tableView.rx.itemSelected
             .bind {[weak self] (indexPath) in
-                self?.tableView.deselectRow(at: indexPath, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        Observable.of(LocalDatabaseHandler.shared.didInsertHistory, LocalDatabaseHandler.shared.didUpdateHistory, LocalDatabaseHandler.shared.didDeleteHistory).merge()
-            .observeOn(MainScheduler.instance)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .bind { [weak self] (_) in
                 guard let self = self else { return }
-                self.viewModel.reloadData(label: self.labelHeaderFilterView.label.text ?? "ALL LABELS")
+                self.tableView.deselectRow(at: indexPath, animated: true)
+                let model = self.viewModel.historyData.value[indexPath.row]
+                var removedHistory = self.viewModel.historyData.value
+                removedHistory.remove(at: indexPath.row)
+                let vc = EditHistoryBottoSheetVC(heartRateHistory: model, leftAction: {[weak self] in
+                    guard let self = self else { return }
+                    self.viewModel.historyData.accept(removedHistory)
+                    APIService.shared.deleteHistoryRates(by: [model.id ?? 0])
+                        .subscribe(onSuccess: { (_) in
+                            LocalDatabaseHandler.shared.deleteHistory(id: model.id ?? 0)
+                        }, onError: {[weak self] (err) in
+                            guard let self = self else { return }
+                            HAlert.showErrorBottomSheet(self, message: "Something went wrong: \(err.localizedDescription)")
+                            removedHistory.insert(model, at: indexPath.row)
+                            self.viewModel.historyData.accept(removedHistory)
+                        })
+                        .disposed(by: self.disposeBag)
+                })
+                self.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

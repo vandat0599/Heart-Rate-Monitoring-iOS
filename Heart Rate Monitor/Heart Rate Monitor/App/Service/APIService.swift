@@ -248,4 +248,28 @@ class APIService {
             return Disposables.create()
         }
     }
+    
+    func deleteHistoryRates(by ids: [Int]) -> Single<[HeartRateHistory]?> {
+        return Single.create { (single) -> Disposable in
+            let params: [String: Any] = [
+                "local_ids": ids
+            ]
+            print("params: \(params)")
+            AF.request("\(self.baseUrl)rates/delete",
+                       method: .post,
+                       parameters: params as Parameters,
+                       encoding: JSONEncoding.default,
+                       headers: self.getHeader())
+                .responseDecodable(of: APIResponse<[HeartRateHistory]>.self) { res in
+                    HLog.log(tag: APIService.tag, res.result)
+                    switch res.result {
+                    case .success(_):
+                        single(.success(nil))
+                    case .failure(let error):
+                        single(.error(HError.init(code: error.responseCode, message: error.localizedDescription)))
+                    }
+                }
+            return Disposables.create()
+        }
+    }
 }

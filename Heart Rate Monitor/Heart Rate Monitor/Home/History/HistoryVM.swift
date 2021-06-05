@@ -39,18 +39,18 @@ class HistoryVM: PHistoryVM {
                         }
                     }
                     history.sort { (m1, m2) -> Bool in return Int(m1.createDate ?? "0") ?? 0 > Int(m2.createDate ?? "0") ?? 0 }
-                    self.historyData.accept(history)
+                    self.updateUnsubmittedRates(history, label: label)
+                    self.historyData.accept(history.filter { label == "ALL LABELS" ? true : $0.label == label })
                     self.reloadLabels()
-                    self.updateUnsubmittedRates(history)
                 } onError: {[weak self] (err) in
-                    self?.updateUnsubmittedRates(history)
+                    self?.updateUnsubmittedRates(history, label: label)
                     print("err: \(err.localizedDescription)")
                 }
                 .disposed(by: disposeBag)
         }
     }
     
-    func updateUnsubmittedRates(_ history: [HeartRateHistory]) {
+    func updateUnsubmittedRates(_ history: [HeartRateHistory], label: String) {
         var historyClone = history
         let unsubmitedRates = history.filter { $0.isSubmitted == false }
         guard !unsubmitedRates.isEmpty else { return }
@@ -65,7 +65,7 @@ class HistoryVM: PHistoryVM {
                         LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: rate)
                     }
                 }
-                self.historyData.accept(historyClone)
+                self.historyData.accept(historyClone.filter { label == "ALL LABELS" ? true : $0.label == label })
                 self.reloadLabels()
             } onError: { (err) in
                 print("err: \(err)")
