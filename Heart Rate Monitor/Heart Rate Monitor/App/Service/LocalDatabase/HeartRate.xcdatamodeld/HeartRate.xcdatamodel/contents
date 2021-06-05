@@ -7,8 +7,9 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="isSubmitted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="label" optional="YES" attributeType="String"/>
+        <attribute name="remoteId" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="LocalHeartHistory" positionX="-63" positionY="-18" width="128" height="119"/>
+        <element name="LocalHeartHistory" positionX="-63" positionY="-18" width="128" height="134"/>
     </elements>
 </model>

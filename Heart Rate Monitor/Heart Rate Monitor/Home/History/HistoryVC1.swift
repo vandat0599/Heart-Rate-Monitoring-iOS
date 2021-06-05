@@ -18,7 +18,7 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
         view.showsVerticalScrollIndicator = false
         view.contentInset = .zero
         view.contentInsetAdjustmentBehavior = .never
-        view.separatorStyle = .none
+        view.separatorStyle = .singleLine
         view.registerWithClassName(cellType: HistoryTableViewCell.self)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

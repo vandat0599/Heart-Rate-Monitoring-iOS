@@ -27,6 +27,18 @@ class APIService {
         "Accept": "*/*"
     ]
     
+    func getAccessToken() -> String {
+        UserDefaultHelper.getLogedUser()?.accessToken ?? ""
+    }
+    
+    func getHeader() -> HTTPHeaders {
+        [
+            "Content-Type": "application/json",
+            "Accept": "*/*",
+            "token": getAccessToken()
+        ]
+    }
+    
     private var baseUrl: String = {
         return Environment.configuration(key: .baseUrl)
     }()
@@ -181,10 +193,10 @@ class APIService {
     }
     
     func postHeartRate(heartRates: [HeartRateHistory]) -> Single<[HeartRateHistory]> {
-        Single.create { (single) -> Disposable in
+        return Single.create { (single) -> Disposable in
             let params: [String: Any] = [
                 "rates": Array(heartRates).map {[
-                            "localId": $0.id ?? 0,
+                            "local_id": $0.id ?? 0,
                             "grapValues": $0.grapValues,
                             "heartRateNumber": $0.heartRateNumber ?? 0,
                             "label": $0.label ?? "",
@@ -192,21 +204,21 @@ class APIService {
                             "isSubmitted": $0.isSubmitted ?? false
                         ]}
             ]
-            print(params)
+            print("params: \(params)")
             AF.request("\(self.baseUrl)rates/arr",
                        method: .post,
                        parameters: params as Parameters,
                        encoding: JSONEncoding.default,
-                       headers: self.headers)
+                       headers: self.getHeader())
                 .responseDecodable(of: APIResponse<[HeartRateHistory]>.self) { res in
                     HLog.log(tag: APIService.tag, res.result)
                     switch res.result {
                     case .success(let data):
-                        guard let data = data.data else {
+                        guard let rates = data.data else {
                             single(.error(HError.unknown))
                             return
                         }
-                        single(.success(data))
+                        single(.success(rates))
                     case .failure(let error):
                         single(.error(HError.init(code: error.responseCode, message: error.localizedDescription)))
                     }

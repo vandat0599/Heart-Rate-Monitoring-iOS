@@ -8,6 +8,8 @@
 import UIKit
 import Charts
 import MaterialComponents
+import RxSwift
+import RxRelay
 
 class ResultBottomSheetVC: BottomSheetViewController {
     // MARK: - UI components
@@ -120,6 +122,7 @@ class ResultBottomSheetVC: BottomSheetViewController {
     private let grapsValues: [Double]
     let leftAction: (() -> Void)?
     let rightAction: (() -> Void)?
+    let disposeBag = DisposeBag()
     
     init(heartRate: Int, grapsValues: [Double], leftAction: (() -> Void)? = nil, rightAction: (() -> Void)? = nil) {
         self.heartRate = heartRate
@@ -215,12 +218,30 @@ class ResultBottomSheetVC: BottomSheetViewController {
         }
     }
     
-    @objc private func rightActionTapped() {
-        dismiss(animated: true) {[weak self] in
+    private func dismissVC() {
+        self.dismiss(animated: true) {[weak self] in
             guard let self = self else { return }
-            let history = HeartRateHistory(id: nil, grapValues: self.grapsValues, heartRateNumber: self.heartRate, label: self.labelTextField.text, createDate: String(Date().timeIntervalSince1970), isSubmitted: false)
-            _ = LocalDatabaseHandler.shared.insertHistory(heartRateHistory: history)
             self.rightAction?()
         }
+    }
+    
+    @objc private func rightActionTapped() {
+        var history = HeartRateHistory(id: nil, grapValues: self.grapsValues, heartRateNumber: self.heartRate, label: self.labelTextField.text, createDate: String(Date().timeIntervalSince1970), isSubmitted: false)
+        history = LocalDatabaseHandler.shared.insertHistory(heartRateHistory: history)!
+        dismissVC()
+        guard UserDefaultHelper.getLogedUser() != nil, let bag = (UIApplication.shared.delegate as? AppDelegate)?.globalDisposebag else {
+            return
+        }
+        APIService.shared.postHeartRate(heartRates: [history])
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .subscribe(onSuccess: {(data) in
+                if let remoteHistory = data.first {
+                    LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: remoteHistory)
+                }
+                print("data: \(data)")
+            }, onError: {(err) in
+                print("err: \(err.localizedDescription)")
+            })
+            .disposed(by: bag)
     }
 }

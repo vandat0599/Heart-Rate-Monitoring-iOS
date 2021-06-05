@@ -7,21 +7,6 @@
 
 import Foundation
 
-struct APIResponsed: Codable {
-    var data: dataResponse?
-    var error_code: Int?
-    var message: String?
-    var status: Int?
-    
-}
-
-struct dataResponse: Codable {
-    var user: User?
-    var token: String?
-    
-}
-
-// old code...
 struct APIResponse<T: Decodable>: Decodable {
     var data: T?
     var errorCode: Int?
@@ -37,10 +22,10 @@ struct APIResponse<T: Decodable>: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try? decoder.container(keyedBy: CodingKeys.self)
-        if let _ = try? container?.decode(String.self, forKey: .data) {
-            data = nil
+        if let model = try? container?.decode(T.self, forKey: .data) {
+            data = model
         } else {
-            data = try? container?.decode(T.self, forKey: .data)
+            data = nil
         }
         errorCode = try? container?.decode(Int.self, forKey: .errorCode) ?? -1
         message = try? container?.decode(String.self, forKey: .message) ?? "unknown"

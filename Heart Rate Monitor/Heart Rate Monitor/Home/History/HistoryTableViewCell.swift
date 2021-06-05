@@ -14,6 +14,7 @@ class HistoryTableViewCell: UITableViewCell {
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var noteLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var submitView: UIView!
     
     
     override func awakeFromNib() {
@@ -42,6 +43,7 @@ class HistoryTableViewCell: UITableViewCell {
         noteLabel.text = model.label
         timeLabel.text = Date().fromTimeMilli(timeMilli: model.createDate ?? "").dateAndTimetoString()
         setupChartData(values: model.grapValues)
+        submitView.backgroundColor = UIColor(named: (model.isSubmitted ?? false) ? "success" : "red-1")!
     }
     
     private func setupChartData(values: [Double]) {
