@@ -15,14 +15,16 @@ struct HeartRateHistory: Codable {
     var label: String?
     var createDate: String?
     var isSubmitted: Bool?
+    var isRemoved: Bool?
     
-    init(id: Int?, remoteId: String? = nil, grapValues: [Double]?, heartRateNumber: Int?, label: String?, createDate: String?, isSubmitted: Bool?) {
+    init(id: Int?, remoteId: String? = nil, grapValues: [Double]?, heartRateNumber: Int?, label: String?, createDate: String?, isSubmitted: Bool?, isRemoved: Bool?) {
         self.id = id
         self.grapValues = grapValues ?? []
         self.heartRateNumber = heartRateNumber
         self.label = label
         self.createDate = createDate
         self.isSubmitted = isSubmitted
+        self.isRemoved = isRemoved
     }
     
     enum CodingKeys: String, CodingKey {
@@ -33,6 +35,7 @@ struct HeartRateHistory: Codable {
         case label
         case createDate
         case isSubmitted
+        case isRemoved
     }
     
     
@@ -50,5 +53,6 @@ struct HeartRateHistory: Codable {
         heartRateNumber = try? container?.decode(Int.self, forKey: .heartRateNumber) ?? 0
         label = try? container?.decode(String.self, forKey: .label) ?? ""
         isSubmitted = try? container?.decode(Bool.self, forKey: .isSubmitted) ?? false
+        isRemoved = try? container?.decode(Bool.self, forKey: .isRemoved) ?? false
     }
 }

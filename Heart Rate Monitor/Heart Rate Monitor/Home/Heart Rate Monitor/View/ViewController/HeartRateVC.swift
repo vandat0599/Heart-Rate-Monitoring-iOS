@@ -457,7 +457,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     func updateBottomHeartRateViews() {
         DispatchQueue.global().async {
-            let heartRateNumber = LocalDatabaseHandler.shared.getAllHistory().map { $0.heartRateNumber ?? 0 }
+            let heartRateNumber = LocalDatabaseHandler.shared.getAllHistory().filter{ $0.isRemoved == false }.map { $0.heartRateNumber ?? 0 }
             guard heartRateNumber.count > 0 else { return }
             let min = Int(heartRateNumber.min() ?? 0)
             let max = Int(heartRateNumber.max() ?? 0)

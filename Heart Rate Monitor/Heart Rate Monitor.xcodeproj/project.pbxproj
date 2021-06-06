@@ -72,6 +72,8 @@
 		CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */; };
 		CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE444972264100DA0028A5D4 /* CustomRippleControl.swift */; };
 		CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */ = {isa = PBXBuildFile; fileRef = CE44497C26410A490028A5D4 /* lottie-warning.json */; };
+		CE4A0A2D266C942000653555 /* LocalHeartHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A0A2B266C942000653555 /* LocalHeartHistory+CoreDataClass.swift */; };
+		CE4A0A2E266C942000653555 /* LocalHeartHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A0A2C266C942000653555 /* LocalHeartHistory+CoreDataProperties.swift */; };
 		CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CF92627F98200159D86 /* lottie-error.json */; };
 		CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFA2627F98200159D86 /* lottie-success.json */; };
 		CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */; };
@@ -139,8 +141,6 @@
 		CEC7EDC5262FF46800403671 /* HeartRateRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */; };
 		CED575012656BE9100AAC1AB /* HeartExserciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED575002656BE9100AAC1AB /* HeartExserciseVC.swift */; };
 		CED575192656CD0200AAC1AB /* lottie-menu.json in Resources */ = {isa = PBXBuildFile; fileRef = CED575182656CD0200AAC1AB /* lottie-menu.json */; };
-		CEE8CB38266BD86F0098D8B7 /* LocalHeartHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE8CB36266BD86F0098D8B7 /* LocalHeartHistory+CoreDataClass.swift */; };
-		CEE8CB39266BD8700098D8B7 /* LocalHeartHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE8CB37266BD86F0098D8B7 /* LocalHeartHistory+CoreDataProperties.swift */; };
 		CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */; };
 		CEFF400B26561C2A0049EA68 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */; };
 		CEFF406926562A210049EA68 /* LocalDatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */; };
@@ -250,6 +250,8 @@
 		CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelper.swift; sourceTree = "<group>"; };
 		CE444972264100DA0028A5D4 /* CustomRippleControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRippleControl.swift; sourceTree = "<group>"; };
 		CE44497C26410A490028A5D4 /* lottie-warning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-warning.json"; sourceTree = "<group>"; };
+		CE4A0A2B266C942000653555 /* LocalHeartHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		CE4A0A2C266C942000653555 /* LocalHeartHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		CE4D1CF92627F98200159D86 /* lottie-error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-error.json"; sourceTree = "<group>"; };
 		CE4D1CFA2627F98200159D86 /* lottie-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-success.json"; sourceTree = "<group>"; };
 		CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-internet-connection.json"; sourceTree = "<group>"; };
@@ -316,8 +318,6 @@
 		CEC7EDC4262FF46800403671 /* HeartRateRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateRecord.swift; sourceTree = "<group>"; };
 		CED575002656BE9100AAC1AB /* HeartExserciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartExserciseVC.swift; sourceTree = "<group>"; };
 		CED575182656CD0200AAC1AB /* lottie-menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-menu.json"; sourceTree = "<group>"; };
-		CEE8CB36266BD86F0098D8B7 /* LocalHeartHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		CEE8CB37266BD86F0098D8B7 /* LocalHeartHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		CEFF400026561AB10049EA68 /* HeartRate.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HeartRate.xcdatamodel; sourceTree = "<group>"; };
 		CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDatabaseHandler.swift; sourceTree = "<group>"; };
@@ -897,8 +897,8 @@
 		CEFF3FFE26561A380049EA68 /* LocalDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				CEE8CB36266BD86F0098D8B7 /* LocalHeartHistory+CoreDataClass.swift */,
-				CEE8CB37266BD86F0098D8B7 /* LocalHeartHistory+CoreDataProperties.swift */,
+				CE4A0A2B266C942000653555 /* LocalHeartHistory+CoreDataClass.swift */,
+				CE4A0A2C266C942000653555 /* LocalHeartHistory+CoreDataProperties.swift */,
 				CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */,
 				CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */,
 				CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */,
@@ -1187,14 +1187,14 @@
 				84CD8230261EDDEC00ABD9B5 /* RecordTableViewCell.swift in Sources */,
 				CE001635261D8F8000B9374F /* HAlert.swift in Sources */,
 				CEC78E9625F73A07007BA177 /* Date+.swift in Sources */,
-				CEE8CB38266BD86F0098D8B7 /* LocalHeartHistory+CoreDataClass.swift in Sources */,
+				CE4A0A2D266C942000653555 /* LocalHeartHistory+CoreDataClass.swift in Sources */,
 				CE62629C26677EF200B2F736 /* FillRoundedButton.swift in Sources */,
 				CEC7EDA7262FBD8700403671 /* PermissionUtil.swift in Sources */,
 				CEC78EA925F73A22007BA177 /* APIService.swift in Sources */,
 				CEC78E9925F73A07007BA177 /* NSObject+.swift in Sources */,
 				CE0BE140261EB29B00073002 /* HeartRateWarning.swift in Sources */,
 				CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */,
-				CEE8CB39266BD8700098D8B7 /* LocalHeartHistory+CoreDataProperties.swift in Sources */,
+				CE4A0A2E266C942000653555 /* LocalHeartHistory+CoreDataProperties.swift in Sources */,
 				CEC78E1525F732A4007BA177 /* AppString.swift in Sources */,
 				CEB7548726566F6300AF434F /* HistoryVM.swift in Sources */,
 				1DE870862614E55B006A38C2 /* Complex.swift in Sources */,

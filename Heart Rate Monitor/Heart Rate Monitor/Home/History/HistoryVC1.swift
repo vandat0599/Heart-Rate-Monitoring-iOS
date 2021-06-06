@@ -104,14 +104,22 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
                     APIService.shared.deleteHistoryRates(by: [model.id ?? 0])
                         .subscribe(onSuccess: { (_) in
                             LocalDatabaseHandler.shared.deleteHistory(id: model.id ?? 0)
-                        }, onError: {[weak self] (err) in
-                            guard let self = self else { return }
-                            HAlert.showErrorBottomSheet(self, message: "Something went wrong: \(err.localizedDescription)")
-                            removedHistory.insert(model, at: indexPath.row)
-                            self.viewModel.historyData.accept(removedHistory)
-                        })
+                        }, onError: { _ in })
                         .disposed(by: self.disposeBag)
-                })
+                }) {[weak self] (label) in
+                    guard let self = self else { return }
+                    var model = self.viewModel.historyData.value[indexPath.row]
+                    APIService.shared.updateHistoryLabel(remoteId: model.remoteId ?? "", label: label)
+                        .subscribe { (_) in
+                            model.label = label
+                            self.viewModel.data[indexPath.row] = model
+                            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                        } onError: { (err) in
+                            print("err: \(err)")
+                        }
+                        .disposed(by: self.disposeBag)
+
+                }
                 self.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -149,7 +157,7 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         labelHeaderFilterView.label.text = viewModel.allLabels[row]
-        viewModel.reloadData(label: viewModel.allLabels[row])
+        viewModel.filterData(with: viewModel.allLabels[row])
     }
 }
 

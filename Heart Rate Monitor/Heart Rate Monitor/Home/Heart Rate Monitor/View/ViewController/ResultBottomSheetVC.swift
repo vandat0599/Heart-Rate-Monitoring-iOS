@@ -226,7 +226,7 @@ class ResultBottomSheetVC: BottomSheetViewController {
     }
     
     @objc private func rightActionTapped() {
-        var history = HeartRateHistory(id: nil, grapValues: self.grapsValues, heartRateNumber: self.heartRate, label: self.labelTextField.text, createDate: String(Int(Date().timeIntervalSince1970) ), isSubmitted: false)
+        var history = HeartRateHistory(id: nil, grapValues: self.grapsValues, heartRateNumber: self.heartRate, label: self.labelTextField.text, createDate: String(Int(Date().timeIntervalSince1970) ), isSubmitted: false, isRemoved: false)
         print("saved: \(history)")
         history = LocalDatabaseHandler.shared.insertHistory(heartRateHistory: history)!
         dismissVC()

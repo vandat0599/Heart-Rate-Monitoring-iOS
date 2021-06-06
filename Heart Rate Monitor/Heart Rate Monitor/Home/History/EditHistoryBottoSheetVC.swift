@@ -118,9 +118,9 @@ class EditHistoryBottoSheetVC: BottomSheetViewController {
     // MARK: - data
     private var heartRateHistory: HeartRateHistory
     let leftAction: (() -> Void)?
-    let rightAction: (() -> Void)?
+    let rightAction: ((String) -> Void)?
     
-    init(heartRateHistory: HeartRateHistory, leftAction: (() -> Void)? = nil, rightAction: (() -> Void)? = nil) {
+    init(heartRateHistory: HeartRateHistory, leftAction: (() -> Void)? = nil, rightAction: ((String) -> Void)? = nil) {
         self.heartRateHistory = heartRateHistory
         self.leftAction = leftAction
         self.rightAction = rightAction
@@ -209,8 +209,11 @@ class EditHistoryBottoSheetVC: BottomSheetViewController {
     
     @objc private func leftActionTapped() {
         dismiss(animated: true) {[weak self] in
-            LocalDatabaseHandler.shared.deleteHistory(id: self?.heartRateHistory.id ?? -1)
-            self?.leftAction?()
+            guard let self = self else { return }
+            var rate = self.heartRateHistory
+            rate.isRemoved = true
+            LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: rate)
+            self.leftAction?()
         }
     }
     
@@ -219,7 +222,7 @@ class EditHistoryBottoSheetVC: BottomSheetViewController {
             guard let self = self else { return }
             self.heartRateHistory.label = self.labelTextField.text
             LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: self.heartRateHistory)
-            self.rightAction?()
+            self.rightAction?(self.labelTextField.text ?? "")
         }
     }
 }

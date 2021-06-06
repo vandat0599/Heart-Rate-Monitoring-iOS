@@ -272,4 +272,29 @@ class APIService {
             return Disposables.create()
         }
     }
+    
+    func updateHistoryLabel(remoteId: String, label: String) -> Single<HeartRateHistory?> {
+        Single.create { (single) -> Disposable in
+            let params: [String: Any] = [
+                "remote_id": remoteId,
+                "label": label
+            ]
+            print("params: \(params)")
+            AF.request("\(self.baseUrl)update/label",
+                       method: .post,
+                       parameters: params as Parameters,
+                       encoding: JSONEncoding.default,
+                       headers: self.getHeader())
+                .responseString(completionHandler: { (res) in
+                    HLog.log(tag: APIService.tag, res.result)
+                    switch res.result {
+                    case .success(_):
+                        single(.success(nil))
+                    case .failure(let error):
+                        single(.error(HError.init(code: error.responseCode, message: error.localizedDescription)))
+                    }
+                })
+            return Disposables.create()
+        }
+    }
 }
