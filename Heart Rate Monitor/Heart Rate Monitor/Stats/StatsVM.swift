@@ -26,7 +26,7 @@ class StatsVM {
     }
     
     func loadAllLabel() {
-        historyList = LocalDatabaseHandler.shared.getAllHistory().filter{ $0.isRemoved == false }
+        historyList = LocalDatabaseHandler.shared.getAllHistory().filter{ ($0.isRemoved ?? false) == false }
         labelsList = Array(Set(historyList.map { $0.label ?? "" }))
         labelsList.insert("ALL LABELS", at: 0)
         
