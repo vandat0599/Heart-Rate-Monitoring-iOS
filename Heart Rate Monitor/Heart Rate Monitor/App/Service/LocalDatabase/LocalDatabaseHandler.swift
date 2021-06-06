@@ -23,11 +23,10 @@ final class LocalDatabaseHandler {
     func insertHistory(heartRateHistory: HeartRateHistory) -> HeartRateHistory? {
         let localHeartRate = LocalHeartHistory(context: PersistenceManager.shared.context)
         localHeartRate.fromRemoteHistory(model: heartRateHistory)
-        let maxId = getAllHistory().map { ($0.id ?? -1) }.max() ?? -1
-        localHeartRate.id = "\(maxId + 1)"
+        localHeartRate.id = "\(Int(Double(heartRateHistory.createDate ?? "0") ?? 0))"
         PersistenceManager.shared.saveContext()
         didInsertHistory.accept(true)
-        print("Inserted: \(maxId + 1)")
+        print("Inserted: \("\(Int(Double(heartRateHistory.createDate ?? "0") ?? 0))")")
         return localHeartRate.toRemoteHistory()
     }
     

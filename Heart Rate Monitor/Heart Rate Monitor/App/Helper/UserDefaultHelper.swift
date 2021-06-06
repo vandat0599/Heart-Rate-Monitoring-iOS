@@ -16,6 +16,7 @@ class UserDefaultHelper {
         case userPassword
         case openCalmCount
         case openMonitorCount
+        case accessToken
         
         // setting key
         case basicInfomation

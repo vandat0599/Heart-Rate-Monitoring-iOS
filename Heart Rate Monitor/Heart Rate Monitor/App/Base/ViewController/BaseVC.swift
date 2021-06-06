@@ -52,6 +52,8 @@ class BaseVC: UIViewController {
     }
     
     private func setupView() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didLogin), name: AppConstant.AppNotificationName.didLogin, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didLogout), name: AppConstant.AppNotificationName.didLogout, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingDidChange(notification:)), name: Notification.Name.IASKSettingChanged, object: nil)
         view.addSubview(centerXView)
         view.addSubview(centerYView)
@@ -70,7 +72,7 @@ class BaseVC: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.view.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = .white
         navigationItem.title = ""
     }
     
@@ -84,4 +86,12 @@ class BaseVC: UIViewController {
     }
     
     @objc func resetSettings() { }
+    
+    @objc func didLogin() {
+        
+    }
+    
+    @objc func didLogout() {
+        
+    }
 }

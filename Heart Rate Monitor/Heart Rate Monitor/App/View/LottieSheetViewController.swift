@@ -38,7 +38,7 @@ class LottieSheetViewController: BottomSheetViewController {
     
     private lazy var leftActionButton: UIButton = {
         let view = UIButton()
-        view.setTitle("CANCEL", for: .normal)
+        view.setTitle(leftActionTitle, for: .normal)
         view.titleLabel?.font = .systemFont(ofSize: 14)
         view.setTitleColor(UIColor(named: "red"), for: .normal)
         view.clipsToBounds = true
@@ -53,7 +53,7 @@ class LottieSheetViewController: BottomSheetViewController {
     
     private lazy var rightActionButton: UIButton = {
         let view = UIButton()
-        view.setTitle("OK", for: .normal)
+        view.setTitle(rightActionTitle, for: .normal)
         view.titleLabel?.font = .systemFont(ofSize: 14)
         view.setTitleColor(.white, for: .normal)
         view.clipsToBounds = true

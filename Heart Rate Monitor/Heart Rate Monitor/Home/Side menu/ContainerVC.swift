@@ -200,7 +200,33 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
         UISelectionFeedbackGenerator().selectionChanged()
         if index > vcArray.count {
             toggleMenu()
-            openMailBox()
+            if index == 7 {
+                openMailBox()
+            } else if index == 8 {
+                let loggedInAccount = UserDefaultHelper.getLogedUser()
+                guard loggedInAccount != nil else {
+                    let loginVC = UINavigationController(rootViewController: SignInVC())
+                    present(loginVC, animated: true)
+                    return
+                }
+                
+                UINotificationFeedbackGenerator().notificationOccurred(.warning)
+                let vc = LottieSheetViewController(
+                    lottie: AnimationView.init(name: "lottie-warning"),
+                    closeImage: UIImage(named: "ic-close")!,
+                    title: "Warning!",
+                    description: "If you log out of your account, your heart rate data will no longer be synced to our server!",
+                    leftActionTitle: "CANCEL",
+                    rightActionTitle: "LOGOUT",
+                    leftAction: nil) {
+                    UserDefaultHelper.remove(key: .loggedInAccount, async: true)
+                    NotificationCenter.default.post(name: AppConstant.AppNotificationName.didLogout, object: nil)
+                }
+                vc.canDismissOnSwipeDown = true
+                vc.closeButton.isHidden = true
+                vc.canDismissOnTouchOutSide = true
+                present(vc, animated: true, completion: nil)
+            }
             return
         }
         guard index <= vcArray.count, showingVC != vcArray[index - 1] else {

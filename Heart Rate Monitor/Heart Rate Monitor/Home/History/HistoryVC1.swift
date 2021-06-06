@@ -18,7 +18,7 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
         view.showsVerticalScrollIndicator = false
         view.contentInset = .zero
         view.contentInsetAdjustmentBehavior = .never
-        view.separatorStyle = .none
+        view.separatorStyle = .singleLine
         view.registerWithClassName(cellType: HistoryTableViewCell.self)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -91,31 +91,56 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
             }
             .disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(HeartRateHistory.self)
-            .bind { (model) in
-                let vc = EditHistoryBottoSheetVC(heartRateHistory: model)
-                self.present(vc, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
         tableView.rx.itemSelected
             .bind {[weak self] (indexPath) in
-                self?.tableView.deselectRow(at: indexPath, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        Observable.of(LocalDatabaseHandler.shared.didInsertHistory, LocalDatabaseHandler.shared.didUpdateHistory, LocalDatabaseHandler.shared.didDeleteHistory).merge()
-            .observeOn(MainScheduler.instance)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .bind { [weak self] (_) in
                 guard let self = self else { return }
-                self.viewModel.reloadData(label: self.labelHeaderFilterView.label.text ?? "ALL LABELS")
+                self.tableView.deselectRow(at: indexPath, animated: true)
+                let model = self.viewModel.historyData.value[indexPath.row]
+                var removedHistory = self.viewModel.historyData.value
+                removedHistory.remove(at: indexPath.row)
+                let vc = EditHistoryBottoSheetVC(heartRateHistory: model, leftAction: {[weak self] in
+                    guard let self = self else { return }
+                    self.viewModel.historyData.accept(removedHistory)
+                    APIService.shared.deleteHistoryRates(by: [model.id ?? 0])
+                        .subscribe(onSuccess: { (_) in
+                            LocalDatabaseHandler.shared.deleteHistory(id: model.id ?? 0)
+                        }, onError: { _ in })
+                        .disposed(by: self.disposeBag)
+                }) {[weak self] (label) in
+                    guard let self = self else { return }
+                    var model = self.viewModel.historyData.value[indexPath.row]
+                    model.label = label
+                    self.viewModel.data[indexPath.row] = model
+                    self.viewModel.reloadLabels()
+                    self.viewModel.filterData(with: self.labelHeaderFilterView.label.text ?? "ALL LABELS")
+                    APIService.shared.updateHistoryLabel(remoteId: model.remoteId ?? "", label: label)
+                        .subscribe { (_) in
+                            model.isLabelUpdated = false
+                            LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: model)
+                            print("updated")
+                        } onError: { (err) in
+                            print("err: \(err)")
+                        }
+                        .disposed(by: self.disposeBag)
+
+                }
+                self.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
     
     @objc private func filterButtonTapped() {
         tmpTextField.becomeFirstResponder()
+    }
+    
+    override func didLogin() {
+        super.didLogin()
+        viewModel.reloadData(label: labelHeaderFilterView.label.text ?? "ALL LABELS")
+    }
+    
+    override func didLogout() {
+        super.didLogout()
+        viewModel.reloadData(label: labelHeaderFilterView.label.text ?? "ALL LABELS")
     }
     
     // MARK: - Action
@@ -136,7 +161,7 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         labelHeaderFilterView.label.text = viewModel.allLabels[row]
-        viewModel.reloadData(label: viewModel.allLabels[row])
+        viewModel.filterData(with: viewModel.allLabels[row])
     }
 }
 

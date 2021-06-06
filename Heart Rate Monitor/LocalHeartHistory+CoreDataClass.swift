@@ -2,7 +2,7 @@
 //  LocalHeartHistory+CoreDataClass.swift
 //  Heart Rate Monitor
 //
-//  Created by Dat Van on 20/05/2021.
+//  Created by Dat Van on 06/06/2021.
 //
 //
 
@@ -18,9 +18,12 @@ public class LocalHeartHistory: NSManagedObject {
         self.heartRateNumber = Int16(model.heartRateNumber ?? 0)
         self.label = model.label
         self.createDate = model.createDate
+        self.remoteId = model.remoteId
+        self.isRemoved = model.isRemoved ?? false
+        self.isLabelUpdated = model.isLabelUpdated ?? false
     }
 
     func toRemoteHistory() -> HeartRateHistory {
-        HeartRateHistory(id: Int(self.id ?? "0"), grapValues: (self.grapValues ?? "").split(separator: ",").map { (Double($0) ?? 0.0) }, heartRateNumber: Int(self.heartRateNumber), label: self.label, createDate: self.createDate, isSubmitted: self.isSubmitted)
+        HeartRateHistory(id: Int(self.id ?? "0"), remoteId: self.remoteId, grapValues: (self.grapValues ?? "").split(separator: ",").map { (Double($0) ?? 0.0) }, heartRateNumber: Int(self.heartRateNumber), label: self.label, createDate: self.createDate, isSubmitted: self.isSubmitted, isRemoved: self.isRemoved, isLabelUpdated: self.isLabelUpdated)
     }
 }
