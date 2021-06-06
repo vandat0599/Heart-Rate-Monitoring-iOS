@@ -11,7 +11,7 @@ import AVFoundation
 
 class HeartRateDetector: NSObject {
 
-    static let Windows_Seconds = 6
+    static let Windows_Seconds = 10
     static var beepSoundEffect: AVAudioPlayer?
     
     static func Multiplication (_ a : [Double], _ b : [Double]) -> [Double] {
@@ -24,7 +24,8 @@ class HeartRateDetector: NSObject {
         return result
     }
     
-    static func findPeakElement(_ freqs: [Double]) -> ([Double],[Int]){
+    static func findPeakElement(_ freqs: [Double], _ threshold: Double) -> ([Double],[Int]){
+        print(freqs.count)
         var ascending = false
         var peaks: [Double] = []
         var index = [Int]()
@@ -35,16 +36,32 @@ class HeartRateDetector: NSObject {
                 }
                 if $0.element < last && ascending  {
                     ascending = false
-                    peaks.append(last)
-                    var idx = $0.offset - 1
-                    while(freqs[idx] == last){
-                        if (freqs[idx-1] != last){
-                            peaks.append(freqs[idx])
-                            index.append(idx)
+                    if (index.count == 0){
+                        peaks.append(last)
+                        var idx = $0.offset - 1
+                        while(freqs[idx] == last){
+                            if (freqs[idx-1] != last){
+                                peaks.append(freqs[idx])
+                                index.append(idx)
+                            }
+                            idx -= 1
                         }
-                        idx -= 1
+                        index.append($0.offset)
                     }
-                    index.append($0.offset)
+                    else{
+                        if (Double($0.offset) - Double(index[index.count - 1]) >= threshold ){
+                            peaks.append(last)
+                            var idx = $0.offset - 1
+                            while(freqs[idx] == last){
+                                if (freqs[idx-1] != last){
+                                    peaks.append(freqs[idx])
+                                    index.append(idx)
+                                }
+                                idx -= 1
+                            }
+                            index.append($0.offset)
+                        }
+                    }
                 }
                 last = $0.element
             }
@@ -93,38 +110,55 @@ class HeartRateDetector: NSObject {
     }
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm (fps) frame thì lại gọi hàm
-    static func PulseDetector(_ signal: [Double], fps: Int, pulseCount: Int) -> Double {
+    static func PulseDetector(_ signal: [Double], fps: Int, pulse: [Double]) -> (Double,[Double]) {
+        print("Captured[\(signal.count): \(signal)")
         var heartBeat = 0.0
         let filter = BBFilter()
-        let (denC,numC) = filter.butter(order: 2,lowFreq: 2/45,highFreq: 23/90)
-        
-        let signalFiltered = filter.Filter(signal: signal, denC: denC, numC: numC)
-        var windowArray = Array(signalFiltered[fps*pulseCount..<signalFiltered.count])
+        let B = [Double](repeating: 1/10, count: 10)
+        let signalFiltered = filter.Filter(signal: signal, denC: B, numC: [1])
+        var windowArray = Array(signalFiltered[fps*pulse.count..<signalFiltered.count])
         
         if (windowArray.count != Windows_Seconds*fps){
             print("signal truyền vào phải có \(Windows_Seconds*fps) giá trị thay vì \(signal.count)")
-            return -1
-        }
-        windowArray = Multiplication(windowArray, hann(Windows_Seconds*fps + 1))
-                
-        let gain = filter.DFT(signal: windowArray)
-        let index_range = Array(5...25)
-        //trueGain : nơi thực sự có tần số chứa giá trị nhịp tim
-        let trueGain = gain.enumerated().filter() {
-            $0.offset >= 5 && $0.offset <= 25
-        }.map(){
-            $0.element
+            return (-1,[-1])
         }
         
-        let (peaks,indexs) = findPeakElement(trueGain)
-        let maxPeak = peaks.max()!
-        let indexOfMaxPeak = peaks.firstIndex(of: maxPeak)!
-        let maxFreqIndx = index_range[indexs[indexOfMaxPeak]]
-        let temp  = Double(maxFreqIndx) * Double(fps) / Double(Windows_Seconds * fps + 1)
-        let bpm = Double(temp*60)
-        heartBeat = SmoothingPeak(y: windowArray, bpm, fps)
+        let threshold = 10.0
+        let (peaks,locs) = findPeakElement(windowArray, threshold)
+        var peakCount = peaks.count
+        var grapValue = [Double]()
+        if (signal.count == fps*Windows_Seconds){
+            grapValue = signalFiltered
+            grapValue.removeFirst(10)
+        }else{
+            grapValue = windowArray
+        }
         
-        return heartBeat
+        print("peakCount before: \(peakCount)")
+        // cablirate
+        if locs.isEmpty || (peakCount - 1 == 0) || (peakCount-1 >= locs.count) {
+            return (pulse[pulse.count - 1],grapValue)
+        }
+        let timeP2P = (locs[peakCount-1] - locs[0]) / (peakCount - 1)
+        let Ex = Windows_Seconds * fps - peakCount * timeP2P
+        if (Ex >= timeP2P) {
+            peakCount += 1
+        }
+        if (Ex > timeP2P/2) {
+            peakCount = peakCount - (timeP2P - Ex) * 60/(Windows_Seconds * fps)
+        }
+        if (Ex < 0){
+            for i in 1..<locs.count {
+                if (locs[i] - locs[i-1] > 2*timeP2P) {
+                    peakCount += 1
+                }
+            }
+        }
+        print("peakCount after: \(peakCount)")
+        heartBeat = Double(peakCount) * 60.0 / Double(Windows_Seconds)
+        
+        
+        return (heartBeat,grapValue)
     }
     
     static func playMedicalAudio() {
