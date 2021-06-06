@@ -34,7 +34,7 @@ class HistoryVM: PHistoryVM {
         
         // 1
         var history = LocalDatabaseHandler.shared.getAllHistory()
-        historyData.accept(history.filter { (label == "ALL LABELS" ? true : $0.label == label) && $0.isRemoved == false })
+        historyData.accept(history.filter { (label == "ALL LABELS" ? true : $0.label == label) && ($0.isRemoved ?? false) == false })
         history.sort { (m1, m2) -> Bool in return Int(m1.createDate ?? "0") ?? 0 > Int(m2.createDate ?? "0") ?? 0 }
         data = history
         reloadLabels()
@@ -43,7 +43,7 @@ class HistoryVM: PHistoryVM {
             mapServerRate(history, label: label) {[weak self] rates in
                 guard let self = self else { return }
                 self.data = rates
-                self.historyData.accept(rates.filter { (label == "ALL LABELS" ? true : $0.label == label) && $0.isRemoved == false })
+                self.historyData.accept(rates.filter { (label == "ALL LABELS" ? true : $0.label == label) && ($0.isRemoved ?? false) == false })
                 self.reloadLabels()
                 // 3
                 APIService.shared.getHeartRates()
@@ -60,9 +60,10 @@ class HistoryVM: PHistoryVM {
                         }
                         history.sort { (m1, m2) -> Bool in return Int(m1.createDate ?? "0") ?? 0 > Int(m2.createDate ?? "0") ?? 0 }
                         self.data = history
-                        self.historyData.accept(history.filter { (label == "ALL LABELS" ? true : $0.label == label) && $0.isRemoved == false })
+                        print("history: \(history)")
+                        self.historyData.accept(history.filter { (label == "ALL LABELS" ? true : $0.label == label) && ($0.isRemoved ?? false) == false })
                         self.reloadLabels()
-                        history.filter { $0.isLabelUpdated == true && $0.isRemoved == false }.forEach {
+                        history.filter { $0.isLabelUpdated == true && ($0.isRemoved ?? false) == false }.forEach {
                             var tmpModel = $0
                             APIService.shared.updateHistoryLabel(remoteId: $0.remoteId ?? "", label: $0.label ?? "")
                                 .subscribe { (rate) in
@@ -86,8 +87,8 @@ class HistoryVM: PHistoryVM {
     
     func mapServerRate(_ history: [HeartRateHistory], label: String, completion: (([HeartRateHistory]) -> ())?) {
         var historyClone = history
-        let unsubmitedRates = history.filter { $0.isSubmitted == false && $0.isRemoved == false }
-        let deletedIds = historyClone.filter { $0.isRemoved == true }.map { $0.id ?? 0 }
+        let unsubmitedRates = history.filter { $0.isSubmitted == false && ($0.isRemoved ?? false) == false }
+        let deletedIds = historyClone.filter { ($0.isRemoved ?? false) == true }.map { $0.id ?? 0 }
         
         if !deletedIds.isEmpty {
             APIService.shared.deleteHistoryRates(by: deletedIds)
@@ -125,11 +126,11 @@ class HistoryVM: PHistoryVM {
     }
     
     func filterData(with label: String) {
-        historyData.accept(data.filter { (label == "ALL LABELS" ? true : $0.label == label) && $0.isRemoved == false })
+        historyData.accept(data.filter { (label == "ALL LABELS" ? true : $0.label == label) && ($0.isRemoved ?? false) == false })
     }
     
     func reloadLabels() {
-        allLabels = Array(Set(data.filter{ $0.isRemoved == false }.map { $0.label ?? "" }))
+        allLabels = Array(Set(data.filter{ ($0.isRemoved ?? false) == false }.map { $0.label ?? "" }))
         allLabels.insert("ALL LABELS", at: 0)
     }
 }
