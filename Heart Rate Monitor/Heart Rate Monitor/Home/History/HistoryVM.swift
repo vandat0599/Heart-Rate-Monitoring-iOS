@@ -68,7 +68,7 @@ class HistoryVM: PHistoryVM {
                                 .subscribe { (rate) in
                                     tmpModel.isLabelUpdated = false
                                     LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: tmpModel)
-                                    print("updated: \(tmpModel.label)")
+                                    print("updated: \(String(describing: tmpModel.label))")
                                 } onError: { (err) in
                                     print("err: \(err.localizedDescription)")
                                 }
@@ -104,8 +104,7 @@ class HistoryVM: PHistoryVM {
         
         if !unsubmitedRates.isEmpty {
             APIService.shared.postHeartRate(heartRates: unsubmitedRates)
-                .subscribe {[weak self] (data) in
-                    guard let self = self else { return }
+                .subscribe { (data) in
                     let localIds = history.map { $0.id }
                     for rate in data {
                         if let index = localIds.firstIndex(of: rate.id) {
