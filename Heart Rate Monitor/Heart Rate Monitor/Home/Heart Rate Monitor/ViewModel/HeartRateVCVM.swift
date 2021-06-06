@@ -88,10 +88,10 @@ class HeartRateVCVMImp: HeartRateVCVM {
             }
             capturedRedmean.append(Double(redmean))
             if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%fps == 0 {
-                let windowArray = Array(capturedRedmean[fps*pulses.count..<capturedRedmean.count])
-                let heartRate = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulseCount: pulses.count)
+               // let windowArray = Array(capturedRedmean[fps*pulses.count..<capturedRedmean.count])
+                let (heartRate,grapvalue) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
                 pulses.append(heartRate)
-                grapValues.accept(windowArray)
+                grapValues.accept(grapvalue)
             }
         } else {
             resetAllData()
