@@ -37,7 +37,7 @@ class HistoryVM: PHistoryVM {
         history.sort { (m1, m2) -> Bool in return Int(m1.createDate ?? "0") ?? 0 > Int(m2.createDate ?? "0") ?? 0 }
         data = history
         reloadLabels()
-        if UserDefaultHelper.getLogedUser() != nil && (NetworkReachabilityManager()?.isReachable ?? false) {
+        if UserDefaultHelper.getLogedUser() != nil && (NetworkReachabilityManager()?.isReachable ?? false) == true {
             // 2
             mapServerRate(history, label: label) {[weak self] rates in
                 guard let self = self else { return }
@@ -50,7 +50,9 @@ class HistoryVM: PHistoryVM {
                         guard let self = self else { return }
                         let localIds = history.map { $0.id }
                         for rate in data {
-                            if localIds.firstIndex(of: rate.id) == nil {
+                            if let index = localIds.firstIndex(of: rate.id) {
+                                history[index].remoteId = rate.remoteId
+                            } else {
                                 history.append(rate)
                                 LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: rate)
                             }
@@ -98,9 +100,12 @@ class HistoryVM: PHistoryVM {
                     }
                     completion?(historyClone)
                 } onError: { (err) in
+                    completion?(historyClone)
                     print("err: \(err)")
                 }
                 .disposed(by: disposeBag)
+        } else {
+            completion?(historyClone)
         }
     }
     

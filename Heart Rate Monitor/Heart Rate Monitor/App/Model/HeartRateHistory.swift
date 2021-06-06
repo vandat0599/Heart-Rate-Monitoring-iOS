@@ -19,6 +19,7 @@ struct HeartRateHistory: Codable {
     
     init(id: Int?, remoteId: String? = nil, grapValues: [Double]?, heartRateNumber: Int?, label: String?, createDate: String?, isSubmitted: Bool?, isRemoved: Bool?) {
         self.id = id
+        self.remoteId = remoteId
         self.grapValues = grapValues ?? []
         self.heartRateNumber = heartRateNumber
         self.label = label

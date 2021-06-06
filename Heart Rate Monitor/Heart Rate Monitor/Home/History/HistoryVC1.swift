@@ -113,7 +113,9 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
                         .subscribe { (_) in
                             model.label = label
                             self.viewModel.data[indexPath.row] = model
-                            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                            self.viewModel.reloadLabels()
+                            (self.tableView.cellForRow(at: indexPath) as? HistoryTableViewCell)?.setData(model: model)
+                            print("updated")
                         } onError: { (err) in
                             print("err: \(err)")
                         }

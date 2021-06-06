@@ -280,7 +280,7 @@ class APIService {
                 "label": label
             ]
             print("params: \(params)")
-            AF.request("\(self.baseUrl)update/label",
+            AF.request("\(self.baseUrl)rates/update/label",
                        method: .post,
                        parameters: params as Parameters,
                        encoding: JSONEncoding.default,
