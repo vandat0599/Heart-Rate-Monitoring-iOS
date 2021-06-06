@@ -30,12 +30,12 @@ class HistoryVM: PHistoryVM {
         // 1. fetch all local history
         // 2. update deleted & submitted
         // 3. fetch remote history
-        // 4. update small info (label,...)
+        // 4. update info (label,...)
         
         // 1
         var history = LocalDatabaseHandler.shared.getAllHistory()
+        history.sort { (m1, m2) -> Bool in return (Int(m1.createDate ?? "0") ?? 0) > (Int(m2.createDate ?? "0") ?? 0) }
         historyData.accept(history.filter { (label == "ALL LABELS" ? true : $0.label == label) && ($0.isRemoved ?? false) == false })
-        history.sort { (m1, m2) -> Bool in return Int(m1.createDate ?? "0") ?? 0 > Int(m2.createDate ?? "0") ?? 0 }
         data = history
         reloadLabels()
         if UserDefaultHelper.getLogedUser() != nil && (NetworkReachabilityManager()?.isReachable ?? false) == true {
@@ -43,6 +43,7 @@ class HistoryVM: PHistoryVM {
             mapServerRate(history, label: label) {[weak self] rates in
                 guard let self = self else { return }
                 self.data = rates
+                self.data.sort { (m1, m2) -> Bool in return (Int(m1.createDate ?? "0") ?? 0) > (Int(m2.createDate ?? "0") ?? 0) }
                 self.historyData.accept(rates.filter { (label == "ALL LABELS" ? true : $0.label == label) && ($0.isRemoved ?? false) == false })
                 self.reloadLabels()
                 // 3
@@ -58,9 +59,8 @@ class HistoryVM: PHistoryVM {
                                 LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: rate)
                             }
                         }
-                        history.sort { (m1, m2) -> Bool in return Int(m1.createDate ?? "0") ?? 0 > Int(m2.createDate ?? "0") ?? 0 }
+                        history.sort { (m1, m2) -> Bool in return (Int(m1.createDate ?? "0") ?? 0) > (Int(m2.createDate ?? "0") ?? 0) }
                         self.data = history
-                        print("history: \(history)")
                         self.historyData.accept(history.filter { (label == "ALL LABELS" ? true : $0.label == label) && ($0.isRemoved ?? false) == false })
                         self.reloadLabels()
                         history.filter { $0.isLabelUpdated == true && ($0.isRemoved ?? false) == false }.forEach {
@@ -126,6 +126,7 @@ class HistoryVM: PHistoryVM {
     }
     
     func filterData(with label: String) {
+        data.sort { (m1, m2) -> Bool in return (Int(m1.createDate ?? "0") ?? 0) > (Int(m2.createDate ?? "0") ?? 0) }
         historyData.accept(data.filter { (label == "ALL LABELS" ? true : $0.label == label) && ($0.isRemoved ?? false) == false })
     }
     

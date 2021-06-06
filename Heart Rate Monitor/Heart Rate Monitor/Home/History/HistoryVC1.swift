@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import Alamofire
 
 class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -101,11 +102,13 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
                 let vc = EditHistoryBottoSheetVC(heartRateHistory: model, leftAction: {[weak self] in
                     guard let self = self else { return }
                     self.viewModel.historyData.accept(removedHistory)
-                    APIService.shared.deleteHistoryRates(by: [model.id ?? 0])
-                        .subscribe(onSuccess: { (_) in
-                            LocalDatabaseHandler.shared.deleteHistory(id: model.id ?? 0)
-                        }, onError: { _ in })
-                        .disposed(by: self.disposeBag)
+                    if UserDefaultHelper.getLogedUser() != nil && (NetworkReachabilityManager()?.isReachable ?? false) == true {
+                        APIService.shared.deleteHistoryRates(by: [model.id ?? 0])
+                            .subscribe(onSuccess: { (_) in
+                                LocalDatabaseHandler.shared.deleteHistory(id: model.id ?? 0)
+                            }, onError: { _ in })
+                            .disposed(by: self.disposeBag)
+                    }
                 }) {[weak self] (label) in
                     guard let self = self else { return }
                     var model = self.viewModel.historyData.value[indexPath.row]
@@ -113,16 +116,17 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
                     self.viewModel.data[indexPath.row] = model
                     self.viewModel.reloadLabels()
                     self.viewModel.filterData(with: self.labelHeaderFilterView.label.text ?? "ALL LABELS")
-                    APIService.shared.updateHistoryLabel(remoteId: model.remoteId ?? "", label: label)
-                        .subscribe { (_) in
-                            model.isLabelUpdated = false
-                            LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: model)
-                            print("updated")
-                        } onError: { (err) in
-                            print("err: \(err)")
-                        }
-                        .disposed(by: self.disposeBag)
-
+                    if UserDefaultHelper.getLogedUser() != nil && (NetworkReachabilityManager()?.isReachable ?? false) == true {
+                        APIService.shared.updateHistoryLabel(remoteId: model.remoteId ?? "", label: label)
+                            .subscribe { (_) in
+                                model.isLabelUpdated = false
+                                LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: model)
+                                print("updated")
+                            } onError: { (err) in
+                                print("err: \(err)")
+                            }
+                            .disposed(by: self.disposeBag)
+                    }
                 }
                 self.present(vc, animated: true)
             }

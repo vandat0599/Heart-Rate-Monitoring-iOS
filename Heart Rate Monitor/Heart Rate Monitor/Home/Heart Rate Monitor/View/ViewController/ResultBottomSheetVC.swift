@@ -10,6 +10,7 @@ import Charts
 import MaterialComponents
 import RxSwift
 import RxRelay
+import Alamofire
 
 class ResultBottomSheetVC: BottomSheetViewController {
     // MARK: - UI components
@@ -230,7 +231,7 @@ class ResultBottomSheetVC: BottomSheetViewController {
         print("saved: \(history)")
         history = LocalDatabaseHandler.shared.insertHistory(heartRateHistory: history)!
         dismissVC()
-        guard UserDefaultHelper.getLogedUser() != nil, let bag = (UIApplication.shared.delegate as? AppDelegate)?.globalDisposebag else {
+        guard UserDefaultHelper.getLogedUser() != nil, let bag = (UIApplication.shared.delegate as? AppDelegate)?.globalDisposebag, (NetworkReachabilityManager()?.isReachable ?? false) == true else {
             return
         }
         APIService.shared.postHeartRate(heartRates: [history])
