@@ -2,7 +2,7 @@
 //  LocalHeartHistory+CoreDataProperties.swift
 //  Heart Rate Monitor
 //
-//  Created by Dat Van on 20/05/2021.
+//  Created by Dat Van on 06/06/2021.
 //
 //
 
@@ -22,5 +22,8 @@ extension LocalHeartHistory {
     @NSManaged public var id: String?
     @NSManaged public var isSubmitted: Bool
     @NSManaged public var label: String?
+    @NSManaged public var remoteId: String?
+    @NSManaged public var isRemoved: Bool
+    @NSManaged public var isLabelUpdated: Bool
 
 }

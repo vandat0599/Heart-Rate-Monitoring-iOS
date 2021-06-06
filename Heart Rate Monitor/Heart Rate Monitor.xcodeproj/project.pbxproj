@@ -17,8 +17,6 @@
 		844863A5261D529C007CC806 /* HistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844863A3261D529C007CC806 /* HistoryVC.xib */; };
 		84575B772607844200711760 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84575B762607844200711760 /* ProfileCell.swift */; };
 		84575B7B2607845800711760 /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84575B7A2607845800711760 /* ProfileCell.xib */; };
-		845DF6122603345B00DD26BF /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DF6102603345B00DD26BF /* SignUpVC.swift */; };
-		845DF6132603345B00DD26BF /* SignUpVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845DF6112603345B00DD26BF /* SignUpVC.xib */; };
 		848645D926201358003599A4 /* TTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848645D826201358003599A4 /* TTSegmentedControl.swift */; };
 		848645E3262037D2003599A4 /* WeekMonthRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848645E1262037D2003599A4 /* WeekMonthRecordTableViewCell.swift */; };
 		848645E4262037D2003599A4 /* WeekMonthRecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848645E2262037D2003599A4 /* WeekMonthRecordTableViewCell.xib */; };
@@ -60,7 +58,6 @@
 		CE10736625FE7449003777D6 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10736525FE7449003777D6 /* CGPoint+.swift */; };
 		CE16203A263930550076E71F /* CMSampleBuffer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE162039263930550076E71F /* CMSampleBuffer+.swift */; };
 		CE1E228C25F72A0200C6632E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E228B25F72A0200C6632E /* AppDelegate.swift */; };
-		CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E228F25F72A0200C6632E /* SignInVC.swift */; };
 		CE1E229525F72A0300C6632E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1E229425F72A0300C6632E /* Assets.xcassets */; };
 		CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE1E229625F72A0300C6632E /* LaunchScreen.storyboard */; };
 		CE1E22A325F72A0300C6632E /* Heart_Rate_MonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E22A225F72A0300C6632E /* Heart_Rate_MonitorTests.swift */; };
@@ -75,6 +72,8 @@
 		CE44496F2640FF390028A5D4 /* UserDefaultHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */; };
 		CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE444972264100DA0028A5D4 /* CustomRippleControl.swift */; };
 		CE44497D26410A490028A5D4 /* lottie-warning.json in Resources */ = {isa = PBXBuildFile; fileRef = CE44497C26410A490028A5D4 /* lottie-warning.json */; };
+		CE4A0A37266CB3C000653555 /* LocalHeartHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A0A35266CB3C000653555 /* LocalHeartHistory+CoreDataClass.swift */; };
+		CE4A0A38266CB3C000653555 /* LocalHeartHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A0A36266CB3C000653555 /* LocalHeartHistory+CoreDataProperties.swift */; };
 		CE4D1CFC2627F98300159D86 /* lottie-error.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CF92627F98200159D86 /* lottie-error.json */; };
 		CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFA2627F98200159D86 /* lottie-success.json */; };
 		CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */ = {isa = PBXBuildFile; fileRef = CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */; };
@@ -82,6 +81,15 @@
 		CE5309D8265836A800AD6202 /* HelpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5309D7265836A800AD6202 /* HelpVC.swift */; };
 		CE5309DD265838A600AD6202 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5309DC265838A600AD6202 /* SettingVC.swift */; };
 		CE5309E126583FD700AD6202 /* GuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5309E026583FD700AD6202 /* GuideVC.swift */; };
+		CE62626126676DAE00B2F736 /* PrivacyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62625A26676DAD00B2F736 /* PrivacyVC.swift */; };
+		CE62626226676DAE00B2F736 /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62625C26676DAD00B2F736 /* ResetPasswordVC.swift */; };
+		CE62626326676DAE00B2F736 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62625E26676DAD00B2F736 /* SignInVC.swift */; };
+		CE62626426676DAE00B2F736 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62626026676DAD00B2F736 /* SignUpVC.swift */; };
+		CE62628A266770CA00B2F736 /* FormInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE626289266770CA00B2F736 /* FormInputView.swift */; };
+		CE6262972667746300B2F736 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6262962667746300B2F736 /* CheckBox.swift */; };
+		CE62629C26677EF200B2F736 /* FillRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62629B26677EF200B2F736 /* FillRoundedButton.swift */; };
+		CE6262B626679F3100B2F736 /* VerifyOTPSignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6262B526679F3100B2F736 /* VerifyOTPSignupVC.swift */; };
+		CE6262C12667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6262C02667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift */; };
 		CE7F8A0125FC7AEA00A2EDC9 /* HomeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */; };
 		CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */; };
 		CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */; };
@@ -98,10 +106,7 @@
 		CEB7548D2656705C00AF434F /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB7548B2656705C00AF434F /* HistoryTableViewCell.xib */; };
 		CEB754912656793800AF434F /* LabelPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB754902656793800AF434F /* LabelPickerView.xib */; };
 		CEB754952656794D00AF434F /* LabelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754942656794D00AF434F /* LabelPickerView.swift */; };
-		CEB754992656841F00AF434F /* FormInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754982656841F00AF434F /* FormInputView.swift */; };
 		CEB7549D26568F3200AF434F /* EditHistoryBottoSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7549C26568F3200AF434F /* EditHistoryBottoSheetVC.swift */; };
-		CEB754A62656942000AF434F /* LocalHeartHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754A42656942000AF434F /* LocalHeartHistory+CoreDataClass.swift */; };
-		CEB754A72656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB754A52656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift */; };
 		CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DF725F730A2007BA177 /* BaseVC.swift */; };
 		CEC78DFD25F730B4007BA177 /* BasePresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */; };
 		CEC78E0525F7327B007BA177 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E0425F7327B007BA177 /* Environment.swift */; };
@@ -129,7 +134,6 @@
 		CEC78EA425F73A07007BA177 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E9325F73A07007BA177 /* UIImage+.swift */; };
 		CEC78EA525F73A07007BA177 /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78E9425F73A07007BA177 /* NSLayoutConstraint+.swift */; };
 		CEC78EA925F73A22007BA177 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78EA825F73A22007BA177 /* APIService.swift */; };
-		CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC78EBC25F74000007BA177 /* SignInVC.xib */; };
 		CEC7EDA7262FBD8700403671 /* PermissionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDA6262FBD8700403671 /* PermissionUtil.swift */; };
 		CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDAA262FBEEC00403671 /* HError.swift */; };
 		CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7EDB2262FCA8A00403671 /* HLog.swift */; };
@@ -176,8 +180,6 @@
 		844863A3261D529C007CC806 /* HistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryVC.xib; sourceTree = "<group>"; };
 		84575B762607844200711760 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		84575B7A2607845800711760 /* ProfileCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileCell.xib; sourceTree = "<group>"; };
-		845DF6102603345B00DD26BF /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
-		845DF6112603345B00DD26BF /* SignUpVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpVC.xib; sourceTree = "<group>"; };
 		848645D826201358003599A4 /* TTSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSegmentedControl.swift; sourceTree = "<group>"; };
 		848645E1262037D2003599A4 /* WeekMonthRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekMonthRecordTableViewCell.swift; sourceTree = "<group>"; };
 		848645E2262037D2003599A4 /* WeekMonthRecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeekMonthRecordTableViewCell.xib; sourceTree = "<group>"; };
@@ -229,7 +231,6 @@
 		CE162039263930550076E71F /* CMSampleBuffer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMSampleBuffer+.swift"; sourceTree = "<group>"; };
 		CE1E228825F72A0200C6632E /* Heart Rate Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heart Rate Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1E228B25F72A0200C6632E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CE1E228F25F72A0200C6632E /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
 		CE1E229425F72A0300C6632E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE1E229725F72A0300C6632E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE1E229925F72A0300C6632E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -249,6 +250,8 @@
 		CE44496E2640FF390028A5D4 /* UserDefaultHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelper.swift; sourceTree = "<group>"; };
 		CE444972264100DA0028A5D4 /* CustomRippleControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRippleControl.swift; sourceTree = "<group>"; };
 		CE44497C26410A490028A5D4 /* lottie-warning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-warning.json"; sourceTree = "<group>"; };
+		CE4A0A35266CB3C000653555 /* LocalHeartHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		CE4A0A36266CB3C000653555 /* LocalHeartHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		CE4D1CF92627F98200159D86 /* lottie-error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-error.json"; sourceTree = "<group>"; };
 		CE4D1CFA2627F98200159D86 /* lottie-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-success.json"; sourceTree = "<group>"; };
 		CE4D1CFB2627F98200159D86 /* lottie-internet-connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lottie-internet-connection.json"; sourceTree = "<group>"; };
@@ -256,6 +259,15 @@
 		CE5309D7265836A800AD6202 /* HelpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpVC.swift; sourceTree = "<group>"; };
 		CE5309DC265838A600AD6202 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		CE5309E026583FD700AD6202 /* GuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideVC.swift; sourceTree = "<group>"; };
+		CE62625A26676DAD00B2F736 /* PrivacyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyVC.swift; sourceTree = "<group>"; };
+		CE62625C26676DAD00B2F736 /* ResetPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
+		CE62625E26676DAD00B2F736 /* SignInVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
+		CE62626026676DAD00B2F736 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		CE626289266770CA00B2F736 /* FormInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormInputView.swift; sourceTree = "<group>"; };
+		CE6262962667746300B2F736 /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		CE62629B26677EF200B2F736 /* FillRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FillRoundedButton.swift; sourceTree = "<group>"; };
+		CE6262B526679F3100B2F736 /* VerifyOTPSignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPSignupVC.swift; sourceTree = "<group>"; };
+		CE6262C02667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordWithOTPVC.swift; sourceTree = "<group>"; };
 		CE7F8A0025FC7AEA00A2EDC9 /* HomeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerVC.swift; sourceTree = "<group>"; };
 		CE7F8A0425FC7AF100A2EDC9 /* HeartRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVC.swift; sourceTree = "<group>"; };
 		CE7F8A0925FC7B1900A2EDC9 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
@@ -272,10 +284,7 @@
 		CEB7548B2656705C00AF434F /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
 		CEB754902656793800AF434F /* LabelPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelPickerView.xib; sourceTree = "<group>"; };
 		CEB754942656794D00AF434F /* LabelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPickerView.swift; sourceTree = "<group>"; };
-		CEB754982656841F00AF434F /* FormInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormInputView.swift; sourceTree = "<group>"; };
 		CEB7549C26568F3200AF434F /* EditHistoryBottoSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHistoryBottoSheetVC.swift; sourceTree = "<group>"; };
-		CEB754A42656942000AF434F /* LocalHeartHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CEB754A52656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalHeartHistory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CEC78DF725F730A2007BA177 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		CEC78DFC25F730B4007BA177 /* BasePresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresentVC.swift; sourceTree = "<group>"; };
 		CEC78E0425F7327B007BA177 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -302,7 +311,6 @@
 		CEC78E9325F73A07007BA177 /* UIImage+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		CEC78E9425F73A07007BA177 /* NSLayoutConstraint+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+.swift"; sourceTree = "<group>"; };
 		CEC78EA825F73A22007BA177 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
-		CEC78EBC25F74000007BA177 /* SignInVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignInVC.xib; sourceTree = "<group>"; };
 		CEC7EDA6262FBD8700403671 /* PermissionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionUtil.swift; sourceTree = "<group>"; };
 		CEC7EDAA262FBEEC00403671 /* HError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HError.swift; sourceTree = "<group>"; };
 		CEC7EDB2262FCA8A00403671 /* HLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLog.swift; sourceTree = "<group>"; };
@@ -391,23 +399,6 @@
 				84E460AA261571DB00F60040 /* View */,
 			);
 			path = ProfileCell;
-			sourceTree = "<group>";
-		};
-		845DF60D2603339400DD26BF /* SignUp */ = {
-			isa = PBXGroup;
-			children = (
-				845DF60F2603341A00DD26BF /* View */,
-			);
-			path = SignUp;
-			sourceTree = "<group>";
-		};
-		845DF60F2603341A00DD26BF /* View */ = {
-			isa = PBXGroup;
-			children = (
-				845DF6102603345B00DD26BF /* SignUpVC.swift */,
-				845DF6112603345B00DD26BF /* SignUpVC.xib */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		848645E0262037AA003599A4 /* WeekMonthRecordTableViewCell */ = {
@@ -536,9 +527,8 @@
 			isa = PBXGroup;
 			children = (
 				CEC78DC825F72BC6007BA177 /* App */,
+				CE62625826676BD100B2F736 /* Authen */,
 				CE7F89F525FC786100A2EDC9 /* Home */,
-				845DF60D2603339400DD26BF /* SignUp */,
-				CEC78E1C25F73324007BA177 /* Login */,
 				84E3963226569C6F006D73A0 /* Stats */,
 				CEC78E1D25F7332E007BA177 /* Dashboard */,
 			);
@@ -598,20 +588,49 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
-		CE7F89DD25FC680B00A2EDC9 /* View */ = {
+		CE62625826676BD100B2F736 /* Authen */ = {
 			isa = PBXGroup;
 			children = (
-				CE1E228F25F72A0200C6632E /* SignInVC.swift */,
-				CEC78EBC25F74000007BA177 /* SignInVC.xib */,
+				CE62625926676DAD00B2F736 /* Privacy */,
+				CE62625B26676DAD00B2F736 /* ResetPassword */,
+				CE62625D26676DAD00B2F736 /* SignIn */,
+				CE62625F26676DAD00B2F736 /* SignUp */,
 			);
-			path = View;
+			path = Authen;
 			sourceTree = "<group>";
 		};
-		CE7F89DE25FC681200A2EDC9 /* ViewModel */ = {
+		CE62625926676DAD00B2F736 /* Privacy */ = {
 			isa = PBXGroup;
 			children = (
+				CE62625A26676DAD00B2F736 /* PrivacyVC.swift */,
 			);
-			path = ViewModel;
+			path = Privacy;
+			sourceTree = "<group>";
+		};
+		CE62625B26676DAD00B2F736 /* ResetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				CE62625C26676DAD00B2F736 /* ResetPasswordVC.swift */,
+				CE6262B526679F3100B2F736 /* VerifyOTPSignupVC.swift */,
+				CE6262C02667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift */,
+			);
+			path = ResetPassword;
+			sourceTree = "<group>";
+		};
+		CE62625D26676DAD00B2F736 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				CE62625E26676DAD00B2F736 /* SignInVC.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		CE62625F26676DAD00B2F736 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				CE62626026676DAD00B2F736 /* SignUpVC.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		CE7F89F525FC786100A2EDC9 /* Home */ = {
@@ -636,6 +655,9 @@
 		CE7F8A3725FCB35300A2EDC9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE62629B26677EF200B2F736 /* FillRoundedButton.swift */,
+				CE6262962667746300B2F736 /* CheckBox.swift */,
+				CE626289266770CA00B2F736 /* FormInputView.swift */,
 				CE2390AC2654B27C00DC05BC /* CustomRippleButton.swift */,
 				CE7F8A3325FCB33A00A2EDC9 /* RoundedView.swift */,
 				84230D4D2603184900EC9DD0 /* GradientColor.swift */,
@@ -647,7 +669,6 @@
 				848645D826201358003599A4 /* TTSegmentedControl.swift */,
 				CE444972264100DA0028A5D4 /* CustomRippleControl.swift */,
 				CE2390F82655549500DC05BC /* ViewWithXib.swift */,
-				CEB754982656841F00AF434F /* FormInputView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -845,15 +866,6 @@
 			path = Value;
 			sourceTree = "<group>";
 		};
-		CEC78E1C25F73324007BA177 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				CE7F89DE25FC681200A2EDC9 /* ViewModel */,
-				CE7F89DD25FC680B00A2EDC9 /* View */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
 		CEC78E1D25F7332E007BA177 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -885,8 +897,8 @@
 		CEFF3FFE26561A380049EA68 /* LocalDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				CEB754A42656942000AF434F /* LocalHeartHistory+CoreDataClass.swift */,
-				CEB754A52656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift */,
+				CE4A0A35266CB3C000653555 /* LocalHeartHistory+CoreDataClass.swift */,
+				CE4A0A36266CB3C000653555 /* LocalHeartHistory+CoreDataProperties.swift */,
 				CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */,
 				CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */,
 				CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */,
@@ -1020,7 +1032,6 @@
 				CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */,
 				CE040E242658C5D700A86649 /* Settings.bundle in Resources */,
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
-				CEC78EBD25F74000007BA177 /* SignInVC.xib in Resources */,
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,
 				CE040E6F2659011800A86649 /* lottie-permission-camera.json in Resources */,
 				CEB7548D2656705C00AF434F /* HistoryTableViewCell.xib in Resources */,
@@ -1040,7 +1051,6 @@
 				CEC78E2225F73365007BA177 /* Staging.xcconfig in Resources */,
 				CEC78E2325F73365007BA177 /* Development.xcconfig in Resources */,
 				CED575192656CD0200AAC1AB /* lottie-menu.json in Resources */,
-				845DF6132603345B00DD26BF /* SignUpVC.xib in Resources */,
 				CE1E229525F72A0300C6632E /* Assets.xcassets in Resources */,
 				CE06D10125FD1DA4007CE81C /* lottie-progress.json in Resources */,
 				CE4D1CFE2627F98300159D86 /* lottie-internet-connection.json in Resources */,
@@ -1172,17 +1182,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEB754A62656942000AF434F /* LocalHeartHistory+CoreDataClass.swift in Sources */,
 				CE00163B261D8FC300B9374F /* LottieSheetOneActionVC.swift in Sources */,
 				CEB7548326566DCC00AF434F /* HistoryVC1.swift in Sources */,
 				84CD8230261EDDEC00ABD9B5 /* RecordTableViewCell.swift in Sources */,
 				CE001635261D8F8000B9374F /* HAlert.swift in Sources */,
 				CEC78E9625F73A07007BA177 /* Date+.swift in Sources */,
+				CE4A0A37266CB3C000653555 /* LocalHeartHistory+CoreDataClass.swift in Sources */,
+				CE62629C26677EF200B2F736 /* FillRoundedButton.swift in Sources */,
 				CEC7EDA7262FBD8700403671 /* PermissionUtil.swift in Sources */,
 				CEC78EA925F73A22007BA177 /* APIService.swift in Sources */,
 				CEC78E9925F73A07007BA177 /* NSObject+.swift in Sources */,
 				CE0BE140261EB29B00073002 /* HeartRateWarning.swift in Sources */,
 				CE7F8A0525FC7AF100A2EDC9 /* HeartRateVC.swift in Sources */,
+				CE4A0A38266CB3C000653555 /* LocalHeartHistory+CoreDataProperties.swift in Sources */,
 				CEC78E1525F732A4007BA177 /* AppString.swift in Sources */,
 				CEB7548726566F6300AF434F /* HistoryVM.swift in Sources */,
 				1DE870862614E55B006A38C2 /* Complex.swift in Sources */,
@@ -1190,17 +1202,19 @@
 				CE5309E126583FD700AD6202 /* GuideVC.swift in Sources */,
 				CE7F8A2C25FC9E6F00A2EDC9 /* TabItemView.swift in Sources */,
 				CE0BE13C261EB0EE00073002 /* HeartRateHistory.swift in Sources */,
+				CE62626326676DAE00B2F736 /* SignInVC.swift in Sources */,
 				CEC78E9C25F73A07007BA177 /* UICollectionView+.swift in Sources */,
 				84230D4E2603184900EC9DD0 /* GradientColor.swift in Sources */,
 				CE444973264100DA0028A5D4 /* CustomRippleControl.swift in Sources */,
 				CEC78EA425F73A07007BA177 /* UIImage+.swift in Sources */,
 				CE10732125FDCDDF003777D6 /* Filter.swift in Sources */,
 				CE2391202655669400DC05BC /* ResultBottomSheetVC.swift in Sources */,
+				CE6262B626679F3100B2F736 /* VerifyOTPSignupVC.swift in Sources */,
 				CE7F8A2225FC902F00A2EDC9 /* UserVC.swift in Sources */,
 				CEC78E9525F73A07007BA177 /* UIColor+.swift in Sources */,
+				CE62626426676DAE00B2F736 /* SignUpVC.swift in Sources */,
 				CEFF400B26561C2A0049EA68 /* PersistenceManager.swift in Sources */,
 				CE0BE144261EB77700073002 /* Gender.swift in Sources */,
-				CEB754A72656942000AF434F /* LocalHeartHistory+CoreDataProperties.swift in Sources */,
 				CEC7EDAB262FBEEC00403671 /* HError.swift in Sources */,
 				CEC78E9F25F73A07007BA177 /* UIView+.swift in Sources */,
 				CE2390F92655549500DC05BC /* ViewWithXib.swift in Sources */,
@@ -1208,13 +1222,15 @@
 				CE5309CF26582CA300AD6202 /* CalmInfoVC.swift in Sources */,
 				848645D926201358003599A4 /* TTSegmentedControl.swift in Sources */,
 				CEC78E9B25F73A07007BA177 /* Int+.swift in Sources */,
-				CE1E229025F72A0200C6632E /* SignInVC.swift in Sources */,
 				CEC78DF825F730A2007BA177 /* BaseVC.swift in Sources */,
 				CEB7548C2656705C00AF434F /* HistoryTableViewCell.swift in Sources */,
 				CEC78EA525F73A07007BA177 /* NSLayoutConstraint+.swift in Sources */,
 				CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */,
 				CEC78EA225F73A07007BA177 /* UIFont+.swift in Sources */,
+				CE6262C12667ACAD00B2F736 /* ChangePasswordWithOTPVC.swift in Sources */,
 				CE1E228C25F72A0200C6632E /* AppDelegate.swift in Sources */,
+				CE6262972667746300B2F736 /* CheckBox.swift in Sources */,
+				CE62626226676DAE00B2F736 /* ResetPasswordVC.swift in Sources */,
 				CEC78E0D25F7329D007BA177 /* AppConstant.swift in Sources */,
 				84575B772607844200711760 /* ProfileCell.swift in Sources */,
 				CE10731C25FDCDD3003777D6 /* CameraManager.swift in Sources */,
@@ -1223,11 +1239,11 @@
 				1D1B8216263003DC0037D3E8 /* HeartRateDetector.swift in Sources */,
 				CE7F8A3425FCB33A00A2EDC9 /* RoundedView.swift in Sources */,
 				CE16203A263930550076E71F /* CMSampleBuffer+.swift in Sources */,
-				845DF6122603345B00DD26BF /* SignUpVC.swift in Sources */,
 				CEC7EDB3262FCA8A00403671 /* HLog.swift in Sources */,
 				CE8DFA082653DA8600385F3B /* ContainerVC.swift in Sources */,
 				CEC78E9A25F73A07007BA177 /* UIViewController+.swift in Sources */,
 				CE001619261D83F700B9374F /* UINibView.swift in Sources */,
+				CE62628A266770CA00B2F736 /* FormInputView.swift in Sources */,
 				CE0BE134261EAA4500073002 /* Account.swift in Sources */,
 				CEC7EDC5262FF46800403671 /* HeartRateRecord.swift in Sources */,
 				CE2390EB26554F3500DC05BC /* BeatLabelView.swift in Sources */,
@@ -1255,6 +1271,7 @@
 				CEB754952656794D00AF434F /* LabelPickerView.swift in Sources */,
 				CE7F8A5125FCB74100A2EDC9 /* HeartRateVCVM.swift in Sources */,
 				CE7F8A0A25FC7B1900A2EDC9 /* BottomBarView.swift in Sources */,
+				CE62626126676DAE00B2F736 /* PrivacyVC.swift in Sources */,
 				84C718992606EB3200BA2C6D /* ProfileVC.swift in Sources */,
 				CE021EF9265764E000728A20 /* HeartExserciseVM.swift in Sources */,
 				84E460B026158C0200F60040 /* InputRelationshipTableViewCell.swift in Sources */,
@@ -1266,7 +1283,6 @@
 				CEC78E9D25F73A07007BA177 /* UITapGestureRecognizer+.swift in Sources */,
 				CEC78E0525F7327B007BA177 /* Environment.swift in Sources */,
 				CEFF406926562A210049EA68 /* LocalDatabaseHandler.swift in Sources */,
-				CEB754992656841F00AF434F /* FormInputView.swift in Sources */,
 				848645E3262037D2003599A4 /* WeekMonthRecordTableViewCell.swift in Sources */,
 				CE2390AD2654B27C00DC05BC /* CustomRippleButton.swift in Sources */,
 				CEC78E9825F73A07007BA177 /* UITextField+.swift in Sources */,

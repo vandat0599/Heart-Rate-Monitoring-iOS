@@ -10,13 +10,14 @@ import IQKeyboardManagerSwift
 import Accelerate
 import UserNotifications
 import InAppSettingsKit
+import RxSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var deviceToken: String?
-    
+    let globalDisposebag = DisposeBag()
     let rootViewController: UIViewController = {
         return UINavigationController(rootViewController: ContainerVC())
     }()

@@ -9,5 +9,5 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-baseUrl = dev_url
+baseUrl = https:/$()/heart-rate-monitor-hcmus.herokuapp.com/api/
 logEnabled = true
