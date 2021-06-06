@@ -30,6 +30,7 @@ class HistoryVM: PHistoryVM {
         // 1. fetch all local history
         // 2. update deleted & submitted
         // 3. fetch remote history
+        // 4. update small info (label,...)
         
         // 1
         var history = LocalDatabaseHandler.shared.getAllHistory()
@@ -61,6 +62,19 @@ class HistoryVM: PHistoryVM {
                         self.data = history
                         self.historyData.accept(history.filter { (label == "ALL LABELS" ? true : $0.label == label) && $0.isRemoved == false })
                         self.reloadLabels()
+                        history.filter { $0.isLabelUpdated == true && $0.isRemoved == false }.forEach {
+                            var tmpModel = $0
+                            APIService.shared.updateHistoryLabel(remoteId: $0.remoteId ?? "", label: $0.label ?? "")
+                                .subscribe { (rate) in
+                                    tmpModel.isLabelUpdated = false
+                                    LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: tmpModel)
+                                    print("updated: \(tmpModel.label)")
+                                } onError: { (err) in
+                                    print("err: \(err.localizedDescription)")
+                                }
+                                .disposed(by: self.disposeBag)
+
+                        }
                     } onError: {(err) in
                         print("err: \(err.localizedDescription)")
                     }
@@ -85,6 +99,8 @@ class HistoryVM: PHistoryVM {
                 }
                 .disposed(by: disposeBag)
         }
+        
+        
         
         if !unsubmitedRates.isEmpty {
             APIService.shared.postHeartRate(heartRates: unsubmitedRates)

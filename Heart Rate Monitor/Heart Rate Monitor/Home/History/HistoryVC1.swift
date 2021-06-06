@@ -109,12 +109,14 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
                 }) {[weak self] (label) in
                     guard let self = self else { return }
                     var model = self.viewModel.historyData.value[indexPath.row]
+                    model.label = label
+                    self.viewModel.data[indexPath.row] = model
+                    self.viewModel.reloadLabels()
+                    self.viewModel.filterData(with: self.labelHeaderFilterView.label.text ?? "ALL LABELS")
                     APIService.shared.updateHistoryLabel(remoteId: model.remoteId ?? "", label: label)
                         .subscribe { (_) in
-                            model.label = label
-                            self.viewModel.data[indexPath.row] = model
-                            self.viewModel.reloadLabels()
-                            (self.tableView.cellForRow(at: indexPath) as? HistoryTableViewCell)?.setData(model: model)
+                            model.isLabelUpdated = false
+                            LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: model)
                             print("updated")
                         } onError: { (err) in
                             print("err: \(err)")

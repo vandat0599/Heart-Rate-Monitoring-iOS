@@ -20,9 +20,10 @@ public class LocalHeartHistory: NSManagedObject {
         self.createDate = model.createDate
         self.remoteId = model.remoteId
         self.isRemoved = model.isRemoved ?? false
+        self.isLabelUpdated = model.isLabelUpdated ?? false
     }
 
     func toRemoteHistory() -> HeartRateHistory {
-        HeartRateHistory(id: Int(self.id ?? "0"), remoteId: self.remoteId, grapValues: (self.grapValues ?? "").split(separator: ",").map { (Double($0) ?? 0.0) }, heartRateNumber: Int(self.heartRateNumber), label: self.label, createDate: self.createDate, isSubmitted: self.isSubmitted, isRemoved: self.isRemoved)
+        HeartRateHistory(id: Int(self.id ?? "0"), remoteId: self.remoteId, grapValues: (self.grapValues ?? "").split(separator: ",").map { (Double($0) ?? 0.0) }, heartRateNumber: Int(self.heartRateNumber), label: self.label, createDate: self.createDate, isSubmitted: self.isSubmitted, isRemoved: self.isRemoved, isLabelUpdated: self.isLabelUpdated)
     }
 }

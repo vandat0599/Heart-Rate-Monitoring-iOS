@@ -221,6 +221,7 @@ class EditHistoryBottoSheetVC: BottomSheetViewController {
         dismiss(animated: true) {[weak self] in
             guard let self = self else { return }
             self.heartRateHistory.label = self.labelTextField.text
+            self.heartRateHistory.isLabelUpdated = true
             LocalDatabaseHandler.shared.updateHeartRateHistory(heartRateHistory: self.heartRateHistory)
             self.rightAction?(self.labelTextField.text ?? "")
         }

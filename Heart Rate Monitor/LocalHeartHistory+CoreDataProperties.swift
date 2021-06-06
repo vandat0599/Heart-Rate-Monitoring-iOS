@@ -24,5 +24,6 @@ extension LocalHeartHistory {
     @NSManaged public var label: String?
     @NSManaged public var remoteId: String?
     @NSManaged public var isRemoved: Bool
+    @NSManaged public var isLabelUpdated: Bool
 
 }
