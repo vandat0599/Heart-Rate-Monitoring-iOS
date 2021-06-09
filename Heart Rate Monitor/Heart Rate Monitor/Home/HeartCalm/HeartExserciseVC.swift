@@ -234,6 +234,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
                     self.playView.transform = .identity
                     self.guideLabel.alpha = 1
                 }
+                UIApplication.shared.isIdleTimerDisabled = value
             })
             .disposed(by: disposeBag)
         
