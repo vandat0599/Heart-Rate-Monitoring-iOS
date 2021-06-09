@@ -18,7 +18,7 @@ protocol PHeartExserciseVM {
     var heartRateTrackNumber: BehaviorRelay<Int> { get }
     var heartRateProgress: BehaviorRelay<Float> { get }
     var isHeartRateValid: BehaviorRelay<Bool> { get }
-    var timeupTrigger: PublishRelay<Bool> { get }
+    var timeupTrigger: PublishRelay<(Bool, Int)> { get }
     var capturedRedmean: [Double] { get }
     var breathinTrigger: PublishRelay<Double> { get }
     var breathoutTrigger: PublishRelay<Double> { get }
@@ -37,7 +37,7 @@ class HeartExserciseVM: PHeartExserciseVM {
     var heartRateProgress: BehaviorRelay<Float>
     var isMeasuring: BehaviorRelay<Bool>
     var isHeartRateValid: BehaviorRelay<Bool>
-    var timeupTrigger: PublishRelay<Bool>
+    var timeupTrigger: PublishRelay<(Bool, Int)>
     var breathinTrigger: PublishRelay<Double>
     var breathoutTrigger: PublishRelay<Double>
     var resetDataTrigger: BehaviorRelay<Bool>
@@ -60,7 +60,7 @@ class HeartExserciseVM: PHeartExserciseVM {
         isHeartRateValid = BehaviorRelay<Bool>(value: false)
         heartRateTrackNumber = BehaviorRelay<Int>(value: 0)
         heartRateProgress = BehaviorRelay<Float>(value: 0.0)
-        timeupTrigger = PublishRelay<Bool>()
+        timeupTrigger = PublishRelay<(Bool, Int)>()
         breathinTrigger = PublishRelay<Double>()
         breathoutTrigger = PublishRelay<Double>()
         resetDataTrigger = BehaviorRelay<Bool>(value: false)
@@ -101,7 +101,7 @@ class HeartExserciseVM: PHeartExserciseVM {
             }
             capturedRedmean.append(Double(redmean))
             if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%fps == 0 {
-                let (heartRate,grapvalue) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
+                let (heartRate,_) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
                 pulses.append((heartRate == -1 ? (pulses.last ?? 80) : heartRate))
             }
         } else {
@@ -130,10 +130,11 @@ class HeartExserciseVM: PHeartExserciseVM {
         }
         value += 1
         let progress = Float(value)/Float(maxProgressSecond)
-        timeupTrigger.accept(progress >= 1)
+        let rate = pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0
+        timeupTrigger.accept((progress >= 1, rate))
         isHeartRateValid.accept(pulses.count > 0)
         heartRateProgress.accept(progress)
-        heartRateTrackNumber.accept(pulses.count > 0 ? Int(pulses.reduce(0.0, +)/Double(pulses.count)) : 0)
+        heartRateTrackNumber.accept(rate)
         print("inputs: \(capturedRedmean.count)")
         if progress >= 1 {
             print("invalidate")

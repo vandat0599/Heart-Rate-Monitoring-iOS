@@ -32,6 +32,24 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private lazy var resultHeartRateLabel: UILabel = {
+        let view = UILabel()
+        view.textAlignment = .center
+        view.numberOfLines = 0
+        view.isHidden = true
+        view.isUserInteractionEnabled = false
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        paragraphStyle.alignment = .center
+        view.attributedText = NSMutableAttributedString(string: "--" as String, attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .bold),
+            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+        ])
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     private lazy var playView: UIView = {
         let view = UIView()
@@ -164,11 +182,12 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         view.addSubview(startButton)
         playView.addSubview(heartImageView)
         playView.addSubview(heartRateTrackLabel)
+        playView.addSubview(resultHeartRateLabel)
         view.addSubview(guideLabel)
         view.addSubview(welldoneLabel)
         view.addSubview(chartView)
         NSLayoutConstraint.activate([
-            playView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            playView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             playView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
             playView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
             playView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -180,6 +199,9 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
             
             heartRateTrackLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
             heartRateTrackLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
+            
+            resultHeartRateLabel.centerXAnchor.constraint(equalTo: playView.centerXAnchor),
+            resultHeartRateLabel.centerYAnchor.constraint(equalTo: playView.centerYAnchor),
             
             exTypePickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             exTypePickerView.topAnchor.constraint(equalTo: playView.bottomAnchor, constant: 0),
@@ -230,10 +252,13 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
                 self.startButton.setTitle(value ? "STOP" : "START", for: .normal)
                 self.exTypePickerView.isHidden = value
                 self.guideLabel.text = "Please place your finger on camera"
+                self.resultHeartRateLabel.isHidden = true
+                self.title = value ? self.secondToMinute(seconds: self.viewModel.mins[self.viewModel.selectedMinIndex]*60) : ""
                 UIView.animate(withDuration: 0.2) {
                     self.playView.transform = .identity
                     self.guideLabel.alpha = 1
                 }
+                UIApplication.shared.isIdleTimerDisabled = value
             })
             .disposed(by: disposeBag)
         
@@ -259,7 +284,7 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         viewModel?.timeupTrigger
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .bind(onNext: {[unowned self] (value) in
+            .bind(onNext: {[unowned self] (value, rate) in
                 guard value else { return }
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 self.reloadChartData(value: self.viewModel.pulses)
@@ -267,9 +292,11 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
                 self.welldoneLabel.isHidden = false
                 self.guideLabel.isHidden = true
                 viewModel.resetAllData()
-                self.heartRateTrackLabel.isHidden = false
                 CameraManager.shared.toggleTorch(status: false)
                 self.startButton.setTitle("START", for: .normal)
+                self.resultHeartRateLabel.isHidden = false
+                self.resultHeartRateLabel.text = "\(rate)"
+                self.title = ""
                 UIView.animate(withDuration: 0.2) {
                     self.playView.transform = .identity
                     self.guideLabel.alpha = 1
@@ -316,6 +343,16 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
                         self.guideLabel.alpha = 1
                     }
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.heartRateProgress
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .bind(onNext: {[weak self] (value) in
+                guard let self = self else { return }
+                let max = self.viewModel.mins[self.viewModel.selectedMinIndex]*60
+                self.title = (self.viewModel.isPlaying.value && self.resultHeartRateLabel.isHidden == true) ? self.secondToMinute(seconds: max - Int(Float(max)*value)) : ""
             })
             .disposed(by: disposeBag)
     }
@@ -374,6 +411,12 @@ class HeartExserciseVC: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource  {
         if viewModel.isPlaying.value == true {
             viewModel.togglePlay()
         }
+    }
+    
+    private func secondToMinute(seconds: Int) -> String {
+        let minute = Int(seconds/60)
+        let remainSeconds = Int(seconds - minute*60)
+        return String(format: "%02d:%02d", minute, remainSeconds)
     }
     
     // UIPicker Delegate & Datasource

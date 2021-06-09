@@ -350,6 +350,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 self.heartRateTrackLabel.isHidden = !value
                 self.fireImageView.isHidden = !value
                 self.bpmLabel.isHidden = !value
+                UIApplication.shared.isIdleTimerDisabled = value
             })
             .disposed(by: disposeBag)
         
