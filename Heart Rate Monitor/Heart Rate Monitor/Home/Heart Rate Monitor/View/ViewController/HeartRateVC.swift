@@ -12,6 +12,7 @@ import RxCocoa
 import AVFoundation
 import Charts
 import HGCircularSlider
+import StoreKit
 
 class HeartRateVC: BaseVC, ChartViewDelegate {
     
@@ -198,6 +199,11 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let openCount = (UserDefaultHelper.get(key: .openMonitorCount) as? Int) ?? 0
+        print("open count: \(openCount)")
+        if openCount%20 == 0 && openCount > 0 {
+            SKStoreReviewController.requestReview()
+        }
         checkPermissionIfNeeded() {[weak self] in
             guard let self = self else { return }
             self.onOKCameraPermission()
@@ -452,6 +458,8 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 let vc = GuideVC()
                 self.present(vc, animated: true)
             }
+        } else if openCount == 10 {
+            
         }
         UserDefaultHelper.save(value: openCount + 1, key: .openMonitorCount)
     }
