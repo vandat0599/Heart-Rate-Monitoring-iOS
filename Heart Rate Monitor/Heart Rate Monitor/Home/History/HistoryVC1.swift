@@ -46,6 +46,17 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
         return view
     }()
     
+    private lazy var exportPDFButton: UIButton = {
+        let view = UIButton()
+        view.setTitle("Export", for: .normal)
+        view.setTitleColor(.white, for: .normal)
+        view.backgroundColor = .clear
+        view.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        view.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        view.addTarget(self, action: #selector(exportPDFTapped), for: .touchUpInside)
+        return view
+    }()
+    
     private var viewModel: HistoryVM!
     
     init(viewModel: HistoryVM) {
@@ -69,7 +80,8 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func setupView() {
-        navigationItem.titleView = labelHeaderFilterView
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: labelHeaderFilterView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: exportPDFButton)
         view.backgroundColor = UIColor(named: "black-background")
         view.addSubview(tmpTextField)
         view.addSubview(tableView)
@@ -148,6 +160,39 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     // MARK: - Action
+    @objc func exportPDFTapped() {
+        HHud.showHud()
+        let currentContentOffset = tableView.contentOffset
+        UIGraphicsBeginImageContextWithOptions(tableView.contentSize, false, 0)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        tableView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let iterationCount = Int(ceil(tableView.contentSize.height / tableView.bounds.size.height))
+        for i in 0..<iterationCount {
+            tableView.setContentOffset(CGPoint(x: 0, y: Int(tableView.bounds.size.height) * i), animated: false)
+            tableView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        }
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        let pdfImageView = UIImageView(image: image)
+        let pdfData: NSMutableData = NSMutableData()
+        UIGraphicsBeginPDFContextToData(pdfData, pdfImageView.bounds, nil)
+        UIGraphicsBeginPDFPageWithInfo(pdfImageView.bounds, nil)
+        pdfImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        UIGraphicsEndPDFContext()
+        DispatchQueue.global().async {[unowned self] in
+            let documentDirectories = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+            let documentsFileName = documentDirectories! + "/" + "History.pdf"
+            pdfData.write(toFile: documentsFileName, atomically: true)
+            let fileURL = NSURL(fileURLWithPath: documentsFileName)
+            var filesToShare = [Any]()
+            filesToShare.append(fileURL)
+            DispatchQueue.main.async {
+                self.tableView.setContentOffset(currentContentOffset, animated: false)
+                HHud.hideHud()
+                let activityViewController = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
+                self.present(activityViewController, animated: true, completion: nil)
+            }
+        }
+    }
     
     // UIPicker Delegate & Datasource
      
