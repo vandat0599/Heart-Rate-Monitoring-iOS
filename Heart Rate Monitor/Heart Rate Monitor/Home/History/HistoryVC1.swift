@@ -161,6 +161,7 @@ class HistoryVC1: BaseVC, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // MARK: - Action
     @objc func exportPDFTapped() {
+        guard tableView.visibleCells.count > 0 else { return }
         HHud.showHud()
         let currentContentOffset = tableView.contentOffset
         UIGraphicsBeginImageContextWithOptions(tableView.contentSize, false, 0)
