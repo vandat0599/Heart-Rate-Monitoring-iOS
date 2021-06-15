@@ -59,8 +59,20 @@ final class FormInputView: UIView, UITextFieldDelegate, UIPickerViewDelegate, UI
         view.borderWidth = 2
         view.borderColor = .clear
         view.isUserInteractionEnabled = true
+        view.setContentHuggingPriority(.defaultHigh, for: .vertical)
         let tap = UITapGestureRecognizer(target: self, action: #selector(iconDownTapped))
         view.addGestureRecognizer(tap)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var errorLabel: UILabel = {
+        let view = UILabel()
+        view.textColor = .systemRed
+        view.text = model?.authenticationType?.errorText
+        view.font = .systemFont(ofSize: 10, weight: .light)
+        view.numberOfLines = 0
+        view.setContentHuggingPriority(.defaultHigh - 1, for: .vertical)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -136,9 +148,24 @@ final class FormInputView: UIView, UITextFieldDelegate, UIPickerViewDelegate, UI
     private var dataPicker: [String] = []
     var onError: (() -> Void)?
     var onTextEditing: ((String?) -> Void)?
+    var model: FormInputViewModel?
+    private var errorLabelHeightAnchor: NSLayoutConstraint?
+    private var viewHolderBottomAnchor: NSLayoutConstraint?
+    private var errorLabelBottomAnchor: NSLayoutConstraint?
     private var isError = true {
         didSet {
-            viewHolderTextField.borderColor = isError ? .systemRed : .clear
+            if isError {
+                viewHolderBottomAnchor?.isActive = false
+                errorLabelHeightAnchor?.isActive = true
+            } else {
+                errorLabelHeightAnchor?.isActive = false
+                viewHolderBottomAnchor?.isActive = true
+            }
+            UIView.animate(withDuration: 0.2) {
+                self.errorLabel.alpha = self.isError ? 1 : 0
+                self.viewHolderTextField.borderColor = self.isError ? .systemRed : .clear
+                self.layoutIfNeeded()
+            }
         }
     }
     var isEnable = true {
@@ -166,13 +193,16 @@ final class FormInputView: UIView, UITextFieldDelegate, UIPickerViewDelegate, UI
         addSubview(viewHolderTextField)
         viewHolderTextField.addSubview(textField)
         viewHolderTextField.addSubview(iconDown)
+        addSubview(errorLabel)
         iconDownWidthAnchor = iconDown.widthAnchor.constraint(equalToConstant: 24)
-        let paddingVertical: CGFloat = 15
+        viewHolderBottomAnchor = viewHolderTextField.bottomAnchor.constraint(equalTo: bottomAnchor)
+        errorLabelHeightAnchor = errorLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+        let paddingVertical: CGFloat = 14
         NSLayoutConstraint.activate([
             viewHolderTextField.topAnchor.constraint(equalTo: topAnchor),
             viewHolderTextField.leadingAnchor.constraint(equalTo: leadingAnchor),
             viewHolderTextField.trailingAnchor.constraint(equalTo: trailingAnchor),
-            viewHolderTextField.bottomAnchor.constraint(equalTo: bottomAnchor),
+            viewHolderBottomAnchor!,
             
             iconDown.trailingAnchor.constraint(equalTo: viewHolderTextField.trailingAnchor, constant: -10),
             iconDown.heightAnchor.constraint(equalToConstant: 24),
@@ -183,10 +213,17 @@ final class FormInputView: UIView, UITextFieldDelegate, UIPickerViewDelegate, UI
             textField.bottomAnchor.constraint(equalTo: viewHolderTextField.bottomAnchor, constant: -paddingVertical),
             textField.leadingAnchor.constraint(equalTo: viewHolderTextField.leadingAnchor, constant: 20),
             textField.trailingAnchor.constraint(equalTo: iconDown.leadingAnchor, constant: -10),
+            
+            errorLabel.topAnchor.constraint(equalTo: viewHolderTextField.bottomAnchor, constant: 5),
+            errorLabel.leadingAnchor.constraint(equalTo: viewHolderTextField.leadingAnchor, constant: 20),
+            errorLabel.trailingAnchor.constraint(equalTo: viewHolderTextField.trailingAnchor, constant: -20),
         ])
     }
     
     func setData(model: FormInputViewModel) {
+        self.model = model
+        errorLabel.text = model.authenticationType?.errorText
+        errorLabel.alpha = 0
         placeHolder = model.placeHolder
         textField.text = model.text
         inputType = model.inputType
@@ -287,11 +324,11 @@ enum FormInputValidateType {
             case .csUserNameLogin:
                 return "Username must be at least 3 characters".localized
             case .csPassword:
-                return "Password must be at least 6 characters".localized
+                return "Password must contain at least 6 characters, including uppercase, lowercase and numbers".localized
             case .csEmail:
                 return "Email is invalid".localized
             case .csEmpty:
-                return "Please fill in all of the fields".localized
+                return "This field is required".localized
             }
         }
     }

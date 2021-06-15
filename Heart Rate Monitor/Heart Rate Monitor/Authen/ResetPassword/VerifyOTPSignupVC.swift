@@ -58,7 +58,7 @@ final class VerifyOTPSignupVC: BaseVC {
         textField.setData(model: FormInputViewModel(
             text: "",
             placeHolder: "OTP code",
-            inputType: .email,
+            inputType: .number,
             authenticationType: .csEmpty,
             dataPicker: nil
         ))

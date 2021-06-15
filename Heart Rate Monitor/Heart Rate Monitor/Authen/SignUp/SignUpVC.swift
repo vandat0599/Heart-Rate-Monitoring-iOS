@@ -103,6 +103,7 @@ final class SignUpVC: BaseVC, CheckBoxDelegate {
             authenticationType: .csPassword,
             dataPicker: nil
         ))
+        textField.errorLabel.text = "Password do not match, please try again!".localized
         textField.onTextEditing = {[weak self] text in
             if self?.passwordView.text != textField.text {
                 textField.forceShowError()

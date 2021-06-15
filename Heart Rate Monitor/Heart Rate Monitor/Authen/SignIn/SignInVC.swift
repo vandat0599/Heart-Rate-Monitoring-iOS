@@ -100,7 +100,7 @@ final class SignInVC: BaseVC {
             text: "",
             placeHolder: "Username",
             inputType: .email,
-            authenticationType: .csEmpty,
+            authenticationType: .csEmail,
             dataPicker: nil
         ))
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -113,7 +113,7 @@ final class SignInVC: BaseVC {
             text: "",
             placeHolder: "Password",
             inputType: .password,
-            authenticationType: .csEmpty,
+            authenticationType: .csPassword,
             dataPicker: nil
         ))
         textField.translatesAutoresizingMaskIntoConstraints = false

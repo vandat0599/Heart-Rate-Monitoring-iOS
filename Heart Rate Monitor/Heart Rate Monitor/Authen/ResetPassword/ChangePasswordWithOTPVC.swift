@@ -54,12 +54,12 @@ class ChangePasswordWithOTPVC: BaseVC {
         return view
     }()
     
-    private lazy var emailView: FormInputView = {
+    private lazy var otpView: FormInputView = {
         let textField = FormInputView()
         textField.setData(model: FormInputViewModel(
             text: "",
             placeHolder: "OTP Code",
-            inputType: .email,
+            inputType: .number,
             authenticationType: .csEmpty,
             dataPicker: nil
         ))
@@ -89,6 +89,7 @@ class ChangePasswordWithOTPVC: BaseVC {
             authenticationType: .csPassword,
             dataPicker: nil
         ))
+        textField.errorLabel.text = "Password do not match, please try again!".localized
         textField.onTextEditing = {[weak self] text in
             if self?.passwordView.text != textField.text {
                 textField.forceShowError()
@@ -151,7 +152,7 @@ class ChangePasswordWithOTPVC: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        [emailView, passwordView, confirmPasswordView].forEach { $0.text = "" }
+        [otpView, passwordView, confirmPasswordView].forEach { $0.text = "" }
     }
     
     private func setupView() {
@@ -161,7 +162,7 @@ class ChangePasswordWithOTPVC: BaseVC {
         scrollView.addSubview(contentView)
         contentView.addSubview(signInButton)
         contentView.addSubview(stackForm)
-        stackForm.addArrangedSubview(emailView)
+        stackForm.addArrangedSubview(otpView)
         stackForm.addArrangedSubview(passwordView)
         stackForm.addArrangedSubview(confirmPasswordView)
         contentView.addSubview(registerButton)
@@ -191,7 +192,7 @@ class ChangePasswordWithOTPVC: BaseVC {
             stackForm.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             stackForm.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
-            emailView.widthAnchor.constraint(equalTo: stackForm.widthAnchor),
+            otpView.widthAnchor.constraint(equalTo: stackForm.widthAnchor),
             passwordView.widthAnchor.constraint(equalTo: stackForm.widthAnchor),
             confirmPasswordView.widthAnchor.constraint(equalTo: stackForm.widthAnchor),
             
@@ -211,10 +212,10 @@ class ChangePasswordWithOTPVC: BaseVC {
     }
     
     @objc private func registerTapped() {
-        let inputViews = [emailView, passwordView, confirmPasswordView]
+        let inputViews = [otpView, passwordView, confirmPasswordView]
         if inputViews.filter({ $0.isValidationError() }).count == 0 && passwordView.text == confirmPasswordView.text {
             HHud.showHud()
-            APIService.shared.changePasswordWithOTP(email: email, password: passwordView.text ?? "", otp: emailView.text ?? "0")
+            APIService.shared.changePasswordWithOTP(email: email, password: passwordView.text ?? "", otp: otpView.text ?? "0")
                 .subscribe { [weak self] (user) in
                     guard let self = self else { return }
                     HHud.hideHud()
