@@ -116,7 +116,7 @@ class HeartRateDetector: NSObject {
         let filter = BBFilter()
         let B = [Double](repeating: 1/10, count: 10)
         let signalFiltered = filter.Filter(signal: signal, denC: B, numC: [1])
-        var windowArray = Array(signalFiltered[fps*pulse.count..<signalFiltered.count])
+        let windowArray = Array(signalFiltered[fps*pulse.count..<signalFiltered.count])
         
         if (windowArray.count != Windows_Seconds*fps){
             print("signal truyền vào phải có \(Windows_Seconds*fps) giá trị thay vì \(signal.count)")
@@ -125,7 +125,7 @@ class HeartRateDetector: NSObject {
         
         let threshold = 10.0
         let (peaks,locs) = findPeakElement(windowArray, threshold)
-        var peakCount = peaks.count
+        var peakCount = Double(peaks.count)
         var grapValue = [Double]()
         if (signal.count == fps*Windows_Seconds){
             grapValue = signalFiltered
@@ -136,20 +136,21 @@ class HeartRateDetector: NSObject {
         
         print("peakCount before: \(peakCount)")
         // cablirate
-        if locs.isEmpty || (peakCount - 1 == 0) || (peakCount-1 >= locs.count) {
+        if locs.isEmpty || (peakCount - 1 == 0) || (Int(peakCount)-1 >= locs.count) {
             return (pulse[pulse.count - 1],grapValue)
         }
-        let timeP2P = (locs[peakCount-1] - locs[0]) / (peakCount - 1)
-        let Ex = Windows_Seconds * fps - peakCount * timeP2P
+        let timeP2P :Double = Double(locs[Int(peakCount)-1] - locs[0]) / Double((peakCount - 1))
+        let Ex :Double = Double(Windows_Seconds * fps) - (Double(peakCount) * timeP2P)
         if (Ex >= timeP2P) {
             peakCount += 1
         }
-        if (Ex > timeP2P/2) {
-            peakCount = peakCount - (timeP2P - Ex) * 60/(Windows_Seconds * fps)
+        if (Ex >= timeP2P/2) {
+            let temp = (timeP2P - Ex) * 60.0/Double((Windows_Seconds * fps))
+            peakCount = peakCount - temp
         }
         if (Ex < 0){
             for i in 1..<locs.count {
-                if (locs[i] - locs[i-1] > 2*timeP2P) {
+                if (Double(locs[i] - locs[i-1]) > 2.0 * timeP2P) {
                     peakCount += 1
                 }
             }
