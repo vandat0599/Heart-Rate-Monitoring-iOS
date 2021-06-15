@@ -55,7 +55,7 @@ final class FormInputView: UIView, UITextFieldDelegate, UIPickerViewDelegate, UI
     
     private lazy var viewHolderTextField: RoundedView = {
         let view = RoundedView()
-        view.backgroundColor = UIColor.init(named: "white-holder")
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.2)
         view.borderWidth = 2
         view.borderColor = .clear
         view.isUserInteractionEnabled = true
@@ -105,7 +105,7 @@ final class FormInputView: UIView, UITextFieldDelegate, UIPickerViewDelegate, UI
     var placeHolder: String? {
         set {
             textField.attributedPlaceholder = NSAttributedString(string: newValue ?? "", attributes: [
-                NSAttributedString.Key.foregroundColor: UIColor.white,
+                NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.8),
                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)
             ])
         }
