@@ -89,7 +89,6 @@ class HistoryVM: PHistoryVM {
         var historyClone = history
         let unsubmitedRates = history.filter { $0.isSubmitted == false && ($0.isRemoved ?? false) == false }
         let deletedIds = historyClone.filter { ($0.isRemoved ?? false) == true }.map { $0.id ?? 0 }
-        
         if !deletedIds.isEmpty {
             APIService.shared.deleteHistoryRates(by: deletedIds)
                 .subscribe { (_) in
@@ -100,9 +99,6 @@ class HistoryVM: PHistoryVM {
                 }
                 .disposed(by: disposeBag)
         }
-        
-        
-        
         if !unsubmitedRates.isEmpty {
             APIService.shared.postHeartRate(heartRates: unsubmitedRates)
                 .subscribe { (data) in
