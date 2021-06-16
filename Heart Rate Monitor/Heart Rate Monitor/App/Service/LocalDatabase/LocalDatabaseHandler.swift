@@ -18,8 +18,10 @@ final class LocalDatabaseHandler {
     var didInsertHistory = PublishRelay<Bool>()
     var didUpdateHistory = PublishRelay<Bool>()
     var didDeleteHistory = PublishRelay<Bool>()
+    private var queue = DispatchQueue(label: "queue", attributes: .concurrent)
     
     // MARK: - Playlist
+    
     func insertHistory(heartRateHistory: HeartRateHistory) -> HeartRateHistory? {
         let localHeartRate = LocalHeartHistory(context: PersistenceManager.shared.context)
         localHeartRate.fromRemoteHistory(model: heartRateHistory)
@@ -51,7 +53,19 @@ final class LocalDatabaseHandler {
         didDeleteHistory.accept(true)
     }
     
-    func deleteAllHistory() {
+    func deleteAllHistory(async: Bool = true) {
+        if async == true {
+            queue.async(flags: .barrier) {
+                self.pDeleteAllHistory()
+            }
+        } else {
+            queue.sync {
+                self.pDeleteAllHistory()
+            }
+        }
+    }
+    
+    private func pDeleteAllHistory() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = LocalHeartHistory.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         _ = try? PersistenceManager.shared.context.execute(deleteRequest)

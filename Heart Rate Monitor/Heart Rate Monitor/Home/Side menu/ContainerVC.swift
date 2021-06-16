@@ -304,8 +304,8 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onSuccess: {(data) in
                 HHud.hideHud()
-                LocalDatabaseHandler.shared.deleteAllHistory()
-                UserDefaultHelper.remove(key: .loggedInAccount, async: true)
+                LocalDatabaseHandler.shared.deleteAllHistory(async: false)
+                UserDefaultHelper.remove(key: .loggedInAccount, async: false)
                 NotificationCenter.default.post(name: AppConstant.AppNotificationName.didLogout, object: nil)
                 print("data: \(data)")
             }, onError: { [weak self] (err) in
