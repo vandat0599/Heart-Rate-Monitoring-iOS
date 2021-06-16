@@ -78,6 +78,9 @@ class BaseVC: UIViewController {
     
     @objc func settingDidChange(notification: Notification?) {
         let sensivity = UserDefaults.standard.integer(forKey: "sensitivity_preference")
+        let windowSec = UserDefaults.standard.integer(forKey: "windowsec_preference")
+        HeartRateDetector.Windows_Seconds = windowSec
+        print("did changed: \(windowSec)")
         if sensivity == 0 {
             CameraManager.shared.updateSensivity(sensivty: .low)
         } else {

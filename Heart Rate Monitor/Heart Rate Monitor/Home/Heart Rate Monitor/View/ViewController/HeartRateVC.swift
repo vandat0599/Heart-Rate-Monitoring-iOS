@@ -97,8 +97,6 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
         view.setScaleEnabled(false)
         view.pinchZoomEnabled = true
         view.autoScaleMinMaxEnabled = true
-//        view.leftAxis.axisMaximum = 260
-//        view.leftAxis.axisMinimum = 0
         view.rightAxis.enabled = false
         view.leftAxis.enabled = false
         view.legend.enabled = false

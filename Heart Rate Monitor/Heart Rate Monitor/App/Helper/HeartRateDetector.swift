@@ -11,7 +11,7 @@ import AVFoundation
 
 class HeartRateDetector: NSObject {
 
-    static let Windows_Seconds = 10
+    static var Windows_Seconds = 10
     static var beepSoundEffect: AVAudioPlayer?
     
     static func Multiplication (_ a : [Double], _ b : [Double]) -> [Double] {
