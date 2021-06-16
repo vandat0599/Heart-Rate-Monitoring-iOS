@@ -1,9 +1,9 @@
 //
-//  LocalDatabaseRepo.swift
-//  Mymanu Play
+//  LocalDatabaseHandler.swift
+//  Heart Rate Monotor
 //
-//  Created by Duy Nguyen on 04/04/2021.
-//  Copyright © 2020 Duy Nguyen. All rights reserved.
+//  Created by Dat Van on 04/04/2021.
+//  Copyright © 2021 Dat Van. All rights reserved.
 //
 
 import Foundation
@@ -49,6 +49,12 @@ final class LocalDatabaseHandler {
         }
         PersistenceManager.shared.context.delete(history)
         didDeleteHistory.accept(true)
+    }
+    
+    func deleteAllHistory() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = LocalHeartHistory.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        _ = try? PersistenceManager.shared.context.execute(deleteRequest)
     }
     
     func getAllHistory() -> [HeartRateHistory] {
