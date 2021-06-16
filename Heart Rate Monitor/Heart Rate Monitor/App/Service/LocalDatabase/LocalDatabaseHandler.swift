@@ -1,9 +1,9 @@
 //
-//  LocalDatabaseRepo.swift
-//  Mymanu Play
+//  LocalDatabaseHandler.swift
+//  Heart Rate Monotor
 //
-//  Created by Duy Nguyen on 04/04/2021.
-//  Copyright © 2020 Duy Nguyen. All rights reserved.
+//  Created by Dat Van on 04/04/2021.
+//  Copyright © 2021 Dat Van. All rights reserved.
 //
 
 import Foundation
@@ -18,8 +18,10 @@ final class LocalDatabaseHandler {
     var didInsertHistory = PublishRelay<Bool>()
     var didUpdateHistory = PublishRelay<Bool>()
     var didDeleteHistory = PublishRelay<Bool>()
+    private var queue = DispatchQueue(label: "queue", attributes: .concurrent)
     
     // MARK: - Playlist
+    
     func insertHistory(heartRateHistory: HeartRateHistory) -> HeartRateHistory? {
         let localHeartRate = LocalHeartHistory(context: PersistenceManager.shared.context)
         localHeartRate.fromRemoteHistory(model: heartRateHistory)
@@ -49,6 +51,24 @@ final class LocalDatabaseHandler {
         }
         PersistenceManager.shared.context.delete(history)
         didDeleteHistory.accept(true)
+    }
+    
+    func deleteAllHistory(async: Bool = true) {
+        if async == true {
+            queue.async(flags: .barrier) {
+                self.pDeleteAllHistory()
+            }
+        } else {
+            queue.sync {
+                self.pDeleteAllHistory()
+            }
+        }
+    }
+    
+    private func pDeleteAllHistory() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = LocalHeartHistory.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        _ = try? PersistenceManager.shared.context.execute(deleteRequest)
     }
     
     func getAllHistory() -> [HeartRateHistory] {

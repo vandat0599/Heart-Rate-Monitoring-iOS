@@ -57,7 +57,7 @@ class HAlert: UIView {
         viewController.present(vc, animated: true, completion: nil)
     }
     
-    static func showAlertErrorNetwork(_ viewController: UIViewController) {
+    static func showAlertErrorNetwork(_ viewController: UIViewController, leftAction: (() -> ())? = nil) {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
         let vc = LottieSheetViewController(
             lottie: AnimationView.init(name: "lottie-internet-connection"),
@@ -66,7 +66,7 @@ class HAlert: UIView {
             description: "Check your Wi-Fi connection or cellular data and try again",
             leftActionTitle: "Retry",
             rightActionTitle: "Settings",
-            leftAction: nil) {
+            leftAction: leftAction) {
             let application = UIApplication.shared
             if let url = URL(string: "App-Prefs:root=WIFI"), application.canOpenURL(url) {
                 application.open(url, options: [:], completionHandler: nil)

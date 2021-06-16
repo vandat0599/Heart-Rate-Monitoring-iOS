@@ -11,6 +11,9 @@ import Lottie
 import InAppSettingsKit
 import Messages
 import AVFoundation
+import RxSwift
+import RxRelay
+import Alamofire
 
 class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
     //MARK: - Properties
@@ -86,6 +89,8 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
         view.addTarget(self, action: #selector(holderViewTapped), for: .touchUpInside)
         return view
     }()
+    
+    private var logoutBottomSheet: LottieSheetViewController?
     
     // MARK: - init
     init() {
@@ -211,20 +216,21 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
                 }
                 
                 UINotificationFeedbackGenerator().notificationOccurred(.warning)
-                let vc = LottieSheetViewController(
+                logoutBottomSheet = LottieSheetViewController(
                     lottie: AnimationView.init(name: "lottie-warning"),
                     closeImage: UIImage(named: "ic-close")!,
                     title: "Warning!",
                     description: "If you log out of your account, your heart rate data will no longer be synced to our server!",
                     leftActionTitle: "CANCEL",
                     rightActionTitle: "LOGOUT",
-                    leftAction: nil) {
-                    UserDefaultHelper.remove(key: .loggedInAccount, async: true)
-                    NotificationCenter.default.post(name: AppConstant.AppNotificationName.didLogout, object: nil)
+                    leftAction: nil) { [weak self] in
+                    guard let self = self else { return }
+                    self.logoutTapped()
                 }
-                vc.canDismissOnSwipeDown = true
-                vc.closeButton.isHidden = true
-                vc.canDismissOnTouchOutSide = true
+                logoutBottomSheet?.canDismissOnSwipeDown = true
+                logoutBottomSheet?.closeButton.isHidden = true
+                logoutBottomSheet?.canDismissOnTouchOutSide = true
+                guard let vc = logoutBottomSheet else { return }
                 present(vc, animated: true, completion: nil)
             }
             return
@@ -282,5 +288,35 @@ class ContainerVC: BaseVC, MenuVCDelegate, MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true)
+    }
+    
+    func logoutTapped() {
+        if !(NetworkReachabilityManager()?.isReachable ?? false) {
+            logoutBottomSheet?.dismiss(animated: true)
+            HAlert.showAlertErrorNetwork(self) {[weak self] in
+                self?.logoutTapped()
+            }
+            return
+        }
+        HHud.showHud()
+        let unsubmitedRates = LocalDatabaseHandler.shared.getAllHistory().filter { $0.isSubmitted == false && ($0.isRemoved ?? false) == false }
+        APIService.shared.postHeartRate(heartRates: unsubmitedRates)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .subscribe(onSuccess: {(data) in
+                HHud.hideHud()
+                LocalDatabaseHandler.shared.deleteAllHistory(async: false)
+                UserDefaultHelper.remove(key: .loggedInAccount, async: false)
+                NotificationCenter.default.post(name: AppConstant.AppNotificationName.didLogout, object: nil)
+                print("data: \(data)")
+            }, onError: { [weak self] (err) in
+                guard let self = self else { return }
+                HHud.hideHud()
+                print("err: \(err.localizedDescription)")
+                self.logoutBottomSheet?.dismiss(animated: true)
+                HAlert.showErrorBottomSheet(self, message: "Something went wrong, please try logout again! (\(err.localizedDescription)") { [weak self] in
+                    self?.logoutTapped()
+                }
+            })
+            .disposed(by: self.disposeBag)
     }
 }
