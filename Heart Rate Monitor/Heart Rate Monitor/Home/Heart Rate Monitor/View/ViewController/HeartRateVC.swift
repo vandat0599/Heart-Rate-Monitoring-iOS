@@ -448,6 +448,16 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 self.updateBottomHeartRateViews()
             }
             .disposed(by: disposeBag)
+        
+        LocalDatabaseHandler.shared.didDeleteAllHistory
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .bind(onNext: {[unowned self] (value) in
+                self.minLabelView.valueLabel.text = "--"
+                self.maxLabelView.valueLabel.text = "--"
+                self.avgLabelView.valueLabel.text = "--"
+            })
+            .disposed(by: disposeBag)
     }
     
     private func onOKCameraPermission() {
@@ -466,7 +476,9 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
     
     func updateBottomHeartRateViews() {
         DispatchQueue.global().async {
-            let heartRateNumber = LocalDatabaseHandler.shared.getAllHistory().filter{ $0.isRemoved == false }.map { $0.heartRateNumber ?? 0 }
+            let heartRateNumber = LocalDatabaseHandler.shared.getAllHistory().filter{
+                return (($0.isRemoved ?? false) == false) && (abs(Int(Date.fromTimeMilli(timeMilli: $0.createDate ?? "0").timeIntervalSinceNow/3600)) <= 24)
+            }.map { $0.heartRateNumber ?? 0 }
             guard heartRateNumber.count > 0 else { return }
             let min = Int(heartRateNumber.min() ?? 0)
             let max = Int(heartRateNumber.max() ?? 0)

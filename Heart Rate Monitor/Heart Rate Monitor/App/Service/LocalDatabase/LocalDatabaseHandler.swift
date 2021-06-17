@@ -18,6 +18,7 @@ final class LocalDatabaseHandler {
     var didInsertHistory = PublishRelay<Bool>()
     var didUpdateHistory = PublishRelay<Bool>()
     var didDeleteHistory = PublishRelay<Bool>()
+    var didDeleteAllHistory = PublishRelay<Bool>()
     private var queue = DispatchQueue(label: "queue", attributes: .concurrent)
     
     // MARK: - Playlist
@@ -57,10 +58,12 @@ final class LocalDatabaseHandler {
         if async == true {
             queue.async(flags: .barrier) {
                 self.pDeleteAllHistory()
+                self.didDeleteAllHistory.accept(true)
             }
         } else {
             queue.sync {
                 self.pDeleteAllHistory()
+                self.didDeleteAllHistory.accept(true)
             }
         }
     }

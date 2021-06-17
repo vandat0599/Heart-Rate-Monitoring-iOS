@@ -41,7 +41,7 @@ class HistoryTableViewCell: UITableViewCell {
     func setData(model: HeartRateHistory) {
         heartRateNumberLabel.text = (model.heartRateNumber ?? 0) == 0 ? "--" : "\(model.heartRateNumber ?? 0)"
         noteLabel.text = model.label
-        timeLabel.text = Date().fromTimeMilli(timeMilli: model.createDate ?? "").dateAndTimetoString()
+        timeLabel.text = Date.fromTimeMilli(timeMilli: model.createDate ?? "").dateAndTimetoString()
         setupChartData(values: model.grapValues)
         if UserDefaultHelper.getLogedUser() != nil {
             submitView.backgroundColor = UIColor(named: (model.isSubmitted ?? false) ? "success" : "red-1")!

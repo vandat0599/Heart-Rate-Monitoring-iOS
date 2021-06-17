@@ -16,7 +16,7 @@ extension Date {
         return formatter.string(from: self)
     }
     
-    func fromTimeMilli(timeMilli: String) -> Date {
+    static func fromTimeMilli(timeMilli: String) -> Date {
         return NSDate(timeIntervalSince1970: TimeInterval(Double(timeMilli)!)) as Date
     }
     

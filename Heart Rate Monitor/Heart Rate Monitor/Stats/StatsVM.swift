@@ -56,7 +56,7 @@ class StatsVM {
         }
         
         // Filter histories in time required
-        historyList = historyList.filter { (Date().fromTimeMilli(timeMilli: $0.createDate ?? "0") >= startDate) && (Date().fromTimeMilli(timeMilli: $0.createDate ?? "0") <= endDate)}
+        historyList = historyList.filter { (Date.fromTimeMilli(timeMilli: $0.createDate ?? "0") >= startDate) && (Date.fromTimeMilli(timeMilli: $0.createDate ?? "0") <= endDate)}
         
         reloadChartData(startDate: startDate, endDate: endDate)
         reloadMinMaxAvgHeartRate()
@@ -82,7 +82,7 @@ class StatsVM {
         
         for history in historyList {
             var i = 0
-            while formatter.string(from: Date().fromTimeMilli(timeMilli: history.createDate ?? "")) != dateList[i] {
+            while formatter.string(from: Date.fromTimeMilli(timeMilli: history.createDate ?? "")) != dateList[i] {
                 i += 1
             }
             recordList[i] += history.heartRateNumber ?? 0
@@ -136,7 +136,7 @@ class StatsVM {
         delegate?.updateMinMaxAvg(  min: min,
                                     max: max,
                                     avg: sum / historyList.count,
-                                    minDate: Date().fromTimeMilli(timeMilli: minDate).dateAndTimetoString(),
-                                    maxDate: Date().fromTimeMilli(timeMilli: maxDate).dateAndTimetoString())
+                                    minDate: Date.fromTimeMilli(timeMilli: minDate).dateAndTimetoString(),
+                                    maxDate: Date.fromTimeMilli(timeMilli: maxDate).dateAndTimetoString())
     }
 }
