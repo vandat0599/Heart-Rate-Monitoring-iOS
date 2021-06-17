@@ -148,13 +148,6 @@ class HeartRateDetector: NSObject {
             let temp = (timeP2P - Ex) * 60.0/Double((Windows_Seconds * fps))
             peakCount = peakCount - temp
         }
-        if (Ex < 0){
-            for i in 1..<locs.count {
-                if (Double(locs[i] - locs[i-1]) > 2.0 * timeP2P) {
-                    peakCount += 1
-                }
-            }
-        }
         print("peakCount after: \(peakCount)")
         heartBeat = Double(peakCount) * 60.0 / Double(Windows_Seconds)
         
