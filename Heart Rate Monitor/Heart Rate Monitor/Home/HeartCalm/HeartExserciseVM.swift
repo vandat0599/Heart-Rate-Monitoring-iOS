@@ -86,6 +86,7 @@ class HeartExserciseVM: PHeartExserciseVM {
         timer?.invalidate()
         timer = nil
         value = 0
+        isRemove30FirstFrame = false
     }
     
     func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
