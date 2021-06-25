@@ -53,6 +53,7 @@ class HeartExserciseVM: PHeartExserciseVM {
     var selectedMinIndex = 0
     var breathPerMaxSecond = 0
     var shouldSaveHeartWaves = true
+    var isRemove30FirstFrame = false
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -100,9 +101,14 @@ class HeartExserciseVM: PHeartExserciseVM {
                 isMeasuring.accept(true)
             }
             capturedRedmean.append(Double(redmean))
-            if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%fps == 0 {
-                let (heartRate,_) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
-                pulses.append((heartRate == -1 ? (pulses.last ?? 80) : heartRate))
+            if capturedRedmean.count >= (HeartRateDetector.Windows_Seconds*fps + fps ) && capturedRedmean.count%fps == 0 {
+                if (capturedRedmean.count == 330 && isRemove30FirstFrame == false) {
+                    capturedRedmean.removeFirst(30)
+                    isRemove30FirstFrame = true
+                }else{
+                    let (heartRate,_) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
+                    pulses.append((heartRate == -1 ? (pulses.last ?? 80) : heartRate))
+                }
             }
         } else {
             if resetDataTrigger.value == false {

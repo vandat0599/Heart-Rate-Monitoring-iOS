@@ -129,7 +129,9 @@ class HeartRateDetector: NSObject {
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm (fps) frame thì lại gọi hàm
     static func PulseDetector(_ signal: [Double], fps: Int, pulse: [Double]) -> (Double,[Double]) {
-        print("Captured[\(signal.count): \(signal)")
+        if ( signal.count == 570){
+            print("Captured[\(signal.count): \(signal)")
+        }
         var heartBeat = 0.0
         let filter = BBFilter()
         let B = [Double](repeating: 1/10, count: 10)
