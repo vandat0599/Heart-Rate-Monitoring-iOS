@@ -105,10 +105,10 @@ class HeartExserciseVM: PHeartExserciseVM {
                 if (capturedRedmean.count == 330 && isRemove30FirstFrame == false) {
                     capturedRedmean.removeFirst(30)
                     isRemove30FirstFrame = true
-                }else{
-                    let (heartRate,_) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
-                    pulses.append((heartRate == -1 ? (pulses.last ?? 80) : heartRate))
                 }
+                let (heartRate,_) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
+                pulses.append((heartRate == -1 ? (pulses.last ?? 80) : heartRate))
+                
             }
         } else {
             if resetDataTrigger.value == false {
