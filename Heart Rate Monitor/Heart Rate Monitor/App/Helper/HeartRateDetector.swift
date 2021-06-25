@@ -25,41 +25,59 @@ class HeartRateDetector: NSObject {
     }
     
     static func findPeakElement(_ freqs: [Double], _ threshold: Double) -> ([Double],[Int]){
-        print(freqs.count)
         var ascending = false
-        var peaks: [Double] = []
+        var peaks = [Double]()
         var index = [Int]()
+        var flag = [Bool]()
+        var downofPeak = [Int]()
+        
+        flag.append(ascending)
         if var last = freqs.first {
             freqs.dropFirst().enumerated().forEach {
                 if last < $0.element {
                     ascending = true
+                    flag.append(ascending)
+                    if (flag[flag.count - 2] == false){
+                        downofPeak.append($0.offset)
+                    }
+                    if (downofPeak.count == 2){
+                        downofPeak.removeFirst()
+                    }
                 }
                 if $0.element < last && ascending  {
                     ascending = false
+                    flag.append(ascending)
                     if (index.count == 0){
                         peaks.append(last)
                         var idx = $0.offset - 1
-                        while(freqs[idx] == last){
-                            if (freqs[idx-1] != last){
-                                peaks.append(freqs[idx])
-                                index.append(idx)
+                        if (freqs[idx] == last){
+                            while(freqs[idx] == last){
+                                if (freqs[idx-1] != last){
+                                    index.append(idx)
+                                }
+                                idx -= 1
                             }
-                            idx -= 1
                         }
-                        index.append($0.offset)
+                        else{
+                            index.append($0.offset)
+                        }
+                        
                     }
                     else{
                         if (Double($0.offset) - Double(index[index.count - 1]) >= threshold ){
                             peaks.append(last)
                             var idx = $0.offset - 1
-                            while(freqs[idx] == last){
-                                if (freqs[idx-1] != last){
-                                    peaks.append(freqs[idx])
-                                    index.append(idx)
+                            if (freqs[idx] == last){
+                                while(freqs[idx] == last){
+                                    if (freqs[idx-1] != last){
+                                        index.append(idx)
+                                    }
+                                    idx -= 1
                                 }
-                                idx -= 1
                             }
-                            index.append($0.offset)
+                            else{
+                                index.append($0.offset)
+                            }
                         }
                     }
                 }
