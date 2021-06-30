@@ -109,7 +109,6 @@ class HeartExserciseVM: PHeartExserciseVM {
                 }
                 let (heartRate,_) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
                 pulses.append((heartRate == -1 ? (pulses.last ?? 80) : heartRate))
-                
             }
         } else {
             if resetDataTrigger.value == false {

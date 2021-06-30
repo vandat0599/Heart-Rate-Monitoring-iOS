@@ -453,8 +453,9 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                     leftActionTitle: "No",
                     rightActionTitle: "Yes",
                     leftAction: nil,
-                    rightAction: {
-                        self.viewModel.togglePlay()
+                    rightAction: {[weak self] in
+                        UINotificationFeedbackGenerator().notificationOccurred(.success)
+                        self?.viewModel.togglePlay()
                     })
                 vc.canDismissOnSwipeDown = false
                 vc.closeButton.isHidden = true
