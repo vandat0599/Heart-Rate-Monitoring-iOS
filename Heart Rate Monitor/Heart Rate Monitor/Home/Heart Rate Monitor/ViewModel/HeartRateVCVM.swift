@@ -20,6 +20,7 @@ protocol HeartRateVCVM {
     var heartRateProgress: BehaviorRelay<Float> { get }
     var isHeartRateValid: BehaviorRelay<Bool> { get }
     var timeupTrigger: PublishRelay<Bool> { get }
+    var unstableSignalTrigger: PublishRelay<Bool> { get }
     var capturedRedmean: [Double] { get }
     var grapValues: BehaviorRelay<[Double]> { get }
     func handleImage(with buffer: CMSampleBuffer, fps: Int)
@@ -40,6 +41,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var isHeartRateValid: BehaviorRelay<Bool>
     var timeupTrigger: PublishRelay<Bool>
     var grapValues: BehaviorRelay<[Double]>
+    var unstableSignalTrigger: PublishRelay<Bool>
     
     var capturedRedmean: [Double] = []
     private var pulses: [Double] = []
@@ -57,6 +59,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
         heartRateProgress = BehaviorRelay<Float>(value: 0.0)
         timeupTrigger = PublishRelay<Bool>()
         grapValues = BehaviorRelay<[Double]>(value: Array.init(repeating: 220, count: 100))
+        unstableSignalTrigger = PublishRelay<Bool>()
         capturedRedmean = []
     }
     
@@ -96,12 +99,10 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 }
                 let (heartRate,grapvalue) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
                 if(heartRate == -1){
-                    
                     // show alert error signal
                     // do
-                    
-                    
-                    resetAllData()
+                    togglePlay()
+                    unstableSignalTrigger.accept(true)
                 }
                 else{
                     pulses.append(heartRate)
