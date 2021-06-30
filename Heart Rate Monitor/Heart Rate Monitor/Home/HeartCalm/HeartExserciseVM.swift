@@ -53,6 +53,7 @@ class HeartExserciseVM: PHeartExserciseVM {
     var selectedMinIndex = 0
     var breathPerMaxSecond = 0
     var shouldSaveHeartWaves = true
+    var isRemove30FirstFrame = false
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -85,6 +86,7 @@ class HeartExserciseVM: PHeartExserciseVM {
         timer?.invalidate()
         timer = nil
         value = 0
+        isRemove30FirstFrame = false
     }
     
     func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
@@ -100,7 +102,11 @@ class HeartExserciseVM: PHeartExserciseVM {
                 isMeasuring.accept(true)
             }
             capturedRedmean.append(Double(redmean))
-            if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%fps == 0 {
+            if capturedRedmean.count >= (HeartRateDetector.Windows_Seconds*fps + fps ) && capturedRedmean.count%fps == 0 {
+                if (capturedRedmean.count == 330 && isRemove30FirstFrame == false) {
+                    capturedRedmean.removeFirst(30)
+                    isRemove30FirstFrame = true
+                }
                 let (heartRate,_) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
                 pulses.append((heartRate == -1 ? (pulses.last ?? 80) : heartRate))
             }

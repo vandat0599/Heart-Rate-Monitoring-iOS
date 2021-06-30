@@ -440,6 +440,29 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
             })
             .disposed(by: disposeBag)
         
+        viewModel?.unstableSignalTrigger
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .bind(onNext: {[unowned self] (value) in
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
+                let vc = LottieSheetViewController(
+                    lottie: AnimationView.init(name: "lottie-warning"),
+                    closeImage: UIImage(named: "ic-close")!,
+                    title: "Poor Signal Quality",
+                    description: "Sorry, We could not measure your heart rate. Please hold your finger and the phone steady. Do not press your finger against the camera too hard. If your fingers are cold, warm them up.\n\nWould you like to try again!",
+                    leftActionTitle: "No",
+                    rightActionTitle: "Yes",
+                    leftAction: nil,
+                    rightAction: {[weak self] in
+                        UINotificationFeedbackGenerator().notificationOccurred(.success)
+                        self?.viewModel.togglePlay()
+                    })
+                vc.canDismissOnSwipeDown = false
+                vc.closeButton.isHidden = true
+                self.present(vc, animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+        
         Observable.of(LocalDatabaseHandler.shared.didInsertHistory, LocalDatabaseHandler.shared.didUpdateHistory, LocalDatabaseHandler.shared.didDeleteHistory).merge()
             .observeOn(MainScheduler.instance)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -458,6 +481,7 @@ class HeartRateVC: BaseVC, ChartViewDelegate {
                 self.avgLabelView.valueLabel.text = "--"
             })
             .disposed(by: disposeBag)
+        
     }
     
     private func onOKCameraPermission() {
