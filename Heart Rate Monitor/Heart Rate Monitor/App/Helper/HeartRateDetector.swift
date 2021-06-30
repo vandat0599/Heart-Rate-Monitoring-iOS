@@ -129,8 +129,17 @@ class HeartRateDetector: NSObject {
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm (fps) frame thì lại gọi hàm
     static func PulseDetector(_ signal: [Double], fps: Int, pulse: [Double]) -> (Double,[Double]) {
-        if ( signal.count == 570){
+        if ( signal.count >= 500){
             print("Captured[\(signal.count): \(signal)")
+        }
+        var tempCount = 0
+        for i in 0..<signal.count{
+            if (signal[i] == 255){
+                tempCount += 1
+            }
+        }
+        if(tempCount >= 10){
+            return (-1,[-1])
         }
         var heartBeat = 0.0
         let filter = BBFilter()
@@ -149,7 +158,7 @@ class HeartRateDetector: NSObject {
         var grapValue = [Double]()
         if (signal.count == fps*Windows_Seconds){
             grapValue = signalFiltered
-            grapValue.removeFirst(10)
+            grapValue.removeFirst(30)
         }else{
             grapValue = windowArray
         }
@@ -157,7 +166,7 @@ class HeartRateDetector: NSObject {
         print("peakCount before: \(peakCount)")
         // cablirate
         if locs.isEmpty || (peakCount - 1 == 0) || (Int(peakCount)-1 >= locs.count) {
-            return (pulse[pulse.count - 1],grapValue)
+            return (-1,grapValue)
         }
         let timeP2P :Double = Double(locs[Int(peakCount)-1] - locs[0]) / Double((peakCount - 1))
         let Ex :Double = Double(Windows_Seconds * fps) - (Double(peakCount) * timeP2P)
