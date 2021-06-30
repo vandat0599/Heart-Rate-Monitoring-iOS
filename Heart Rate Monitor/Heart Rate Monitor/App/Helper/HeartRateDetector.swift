@@ -53,7 +53,7 @@ class HeartRateDetector: NSObject {
                         if (freqs[idx] == last){
                             while(freqs[idx] == last){
                                 if (freqs[idx-1] != last){
-                                    index.append(idx)
+                                    index.append((idx+$0.offset)/2)
                                 }
                                 idx -= 1
                             }
@@ -70,7 +70,7 @@ class HeartRateDetector: NSObject {
                             if (freqs[idx] == last){
                                 while(freqs[idx] == last){
                                     if (freqs[idx-1] != last){
-                                        index.append(idx)
+                                        index.append((idx+$0.offset)/2)
                                     }
                                     idx -= 1
                                 }
@@ -133,9 +133,21 @@ class HeartRateDetector: NSObject {
             print("Captured[\(signal.count): \(signal)")
         }
         var tempCount = 0
+        var countValue = 0 // đếm giá trị trùng lặp
+        var currenValue = signal[0]
         for i in 0..<signal.count{
             if (signal[i] == 255){
                 tempCount += 1
+            }
+            if(currenValue == signal[i]){
+                countValue += 1
+                if(countValue > 30){
+                    return (-1,[-1])
+                }
+            }
+            else{
+                currenValue = signal[i]
+                countValue = 0
             }
         }
         if(tempCount >= 10){
