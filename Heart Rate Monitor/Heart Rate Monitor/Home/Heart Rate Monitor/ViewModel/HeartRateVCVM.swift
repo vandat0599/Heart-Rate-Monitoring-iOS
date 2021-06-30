@@ -98,13 +98,11 @@ class HeartRateVCVMImp: HeartRateVCVM {
                     isRemove30FirstFrame = true
                 }
                 let (heartRate,grapvalue) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
-                if(heartRate == -1){
-                    // show alert error signal
-                    // do
+                if(heartRate == -1) {
                     togglePlay()
                     unstableSignalTrigger.accept(true)
                 }
-                else{
+                else {
                     pulses.append(heartRate)
                     grapValues.accept(grapvalue)
                 }
