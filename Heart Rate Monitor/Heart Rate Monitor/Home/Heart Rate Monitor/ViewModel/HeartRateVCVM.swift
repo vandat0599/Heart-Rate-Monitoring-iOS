@@ -20,6 +20,7 @@ protocol HeartRateVCVM {
     var heartRateProgress: BehaviorRelay<Float> { get }
     var isHeartRateValid: BehaviorRelay<Bool> { get }
     var timeupTrigger: PublishRelay<Bool> { get }
+    var unstableSignalTrigger: PublishRelay<Bool> { get }
     var capturedRedmean: [Double] { get }
     var grapValues: BehaviorRelay<[Double]> { get }
     func handleImage(with buffer: CMSampleBuffer, fps: Int)
@@ -40,6 +41,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var isHeartRateValid: BehaviorRelay<Bool>
     var timeupTrigger: PublishRelay<Bool>
     var grapValues: BehaviorRelay<[Double]>
+    var unstableSignalTrigger: PublishRelay<Bool>
     
     var capturedRedmean: [Double] = []
     private var pulses: [Double] = []
@@ -47,6 +49,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
     var maxProgressSecond = 20
     var value = 0
     var shouldSaveHeartWaves = true
+    var isRemove30FirstFrame = false
     
     init() {
         isPlaying = BehaviorRelay<Bool>(value: false)
@@ -56,6 +59,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
         heartRateProgress = BehaviorRelay<Float>(value: 0.0)
         timeupTrigger = PublishRelay<Bool>()
         grapValues = BehaviorRelay<[Double]>(value: Array.init(repeating: 220, count: 100))
+        unstableSignalTrigger = PublishRelay<Bool>()
         capturedRedmean = []
     }
     
@@ -74,6 +78,7 @@ class HeartRateVCVMImp: HeartRateVCVM {
         timer?.invalidate()
         timer = nil
         value = 0
+        isRemove30FirstFrame = false
     }
     
     func handleImage(with buffer: CMSampleBuffer, fps: Int = 30) {
@@ -87,11 +92,20 @@ class HeartRateVCVMImp: HeartRateVCVM {
                 isMeasuring.accept(true)
             }
             capturedRedmean.append(Double(redmean))
-            if capturedRedmean.count >= HeartRateDetector.Windows_Seconds*fps && capturedRedmean.count%fps == 0 {
-               // let windowArray = Array(capturedRedmean[fps*pulses.count..<capturedRedmean.count])
+            if capturedRedmean.count >= (HeartRateDetector.Windows_Seconds*fps + fps ) && capturedRedmean.count%fps == 0 {
+                if (capturedRedmean.count == 330 && isRemove30FirstFrame == false) {
+                    capturedRedmean.removeFirst(30)
+                    isRemove30FirstFrame = true
+                }
                 let (heartRate,grapvalue) = HeartRateDetector.PulseDetector(capturedRedmean, fps: fps, pulse: pulses)
-                pulses.append(heartRate)
-                grapValues.accept(grapvalue)
+                if(heartRate == -1) {
+                    togglePlay()
+                    unstableSignalTrigger.accept(true)
+                }
+                else {
+                    pulses.append(heartRate)
+                    grapValues.accept(grapvalue)
+                }
             }
         } else {
             resetAllData()

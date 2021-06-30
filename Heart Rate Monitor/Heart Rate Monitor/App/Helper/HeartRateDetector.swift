@@ -25,41 +25,59 @@ class HeartRateDetector: NSObject {
     }
     
     static func findPeakElement(_ freqs: [Double], _ threshold: Double) -> ([Double],[Int]){
-        print(freqs.count)
         var ascending = false
-        var peaks: [Double] = []
+        var peaks = [Double]()
         var index = [Int]()
+        var flag = [Bool]()
+        var downofPeak = [Int]()
+        
+        flag.append(ascending)
         if var last = freqs.first {
             freqs.dropFirst().enumerated().forEach {
                 if last < $0.element {
                     ascending = true
+                    flag.append(ascending)
+                    if (flag[flag.count - 2] == false){
+                        downofPeak.append($0.offset)
+                    }
+                    if (downofPeak.count == 2){
+                        downofPeak.removeFirst()
+                    }
                 }
                 if $0.element < last && ascending  {
                     ascending = false
+                    flag.append(ascending)
                     if (index.count == 0){
                         peaks.append(last)
                         var idx = $0.offset - 1
-                        while(freqs[idx] == last){
-                            if (freqs[idx-1] != last){
-                                peaks.append(freqs[idx])
-                                index.append(idx)
+                        if (freqs[idx] == last){
+                            while(freqs[idx] == last){
+                                if (freqs[idx-1] != last){
+                                    index.append((idx+$0.offset)/2)
+                                }
+                                idx -= 1
                             }
-                            idx -= 1
                         }
-                        index.append($0.offset)
+                        else{
+                            index.append($0.offset)
+                        }
+                        
                     }
                     else{
                         if (Double($0.offset) - Double(index[index.count - 1]) >= threshold ){
                             peaks.append(last)
                             var idx = $0.offset - 1
-                            while(freqs[idx] == last){
-                                if (freqs[idx-1] != last){
-                                    peaks.append(freqs[idx])
-                                    index.append(idx)
+                            if (freqs[idx] == last){
+                                while(freqs[idx] == last){
+                                    if (freqs[idx-1] != last){
+                                        index.append((idx+$0.offset)/2)
+                                    }
+                                    idx -= 1
                                 }
-                                idx -= 1
                             }
-                            index.append($0.offset)
+                            else{
+                                index.append($0.offset)
+                            }
                         }
                     }
                 }
@@ -111,7 +129,30 @@ class HeartRateDetector: NSObject {
     // truyền vào func mỗi khi đạt đủ 180 frames (tương đương với 6s)
     // sau đó mỗi lần signal có thêm (fps) frame thì lại gọi hàm
     static func PulseDetector(_ signal: [Double], fps: Int, pulse: [Double]) -> (Double,[Double]) {
-        print("Captured[\(signal.count): \(signal)")
+        if ( signal.count >= 500){
+            print("Captured[\(signal.count): \(signal)")
+        }
+        var tempCount = 0
+        var countValue = 0 // đếm giá trị trùng lặp
+        var currenValue = signal[0]
+        for i in 0..<signal.count{
+            if (signal[i] == 255){
+                tempCount += 1
+            }
+            if(currenValue == signal[i]){
+                countValue += 1
+                if(countValue > 30){
+                    return (-1,[-1])
+                }
+            }
+            else{
+                currenValue = signal[i]
+                countValue = 0
+            }
+        }
+        if(tempCount >= 10){
+            return (-1,[-1])
+        }
         var heartBeat = 0.0
         let filter = BBFilter()
         let B = [Double](repeating: 1/10, count: 10)
@@ -129,7 +170,7 @@ class HeartRateDetector: NSObject {
         var grapValue = [Double]()
         if (signal.count == fps*Windows_Seconds){
             grapValue = signalFiltered
-            grapValue.removeFirst(10)
+            grapValue.removeFirst(30)
         }else{
             grapValue = windowArray
         }
@@ -137,7 +178,7 @@ class HeartRateDetector: NSObject {
         print("peakCount before: \(peakCount)")
         // cablirate
         if locs.isEmpty || (peakCount - 1 == 0) || (Int(peakCount)-1 >= locs.count) {
-            return (pulse[pulse.count - 1],grapValue)
+            return (-1,grapValue)
         }
         let timeP2P :Double = Double(locs[Int(peakCount)-1] - locs[0]) / Double((peakCount - 1))
         let Ex :Double = Double(Windows_Seconds * fps) - (Double(peakCount) * timeP2P)
