@@ -19,6 +19,7 @@ target 'Heart Rate Monitor' do
   pod 'MaterialComponents/TextControls+OutlinedTextAreas'
   pod 'MaterialComponents/TextControls+OutlinedTextFields'
   pod 'InAppSettingsKit', '~> 3.3.1'
+  pod 'Firebase/Analytics'
 
   # Pods for Heart Rate Monitor
 

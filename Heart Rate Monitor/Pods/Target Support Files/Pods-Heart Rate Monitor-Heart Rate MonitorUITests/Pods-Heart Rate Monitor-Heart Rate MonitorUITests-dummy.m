@@ -1,5 +1,0 @@
-#import <Foundation/Foundation.h>
-@interface PodsDummy_Pods_Heart_Rate_Monitor_Heart_Rate_MonitorUITests : NSObject
-@end
-@implementation PodsDummy_Pods_Heart_Rate_Monitor_Heart_Rate_MonitorUITests
-@end

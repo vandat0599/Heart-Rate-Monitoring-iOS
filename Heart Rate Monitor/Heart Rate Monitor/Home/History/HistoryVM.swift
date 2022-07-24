@@ -27,10 +27,21 @@ class HistoryVM: PHistoryVM {
     
     func reloadData(label: String) {
         data.removeAll()
-        // 1. fetch all local history
-        // 2. update deleted & submitted
-        // 3. fetch remote history
-        // 4. update info (label,...)
+        
+        /*
+         1. fetch all local history without removed history
+            - fetch all local history without removed history
+            - show history
+         2. map local history to server
+            - get unsubmit history
+                + post unsubmit history to server and wait for completion
+            - get deleted history
+                + post deleted history
+         
+         3. fetch remote history
+            - fetch remote history
+            - update labels
+         */
         
         // 1
         var history = LocalDatabaseHandler.shared.getAllHistory()
@@ -63,6 +74,7 @@ class HistoryVM: PHistoryVM {
                         self.data = history
                         self.historyData.accept(history.filter { (label == "ALL LABELS" ? true : $0.label == label) && ($0.isRemoved ?? false) == false })
                         self.reloadLabels()
+                        // update labels
                         history.filter { $0.isLabelUpdated == true && ($0.isRemoved ?? false) == false }.forEach {
                             var tmpModel = $0
                             APIService.shared.updateHistoryLabel(remoteId: $0.remoteId ?? "", label: $0.label ?? "")
