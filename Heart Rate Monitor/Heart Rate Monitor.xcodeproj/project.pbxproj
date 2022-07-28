@@ -144,7 +144,7 @@
 		CEFF400126561AB10049EA68 /* HeartRate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEFF3FFF26561AB10049EA68 /* HeartRate.xcdatamodeld */; };
 		CEFF400B26561C2A0049EA68 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */; };
 		CEFF406926562A210049EA68 /* LocalDatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */; };
-		DF021222281900330000AAD1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF021221281900330000AAD1 /* GoogleService-Info.plist */; };
+		DF9CD68528913943009908DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF9CD68428913943009908DC /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -322,7 +322,7 @@
 		CEFF400026561AB10049EA68 /* HeartRate.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HeartRate.xcdatamodel; sourceTree = "<group>"; };
 		CEFF400A26561C2A0049EA68 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		CEFF406826562A210049EA68 /* LocalDatabaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDatabaseHandler.swift; sourceTree = "<group>"; };
-		DF021221281900330000AAD1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DF9CD68428913943009908DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EA0CA797C01A5CC5331E7137 /* Pods-Heart Rate Monitor.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heart Rate Monitor.production.xcconfig"; path = "Target Support Files/Pods-Heart Rate Monitor/Pods-Heart Rate Monitor.production.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -726,6 +726,7 @@
 		CEC78DC925F72BEB007BA177 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				DF9CD68428913943009908DC /* GoogleService-Info.plist */,
 				CEC78E1E25F73355007BA177 /* Environment */,
 				CE1E229925F72A0300C6632E /* Info.plist */,
 			);
@@ -773,7 +774,6 @@
 		CEC78DF325F73022007BA177 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				DF021221281900330000AAD1 /* GoogleService-Info.plist */,
 				CE040E392658E92300A86649 /* Audio */,
 				CE1E229425F72A0300C6632E /* Assets.xcassets */,
 				CEC78E1B25F732E3007BA177 /* Value */,
@@ -1035,6 +1035,7 @@
 				CE4D1CFD2627F98300159D86 /* lottie-success.json in Resources */,
 				CE040E242658C5D700A86649 /* Settings.bundle in Resources */,
 				CE10733625FE1075003777D6 /* lottie-heart-wave.json in Resources */,
+				DF9CD68528913943009908DC /* GoogleService-Info.plist in Resources */,
 				CE1E229825F72A0300C6632E /* LaunchScreen.storyboard in Resources */,
 				CE040E6F2659011800A86649 /* lottie-permission-camera.json in Resources */,
 				CEB7548D2656705C00AF434F /* HistoryTableViewCell.xib in Resources */,
@@ -1044,7 +1045,6 @@
 				84E46096261566F700F60040 /* RelationshipTableViewCell.xib in Resources */,
 				CEC78E2425F73365007BA177 /* Production.xcconfig in Resources */,
 				84CD8231261EDDEC00ABD9B5 /* RecordTableViewCell.xib in Resources */,
-				DF021222281900330000AAD1 /* GoogleService-Info.plist in Resources */,
 				84575B7B2607845800711760 /* ProfileCell.xib in Resources */,
 				CEB754912656793800AF434F /* LabelPickerView.xib in Resources */,
 				84C7189A2606EB3200BA2C6D /* ProfileVC.xib in Resources */,
@@ -1402,14 +1402,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 9TZTHJXX2D;
+				DEVELOPMENT_TEAM = FZCMHM49LE;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.hr2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.hr20211;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1530,14 +1530,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 9TZTHJXX2D;
+				DEVELOPMENT_TEAM = FZCMHM49LE;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.hr2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.hr20211;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1658,14 +1658,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 9TZTHJXX2D;
+				DEVELOPMENT_TEAM = FZCMHM49LE;
 				INFOPLIST_FILE = "$(SRCROOT)/Heart Rate Monitor/App/Config/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.hr2021;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hcmus.hr20211;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>664235048869-8viqm1vpldkl1npc1jsctuluranlqekq.apps.googleusercontent.com</string>
+	<string>664235048869-e27rlehsjhgs6u8n9odjcbc1agli0v1d.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.664235048869-8viqm1vpldkl1npc1jsctuluranlqekq</string>
+	<string>com.googleusercontent.apps.664235048869-e27rlehsjhgs6u8n9odjcbc1agli0v1d</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDOxDtlgcmm05O83SMt6KZ_xa3uBVUKvAk</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.hcmus.hr2021</string>
+	<string>com.hcmus.hr20211</string>
 	<key>PROJECT_ID</key>
 	<string>heart-rate-monitor-2eedb</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:664235048869:ios:3a6814574137600c8b724c</string>
+	<string>1:664235048869:ios:6b71388826082c3c8b724c</string>
 </dict>
 </plist>
