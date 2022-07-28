@@ -21,6 +21,10 @@ class Heart_Rate_MonitorTests: XCTestCase {
     func testExample() throws {
         XCTAssertEqual(1, 1)
     }
+    
+    func testExample1() throws {
+        XCTAssertEqual(0, 1)
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
